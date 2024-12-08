@@ -1,4 +1,5 @@
 <div class="register-container">
+<<<<<<< Updated upstream
     <div class="register-content">
       <h2>Create Your Account</h2>
       <form (ngSubmit)="onSubmit()">
@@ -62,5 +63,23 @@
         Already have an account? <button (click)="goToLogin()">Login</button>
       </p>
     </div>
+=======
+    <h2>Register</h2>
+    <form (submit)="register()">
+      <label for="name">Name:</label>
+      <input id="name" type="text" [(ngModel)]="name" required />
+  
+      <label for="username">Username:</label>
+      <input id="username" type="text" [(ngModel)]="username" required />
+  
+      <label for="password">Password:</label>
+      <input id="password" type="password" [(ngModel)]="password" required />
+  
+      <label for="medicalHistory">Medical History:</label>
+      <textarea id="medicalHistory" [(ngModel)]="medicalHistory" rows="4"></textarea>
+  
+      <button type="submit">Register</button>
+    </form>
+>>>>>>> Stashed changes
   </div>
   

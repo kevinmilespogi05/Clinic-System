@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <div class="login-container">
   <div class="login-content">
     <!-- Left Image (Hospital/Clinic) -->
@@ -55,4 +56,31 @@
       </form>
     </div>
   </div>
+=======
+<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+<!-- Login Form -->
+<div *ngIf="!showRegister">
+  <h2>Login</h2>
+  <form (ngSubmit)="login(username, password)">
+    <input id="username" type="text" [(ngModel)]="username" name="username" required />
+    <input id="password" type="password" [(ngModel)]="password" name="password" required />
+    <button type="submit">Login</button>
+  </form>
+  <button (click)="toggleRegister()">Don't have an account? Register</button>
+</div>
+
+<!-- Register Form -->
+<div *ngIf="showRegister">
+  <h2>Register</h2>
+  <form (ngSubmit)="register(username, password, name, contact_number, date_of_birth)">
+    <input id="username" type="text" [(ngModel)]="username" name="username" required />
+    <input id="password" type="password" [(ngModel)]="password" name="password" required />
+    <input id="name" type="text" [(ngModel)]="name" name="name" required />
+    <input id="contact_number" type="text" [(ngModel)]="contact_number" name="contact_number" required />
+    <input id="date_of_birth" type="date" [(ngModel)]="date_of_birth" name="date_of_birth" required />
+    <button type="submit">Register</button>
+  </form>
+  <button (click)="toggleRegister()">Already have an account? Login</button>
+>>>>>>> Stashed changes
 </div>
