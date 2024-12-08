@@ -13,7 +13,7 @@ export class LoginComponent {
 
   username: string = '';
   password: string = '';
-  passwordVisible: boolean = false; // To toggle password visibility
+  passwordVisible: boolean = false; // Track password visibility
 
   constructor(private router: Router) {}
 
@@ -29,7 +29,15 @@ export class LoginComponent {
     }
   }
 
+  // Toggle the visibility of the password
   togglePasswordVisibility() {
-    this.passwordVisible = !this.passwordVisible; // Toggle the visibility state
+    this.passwordVisible = !this.passwordVisible;
   }
+
+  // Redirect to the register page when "Sign Up" is clicked
+  goToRegister(event: Event) {
+    event.preventDefault(); // Prevent the form's default behavior
+    this.router.navigate(['/register']); // Navigate to the register page
+  }  
+  
 }
