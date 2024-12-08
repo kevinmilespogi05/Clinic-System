@@ -7,6 +7,7 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
+    overflow: hidden; /* Prevents the scroll bar from appearing */
 }
 
 .dashboard-container {
@@ -15,35 +16,50 @@ body {
 }
 
 .sidebar {
-    background-color: #2c3e50;
+    background-color: #55d3fa;
     color: white;
     width: 250px;
     padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-between; /* Keeps the logo and logout button fixed */
+    height: 100%; /* Ensures the sidebar takes full height */
 }
 
-.logo h2 {
+.logo img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px; /* Centers the logo and adds margin at the bottom */
+}
+
+.system-name {
     text-align: center;
     font-size: 24px;
-    margin-bottom: 20px;
+    font-weight: bold;
+    color: white;
+    margin-top: 5px; /* Adds some space between the logo and system name */
 }
 
 .menu {
     list-style: none;
     padding: 0;
+    margin-top: 60px; /* Added margin to push the menu down */
+    flex-grow: 1; /* Pushes the menu towards the bottom, before the logout button */
 }
 
 .menu li {
     margin-bottom: 20px;
+    display: flex;
+    align-items: center; /* Ensures the icon and text are aligned */
 }
 
 .menu a {
     text-decoration: none;
     color: white;
-    font-size: 18px;
-    display: block;
+    font-size: 20px;
+    display: flex;
+    align-items: center; /* Ensures text aligns with the icon */
     padding: 10px;
     border-radius: 5px;
     transition: background-color 0.3s ease;
@@ -53,8 +69,19 @@ body {
     background-color: #34495e;
 }
 
+/* Active Link Style */
+.menu a.active {
+    background-color: #2c3e50; /* Darker background for active link */
+}
+
+.menu-icon {
+    width: 30px; /* Adjust the size of the icons */
+    height: 30px;
+    margin-right: 10px; /* Adds space between the icon and the text */
+}
+
 .logout-btn {
-    background-color: #e74c3c;
+    background-color: #55d3fa;
     color: white;
     border: none;
     padding: 10px;
@@ -62,18 +89,28 @@ body {
     width: 100%;
     cursor: pointer;
     border-radius: 5px;
-    margin-top: 20px;
+    margin-top: 20px; /* Keeps the logout button in the same position */
     transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center; /* Ensures icon and text are aligned */
+    justify-content: center;
 }
 
 .logout-btn:hover {
     background-color: #c0392b;
 }
 
+.logout-icon {
+    width: 30px; /* Adjust the size of the logout icon */
+    height: 30px;
+    margin-right: 10px; /* Adds space between the icon and text */
+}
+
 .main-content {
     flex-grow: 1;
     padding: 20px;
     background-color: #ecf0f1;
+    overflow: hidden; /* Prevent overflow */
 }
 
 .header h1 {
@@ -83,8 +120,18 @@ body {
 }
 
 .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.appointments {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    height: 80%;
+    text-align: left;
 }
