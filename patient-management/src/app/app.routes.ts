@@ -6,6 +6,7 @@ import { DashboardComponent } from './user/dashboard/dashboard.component';
 import { AppointmentsComponent } from './user/appointments/appointments.component';
 
 
+
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'login'},
     { path: 'login', component: LoginComponent, title: 'Login' },

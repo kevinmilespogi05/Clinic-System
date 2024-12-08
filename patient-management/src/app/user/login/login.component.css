@@ -1,46 +1,125 @@
-.login-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  h2 {
-    text-align: center;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
+.desktop-patient-login-register,
+.desktop-patient-login-register * {
+  box-sizing: border-box;
+}
+.desktop-patient-login-register {
+  background: #ffffff;
+  height: 1024px;
+  position: relative;
+  overflow: hidden;
+}
+.rectangle-8 {
+  border-radius: 0px;
+  width: 591px;
+  height: 340px;
+  position: absolute;
+  left: 425px;
+  top: 334px;
+  overflow: visible;
+}
+.clinic-1 {
+  width: 173px;
+  height: 156px;
+  position: absolute;
+  left: 476px;
+  top: 401px;
+  object-fit: cover;
+}
+.rectangle-3 {
+  background: #ececec;
+  border-style: solid;
+  border-color: #ececec;
+  border-width: 1px;
+  width: 291px;
+  height: 62px;
+  position: absolute;
+  left: 691px;
+  top: 401px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.username {
+  color: #5e5e5e;
+  text-align: left;
+  font-family: "Poppins-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  left: 699px;
+  top: 419px;
+  width: 132px;
+  height: 39px;
+}
+.rectangle-4-svg {
+  background: #ececec;
+  border-style: solid;
+  border-color: #ececec;
+  border-width: 1px;
+  width: 291px;
+  height: 62px;
+  position: absolute;
+  left: 691px;
+  top: 485px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.password {
+  color: #5e5e5e;
+  text-align: left;
+  font-family: "Poppins-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  left: 699px;
+  top: 498px;
+}
+.don-t-have-an-account {
+  color: #777777;
+  text-align: left;
+  font-family: "Poppins-SemiBoldItalic", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  font-style: italic;
+  position: absolute;
+  left: 691px;
+  top: 557px;
+}
+.sign-up-button {
+  color: #0a58ca;
+  text-align: left;
+  font-family: "Poppins-SemiBold", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  position: absolute;
+  left: 866px;
+  top: 557px;
+}
+.patient-management-and-clinic-appointment-system {
+  color: #5e5e5e;
+  text-align: left;
+  font-family: "Poppins-Regular", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  position: absolute;
+  left: 476px;
+  top: 557px;
+  width: 208px;
+  height: 51px;
+}
+.rectangle-9-button {
+  border-radius: 0px;
+  width: 88px;
+  height: 38px;
+  position: absolute;
+  left: 894px;
+  top: 615px;
+  overflow: visible;
+}
+.sign-in {
+  color: #000000;
+  text-align: left;
+  font-family: "Poppins-SemiBold", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  position: absolute;
+  left: 917px;
+  top: 624px;
+}
