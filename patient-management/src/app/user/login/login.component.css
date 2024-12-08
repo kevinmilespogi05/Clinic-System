@@ -1,125 +1,129 @@
-.desktop-patient-login-register,
-.desktop-patient-login-register * {
-  box-sizing: border-box;
+/* Overall background and container styling */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: white;
 }
-.desktop-patient-login-register {
-  background: #ffffff;
-  height: 1024px;
+
+.login-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #a7d8f0; /* Light blue */
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  width: 70%;
+  max-width: 1100px;
+}
+
+/* Left side image container */
+.image-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+}
+
+.clinic-image {
+  width: 100%;
+  max-width: 250px;
+  margin-bottom: 20px;
+}
+
+.system-description {
+  font-size: 18px;
+  text-align: center;
+  color: #555;
+}
+
+/* Right side form container */
+.form-container {
+  width: 50%;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.label {
+  font-size: 16px;
+  color: #333;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #5a8fd4;
+}
+
+/* Password visibility toggle button */
+.password-container {
   position: relative;
-  overflow: hidden;
 }
-.rectangle-8 {
-  border-radius: 0px;
-  width: 591px;
-  height: 340px;
+
+.toggle-password-btn {
   position: absolute;
-  left: 425px;
-  top: 334px;
-  overflow: visible;
-}
-.clinic-1 {
-  width: 173px;
-  height: 156px;
-  position: absolute;
-  left: 476px;
-  top: 401px;
-  object-fit: cover;
-}
-.rectangle-3 {
-  background: #ececec;
-  border-style: solid;
-  border-color: #ececec;
-  border-width: 1px;
-  width: 291px;
-  height: 62px;
-  position: absolute;
-  left: 691px;
-  top: 401px;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-.username {
-  color: #5e5e5e;
-  text-align: left;
-  font-family: "Poppins-Regular", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  position: absolute;
-  left: 699px;
-  top: 419px;
-  width: 132px;
-  height: 39px;
-}
-.rectangle-4-svg {
-  background: #ececec;
-  border-style: solid;
-  border-color: #ececec;
-  border-width: 1px;
-  width: 291px;
-  height: 62px;
-  position: absolute;
-  left: 691px;
-  top: 485px;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-.password {
-  color: #5e5e5e;
-  text-align: left;
-  font-family: "Poppins-Regular", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  position: absolute;
-  left: 699px;
-  top: 498px;
-}
-.don-t-have-an-account {
-  color: #777777;
-  text-align: left;
-  font-family: "Poppins-SemiBoldItalic", sans-serif;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
   font-size: 14px;
-  font-weight: 600;
-  font-style: italic;
-  position: absolute;
-  left: 691px;
-  top: 557px;
+  color: #1d68f0;
+  cursor: pointer;
 }
-.sign-up-button {
-  color: #0a58ca;
-  text-align: left;
-  font-family: "Poppins-SemiBold", sans-serif;
+
+.toggle-password-btn:hover {
+  text-decoration: underline;
+}
+
+/* Sign up and options styling */
+.options {
+  margin-bottom: 20px;
+}
+
+.signup-link {
   font-size: 14px;
-  font-weight: 600;
-  position: absolute;
-  left: 866px;
-  top: 557px;
+  color: #555;
 }
-.patient-management-and-clinic-appointment-system {
-  color: #5e5e5e;
-  text-align: left;
-  font-family: "Poppins-Regular", sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  position: absolute;
-  left: 476px;
-  top: 557px;
-  width: 208px;
-  height: 51px;
+
+.signup-link a {
+  color: #1d68f0;
+  text-decoration: none;
 }
-.rectangle-9-button {
-  border-radius: 0px;
-  width: 88px;
-  height: 38px;
-  position: absolute;
-  left: 894px;
-  top: 615px;
-  overflow: visible;
+
+.signup-link a:hover {
+  text-decoration: underline;
 }
-.sign-in {
-  color: #000000;
-  text-align: left;
-  font-family: "Poppins-SemiBold", sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  position: absolute;
-  left: 917px;
-  top: 624px;
+
+/* Submit button styling */
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #1d68f0;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #1566c1;
+}
+
+.submit-button:focus {
+  outline: none;
 }

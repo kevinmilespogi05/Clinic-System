@@ -1,17 +1,55 @@
-<div class="desktop-patient-login-register">
-  <img class="rectangle-8" src="rectangle-80.svg" />
-  <img class="clinic-1" src="src\assets\clinic 1.png" />
-  <div class="rectangle-3"></div>
-  <div class="username">Username</div>
-  <div class="rectangle-4-svg"></div>
-  <div class="password">Password</div>
-  <div class="don-t-have-an-account">Don’t have an account?</div>
-  <div class="sign-up-button">Sign Up</div>
-  <div class="patient-management-and-clinic-appointment-system">
-    Patient Management and
-    <br />
-    Clinic Appointment System
+<div class="login-container">
+  <div class="login-content">
+    <!-- Left Image (Hospital/Clinic) -->
+    <div class="image-container">
+      <img class="clinic-1" src="/assets/clinic%201.png" />
+      <p class="system-description">
+        Patient Management and
+        <br />
+        Clinic Appointment System
+      </p>
+    </div>
+
+    <!-- Login Form -->
+    <div class="form-container">
+      <form (ngSubmit)="onSubmit()">
+        <div class="input-group">
+          <label for="username" class="label">Username</label>
+          <input
+            type="text"
+            id="username"
+            [(ngModel)]="username"
+            name="username"
+            placeholder="Enter Username"
+            class="input-field"
+          />
+        </div>
+
+        <div class="input-group">
+          <label for="password" class="label">Password</label>
+          <div class="password-container">
+            <input
+              [type]="passwordVisible ? 'text' : 'password'"
+              id="password"
+              [(ngModel)]="password"
+              name="password"
+              placeholder="Enter Password"
+              class="input-field"
+            />
+            <button type="button" (click)="togglePasswordVisibility()" class="toggle-password-btn">
+              {{ passwordVisible ? 'Hide' : 'Show' }}
+            </button>
+          </div>
+        </div>
+
+        <div class="options">
+          <p class="signup-link">
+            Don’t have an account? <a href="#">Sign Up</a>
+          </p>
+        </div>
+
+        <button type="submit" class="submit-button">Sign In</button>
+      </form>
+    </div>
   </div>
-  <img class="rectangle-9-button" src="rectangle-9-button0.svg" />
-  <div class="sign-in">Sign In</div>
 </div>

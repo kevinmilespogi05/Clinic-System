@@ -7,12 +7,13 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
 
   username: string = '';
   password: string = '';
+  passwordVisible: boolean = false; // To toggle password visibility
 
   constructor(private router: Router) {}
 
@@ -27,5 +28,8 @@ export class LoginComponent {
       alert('Invalid credentials');
     }
   }
-}
 
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible; // Toggle the visibility state
+  }
+}
