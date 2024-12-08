@@ -1,85 +1,39 @@
 <div class="register-container">
-<<<<<<< Updated upstream
-    <div class="register-content">
-      <h2>Create Your Account</h2>
-      <form (ngSubmit)="onSubmit()">
-        <div class="input-group">
-          <label for="firstName" class="label">First Name</label>
-          <input
-            type="text"
-            id="firstName"
-            [(ngModel)]="firstName"
-            name="firstName"
-            placeholder="Enter First Name"
-            class="input-field"
-            required
-          />
-        </div>
-  
-        <div class="input-group">
-          <label for="lastName" class="label">Last Name</label>
-          <input
-            type="text"
-            id="lastName"
-            [(ngModel)]="lastName"
-            name="lastName"
-            placeholder="Enter Last Name"
-            class="input-field"
-            required
-          />
-        </div>
-  
-        <div class="input-group">
-          <label for="dob" class="label">Date of Birth</label>
-          <input
-            type="date"
-            id="dob"
-            [(ngModel)]="dob"
-            name="dob"
-            class="input-field"
-            required
-          />
-        </div>
-  
-        <div class="input-group">
-          <label for="contactNo" class="label">Contact Number</label>
-          <input
-            type="tel"
-            id="contactNo"
-            [(ngModel)]="contactNo"
-            name="contactNo"
-            placeholder="Enter Contact Number"
-            class="input-field"
-            pattern="^\d{10}$"
-            required
-          />
-        </div>
-  
-        <button type="submit" class="submit-button">Register</button>
-      </form>
-  
-      <!-- Already have an account link -->
-      <p class="login-link">
-        Already have an account? <button (click)="goToLogin()">Login</button>
-      </p>
-    </div>
-=======
     <h2>Register</h2>
-    <form (submit)="register()">
-      <label for="name">Name:</label>
-      <input id="name" type="text" [(ngModel)]="name" required />
-  
-      <label for="username">Username:</label>
-      <input id="username" type="text" [(ngModel)]="username" required />
-  
-      <label for="password">Password:</label>
-      <input id="password" type="password" [(ngModel)]="password" required />
-  
-      <label for="medicalHistory">Medical History:</label>
-      <textarea id="medicalHistory" [(ngModel)]="medicalHistory" rows="4"></textarea>
-  
-      <button type="submit">Register</button>
+
+    <form (ngSubmit)="register()">
+        <!-- Existing Form Fields -->
+
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" [(ngModel)]="name" name="name" required placeholder="Enter your name">
+        </div>
+
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" [(ngModel)]="username" name="username" required placeholder="Enter your username">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" [(ngModel)]="password" name="password" required placeholder="Enter your password">
+        </div>
+
+        <div class="form-group">
+            <label for="contact_number">Contact Number:</label>
+            <input type="text" id="contact_number" [(ngModel)]="contact_number" name="contact_number" required placeholder="Enter your contact number">
+        </div>
+
+        <div class="form-group">
+            <label for="date_of_birth">Date of Birth:</label>
+            <input type="date" id="date_of_birth" [(ngModel)]="date_of_birth" name="date_of_birth" required>
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Register</button>
+        </div>
     </form>
->>>>>>> Stashed changes
-  </div>
-  
+
+    <!-- Back Button -->
+    <button (click)="goBack()">Back to Login</button>
+</div>

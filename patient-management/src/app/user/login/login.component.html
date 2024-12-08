@@ -1,86 +1,26 @@
-<<<<<<< Updated upstream
+<!-- login.component.html -->
 <div class="login-container">
-  <div class="login-content">
-    <!-- Left Image (Hospital/Clinic) -->
-    <div class="image-container">
-      <img class="clinic-1" src="/assets/clinic%201.png" />
-      <p class="system-description">
-        Patient Management and
-        <br />
-        Clinic Appointment System
-      </p>
-    </div>
+    <h2>Login</h2>
 
-    <!-- Login Form -->
-    <div class="form-container">
-      <form (ngSubmit)="onSubmit()">
-        <div class="input-group">
-          <label for="username" class="label">Username</label>
-          <input
-            type="text"
-            id="username"
-            [(ngModel)]="username"
-            name="username"
-            placeholder="Enter Username"
-            class="input-field"
-          />
+    <form (ngSubmit)="login()">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" [(ngModel)]="username" name="username" required placeholder="Enter your username">
         </div>
 
-        <div class="input-group">
-          <label for="password" class="label">Password</label>
-          <div class="password-container">
-            <input
-              [type]="passwordVisible ? 'text' : 'password'"
-              id="password"
-              [(ngModel)]="password"
-              name="password"
-              placeholder="Enter Password"
-              class="input-field"
-            />
-            <button type="button" (click)="togglePasswordVisibility()" class="toggle-password-btn">
-              {{ passwordVisible ? 'Hide' : 'Show' }}
-            </button>
-          </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" [(ngModel)]="password" name="password" required placeholder="Enter your password">
         </div>
 
-        <div class="options">
-          <p class="signup-link">
-            Don't have an account? 
-            <a href="#" (click)="goToRegister($event)">Sign Up</a>
-          </p>
-          
-          
+        <div class="form-group">
+            <button type="submit">Login</button>
         </div>
 
-        <button type="submit" class="submit-button">Sign In</button>
-      </form>
-    </div>
-  </div>
-=======
-<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+        <div class="form-group">
+            <button type="button" (click)="navigateToRegister()">Register</button> <!-- Register button -->
+        </div>
 
-<!-- Login Form -->
-<div *ngIf="!showRegister">
-  <h2>Login</h2>
-  <form (ngSubmit)="login(username, password)">
-    <input id="username" type="text" [(ngModel)]="username" name="username" required />
-    <input id="password" type="password" [(ngModel)]="password" name="password" required />
-    <button type="submit">Login</button>
-  </form>
-  <button (click)="toggleRegister()">Don't have an account? Register</button>
-</div>
-
-<!-- Register Form -->
-<div *ngIf="showRegister">
-  <h2>Register</h2>
-  <form (ngSubmit)="register(username, password, name, contact_number, date_of_birth)">
-    <input id="username" type="text" [(ngModel)]="username" name="username" required />
-    <input id="password" type="password" [(ngModel)]="password" name="password" required />
-    <input id="name" type="text" [(ngModel)]="name" name="name" required />
-    <input id="contact_number" type="text" [(ngModel)]="contact_number" name="contact_number" required />
-    <input id="date_of_birth" type="date" [(ngModel)]="date_of_birth" name="date_of_birth" required />
-    <button type="submit">Register</button>
-  </form>
-  <button (click)="toggleRegister()">Already have an account? Login</button>
->>>>>>> Stashed changes
+        <div id="error-message" style="color: red; display: none;"></div>
+    </form>
 </div>
