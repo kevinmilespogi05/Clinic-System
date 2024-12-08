@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'SkillBridge' title`, () => {
+  it(`should have the 'Patient-Management' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('SkillBridge');
+    expect(app.title).toEqual('Patient-Management');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, SkillBridge');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, Patient Management');
   });
 });
