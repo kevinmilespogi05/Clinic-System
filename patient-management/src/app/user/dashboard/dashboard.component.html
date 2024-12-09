@@ -12,8 +12,8 @@
         </thead>
         <tbody>
           <tr *ngFor="let appointment of appointments">
-            <td>{{ appointment.date }}</td>
-            <td>{{ appointment.time }}</td>
+            <td>{{ appointment.appointment_date }}</td> <!-- Update the field name here -->
+            <td>{{ appointment.appointment_time }}</td> <!-- Update the field name here -->
             <td>{{ appointment.status }}</td>
           </tr>
         </tbody>

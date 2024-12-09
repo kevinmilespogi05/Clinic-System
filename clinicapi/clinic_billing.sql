@@ -28,18 +28,21 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `appointments` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `date_time` datetime NOT NULL,
-  `status` enum('booked','cancelled') DEFAULT 'booked'
+  `appointment_date` date NOT NULL,
+  `appointment_time` time NOT NULL,
+  `status` enum('booked','cancelled') DEFAULT 'booked',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 --
 -- Dumping data for table `appointments`
 --
 
-INSERT INTO `appointments` (`id`, `user_id`, `date_time`, `status`) VALUES
-(1, 1, '2024-12-15 10:00:00', 'booked');
+
+
 
 -- --------------------------------------------------------
 
