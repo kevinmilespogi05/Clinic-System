@@ -1,11 +1,9 @@
 .dashboard-container {
     padding: 20px;
-    background-color: #f9f9f9; /* Add background for better visibility */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    margin: 20px 20px 20px 240px; /* Shifted right to make room for sidebar (220px + margin) */
-    max-width: calc(100% - 220px); /* Ensure it doesn't go past the side nav */
-    width: calc(100% - 220px); /* Adjust width so it sits next to sidebar but doesn't overlap */
+    background-color: #f9f9f9; /* Add background to make it more visible */
+    border-radius: 8px; /* Rounded corners for a better look */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    margin-left: 220px; /* Adjusting margin for positioning */
 }
 
 h1 {

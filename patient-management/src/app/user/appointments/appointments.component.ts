@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PatientService } from '../../services/patient.service';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';  // <-- Add FormsModule here
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-appointments',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],  // <-- Include FormsModule in imports
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './appointments.component.html',
   styleUrls: ['./appointments.component.css']
 })
@@ -35,6 +35,7 @@ export class AppointmentsComponent implements OnInit {
     }
   }
 
+  // Handle the form submission to book an appointment
   bookAppointment(): void {
     const userId = localStorage.getItem('userId');
     if (userId && this.newAppointment.date && this.newAppointment.time) {
@@ -44,11 +45,17 @@ export class AppointmentsComponent implements OnInit {
         date: this.newAppointment.date,
         time: this.newAppointment.time
       };
-
+  
+      console.log('Booking Appointment with data:', appointmentData); // Add logging to check form data
+  
+      // Call the service to book the appointment
       this.patientService.bookAppointment(appointmentData).subscribe(
         (response) => {
           console.log('Appointment booked successfully:', response);
+          // Refresh the appointments list
           this.fetchAppointments();
+          // Clear the form after successful booking
+          this.newAppointment = {};
         },
         (error) => {
           console.error('Error booking appointment:', error);
@@ -57,5 +64,5 @@ export class AppointmentsComponent implements OnInit {
     } else {
       console.error('Please fill in all fields.');
     }
-  }
+  }  
 }
