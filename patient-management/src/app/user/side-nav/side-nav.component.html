@@ -1,0 +1,14 @@
+<nav class="side-nav">
+    <ul>
+      <li><a routerLink="/user/dashboard">Dashboard</a></li>
+      <li><a routerLink="/user/appointments">Appointments</a></li>
+      <li><a routerLink="/user/profile">Profile</a></li>
+      <li><a (click)="logout()">Logout</a></li>
+    </ul>
+  </nav>
+  
+  <!-- This is where the child components will be injected -->
+  <div class="content">
+    <router-outlet></router-outlet> <!-- Child routes will be rendered here -->
+  </div>
+  

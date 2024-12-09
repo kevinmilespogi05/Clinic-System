@@ -1,0 +1,30 @@
+.appointments-container {
+    padding: 20px;
+  background-color: #f9f9f9; /* Add background to make it more visible */
+  border-radius: 8px; /* Rounded corners for a better look */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  margin-left: 220px;
+}
+
+h1 {
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+}

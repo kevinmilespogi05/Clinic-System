@@ -1,15 +1,14 @@
 <div class="dashboard">
-    <h2>Admin Dashboard</h2>
-  
-    <div class="appointments">
-      <h3>Upcoming Appointments</h3>
-      <ul>
-        <li *ngFor="let appointment of appointments">
-          {{ appointment.date }} - {{ appointment.time }} 
-          (Patient: {{ appointment.patientName }})
-        </li>
-      </ul>
-      <p *ngIf="appointments.length === 0">No upcoming appointments.</p>
-    </div>
+  <h2>Admin Dashboard</h2>
+
+  <div class="appointments">
+    <h3>Upcoming Appointments</h3>
+    <ul>
+      <li *ngFor="let appointment of appointments">
+        {{ appointment.date }} - {{ appointment.time }} 
+        (Patient: {{ appointment.patientName }})
+      </li>
+    </ul>
+    <p *ngIf="appointments?.length === 0">No upcoming appointments.</p>
   </div>
-  
+</div>
