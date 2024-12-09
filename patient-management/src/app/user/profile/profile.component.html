@@ -1,1 +1,79 @@
-<p>profile works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Dashboard</title>
+    <link rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <div class="logo">
+                <img src="assets/clinic%201.png" alt="Clinic Logo" class="logo-img">
+                <p class="system-name">ClinicPoint</p>
+            </div>
+            <ul class="menu">
+                <li><a href="#dashboard"><img src="assets/dashboard.png" alt="Dashboard" class="menu-icon"> Dashboard</a></li>
+                <li><a href="#appointments"><img src="assets/appointment.png" alt="Appointments" class="menu-icon"> Appointments</a></li>
+                <li><a href="#profile" class="active"><img src="assets/user.png" alt="Profile" class="menu-icon"> Profile</a></li>
+            </ul>
+            <button class="logout-btn">
+                <img src="assets/logout.png" alt="Logout" class="logout-icon"> Logout
+            </button>
+        </div>
+        <div class="main-content">
+            <div class="content">
+                <div class="profile-section">
+                    <!-- Profile Picture Section -->
+                    <div class="profile-picture-container">
+                        <img src="assets/default-profile.jpg" alt="Profile Picture" id="profile-pic">
+                        <input type="file" id="profile-pic-upload" class="upload-btn" accept="image/*">
+                    </div>
+
+                    <!-- Profile Details Section -->
+                    <div class="profile-details">
+                        <h3>Personal Information</h3>
+                        <form class="profile-form">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" value="John Doe" placeholder="Enter your name">
+
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" value="johndoe@example.com" placeholder="Enter your email">
+
+                            <label for="phone">Phone Number:</label>
+                            <input type="text" id="phone" value="09123456789" placeholder="Enter your phone number">
+
+                            <label for="dob">Date of Birth:</label>
+                            <input type="date" id="dob" value="1990-01-01">
+
+                            <label for="address">Address:</label>
+                            <input type="text" id="address" value="1234 Street, City" placeholder="Enter your address">
+
+                            <button type="submit" class="save-btn">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Spacer (Blank space) Between Sections -->
+                <div class="spacer"></div>
+
+                <!-- Medical Records & Insurance Section -->
+                <div class="medical-records-container">
+                    <h3>Medical Records & Insurance</h3>
+                    <form class="medical-form">
+                        <label for="medical-condition">Medical Condition:</label>
+                        <input type="text" id="medical-condition" value="None" placeholder="Enter any medical conditions">
+
+                        <label for="insurance">Insurance Provider:</label>
+                        <input type="text" id="insurance" value="PhilHealth" placeholder="Enter insurance provider">
+
+                        <label for="insurance-id">Insurance ID:</label>
+                        <input type="text" id="insurance-id" value="123456789" placeholder="Enter insurance ID">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
