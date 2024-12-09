@@ -57,9 +57,10 @@ bookAppointment(data: { userId: number; date: string; time: string }): Observabl
   }
 
   // Update Profile
-  updateProfile(userId: number, data: { name: string; contact_number: string; date_of_birth: string; medical_history: string }): Observable<any> {
+  updateProfile(userId: number, data: { name: string; contact_number: string; date_of_birth: string }): Observable<any> {
     const url = `${this.baseUrl}/api/users/update_profile.php`;
     const body = { user_id: userId, ...data };
     return this.http.post(url, body);
   }
+   
 }

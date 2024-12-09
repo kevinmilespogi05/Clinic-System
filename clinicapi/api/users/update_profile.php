@@ -1,5 +1,17 @@
 <?php
+
 include_once '../../config/database.php';
+
+// Allow cross-origin requests from your Angular app
+header("Access-Control-Allow-Origin: http://localhost:4200"); // Replace with your frontend URL if different
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+// Check if the request method is OPTIONS (pre-flight request) and respond with 200
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
 
 $database = new Database();
 $db = $database->getConnection();
@@ -20,11 +32,11 @@ if (!empty($data->user_id) && !empty($data->name) && !empty($data->contact_numbe
     $stmt->bindParam(":user_id", $data->user_id);
 
     if ($stmt->execute()) {
-        echo json_encode(["message" => "Profile updated successfully."]);
+        echo json_encode(["success" => true, "message" => "Profile updated successfully."]);
     } else {
-        echo json_encode(["message" => "Failed to update profile."]);
+        echo json_encode(["success" => false, "message" => "Failed to update profile."]);
     }
 } else {
-    echo json_encode(["message" => "Incomplete data."]);
+    echo json_encode(["success" => false, "message" => "Incomplete data."]);
 }
 ?>
