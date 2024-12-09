@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PatientService } from '../../services/patient.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -20,12 +21,23 @@ export class LoginComponent {
   login() {
     this.patientService.login(this.username, this.password).subscribe(
       (response: any) => {
-        alert('Login successful!');
-        localStorage.setItem('userId', response.user.id); // Save user ID in localStorage
-        this.router.navigate(['user/dashboard']);
+        Swal.fire({
+          title: 'Login Successful!',
+          text: 'Welcome back!',
+          icon: 'success',
+          confirmButtonText: 'Proceed'
+        }).then(() => {
+          localStorage.setItem('userId', response.user.id); // Save user ID in localStorage
+          this.router.navigate(['user/dashboard']); // Redirect to dashboard
+        });
       },
       (error: any) => {
-        alert('Login failed! Please check your credentials.');
+        Swal.fire({
+          title: 'Login Failed',
+          text: 'Invalid username or password. Please try again.',
+          icon: 'error',
+          confirmButtonText: 'Retry'
+        });
       }
     );
   }

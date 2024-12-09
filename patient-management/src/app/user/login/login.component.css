@@ -25,7 +25,6 @@ body {
     width: 100%;
     max-width: 360px;
     text-align: center;
-    position: relative;
 }
 
 /* Header */
@@ -57,18 +56,20 @@ input[type="password"] {
     border: 1px solid #dcdcdc;
     font-size: 14px;
     outline: none;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 input[type="text"]:focus,
 input[type="password"]:focus {
     border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
 }
 
 /* Button Group */
 .button-group {
     display: flex;
     flex-direction: column;
+    gap: 10px; /* Replaced margin with gap for better layout control */
 }
 
 button {
@@ -79,7 +80,7 @@ button {
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button[type="submit"] {
@@ -89,16 +90,17 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     background-color: #2980b9;
+    transform: scale(1.02); /* Slightly enlarges button for hover effect */
 }
 
 button.register-btn {
     background-color: #27ae60;
-    margin-top: 10px;
     color: white;
 }
 
 button.register-btn:hover {
     background-color: #2ecc71;
+    transform: scale(1.02);
 }
 
 /* Error Message */

@@ -1,39 +1,77 @@
 <div class="register-container">
     <h2>Register</h2>
 
-    <form (ngSubmit)="register()">
-        <!-- Existing Form Fields -->
-
+    <form (ngSubmit)="register()" novalidate>
+        <!-- Name Field -->
         <div class="form-group">
             <label for="name">Name:</label>
-            <input type="text" id="name" [(ngModel)]="name" name="name" required placeholder="Enter your name">
+            <input 
+                type="text" 
+                id="name" 
+                [(ngModel)]="name" 
+                name="name" 
+                required 
+                placeholder="Enter your name" 
+                aria-label="Name">
         </div>
 
+        <!-- Username Field -->
         <div class="form-group">
             <label for="username">Username:</label>
-            <input type="text" id="username" [(ngModel)]="username" name="username" required placeholder="Enter your username">
+            <input 
+                type="text" 
+                id="username" 
+                [(ngModel)]="username" 
+                name="username" 
+                required 
+                placeholder="Enter your username" 
+                aria-label="Username">
         </div>
 
+        <!-- Password Field -->
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" id="password" [(ngModel)]="password" name="password" required placeholder="Enter your password">
+            <input 
+                type="password" 
+                id="password" 
+                [(ngModel)]="password" 
+                name="password" 
+                required 
+                placeholder="Enter your password" 
+                aria-label="Password">
         </div>
 
+        <!-- Contact Number Field -->
         <div class="form-group">
             <label for="contact_number">Contact Number:</label>
-            <input type="text" id="contact_number" [(ngModel)]="contact_number" name="contact_number" required placeholder="Enter your contact number">
+            <input 
+                type="text" 
+                id="contact_number" 
+                [(ngModel)]="contact_number" 
+                name="contact_number" 
+                required 
+                placeholder="Enter your contact number" 
+                aria-label="Contact Number">
         </div>
 
+        <!-- Date of Birth Field -->
         <div class="form-group">
             <label for="date_of_birth">Date of Birth:</label>
-            <input type="date" id="date_of_birth" [(ngModel)]="date_of_birth" name="date_of_birth" required>
+            <input 
+                type="date" 
+                id="date_of_birth" 
+                [(ngModel)]="date_of_birth" 
+                name="date_of_birth" 
+                required 
+                aria-label="Date of Birth">
         </div>
 
+        <!-- Register Button -->
         <div class="form-group">
-            <button type="submit">Register</button>
+            <button type="submit" aria-label="Register">Register</button>
         </div>
     </form>
 
     <!-- Back Button -->
-    <button (click)="goBack()">Back to Login</button>
+    <button (click)="goBack()" aria-label="Back to Login">Back to Login</button>
 </div>
