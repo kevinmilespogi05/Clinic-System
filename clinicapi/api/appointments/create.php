@@ -1,4 +1,7 @@
 <?php
+header("Access-Control-Allow-Origin: *"); // Allow requests from all origins, or replace * with http://localhost:4200 for specific origin
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS, DELETE, PUT"); // Allow specific methods
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 
 include_once '../../config/database.php';
 
