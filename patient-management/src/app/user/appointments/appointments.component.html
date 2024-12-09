@@ -10,12 +10,13 @@
       <input type="time" id="time" name="time" [(ngModel)]="newAppointment.time" required>
 
       <button type="submit" [disabled]="appointmentForm.invalid">Book Appointment</button>
+
     </form>
   </div>
 
   <!-- My Appointments Section -->
   <div class="appointments-list">
-    <h2>My Appointments</h2>
+    <h1>My Appointments</h1>
     <div *ngIf="appointments && appointments.length > 0; else noAppointments">
       <table>
         <thead>
@@ -23,7 +24,6 @@
             <th>Date</th>
             <th>Time</th>
             <th>Status</th>
-            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -31,9 +31,6 @@
             <td>{{ appointment.date }}</td>
             <td>{{ appointment.time }}</td>
             <td>{{ appointment.status }}</td>
-            <td>
-              <button (click)="cancelAppointment(appointment.id)">Cancel</button>
-            </td>
           </tr>
         </tbody>
       </table>
