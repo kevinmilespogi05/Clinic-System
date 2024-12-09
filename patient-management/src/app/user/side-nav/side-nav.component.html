@@ -3,21 +3,24 @@
     <img src="assets/clinic 1.png" alt="Clinic Logo" />
     <h1 class="title">ClinicPoint</h1>
   </div>
+
+  <div class="horizontal-line"></div>
+
   <ul class="nav-links">
     <li>
-      <a routerLink="/user/dashboard">
+      <a routerLink="/user/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <img src="assets/dashboard.png" alt="Dashboard Icon" />
         Dashboard
       </a>
     </li>
     <li>
-      <a routerLink="/user/appointments">
+      <a routerLink="/user/appointments" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <img src="assets/appointment.png" alt="Appointments Icon" />
         Appointments
       </a>
     </li>
     <li>
-      <a routerLink="/user/profile">
+      <a routerLink="/user/profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <img src="assets/user.png" alt="Profile Icon" />
         Profile
       </a>

@@ -12,12 +12,8 @@
   padding: 30px 15px;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Poppins', sans-serif;
   transition: width 0.3s ease;
-}
-
-.side-nav:hover {
-  width: 250px; /* Slightly expand on hover */
 }
 
 /* Logo Container */
@@ -32,10 +28,6 @@
   height: auto;
   border-radius: 50%;
   transition: transform 0.3s ease;
-}
-
-.logo-container:hover {
-  transform: scale(1.1); /* Scale the logo when hovered */
 }
 
 .title {
@@ -58,6 +50,13 @@
   margin: 20px 0;
 }
 
+/* Horizontal Line for Separation */
+.horizontal-line {
+  border-top: 3px solid #7c95ad; /* Add a line above the Dashboard section */
+  width: 90%;
+  margin-left: 10px;
+}
+
 .nav-links a, .logout a {
   color: #ecf0f1;
   text-decoration: none;
@@ -77,6 +76,7 @@
   transition: transform 0.3s ease;
 }
 
+/* Hover effect for Dashboard, Appointments, Profile, and Logout */
 .nav-links a:hover, .logout a:hover {
   background-color: #34495e;
   transform: translateX(5px); /* Slight move on hover */
@@ -86,8 +86,19 @@
   transform: scale(1.1); /* Icon scales up on hover */
 }
 
+/* Remove hover effect from other items */
+.nav-links a {
+  background-color: transparent; /* No background color */
+  transform: none; /* No move on hover */
+}
+
+.nav-links a img {
+  transform: none; /* No scale effect on icons */
+}
+
+/* Active Link Highlight */
 .nav-links a.active, .logout a.active {
-  background-color: #16a085; /* Highlight active link with a unique color */
+  background-color: #162331; /* Highlight active link with a unique color */
   color: white;
 }
 
@@ -120,4 +131,13 @@
     font-size: 1rem;
     padding: 10px 15px;
   }
+  /* Hover and active state for Dashboard, Appointments, Profile */
+.nav-links a.active, .nav-links a:hover {
+  background-color: #34495e;
+  transform: translateX(5px); /* Slight move on hover */
+}
+
+.nav-links a.active img, .nav-links a:hover img {
+  transform: scale(1.1); /* Icon scales up on hover */
+}
 }
