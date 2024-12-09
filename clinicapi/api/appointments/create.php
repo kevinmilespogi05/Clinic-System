@@ -1,12 +1,7 @@
 <?php
 header('Access-Control-Allow-Origin: *');
-
-
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
-
 header('Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Origin, Authorization');
-
-
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
@@ -27,7 +22,6 @@ $db = $database->getConnection();
 // Handle OPTIONS request (preflight request for CORS)
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     http_response_code(200);
-    
 }
 
 // Read the input JSON payload
@@ -36,23 +30,24 @@ $data = json_decode(file_get_contents("php://input"));
 // Check if data is valid
 if (!$data) {
     echo json_encode(["message" => "No data received."]);
-    
+    exit();
 }
 
 // Validate required fields
 if (empty($data->user_id) || empty($data->date) || empty($data->time)) {
     echo json_encode(["message" => "Incomplete data. Ensure 'user_id', 'date', and 'time' are provided."]);
-   
+    exit();
 }
 
 // Prepare the query
-$query = "INSERT INTO appointments (user_id, date, time) VALUES (:user_id, :date, :time)";
+$query = "INSERT INTO appointments (user_id, date, time, description) VALUES (:user_id, :date, :time, :description)";
 $stmt = $db->prepare($query);
 
 // Bind the parameters
 $stmt->bindParam(":user_id", $data->user_id);
 $stmt->bindParam(":date", $data->date);
 $stmt->bindParam(":time", $data->time);
+$stmt->bindParam(":description", $data->description); // Bind description parameter
 
 try {
     // Execute the query
