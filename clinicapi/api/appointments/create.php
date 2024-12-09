@@ -8,23 +8,36 @@ include_once '../../config/database.php';
 $database = new Database();
 $db = $database->getConnection();
 
+// Read the input JSON payload
 $data = json_decode(file_get_contents("php://input"));
 
-if (!empty($data->user_id) && !empty($data->date) && !empty($data->time)) {
-    $query = "INSERT INTO appointments (user_id, date, time) VALUES (:user_id, :date, :time)";
+if (!$data) {
+    echo json_encode(["message" => "No data received."]);
+    exit;
+}
 
-    $stmt = $db->prepare($query);
-    $stmt->bindParam(":user_id", $data->user_id);
-    $stmt->bindParam(":date", $data->date);
-    $stmt->bindParam(":time", $data->time);
+// Validate input data
+if (empty($data->user_id) || empty($data->date) || empty($data->time)) {
+    echo json_encode(["message" => "Incomplete data. Ensure 'user_id', 'date', and 'time' are provided."]);
+    exit;
+}
 
+// Prepare the query
+$query = "INSERT INTO appointments (user_id, date, time) VALUES (:user_id, :date, :time)";
+$stmt = $db->prepare($query);
+
+$stmt->bindParam(":user_id", $data->user_id);
+$stmt->bindParam(":date", $data->date);
+$stmt->bindParam(":time", $data->time);
+
+try {
+    // Execute the query
     if ($stmt->execute()) {
         echo json_encode(["message" => "Appointment created successfully."]);
     } else {
-        echo json_encode(["message" => "Failed to create appointment."]);
+        echo json_encode(["message" => "Failed to create appointment due to a database error."]);
     }
-} else {
-    echo json_encode(["message" => "Incomplete data."]);
+} catch (PDOException $e) {
+    echo json_encode(["message" => "Database error: " . $e->getMessage()]);
 }
-
 ?>
