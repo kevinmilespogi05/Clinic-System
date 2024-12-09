@@ -1,1 +1,15 @@
-<p>profile works!</p>
+<div class="profile-container" *ngIf="profileData; else errorTemplate">
+    <h1>Welcome, {{ profileData.name }}</h1>
+    <p><strong>Username:</strong> {{ profileData.username }}</p>
+    <p><strong>Contact Number:</strong> {{ profileData.contact_number }}</p>
+    <p><strong>Date of Birth:</strong> {{ profileData.date_of_birth }}</p>
+    <p><strong>Medical History:</strong> {{ profileData.medical_history || 'N/A' }}</p>
+  </div>
+  
+  <ng-template #errorTemplate>
+    <div class="error-message">
+      <p *ngIf="errorMessage">{{ errorMessage }}</p>
+      <p *ngIf="!errorMessage">Loading...</p>
+    </div>
+  </ng-template>
+  

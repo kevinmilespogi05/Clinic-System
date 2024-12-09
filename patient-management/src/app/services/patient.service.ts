@@ -35,11 +35,13 @@ export class PatientService {
     return this.http.get(`${url}?user_id=${userId}`);
   }
 
-  // Book Appointment
-  bookAppointment(data: { userId: number; date: string; time: string }): Observable<any> {
-    const url = `${this.baseUrl}/api/appointments/create.php`;
-    return this.http.post(url, data);
-  }
+  // PatientService
+
+bookAppointment(data: { userId: number; date: string; time: string }): Observable<any> {
+  const url = `${this.baseUrl}/api/appointments/create.php`; // API endpoint to create the appointment
+  return this.http.post(url, data); // Send the data to the backend
+}
+
 
   // Cancel Appointment
   cancelAppointment(appointmentId: number): Observable<any> {

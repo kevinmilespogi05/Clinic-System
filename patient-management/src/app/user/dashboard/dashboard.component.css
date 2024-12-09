@@ -1,45 +1,36 @@
 .dashboard-container {
-  padding: 20px;
-  background-color: #f9f9f9; /* Add background to make it more visible */
-  border-radius: 8px; /* Rounded corners for a better look */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
-  margin-left: 220px; /* Adjust for sidebar width, ensure the content doesn't overlap */
+    padding: 20px;
+    background-color: #f9f9f9; /* Add background to make it more visible */
+    border-radius: 8px; /* Rounded corners for a better look */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    margin-left: 220px; /* Adjusting margin for positioning */
 }
 
 h1 {
-  color: #333;
-  font-size: 28px;
-  margin-bottom: 10px;
-}
-
-h2 {
-  color: #555;
-  font-size: 22px;
-  margin-bottom: 20px;
+    color: #333;
+    font-size: 36px; /* Enlarged for better visibility */
+    font-weight: bold; /* Bold title */
+    margin-bottom: 20px;
 }
 
 table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-  background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
 table, th, td {
-  border: 1px solid #ccc;
+    border: 1px solid #ccc;
 }
 
 th, td {
-  padding: 10px;
-  text-align: left;
+    padding: 15px;
+    text-align: left;
+    font-size: 18px; /* Larger font for better visibility */
 }
 
 th {
-  background-color: #f4f4f4;
-}
-
-p {
-  color: #888;
-  font-size: 16px;
-  margin-top: 20px;
+    background-color: #f4f4f4;
+    font-weight: bold;
+    font-size: 18px; /* Increase table header font size */
 }

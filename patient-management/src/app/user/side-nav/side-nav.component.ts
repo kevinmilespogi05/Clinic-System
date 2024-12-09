@@ -12,8 +12,9 @@ import { Router } from '@angular/router';
 export class SideNavComponent {
     constructor(private router: Router) {}
   
-    logout(): void {
-      localStorage.clear(); // Clear user session data
+    logout() {
+      localStorage.removeItem('userId');
       this.router.navigate(['/login']);
     }
+    
 }

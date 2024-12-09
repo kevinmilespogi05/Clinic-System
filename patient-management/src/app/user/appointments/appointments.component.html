@@ -1,4 +1,21 @@
 <div class="appointments-container">
+  <!-- Book Appointment Section -->
+  <div class="booking-container">
+    <h2>Book an Appointment</h2>
+    <form (ngSubmit)="bookAppointment()" #appointmentForm="ngForm">
+      <label for="date">Select Date:</label>
+      <input type="date" id="date" name="date" [(ngModel)]="newAppointment.date" required>
+
+      <label for="time">Select Time:</label>
+      <input type="time" id="time" name="time" [(ngModel)]="newAppointment.time" required>
+
+      <button type="submit" [disabled]="appointmentForm.invalid">Book Appointment</button>
+
+    </form>
+  </div>
+
+  <!-- My Appointments Section -->
+  <div class="appointments-list">
     <h1>My Appointments</h1>
     <div *ngIf="appointments && appointments.length > 0; else noAppointments">
       <table>
@@ -21,4 +38,5 @@
     <ng-template #noAppointments>
       <p>No appointments found. Book an appointment now.</p>
     </ng-template>
+  </div>
 </div>
