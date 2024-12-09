@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +35,10 @@ export class PatientService {
   // Get Appointments
   getAppointments(userId: number): Observable<any> {
     const url = `${this.baseUrl}/api/appointments/get_appointments.php`;
-    return this.http.get(`${url}?user_id=${userId}`);
+    
+    return this.http.get<any>(`${url}?user_id=${userId}`).pipe(
+      catchError(this.handleError)
+    );
   }
 
   // PatientService
@@ -61,6 +67,15 @@ bookAppointment(data: { userId: number; date: string; time: string }): Observabl
     const url = `${this.baseUrl}/api/users/update_profile.php`;
     const body = { user_id: userId, ...data };
     return this.http.post(url, body);
+  }
+
+  // Error handler function for HTTP requests
+  private handleError(error: any): Observable<never> {
+    // Log the error to the console for debugging
+    console.error('An error occurred:', error);
+
+    // Return a user-friendly error message or rethrow the error
+    return throwError('Something went wrong while fetching appointments. Please try again later.');
   }
    
 }

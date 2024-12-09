@@ -13,7 +13,7 @@ try {
     $conn = $database->getConnection();
 
     // Check if 'user_id' is provided in the request
-    if (isset($_GET['user_id'])) {
+    if (isset($_GET['user_id']) && !empty($_GET['user_id'])) {
         $user_id = $_GET['user_id'];
 
         // Query to fetch appointments for the user
@@ -25,8 +25,14 @@ try {
         // Fetch all appointments as an associative array
         $appointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Return appointments as a JSON response
-        echo json_encode($appointments);
+        // Check if appointments are found
+        if ($appointments) {
+            // Return appointments as a JSON response
+            echo json_encode(["appointments" => $appointments]);
+        } else {
+            // No appointments found
+            echo json_encode(["appointments" => [], "message" => "No appointments found"]);
+        }
     } else {
         // Return error if user_id is not provided
         echo json_encode(["error" => "User ID is required"]);
