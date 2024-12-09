@@ -1,7 +1,23 @@
 <?php
-header("Access-Control-Allow-Origin: http://localhost:4200"); // Allow requests from your Angular app
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS, DELETE, PUT"); // Allow specific methods
-header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
+header('Access-Control-Allow-Origin: *');
+
+
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
+
+header('Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Origin, Authorization');
+
+
+header('Content-Type: application/json');
+
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+
+    if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+        header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+
+    exit(0);
+}
 
 include_once '../../config/database.php';
 
@@ -11,7 +27,7 @@ $db = $database->getConnection();
 // Handle OPTIONS request (preflight request for CORS)
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     http_response_code(200);
-    exit;
+    
 }
 
 // Read the input JSON payload
@@ -20,13 +36,13 @@ $data = json_decode(file_get_contents("php://input"));
 // Check if data is valid
 if (!$data) {
     echo json_encode(["message" => "No data received."]);
-    exit;
+    
 }
 
 // Validate required fields
 if (empty($data->user_id) || empty($data->date) || empty($data->time)) {
     echo json_encode(["message" => "Incomplete data. Ensure 'user_id', 'date', and 'time' are provided."]);
-    exit;
+   
 }
 
 // Prepare the query

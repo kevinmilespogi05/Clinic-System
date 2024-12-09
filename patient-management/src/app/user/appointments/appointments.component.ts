@@ -41,7 +41,7 @@ export class AppointmentsComponent implements OnInit {
     if (userId && this.newAppointment.date && this.newAppointment.time) {
       const dateTime = `${this.newAppointment.date} ${this.newAppointment.time}`;
       const appointmentData = {
-        userId: Number(userId),
+        user_id: Number(userId),
         date: this.newAppointment.date,
         time: this.newAppointment.time
       };

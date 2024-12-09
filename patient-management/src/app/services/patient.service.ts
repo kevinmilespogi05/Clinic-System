@@ -43,7 +43,7 @@ export class PatientService {
 
   // PatientService
 
-bookAppointment(data: { userId: number; date: string; time: string }): Observable<any> {
+bookAppointment(data: any): Observable<any> {
   const url = `${this.baseUrl}/api/appointments/create.php`; // API endpoint to create the appointment
   return this.http.post(url, data); // Send the data to the backend
 }
