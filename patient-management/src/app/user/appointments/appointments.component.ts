@@ -1,37 +1,61 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Import CommonModule for NgIf and NgFor
-import { PatientService } from '../../services/patient.service'; // Import the service to get data
-import { RouterModule } from '@angular/router'; // Import RouterModule
-
+import { CommonModule } from '@angular/common';
+import { PatientService } from '../../services/patient.service';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';  // <-- Add FormsModule here
 
 @Component({
   selector: 'app-appointments',
   standalone: true,
-  imports: [CommonModule, RouterModule], // Add CommonModule here
+  imports: [CommonModule, RouterModule, FormsModule],  // <-- Include FormsModule in imports
   templateUrl: './appointments.component.html',
   styleUrls: ['./appointments.component.css']
 })
 export class AppointmentsComponent implements OnInit {
-  appointments: any[] = []; // Array to store appointments
+  appointments: any[] = [];
+  newAppointment: any = {};
 
-  constructor(private patientService: PatientService) {} // Inject the PatientService
+  constructor(private patientService: PatientService) {}
 
   ngOnInit(): void {
-    this.fetchAppointments(); // Fetch appointments when the component is initialized
+    this.fetchAppointments();
   }
 
   fetchAppointments(): void {
-    const userId = localStorage.getItem('userId'); // Get userId from localStorage
+    const userId = localStorage.getItem('userId');
     if (userId) {
-      // Use your service to fetch appointments
       this.patientService.getAppointments(Number(userId)).subscribe(
         (data) => {
-          this.appointments = data.appointments || []; // Assign the fetched data to the appointments array
+          this.appointments = data.appointments || [];
         },
         (error) => {
-          console.error('Error fetching appointments:', error); // Handle error
+          console.error('Error fetching appointments:', error);
         }
       );
+    }
+  }
+
+  bookAppointment(): void {
+    const userId = localStorage.getItem('userId');
+    if (userId && this.newAppointment.date && this.newAppointment.time) {
+      const dateTime = `${this.newAppointment.date} ${this.newAppointment.time}`;
+      const appointmentData = {
+        userId: Number(userId),
+        date: this.newAppointment.date,
+        time: this.newAppointment.time
+      };
+
+      this.patientService.bookAppointment(appointmentData).subscribe(
+        (response) => {
+          console.log('Appointment booked successfully:', response);
+          this.fetchAppointments();
+        },
+        (error) => {
+          console.error('Error booking appointment:', error);
+        }
+      );
+    } else {
+      console.error('Please fill in all fields.');
     }
   }
 }

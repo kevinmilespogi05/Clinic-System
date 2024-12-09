@@ -1,14 +1,37 @@
 <nav class="side-nav">
-    <ul>
-      <li><a routerLink="/user/dashboard">Dashboard</a></li>
-      <li><a routerLink="/user/appointments">Appointments</a></li>
-      <li><a routerLink="/user/profile">Profile</a></li>
-      <li><a (click)="logout()">Logout</a></li>
-    </ul>
-  </nav>
-  
-  <!-- This is where the child components will be injected -->
-  <div class="content">
-    <router-outlet></router-outlet> <!-- Child routes will be rendered here -->
+  <div class="logo-container">
+    <img src="assets/clinic 1.png" alt="Clinic Logo" />
+    <h1 class="title">ClinicPoint</h1>
   </div>
-  
+  <ul class="nav-links">
+    <li>
+      <a routerLink="/user/dashboard">
+        <img src="assets/dashboard.png" alt="Dashboard Icon" />
+        Dashboard
+      </a>
+    </li>
+    <li>
+      <a routerLink="/user/appointments">
+        <img src="assets/appointment.png" alt="Appointments Icon" />
+        Appointments
+      </a>
+    </li>
+    <li>
+      <a routerLink="/user/profile">
+        <img src="assets/user.png" alt="Profile Icon" />
+        Profile
+      </a>
+    </li>
+  </ul>
+  <ul class="logout">
+    <li>
+      <a (click)="logout()">
+        <img src="assets/logout.png" alt="Logout Icon" />
+        Logout
+      </a>
+    </li>
+  </ul>
+</nav>
+<div class="content">
+  <router-outlet></router-outlet>
+</div>
