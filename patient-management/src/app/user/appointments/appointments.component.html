@@ -9,9 +9,11 @@
       <label for="time">Select Time:</label>
       <input type="time" id="time" name="time" [(ngModel)]="newAppointment.time" required>
 
-      <button type="submit" [disabled]="appointmentForm.invalid">Book Appointment</button>
+      <!-- Description Field -->
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" [(ngModel)]="newAppointment.description" placeholder="Enter description" rows="4"></textarea>
 
+      <button type="submit" [disabled]="appointmentForm.invalid">Book Appointment</button>
     </form>
   </div>
-
-  
+</div>

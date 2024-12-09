@@ -43,7 +43,8 @@ export class AppointmentsComponent implements OnInit {
       const appointmentData = {
         user_id: Number(userId),
         date: this.newAppointment.date,
-        time: this.newAppointment.time
+        time: this.newAppointment.time,
+        description: this.newAppointment.description
       };
   
       console.log('Booking Appointment with data:', appointmentData); // Add logging to check form data
