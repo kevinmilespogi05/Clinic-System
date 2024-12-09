@@ -7,14 +7,14 @@
           <tr>
             <th>Date</th>
             <th>Time</th>
-            <th>Status</th>
+            <th>Description</th> <!-- Removed Status column -->
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let appointment of appointments">
-            <td>{{ appointment.appointment_date }}</td> <!-- Update the field name here -->
-            <td>{{ appointment.appointment_time }}</td> <!-- Update the field name here -->
-            <td>{{ appointment.status }}</td>
+            <td>{{ appointment.date }}</td>
+            <td>{{ appointment.time }}</td>
+            <td>{{ appointment.description || 'No description provided' }}</td>
           </tr>
         </tbody>
       </table>
