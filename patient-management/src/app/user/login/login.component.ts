@@ -22,7 +22,7 @@ export class LoginComponent {
       (response: any) => {
         alert('Login successful!');
         localStorage.setItem('userId', response.user.id); // Save user ID in localStorage
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['user/dashboard']);
       },
       (error: any) => {
         alert('Login failed! Please check your credentials.');
