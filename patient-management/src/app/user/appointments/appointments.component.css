@@ -1,79 +1,138 @@
+/* Main container for appointments */
 .appointments-container {
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  background-color: #f4f6f9; /* Soft light background for contrast */
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   margin-left: 220px;
+  font-family: 'Roboto', sans-serif; /* Modern, clean font */
 }
 
+/* Booking form container */
 .booking-container {
-  background-color: #fff;
-  padding: 20px;
-  margin-bottom: 20px;  /* Space between book appointment form and the appointments list */
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  padding: 25px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Heading for booking form */
 .booking-container h2 {
-  color: #333;
+  color: #2c3e50;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
+/* Form styling */
 .booking-container form {
   display: flex;
   flex-direction: column;
 }
 
+/* Label styling */
 .booking-container label {
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+  color: #34495e;
+  font-size: 1.1rem;
 }
 
+/* Input fields */
 .booking-container input {
-  margin-bottom: 15px;
-  padding: 8px;
+  margin-bottom: 20px;
+  padding: 12px;
   font-size: 1rem;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid #ccc;
+  transition: all 0.3s ease;
 }
 
+.booking-container input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+/* Submit button */
 .booking-container button {
-  padding: 10px 15px;
-  background-color: #4CAF50;
+  padding: 12px 20px;
+  background-color: #3498db;
   color: white;
+  font-size: 1rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.booking-container button:hover {
+  background-color: #2980b9;
 }
 
 .booking-container button:disabled {
-  background-color: #ccc;
+  background-color: #bdc3c7;
+  cursor: not-allowed;
 }
 
+/* Appointments list container */
 .appointments-list {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Heading for appointments list */
 .appointments-list h1 {
-  color: #333;
+  color: #2c3e50;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
+/* Table styling */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
+/* Table cell styling */
 table, th, td {
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
 }
 
 th, td {
-  padding: 10px;
+  padding: 12px;
   text-align: left;
+  font-size: 1rem;
 }
 
 th {
-  background-color: #f4f4f4;
+  background-color: #f7f7f7;
+  color: #34495e;
+}
+
+/* Row hover effect */
+tr:hover {
+  background-color: #f0f0f0;
+}
+
+@media (max-width: 600px) {
+  .appointments-container {
+    padding: 15px;
+    margin-left: 10px;
+  }
+
+  .booking-container {
+    padding: 15px;
+  }
+
+  .appointments-list {
+    padding: 20px;
+  }
+
+  .booking-container button {
+    width: 100%;
+  }
 }

@@ -1,51 +1,143 @@
+/* Profile Container */
 .profile-container {
-    padding: 20px;
-    background-color: #f9f9f9; /* Add background to make it more visible */
-    border-radius: 8px; /* Rounded corners for a better look */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
-    margin-left: 220px; /* Adjusting margin for positioning */
+    padding: 25px;
+    background-color: #fff; /* Clean white background */
+    border-radius: 15px; /* Rounded corners for a smoother look */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Stronger shadow for depth */
+    margin: 40px auto; /* Centered with space around */
+    max-width: 900px; /* Restricting the width for better readability */
+    font-family: 'Poppins', sans-serif; /* Modern font */
+    transition: transform 0.3s ease-in-out;
 }
 
+.profile-container:hover {
+    transform: scale(1.02); /* Subtle zoom effect on hover */
+}
+
+/* Profile Header */
 h1 {
-    color: #333;
-    font-size: 2rem;
+    color: #2c3e50; /* Darker shade for the header */
+    font-size: 2.6rem;
     margin-bottom: 20px;
+    text-align: center;
+    font-weight: 600;
+    text-transform: capitalize;
 }
 
-.profile-details {
-    margin-bottom: 20px;
+.profile-details p {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    line-height: 1.6;
+    color: #34495e;
 }
 
+/* Strong text for labels */
+strong {
+    color: #16a085; /* Green color for labels */
+}
+
+/* Edit Button Styling */
 button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
+    padding: 14px 28px;
+    background-color: #3498db; /* Blue background */
     color: white;
     border: none;
     cursor: pointer;
-    font-size: 1rem;
-    border-radius: 5px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: block;
+    margin: 30px auto 0;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #2980b9; /* Darker blue on hover */
+    transform: translateY(-2px); /* Slight lift effect */
 }
 
-/* Table Styling for displaying data, if necessary */
-table {
+button:active {
+    transform: translateY(0); /* Button presses back on click */
+}
+
+/* Edit Profile Form Styles */
+.profile-container .is-editing {
+    background-color: #ecf0f1; /* Light grey background for the form */
+    padding: 30px;
+    border-radius: 10px;
+    margin-top: 30px;
+    border: 1px solid #ddd;
+}
+
+.profile-container .is-editing h2 {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.profile-container .is-editing form {
+    display: grid;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+/* Input fields inside the form */
+input[type="text"], input[type="date"] {
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
     width: 100%;
-    border-collapse: collapse;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus, input[type="date"]:focus {
+    border-color: #3498db; /* Blue highlight on focus */
+    outline: none;
+}
+
+/* Error message container */
+.error-message {
+    text-align: center;
+    padding: 20px;
+    background-color: #f8d7da; /* Light red background for error */
+    color: #721c24; /* Dark red text color */
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
     margin-top: 20px;
 }
 
-table, th, td {
-    border: 1px solid #ccc;
+.error-message p {
+    margin: 0;
+    font-size: 1.3rem;
 }
 
-th, td {
-    padding: 10px;
-    text-align: left;
+.error-message p:last-child {
+    font-size: 1.1rem;
+    color: #6c757d; /* Light grey color for the loading message */
 }
 
-th {
-    background-color: #f4f4f4;
+/* Responsiveness for smaller screens */
+@media (max-width: 600px) {
+    .profile-container {
+        padding: 20px;
+        margin: 15px;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    .profile-details p {
+        font-size: 1rem;
+    }
+
+    button {
+        width: 100%; /* Full width button for mobile */
+    }
+
+    .profile-container .is-editing form {
+        padding: 0 15px;
+    }
 }

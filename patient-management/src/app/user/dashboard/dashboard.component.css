@@ -1,18 +1,32 @@
+/* Dashboard container styling */
 .dashboard-container {
-    padding: 20px;
-    background-color: #f9f9f9; /* Add background to make it more visible */
-    border-radius: 8px; /* Rounded corners for a better look */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    padding: 30px;
+    background-color: #fff; /* Clean white background for contrast */
+    border-radius: 12px; /* Rounded corners for a sleek look */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Softer shadow for depth */
     margin-left: 220px; /* Adjusting margin for positioning */
+    max-width: 1000px; /* Restricting width for a clean layout */
+    margin: 40px auto; /* Centered with space around */
+    font-family: 'Arial', sans-serif; /* Modern, clean font */
 }
 
+/* Dashboard heading */
 h1 {
-    color: #333;
-    font-size: 36px; /* Enlarged for better visibility */
-    font-weight: bold; /* Bold title */
+    color: #2c3e50; /* Dark shade for header */
+    font-size: 2.5rem; /* Enlarged title for visibility */
+    font-weight: bold;
     margin-bottom: 20px;
+    text-align: center;
 }
 
+/* Appointments section container */
+.appointments-section {
+    background-color: #f9f9f9; /* Light background for the section */
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* Table styling */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -24,13 +38,49 @@ table, th, td {
 }
 
 th, td {
-    padding: 15px;
+    padding: 12px 20px;
     text-align: left;
-    font-size: 18px; /* Larger font for better visibility */
+    font-size: 1.2rem; /* Slightly larger font for clarity */
 }
 
+/* Table headers */
 th {
-    background-color: #f4f4f4;
+    background-color: #ecf0f1; /* Soft grey background for headers */
+    color: #34495e; /* Darker text color for contrast */
     font-weight: bold;
-    font-size: 18px; /* Increase table header font size */
+}
+
+/* Table row styling */
+tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1; /* Light hover effect for rows */
+}
+
+/* No appointments message */
+ng-template#noAppointments p {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #7f8c8d; /* Subtle grey for no appointments message */
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+/* Responsiveness for mobile screens */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 20px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    h1 {
+        font-size: 2rem; /* Adjust title size for smaller screens */
+    }
+
+    table, th, td {
+        font-size: 1rem; /* Slightly smaller font for tables */
+    }
 }
