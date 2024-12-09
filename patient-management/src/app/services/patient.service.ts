@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PatientService {
-  private baseUrl = 'http://localhost/clinicapi'; // Base API URL
+  private baseUrl = 'http://localhost/Clinic-System/clinicapi'; // Base API URL
 
   constructor(private http: HttpClient) {}
 
