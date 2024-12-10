@@ -66,6 +66,18 @@
                 aria-label="Date of Birth">
         </div>
 
+        <!-- Medical History Field -->
+        <div class="form-group">
+            <label for="medical_history">Medical History:</label>
+            <textarea 
+                id="medical_history" 
+                [(ngModel)]="medicalHistory" 
+                name="medical_history" 
+                required 
+                placeholder="Enter your medical history" 
+                aria-label="Medical History"></textarea>
+        </div>
+
         <!-- Register Button -->
         <div class="form-group">
             <button type="submit" aria-label="Register">Register</button>

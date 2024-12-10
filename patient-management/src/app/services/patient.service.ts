@@ -16,15 +16,17 @@ export class PatientService {
     return this.http.post<any>(`${this.baseUrl}/api/auth/login.php`, { username, password });
   }
 
-  register(username: string, password: string, name: string, contact_number: string, date_of_birth: string): Observable<any> {
+  register(username: string, password: string, name: string, contact_number: string, date_of_birth: string, medicalHistory: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/api/users/register.php`, {
       username,
       password,
       name,
       contact_number,
-      date_of_birth
+      date_of_birth,
+      medicalHistory  // Include medical history in the request
     });
-  }
+}
+
 
   // Get Dashboard Data
   getDashboardData(userId: number): Observable<any> {
@@ -72,16 +74,18 @@ export class PatientService {
       return this.http.get<any>(`${url}?id=${userId}`);
     }
   
-    // Update Profile
-    updateProfile(userId: number, updatedData: any): Observable<any> {
-      const url = `${this.baseUrl}/api/users/update_profile.php`;
-      return this.http.post<any>(url, {
-        user_id: userId,
-        name: updatedData.name,
-        contact_number: updatedData.contact_number,
-        date_of_birth: updatedData.date_of_birth
-      });
-    }
+   // Update Profile
+updateProfile(userId: number, updatedData: any): Observable<any> {
+  const url = `${this.baseUrl}/api/users/update_profile.php`;
+  return this.http.post<any>(url, {
+    user_id: userId,
+    name: updatedData.name,
+    contact_number: updatedData.contact_number,
+    date_of_birth: updatedData.date_of_birth,
+    medical_history: updatedData.medical_history // Add medical history
+  });
+}
+
 
   // Error handler function for HTTP requests
   private handleError(error: any): Observable<never> {

@@ -21,8 +21,12 @@
       <label for="date_of_birth">Date of Birth:</label>
       <input type="date" id="date_of_birth" [(ngModel)]="updatedProfileData.date_of_birth" name="date_of_birth" required>
 
+      <!-- Medical History -->
+      <label for="medical_history">Medical History:</label>
+      <textarea id="medical_history" [(ngModel)]="updatedProfileData.medical_history" name="medical_history"></textarea>
+
       <button type="submit">Save Changes</button>
-      <button type="button" (click)="toggleEdit()">Cancel</button>
+      <button type="button" class="cancel" (click)="toggleEdit()">Cancel</button>
     </form>
   </div>
 </div>

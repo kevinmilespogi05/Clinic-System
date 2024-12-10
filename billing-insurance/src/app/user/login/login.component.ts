@@ -36,7 +36,7 @@ export class LoginComponent {
           }).then(() => {
             // Redirect to the billing page for users, or an admin page for admin roles
             if (response.role === 'admin') {
-              this.router.navigate(['admin/admin-insurance']); // Admin dashboard
+              this.router.navigate(['admin/invoice']); // Admin dashboard
             } else {
               this.router.navigate(['user/billing']); // Redirect to billing page for users
             }

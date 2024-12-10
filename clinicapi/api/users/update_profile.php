@@ -22,13 +22,15 @@ if (!empty($data->user_id) && !empty($data->name) && !empty($data->contact_numbe
     $query = "UPDATE users SET 
         name = :name, 
         contact_number = :contact_number, 
-        date_of_birth = :date_of_birth 
+        date_of_birth = :date_of_birth,
+        medical_history = :medical_history 
         WHERE id = :user_id";
 
     $stmt = $db->prepare($query);
     $stmt->bindParam(":name", $data->name);
     $stmt->bindParam(":contact_number", $data->contact_number);
     $stmt->bindParam(":date_of_birth", $data->date_of_birth);
+    $stmt->bindParam(":medical_history", $data->medical_history); // Bind medical history
     $stmt->bindParam(":user_id", $data->user_id);
 
     if ($stmt->execute()) {

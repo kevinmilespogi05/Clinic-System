@@ -18,7 +18,7 @@ export class RegisterComponent {
   password: string = '';
   contact_number: string = '';
   date_of_birth: string = '';
-  medicalHistory: string = '';
+  medicalHistory: string = '';  // Added field for medical history
 
   constructor(private patientService: PatientService, private router: Router) {}
 
@@ -42,7 +42,7 @@ export class RegisterComponent {
           name: this.name,
           contact_number: this.contact_number,
           date_of_birth: this.date_of_birth,
-          medicalHistory: this.medicalHistory
+          medicalHistory: this.medicalHistory // Include medical history
         };
 
         this.patientService.register(
@@ -50,7 +50,8 @@ export class RegisterComponent {
           this.password,
           this.name,
           this.contact_number,
-          this.date_of_birth
+          this.date_of_birth,
+          this.medicalHistory  // Pass medical history to the service
         ).subscribe(
           (response: any) => {
             Swal.fire({
