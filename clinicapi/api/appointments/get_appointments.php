@@ -1,7 +1,7 @@
 <?php
 // Allow cross-origin requests (CORS)
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS, DELETE, PUT");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 // Include database configuration
@@ -9,33 +9,35 @@ include_once '../../config/database.php';
 
 try {
     // Create a database connection
-    $database = new Database(); // Assuming `Database` is the class in `database.php`
+    $database = new Database();
     $conn = $database->getConnection();
 
-    // Check if 'user_id' is provided in the request
-    if (isset($_GET['user_id']) && !empty($_GET['user_id'])) {
-        $user_id = $_GET['user_id'];
+    // Check if user_id is provided
+    $user_id = isset($_GET['user_id']) ? $_GET['user_id'] : null;
 
-        // Query to fetch appointments for the user
-        $query = "SELECT * FROM appointments WHERE user_id = :user_id";
+    // If user_id is provided, fetch appointments for that user, otherwise fetch all appointments
+    if ($user_id) {
+        $query = "SELECT * FROM appointments WHERE user_id = :user_id ORDER BY date DESC, time DESC";
         $stmt = $conn->prepare($query);
-        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-        $stmt->execute();
-
-        // Fetch all appointments as an associative array
-        $appointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // Check if appointments are found
-        if ($appointments) {
-            // Return appointments as a JSON response
-            echo json_encode(["appointments" => $appointments]);
-        } else {
-            // No appointments found
-            echo json_encode(["appointments" => [], "message" => "No appointments found"]);
-        }
+        $stmt->bindParam(':user_id', $user_id);
     } else {
-        // Return error if user_id is not provided
-        echo json_encode(["error" => "User ID is required"]);
+        // If no user_id is provided, fetch all appointments
+        $query = "SELECT * FROM appointments ORDER BY date DESC, time DESC";
+        $stmt = $conn->prepare($query);
+    }
+
+    $stmt->execute();
+
+    // Fetch all appointments as an associative array
+    $appointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Check if appointments are found
+    if ($appointments) {
+        // Return appointments as a JSON response
+        echo json_encode(["appointments" => $appointments]);
+    } else {
+        // No appointments found
+        echo json_encode(["appointments" => [], "message" => "No appointments found"]);
     }
 } catch (Exception $e) {
     // Handle connection or query errors
