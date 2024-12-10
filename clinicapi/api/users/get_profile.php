@@ -12,8 +12,8 @@ $database = new Database();
 $pdo = $database->getConnection();
 
 // Check if the 'user_id' parameter is provided in the request
-if (isset($_GET['user_id'])) {
-    $userId = $_GET['user_id'];
+if (isset($_GET['id'])) { // Use 'id' instead of 'user_id' for consistency with Angular query params
+    $userId = $_GET['id'];
 
     try {
         // Prepare the SQL query to fetch the user's profile

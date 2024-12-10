@@ -1,9 +1,8 @@
 <?php
-
 include_once '../../config/database.php';
 
 // Allow cross-origin requests from your Angular app
-header("Access-Control-Allow-Origin: http://localhost:4200"); // Replace with your frontend URL if different
+header("Access-Control-Allow-Origin: http://localhost:4200"); // Adjust this if your Angular URL is different
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
@@ -18,6 +17,7 @@ $db = $database->getConnection();
 
 $data = json_decode(file_get_contents("php://input"));
 
+// Check if necessary data is provided
 if (!empty($data->user_id) && !empty($data->name) && !empty($data->contact_number) && !empty($data->date_of_birth)) {
     $query = "UPDATE users SET 
         name = :name, 

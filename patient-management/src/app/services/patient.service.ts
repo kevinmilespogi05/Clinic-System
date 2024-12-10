@@ -66,18 +66,22 @@ export class PatientService {
     return this.http.post(url, body);
   }
 
-  // Get Profile Data
-  getProfile(userId: number): Observable<any> {
-    const url = `${this.baseUrl}/api/users/get_profile.php`;
-    return this.http.get(`${url}?id=${userId}`);
-  }
-
-  // Update Profile
-  updateProfile(userId: number, data: { name: string; contact_number: string; date_of_birth: string }): Observable<any> {
-    const url = `${this.baseUrl}/api/users/update_profile.php`;
-    const body = { id: userId, ...data };
-    return this.http.post(url, body);
-  }
+    // Get Profile Data
+    getProfile(userId: number): Observable<any> {
+      const url = `${this.baseUrl}/api/users/get_profile.php`;
+      return this.http.get<any>(`${url}?id=${userId}`);
+    }
+  
+    // Update Profile
+    updateProfile(userId: number, updatedData: any): Observable<any> {
+      const url = `${this.baseUrl}/api/users/update_profile.php`;
+      return this.http.post<any>(url, {
+        user_id: userId,
+        name: updatedData.name,
+        contact_number: updatedData.contact_number,
+        date_of_birth: updatedData.date_of_birth
+      });
+    }
 
   // Error handler function for HTTP requests
   private handleError(error: any): Observable<never> {

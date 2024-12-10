@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  userId: number | null = null; // Set this based on your authentication logic
+  userId: number | null = null;
   profileData: any = null;
   errorMessage: string | null = null;
   isEditing: boolean = false;
@@ -21,8 +21,7 @@ export class ProfileComponent implements OnInit {
   constructor(private patientService: PatientService, private router: Router) {}
 
   ngOnInit(): void {
-    // Replace this with actual user authentication logic
-    this.userId = Number(localStorage.getItem('userId')); // Get userId from localStorage or session
+    this.userId = Number(localStorage.getItem('userId'));
     if (this.userId) {
       this.fetchProfileData(this.userId);
     } else {
@@ -35,7 +34,7 @@ export class ProfileComponent implements OnInit {
     this.patientService.getProfile(userId).subscribe({
       next: (response) => {
         if (response.success) {
-          this.profileData = response.data; // Adjust according to API response structure
+          this.profileData = response.data;
           this.updatedProfileData = { ...this.profileData }; // Initialize data for editing
         } else {
           this.errorMessage = response.message || 'Profile data not found.';
@@ -53,7 +52,7 @@ export class ProfileComponent implements OnInit {
   }
 
   updateProfile(): void {
-    console.log('Updating profile with data:', this.updatedProfileData); // Debug line
+    console.log('Updating profile with data:', this.updatedProfileData);
     if (this.userId !== null) {
       this.patientService.updateProfile(this.userId, this.updatedProfileData).subscribe({
         next: (response) => {
@@ -73,5 +72,4 @@ export class ProfileComponent implements OnInit {
       this.errorMessage = 'User ID is invalid.';
     }
   }
-  
 }
