@@ -1,25 +1,8 @@
-<div class="insurance">
-  <h2>Submit Insurance Claim</h2>
-
-  <form (ngSubmit)="addClaim()">
-    <label for="policyNumber">Policy Number:</label>
-    <input
-      type="text"
-      id="policyNumber"
-      [(ngModel)]="newClaim.policyNumber"
-      name="policyNumber"
-      required
-    />
-
-    <label for="amount">Amount:</label>
-    <input
-      type="number"
-      id="amount"
-      [(ngModel)]="newClaim.amount"
-      name="amount"
-      required
-    />
-
-    <button type="submit">Submit Claim</button>
-  </form>
+<div class="insurance-container">
+  <h2>Insurance</h2>
+  <div *ngFor="let claim of claims">
+    <p>Claim ID: {{ claim.id }}</p>
+    <p>Patient ID: {{ claim.patient_id }}</p>
+    <p>Status: {{ claim.status }}</p>
+  </div>
 </div>

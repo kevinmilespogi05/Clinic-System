@@ -1,27 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { InsuranceService } from '../../services/insurance.service';
 
 @Component({
   selector: 'app-insurance',
+  standalone: true,
+  imports: [CommonModule, HttpClientModule],
   templateUrl: './insurance.component.html',
   styleUrls: ['./insurance.component.css'],
-  standalone: true,
-  imports: [FormsModule],
+  providers: [InsuranceService],
 })
 export class InsuranceComponent implements OnInit {
-  newClaim = { policyNumber: '', amount: 0 };
+  claims: any[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private insuranceService: InsuranceService) {}
 
-  ngOnInit(): void {}
-
-  // Add an insurance claim
-  addClaim() {
-    this.http
-      .post('http://localhost/clinicapi/insurance.php', this.newClaim)
-      .subscribe(() => {
-        alert('Claim submitted successfully');
-      });
+  ngOnInit(): void {
+    this.insuranceService.getClaims().subscribe((data: any[]) => {
+      this.claims = data;
+    });
   }
 }

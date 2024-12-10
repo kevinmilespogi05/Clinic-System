@@ -1,15 +1,3 @@
-.billing {
+.billing-container {
   padding: 20px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-input,
-select {
-  padding: 8px;
-  margin-bottom: 10px;
 }
