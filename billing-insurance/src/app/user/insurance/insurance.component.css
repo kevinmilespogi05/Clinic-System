@@ -1,0 +1,14 @@
+.insurance {
+  padding: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input {
+  padding: 8px;
+  margin-bottom: 10px;
+}

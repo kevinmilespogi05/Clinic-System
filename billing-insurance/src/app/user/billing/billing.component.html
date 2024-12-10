@@ -1,1 +1,33 @@
-<p>billing works!</p>
+<div class="billing">
+  <h2>Create Invoice</h2>
+
+  <form (ngSubmit)="createInvoice()">
+    <label for="patient">Patient:</label>
+    <select id="patient" [(ngModel)]="newInvoice.patientId" name="patientId">
+      <option *ngFor="let patient of patients" [value]="patient.id">
+        {{ patient.name }}
+      </option>
+    </select>
+
+    <label for="appointment">Appointment:</label>
+    <select
+      id="appointment"
+      [(ngModel)]="newInvoice.appointmentId"
+      name="appointmentId"
+    >
+      <option *ngFor="let appointment of appointments" [value]="appointment.id">
+        {{ appointment.date }}
+      </option>
+    </select>
+
+    <label for="amount">Amount:</label>
+    <input
+      type="number"
+      [(ngModel)]="newInvoice.amount"
+      name="amount"
+      required
+    />
+
+    <button type="submit">Create Invoice</button>
+  </form>
+</div>
