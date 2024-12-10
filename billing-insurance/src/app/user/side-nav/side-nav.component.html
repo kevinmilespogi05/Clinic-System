@@ -1,36 +1,34 @@
 <nav class="side-nav">
-    <div class="logo-container">
-      <img src="assets/clinic 1.png" alt="Clinic Logo" />
-      <h1 class="title">ClinicPoint</h1>
-    </div>
-  
-    <div class="horizontal-line"></div>
-  
-    <ul class="nav-links">
-      <li>
-        <a routerLink="/user/billing" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <img src="assets/dashboard.png" alt="Dashboard Icon" />
-          Billing
-        </a>
-      </li>
-      <li>
-        <a routerLink="/user/insurance" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <img src="assets/appointment.png" alt="Appointments Icon" />
-          Insurance
-        </a>
-      </li>
-     
-    </ul>
-    <ul class="logout">
-      <li>
-        <a (click)="logout()">
-          <img src="assets/logout.png" alt="Logout Icon" />
-          Logout
-        </a>
-      </li>
-    </ul>
-  </nav>
-  <div class="content">
-    <router-outlet></router-outlet>
+  <div class="logo-container">
+    <img src="assets/logo.png" alt="Billing Logo" />
+    
   </div>
-  
+
+  <div class="horizontal-line"></div>
+
+  <ul class="nav-links">
+    <li>
+      <a routerLink="/user/billing" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <img src="assets/Billing.png" alt="Billing Icon" />
+        Billing
+      </a>
+    </li>
+    <li>
+      <a routerLink="/user/insurance" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <img src="assets/Insurance.png" alt="Insurance Icon" />
+        Insurance
+      </a>
+    </li>
+  </ul>
+  <ul class="logout">
+    <li>
+      <a (click)="logout()">
+        <img src="assets/logout.png" alt="Logout Icon" />
+        Logout
+      </a>
+    </li>
+  </ul>
+</nav>
+<div class="content">
+  <router-outlet></router-outlet>
+</div>
