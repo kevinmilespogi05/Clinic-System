@@ -109,4 +109,42 @@ export class AppointmentsComponent implements OnInit {
       });
     }
   }
+
+  // Cancel Appointment
+  cancelAppointment(appointmentId: number): void {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to cancel this appointment?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, cancel it!',
+      cancelButtonText: 'No, keep it',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.patientService.cancelAppointment(appointmentId).subscribe(
+          (response) => {
+            console.log('Appointment canceled:', response);
+            Swal.fire({
+              title: 'Cancelled',
+              text: 'Your appointment has been cancelled.',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            }).then(() => {
+              this.fetchAppointments();  // Refresh the appointment list
+            });
+          },
+          (error) => {
+            console.error('Error canceling appointment:', error);
+            Swal.fire({
+              title: 'Error!',
+              text: 'There was an error canceling your appointment. Please try again later.',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          }
+        );
+      }
+    });
+  }
 }
