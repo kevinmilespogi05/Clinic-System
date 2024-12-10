@@ -1,9 +1,9 @@
 /* Profile Container */
 .profile-container {
     padding: 25px;
-    background-color: #fff; /* Clean white background */
+    background: linear-gradient(135deg, #f2f2f2, #ffffff); /* Subtle gradient background */
     border-radius: 15px; /* Rounded corners for a smoother look */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Stronger shadow for depth */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Stronger shadow for depth */
     margin: 40px auto; /* Centered with space around */
     max-width: 900px; /* Restricting the width for better readability */
     font-family: 'Poppins', sans-serif; /* Modern font */
@@ -16,43 +16,46 @@
 
 /* Profile Header */
 h1 {
-    color: #2c3e50; /* Darker shade for the header */
-    font-size: 2.6rem;
+    color: #34495e; /* Darker, more vibrant header color */
+    font-size: 3rem; /* Larger font size for prominence */
     margin-bottom: 20px;
     text-align: center;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: capitalize;
+    letter-spacing: 1px; /* Slight letter spacing for a modern feel */
 }
 
+/* Profile Details Styling */
 .profile-details p {
     font-size: 1.1rem;
     margin-bottom: 12px;
-    line-height: 1.6;
+    line-height: 1.7;
     color: #34495e;
 }
 
 /* Strong text for labels */
 strong {
-    color: #16a085; /* Green color for labels */
+    color: #1abc9c; /* Vibrant green for labels */
 }
 
 /* Edit Button Styling */
 button {
     padding: 14px 28px;
-    background-color: #3498db; /* Blue background */
+    background-color: #2980b9; /* Fresh blue color */
     color: white;
     border: none;
     cursor: pointer;
     font-size: 1.1rem;
     border-radius: 8px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     display: block;
     margin: 30px auto 0;
 }
 
 button:hover {
-    background-color: #2980b9; /* Darker blue on hover */
+    background-color: #3498db; /* Lighter blue on hover */
     transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Add a shadow on hover for depth */
 }
 
 button:active {
@@ -73,6 +76,7 @@ button:active {
     color: #2c3e50;
     margin-bottom: 20px;
     text-align: center;
+    font-weight: 600;
 }
 
 .profile-container .is-editing form {
@@ -89,12 +93,13 @@ input[type="text"], input[type="date"] {
     border-radius: 6px;
     width: 100%;
     box-sizing: border-box;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 input[type="text"]:focus, input[type="date"]:focus {
     border-color: #3498db; /* Blue highlight on focus */
     outline: none;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.6); /* Subtle glow effect */
 }
 
 /* Error message container */
@@ -126,7 +131,7 @@ input[type="text"]:focus, input[type="date"]:focus {
     }
 
     h1 {
-        font-size: 2.2rem;
+        font-size: 2.4rem; /* Smaller heading on mobile */
     }
 
     .profile-details p {

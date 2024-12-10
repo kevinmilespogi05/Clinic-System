@@ -2,27 +2,33 @@
 .appointments-container {
   padding: 30px;
   background-color: #f4f6f9; /* Soft light background for contrast */
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 12px; /* Slightly larger border radius */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Deeper shadow for more contrast */
   margin-left: 220px;
   font-family: 'Roboto', sans-serif; /* Modern, clean font */
+  transition: transform 0.3s ease-in-out;
+}
+
+.appointments-container:hover {
+  transform: scale(1.02); /* Subtle zoom effect on hover */
 }
 
 /* Booking form container */
 .booking-container {
-  background-color: #ffffff;
+  background: linear-gradient(145deg, #ffffff, #f1f1f1); /* Subtle gradient for depth */
   padding: 25px;
   margin-bottom: 30px;
   border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* Heading for booking form */
 .booking-container h2 {
   color: #2c3e50;
-  font-size: 1.8rem;
+  font-size: 1.9rem; /* Slightly larger text */
   margin-bottom: 20px;
   text-align: center;
+  font-weight: bold;
 }
 
 /* Form styling */
@@ -36,10 +42,12 @@
   margin-bottom: 8px;
   color: #34495e;
   font-size: 1.1rem;
+  font-weight: 500;
 }
 
 /* Input fields */
-.booking-container input {
+.booking-container input,
+.booking-container textarea {
   margin-bottom: 20px;
   padding: 12px;
   font-size: 1rem;
@@ -48,7 +56,8 @@
   transition: all 0.3s ease;
 }
 
-.booking-container input:focus {
+.booking-container input:focus,
+.booking-container textarea:focus {
   border-color: #3498db;
   box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
 }
@@ -58,15 +67,16 @@
   padding: 12px 20px;
   background-color: #3498db;
   color: white;
-  font-size: 1rem;
+  font-size: 1.1rem; /* Slightly larger button text */
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .booking-container button:hover {
   background-color: #2980b9;
+  transform: translateY(-2px); /* Button lift on hover */
 }
 
 .booking-container button:disabled {
@@ -79,13 +89,13 @@
   background-color: #ffffff;
   padding: 30px;
   border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 /* Heading for appointments list */
 .appointments-list h1 {
   color: #2c3e50;
-  font-size: 2rem;
+  font-size: 2.2rem;
   margin-bottom: 20px;
   text-align: center;
 }
@@ -111,13 +121,17 @@ th, td {
 th {
   background-color: #f7f7f7;
   color: #34495e;
+  font-weight: bold;
 }
 
 /* Row hover effect */
 tr:hover {
   background-color: #f0f0f0;
+  transform: scale(1.01); /* Slight scaling on hover */
+  transition: transform 0.3s ease-in-out;
 }
 
+/* Responsiveness for smaller screens */
 @media (max-width: 600px) {
   .appointments-container {
     padding: 15px;
@@ -133,6 +147,6 @@ tr:hover {
   }
 
   .booking-container button {
-    width: 100%;
+    width: 100%; /* Full width button for mobile */
   }
 }
