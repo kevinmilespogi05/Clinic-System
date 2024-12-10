@@ -5,11 +5,11 @@ import { ProfileComponent } from './user/profile/profile.component';
 import { DashboardComponent as UserDashboardComponent } from './user/dashboard/dashboard.component';
 import { AppointmentsComponent as UserAppointmentsComponent } from './user/appointments/appointments.component';
 import { RegisterComponent } from './user/register/register.component';
-import { DashboardComponent as AdminDashboardComponent } from './admin/dashboard/dashboard.component';
 import { AppointmentsComponent as AdminAppointmentsComponent } from './admin/appointments/appointments.component';
 import { PatientComponent } from './admin/patient/patient.component';
 import { SideNavComponent as UserSideNavComponent } from './user/side-nav/side-nav.component';
 import { SideNavComponent as AdminSideNavComponent } from './admin/side-nav/side-nav.component';
+import { AnalyticsComponent } from './admin/analytics/analytics.component';
 
 // Define a layout component for users
 export const routes: Routes = [
@@ -36,8 +36,8 @@ export const routes: Routes = [
     path: 'admin',
     component: AdminSideNavComponent, // Wrap routes with the admin side nav
     children: [
-      { path: 'dashboard', component: AdminDashboardComponent, title: 'Admin Dashboard' },
       { path: 'appointments', component: AdminAppointmentsComponent, title: 'Admin Appointments' },
+      {path:  'analytics', component: AnalyticsComponent, title: 'Admin Analytics'},
       { path: 'patient', component: PatientComponent, title: 'Admin Patient Management' }
     ]
   }
