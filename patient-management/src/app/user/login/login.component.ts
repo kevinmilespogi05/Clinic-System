@@ -19,22 +19,43 @@ export class LoginComponent {
   constructor(private patientService: PatientService, private router: Router) {}
 
   login() {
+    // Call the login method from the PatientService
     this.patientService.login(this.username, this.password).subscribe(
       (response: any) => {
-        Swal.fire({
-          title: 'Login Successful!',
-          text: 'Welcome back!',
-          icon: 'success',
-          confirmButtonText: 'Proceed'
-        }).then(() => {
-          localStorage.setItem('userId', response.user.id); // Save user ID in localStorage
-          this.router.navigate(['user/dashboard']); // Redirect to dashboard
-        });
+        if (response.message === 'Login successful.') {
+          // Store the user ID and role in localStorage
+          localStorage.setItem('userId', response.user_id);
+          localStorage.setItem('role', response.role);
+
+          // Display success message
+          Swal.fire({
+            title: 'Login Successful!',
+            text: 'Welcome back!',
+            icon: 'success',
+            confirmButtonText: 'Proceed'
+          }).then(() => {
+            // Redirect based on the user role
+            if (response.role === 'admin') {
+              this.router.navigate(['admin/appointments']); // Admin dashboard
+            } else {
+              this.router.navigate(['user/dashboard']); // User dashboard
+            }
+          });
+        } else {
+          // If login failed, show error message
+          Swal.fire({
+            title: 'Login Failed',
+            text: response.message, // Display the message from the backend
+            icon: 'error',
+            confirmButtonText: 'Retry'
+          });
+        }
       },
       (error: any) => {
+        // Handle errors (network issues, etc.)
         Swal.fire({
-          title: 'Login Failed',
-          text: 'Invalid username or password. Please try again.',
+          title: 'Error',
+          text: 'Something went wrong. Please try again later.',
           icon: 'error',
           confirmButtonText: 'Retry'
         });
@@ -44,6 +65,6 @@ export class LoginComponent {
 
   // Method to navigate to the Register component
   navigateToRegister() {
-    this.router.navigate(['/register']); // Navigate to the register page
+    this.router.navigate(['/register']);
   }
 }

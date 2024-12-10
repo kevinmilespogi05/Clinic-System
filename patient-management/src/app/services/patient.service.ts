@@ -13,7 +13,7 @@ export class PatientService {
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/api/users/login.php`, { username, password });
+    return this.http.post<any>(`${this.baseUrl}/api/auth/login.php`, { username, password });
   }
 
   register(username: string, password: string, name: string, contact_number: string, date_of_birth: string): Observable<any> {
