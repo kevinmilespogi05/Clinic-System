@@ -1,24 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { BillingService } from '../../services/billing.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-billing',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [],
   templateUrl: './billing.component.html',
-  styleUrls: ['./billing.component.css'],
-  providers: [BillingService],
+  styleUrl: './billing.component.css'
 })
-export class BillingComponent implements OnInit {
-  invoices: any[] = [];
+export class BillingComponent {
 
-  constructor(private billingService: BillingService) {}
-
-  ngOnInit(): void {
-    this.billingService.getInvoices().subscribe((data) => {
-      this.invoices = data;
-    });
-  }
 }

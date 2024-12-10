@@ -1,24 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { InsuranceService } from '../../services/insurance.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-insurance',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [],
   templateUrl: './insurance.component.html',
-  styleUrls: ['./insurance.component.css'],
-  providers: [InsuranceService],
+  styleUrl: './insurance.component.css'
 })
-export class InsuranceComponent implements OnInit {
-  claims: any[] = [];
+export class InsuranceComponent {
 
-  constructor(private insuranceService: InsuranceService) {}
-
-  ngOnInit(): void {
-    this.insuranceService.getClaims().subscribe((data: any[]) => {
-      this.claims = data;
-    });
-  }
 }
