@@ -7,7 +7,8 @@
           <tr>
             <th>Date</th>
             <th>Time</th>
-            <th>Description</th> <!-- Removed Status column -->
+            <th>Description</th>
+            <th>Status</th> <!-- Added Status column -->
           </tr>
         </thead>
         <tbody>
@@ -15,6 +16,7 @@
             <td>{{ appointment.date }}</td>
             <td>{{ appointment.time }}</td>
             <td>{{ appointment.description || 'No description provided' }}</td>
+            <td>{{ appointment.status }}</td> <!-- Display appointment status -->
           </tr>
         </tbody>
       </table>

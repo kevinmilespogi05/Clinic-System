@@ -7,15 +7,20 @@
         <th>Appointment Date</th>
         <th>Appointment Time</th>
         <th>Description</th>
+        <th>Status</th>
+        <th>Actions</th> <!-- Add Actions Column -->
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let appointment of appointments">
-        <!-- Display the patient's name instead of user_id -->
-        <td>{{ appointment.patient_name }}</td> <!-- Display patient name -->
-        <td>{{ formatDate(appointment.date) }}</td> <!-- Display formatted date -->
-        <td>{{ formatTime(appointment.time) }}</td> <!-- Display formatted time -->
-        <td>{{ appointment.description }}</td> <!-- Display description -->
+        <td>{{ appointment.patient_name }}</td>
+        <td>{{ formatDate(appointment.date) }}</td>
+        <td>{{ formatTime(appointment.time) }}</td>
+        <td>{{ appointment.description }}</td>
+        <td>{{ appointment.status | titlecase }}</td>
+        <td>
+          <button class="delete-btn" (click)="deleteAppointment(appointment.id)">Delete</button>
+        </td>
       </tr>
     </tbody>
   </table>

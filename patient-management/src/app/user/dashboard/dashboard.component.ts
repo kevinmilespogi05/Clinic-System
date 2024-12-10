@@ -27,15 +27,12 @@ export class DashboardComponent implements OnInit {
       this.patientService.getAppointments(Number(userId)).subscribe(
         (data) => {
           this.appointments = data.appointments || [];
-          // Format the date and time after fetching appointments
+          // Format the data after fetching appointments
           this.appointments.forEach(appointment => {
-            // Format the appointment_date as a short date
-            appointment.appointment_date = this.datePipe.transform(appointment.appointment_date, 'shortDate');
-            
-            // Format the appointment_time as a valid time string
-            if (appointment.appointment_time) {
-              const timeParts = appointment.appointment_time.split(':');
-              appointment.appointment_time = `${timeParts[0]}:${timeParts[1]}`;
+            appointment.date = this.datePipe.transform(appointment.date, 'shortDate');
+            if (appointment.time) {
+              const timeParts = appointment.time.split(':');
+              appointment.time = `${timeParts[0]}:${timeParts[1]}`;
             }
           });
         },
@@ -46,3 +43,4 @@ export class DashboardComponent implements OnInit {
     }
   }
 }
+

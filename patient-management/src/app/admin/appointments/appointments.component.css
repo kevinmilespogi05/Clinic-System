@@ -1,83 +1,120 @@
 .appointments-container {
-    max-width: 90%;
-    padding: 40px;
-    padding-top: 5px;
-    box-sizing: border-box;
-    border-radius: 6px;
-    background-color: #f4f7fa;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 50%;
-    left: 45%;
-    transform: translate(-50%, -50%) translateX(20%); /* Center horizontally and push to the right */
-    font-family: 'Futura Std Condensed Light', sans-serif;
+  max-width: 90%;
+  padding: 40px;
+  padding-top: 5px;
+  box-sizing: border-box;
+  border-radius: 6px;
+  background-color: #f4f7fa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center horizontally and vertically */
+  font-family: 'Futura Std Condensed Light', sans-serif;
+}
+
+.appointments-container h1 {
+  margin-bottom: 20px; /* Improved spacing */
+  font-size: 1.8rem;   /* Larger font size for title */
+  color: #333;         /* Darker color for better contrast */
+  text-align: center;
+  font-weight: 700;
+}
+
+table {
+  width: 100%;
+  max-width: 1000px; /* Table maximum width */
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Enhanced shadow for better elevation */
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 20px;
+  font-family: 'Futura Std Condensed Light', sans-serif;
+}
+
+thead {
+  background-color: #3498db;
+  color: white;
+  text-align: left;
+}
+
+th,
+td {
+  padding: 12px 15px;  /* Increased padding for larger cells */
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  font-size: 1.1rem; /* Increased font size for headers */
+  text-transform: uppercase;
+  letter-spacing: 0.05rem; /* Added letter spacing */
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer; /* Indicate hoverable rows */
+}
+
+tbody td {
+  font-size: 1rem;  /* Larger font size for readability */
+  color: #555;
+}
+
+/* Status-specific styles */
+.status-pending {
+  color: orange;
+  font-weight: bold;
+}
+
+.status-confirmed {
+  color: green;
+  font-weight: bold;
+}
+
+.status-cancelled {
+  color: red;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .appointments-container {
+    padding: 20px; /* Reduced padding for smaller screens */
   }
-  
-  .appointments-container h1 {
-    margin-bottom: 15px; /* Increased margin for spacing */
-    font-size: 1.5rem;   /* Increased font size */
-    color: black;
-    text-align: center;
-    font-weight: 600;
-  }
-  
+
   table {
-    width: 100%;
-    max-width: 1000px;  /* Increased max-width for larger table */
-    border-collapse: collapse;
-    background-color: white;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 6px;
-    overflow: hidden;
-    margin-top: 20px;
-    font-family: 'Futura Std Condensed Light', sans-serif;
+    font-size: 0.9rem; /* Adjusted font size for smaller screens */
   }
-  
-  thead {
-    background-color: #3498db;
-    color: white;
-    text-align: left;
-  }
-  
+
   th,
   td {
-    padding: 10px 10px;  /* Increased padding for larger cells */
-    border-bottom: 1px solid #ddd;
-    text-align: left;
+    padding: 10px 8px; /* Adjusted padding for mobile */
   }
-  
-  th {
-    font-size: 1rem;  /* Slightly increased font size */
+
+  thead {
+    font-size: 0.9rem; /* Adjusted header font size */
   }
-  
-  tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+}
+
+@media (max-width: 480px) {
+  table {
+    font-size: 0.85rem; /* Further reduced font size for very small screens */
   }
-  
-  tbody tr:hover {
-    background-color: #f1f1f1;
+
+  th,
+  td {
+    padding: 8px 6px; /* Compact padding for very small screens */
   }
-  
-  tbody td {
-    font-size: 0.95rem;  /* Increased font size for better readability */
-    color: #333;
+
+  .appointments-container h1 {
+    font-size: 1.5rem; /* Adjusted title size */
   }
-  
-  @media (max-width: 768px) {
-    .appointments-container {
-      padding: 20px;  /* Slightly reduced padding for mobile */
-    }
-  
-    table {
-      font-size: 0.9rem;  /* Slightly increased font size for mobile */
-    }
-  
-    th,
-    td {
-      padding: 8px 12px;  /* Increased padding for mobile */
-    }
-  }
-  
+}
