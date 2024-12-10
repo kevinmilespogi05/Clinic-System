@@ -9,11 +9,23 @@
       <label for="time">Select Time:</label>
       <input type="time" id="time" name="time" [(ngModel)]="newAppointment.time" required>
 
-      <!-- Description Field -->
       <label for="description">Description:</label>
-      <textarea id="description" name="description" [(ngModel)]="newAppointment.description" placeholder="Enter description" rows="4"></textarea>
+      <textarea id="description" name="description" [(ngModel)]="newAppointment.description" rows="3" placeholder="Enter description"></textarea>
 
       <button type="submit" [disabled]="appointmentForm.invalid">Book Appointment</button>
     </form>
+  </div>
+
+  <!-- Booked Appointments Section -->
+  <div class="appointments-list">
+    <h2>Your Appointments</h2>
+    <div *ngFor="let appointment of appointments" class="appointment-item">
+      <div class="appointment-details">
+        <p><strong>Date:</strong> {{ appointment.date }} <strong>Time:</strong> {{ appointment.time }}</p>
+        <p><strong>Description:</strong> {{ appointment.description }}</p>
+        <p><strong>Status:</strong> {{ appointment.status }}</p>
+      </div>
+      <button class="cancel-btn" *ngIf="appointment.status === 'booked'" (click)="cancelAppointment(appointment.id)">Cancel</button>
+    </div>
   </div>
 </div>

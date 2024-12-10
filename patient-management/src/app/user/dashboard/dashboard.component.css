@@ -4,10 +4,10 @@
     background-color: #fff; /* Clean white background for contrast */
     border-radius: 12px; /* Rounded corners for a sleek look */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Softer shadow for depth */
-    margin-left: 220px; /* Adjusting margin for positioning */
-    max-width: 1000px; /* Restricting width for a clean layout */
+    max-width: 750px; /* Increased width for more content space */
     margin: 40px auto; /* Centered with space around */
     font-family: 'Arial', sans-serif; /* Modern, clean font */
+    margin-left: 350px;
 }
 
 /* Dashboard heading */
@@ -29,6 +29,8 @@ h1 {
 /* Table styling */
 table {
     width: 100%;
+    max-width: 1100px; /* Increased max width for the table */
+    margin: 0 auto;
     border-collapse: collapse;
     margin-top: 20px;
 }
@@ -66,21 +68,4 @@ ng-template#noAppointments p {
     color: #7f8c8d; /* Subtle grey for no appointments message */
     font-weight: bold;
     margin-top: 30px;
-}
-
-/* Responsiveness for mobile screens */
-@media (max-width: 768px) {
-    .dashboard-container {
-        padding: 20px;
-        margin-left: 10px;
-        margin-right: 10px;
-    }
-
-    h1 {
-        font-size: 2rem; /* Adjust title size for smaller screens */
-    }
-
-    table, th, td {
-        font-size: 1rem; /* Slightly smaller font for tables */
-    }
 }
