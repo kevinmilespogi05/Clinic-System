@@ -1,1 +1,9 @@
-<p>billing works!</p>
+<div class="billing-container">
+  <h2>Billing</h2>
+  <div *ngFor="let invoice of invoices">
+    <p>Invoice ID: {{ invoice.id }}</p>
+    <p>Patient ID: {{ invoice.patient_id }}</p>
+    <p>Amount: {{ invoice.amount }}</p>
+    <p>Status: {{ invoice.status }}</p>
+  </div>
+</div>

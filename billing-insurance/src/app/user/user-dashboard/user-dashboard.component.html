@@ -1,0 +1,57 @@
+<div class="user-dashboard">
+  <h2>User Dashboard</h2>
+
+  <h3>Patients</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Phone</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.name }}</td>
+        <td>{{ user.age }}</td>
+        <td>{{ user.phone }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Invoices</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Patient</th>
+        <th>Amount</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let invoice of invoices">
+        <td>{{ invoice.patient_name }}</td>
+        <td>{{ invoice.amount }}</td>
+        <td>{{ invoice.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Insurance Claims</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Policy Number</th>
+        <th>Amount</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let claim of insuranceClaims">
+        <td>{{ claim.policy_number }}</td>
+        <td>{{ claim.amount }}</td>
+        <td>{{ claim.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
