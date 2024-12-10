@@ -1,83 +1,30 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
-    line-height: 1.6;
-  }
-  
-  .analytics-container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    height: 920px;
-  }
-  
-  .header {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .header h1 {
-    font-size: 2rem;
-    color: #40aceb;
-  }
-  
-  .overview {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    margin-bottom: 30px;
-  }
-  
-  .card {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    flex: 1;
-  }
-  
-  .card h3 {
-    font-size: 1rem;
-    margin-bottom: 10px;
-    color: #555;
-  }
-  
-  .card .stat {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #40aceb;
-  }
-  
-  .charts {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  }
-  
-  .chart {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    flex: 1;
-  }
-  
-  .chart h3 {
-    font-size: 1rem;
-    margin-bottom: 10px;
-    color: #555;
-  }
-  
-  canvas {
-    width: 100%;
-    height: 300px;
-  }
-  
+.analytics-container {
+  position: absolute;
+  top: 50%; /* Vertically center */
+  left: 56%; /* Horizontally center */
+  transform: translate(-50%, -50%); /* Adjust to center it exactly */
+  width: 60%; /* Adjust width as per your requirement */
+  text-align: center;
+  font-family: 'Futura Std Condensed Light', sans-serif;
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
+  font-family: 'Futura Std Condensed Light', sans-serif;
+}
+
+.chart-container {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Futura Std Condensed Light', sans-serif;
+}
+
+canvas {
+  max-width: 100%;
+  height: 300px;
+}

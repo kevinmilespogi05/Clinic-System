@@ -1,6 +1,6 @@
 /* Side Navigation */
 .side-nav {
-  width: 220px;
+  width: 180px;
   position: fixed;
   top: 0;
   left: 0;
@@ -9,34 +9,35 @@
   color: #ecf0f1;
   display: flex;
   flex-direction: column;
-  padding: 30px 15px;
+  padding: 20px 15px; /* Reduced padding */
+  box-sizing: border-box;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Futura Std Condensed Light', sans-serif;
   transition: width 0.3s ease;
 }
 
 /* Logo Container */
 .logo-container {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px; /* Reduced margin */
   transition: transform 0.3s ease;
 }
 
 .logo-container img {
-  max-width: 80%;
+  max-width: 70%; /* Reduced image size */
   height: auto;
   border-radius: 50%;
   transition: transform 0.3s ease;
 }
 
 .title {
-  margin-top: 10px;
-  font-size: 1.4rem;
+  margin-top: 8px; /* Reduced margin */
+  font-size: 1.2rem; /* Smaller font size */
   font-weight: bold;
   color: #ecf0f1;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px; /* Slightly reduced letter-spacing */
 }
 
 /* Navigation Links */
@@ -47,7 +48,7 @@
 }
 
 .nav-links li, .logout li {
-  margin: 20px 0;
+  margin: 15px 0; /* Reduced margin */
 }
 
 /* Horizontal Line for Separation */
@@ -62,16 +63,16 @@
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 15px; /* Increased space between icon and text */
-  padding: 12px 20px;
+  gap: 10px; /* Reduced space between icon and text */
+  padding: 8px 15px; /* Reduced padding */
   border-radius: 8px;
-  font-size: 1.1rem;
+  font-size: 1rem; /* Smaller font size */
   transition: background-color 0.3s, transform 0.2s;
 }
 
 .nav-links a img, .logout a img {
-  width: 22px;
-  height: 22px;
+  width: 18px; /* Smaller icon size */
+  height: 18px; /* Smaller icon size */
   border-radius: 50%;
   transition: transform 0.3s ease;
 }
@@ -105,18 +106,18 @@
 /* Logout Section */
 .logout {
   margin-top: auto;
-  margin-bottom: 30px;
+  margin-bottom: 20px; /* Reduced margin */
 }
 
 .logout li {
-  margin-top: 40px; /* Adds space between logout and previous links */
+  margin-top: 30px; /* Reduced space between logout and previous links */
 }
 
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
   .side-nav {
     width: 200px;
-    padding: 20px 10px;
+    padding: 15px 10px; /* Adjusted padding for mobile */
   }
 
   .side-nav:hover {
@@ -124,20 +125,20 @@
   }
 
   .logo-container img {
-    max-width: 90%;
+    max-width: 80%; /* Slightly reduced size for mobile */
   }
 
   .nav-links a, .logout a {
-    font-size: 1rem;
-    padding: 10px 15px;
+    font-size: 0.95rem; /* Smaller font size for mobile */
+    padding: 8px 12px; /* Reduced padding for mobile */
   }
   /* Hover and active state for Dashboard, Appointments, Profile */
-.nav-links a.active, .nav-links a:hover {
-  background-color: #34495e;
-  transform: translateX(5px); /* Slight move on hover */
-}
+  .nav-links a.active, .nav-links a:hover {
+    background-color: #34495e;
+    transform: translateX(5px); /* Slight move on hover */
+  }
 
-.nav-links a.active img, .nav-links a:hover img {
-  transform: scale(1.1); /* Icon scales up on hover */
-}
+  .nav-links a.active img, .nav-links a:hover img {
+    transform: scale(1.1); /* Icon scales up on hover */
+  }
 }

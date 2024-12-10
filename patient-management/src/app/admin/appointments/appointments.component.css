@@ -1,74 +1,83 @@
-/* Container for the appointments list */
 .appointments-container {
-    padding: 25px;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    max-width: 1200px; /* Max width for large screens */
-    margin: 40px auto;
-    font-family: 'Poppins', sans-serif;
-    overflow: hidden;
-}
-
-/* Title of the appointments list */
-.appointments-container h1 {
+    max-width: 90%;
+    padding: 40px;
+    padding-top: 5px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background-color: #f4f7fa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    transform: translate(-50%, -50%) translateX(20%); /* Center horizontally and push to the right */
+    font-family: 'Futura Std Condensed Light', sans-serif;
+  }
+  
+  .appointments-container h1 {
+    margin-bottom: 15px; /* Increased margin for spacing */
+    font-size: 1.5rem;   /* Increased font size */
+    color: black;
     text-align: center;
-    color: #2c3e50;
-    font-size: 2.6rem;
-    margin-bottom: 30px;
     font-weight: 600;
-}
-
-/* Styling for the appointment table */
-.appointments-container table {
+  }
+  
+  table {
     width: 100%;
+    max-width: 1000px;  /* Increased max-width for larger table */
     border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
     margin-top: 20px;
-}
-
-/* Styling for the header row */
-.appointments-container table th, .appointments-container table td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #ddd;
-}
-
-.appointments-container table th {
+    font-family: 'Futura Std Condensed Light', sans-serif;
+  }
+  
+  thead {
     background-color: #3498db;
     color: white;
-    font-size: 1.1rem;
-    font-weight: bold;
-}
-
-.appointments-container table td {
+    text-align: left;
+  }
+  
+  th,
+  td {
+    padding: 10px 10px;  /* Increased padding for larger cells */
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  th {
+    font-size: 1rem;  /* Slightly increased font size */
+  }
+  
+  tbody tr:nth-child(even) {
     background-color: #f9f9f9;
-    color: #34495e;
-    font-size: 1rem;
-    vertical-align: middle;
-}
-
-/* Hover effect for rows */
-.appointments-container table tr:hover {
-    background-color: #ecf0f1; /* Light grey background on hover */
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .appointments-container table {
-        font-size: 0.9rem; /* Smaller font for medium screens */
+  }
+  
+  tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  tbody td {
+    font-size: 0.95rem;  /* Increased font size for better readability */
+    color: #333;
+  }
+  
+  @media (max-width: 768px) {
+    .appointments-container {
+      padding: 20px;  /* Slightly reduced padding for mobile */
     }
-
-    .appointments-container h1 {
-        font-size: 2.2rem; /* Slightly smaller heading for medium screens */
+  
+    table {
+      font-size: 0.9rem;  /* Slightly increased font size for mobile */
     }
-}
-
-@media (max-width: 600px) {
-    .appointments-container table th, .appointments-container table td {
-        padding: 10px; /* Reduced padding for mobile screens */
+  
+    th,
+    td {
+      padding: 8px 12px;  /* Increased padding for mobile */
     }
-
-    .appointments-container h1 {
-        font-size: 2rem; /* Smaller heading for mobile */
-    }
-}
+  }
+  
