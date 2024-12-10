@@ -1,1 +1,53 @@
-<p>analytics works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clinic Analytics</title>
+  <link rel="stylesheet" >
+</head>
+<body>
+  <div class="analytics-container">
+    <header class="header">
+      <h1>Clinic Analytics</h1>
+    </header>
+
+    <section class="overview">
+      <div class="card">
+        <h3>Total Patients</h3>
+        <p class="stat">1,245</p>
+      </div>
+      <div class="card">
+        <h3>Appointments This Month</h3>
+        <p class="stat">320</p>
+      </div>
+    </section>
+
+    <section class="charts">
+      <div class="chart" id="appointments-chart">
+        <h3>Appointments Overview</h3>
+        <canvas id="appointmentsCanvas"></canvas>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Example Chart.js code
+    const appointmentsCtx = document.getElementById('appointmentsCanvas').getContext('2d');
+
+    new Chart(appointmentsCtx, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+          label: 'Appointments',
+          data: [50, 100, 150, 200, 250, 300],
+          borderColor: '#4caf50',
+          borderWidth: 2,
+        }]
+      }
+    });
+  </script>
+</body>
+</html>
