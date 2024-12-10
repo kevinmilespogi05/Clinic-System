@@ -19,7 +19,7 @@ export class LoginComponent {
   constructor(private billingService: BillingService, private router: Router) {}
 
   login() {
-    // Call the login method from the PatientService
+    // Call the login method from the BillingService
     this.billingService.login(this.username, this.password).subscribe(
       (response: any) => {
         if (response.message === 'Login successful.') {
@@ -34,11 +34,11 @@ export class LoginComponent {
             icon: 'success',
             confirmButtonText: 'Proceed'
           }).then(() => {
-            // Redirect based on the user role
+            // Redirect to the billing page for users, or an admin page for admin roles
             if (response.role === 'admin') {
-              this.router.navigate(['admin/appointments']); // Admin dashboard
+              this.router.navigate(['admin/admin-insurance']); // Admin dashboard
             } else {
-              this.router.navigate(['user/dashboard']); // User dashboard
+              this.router.navigate(['user/billing']); // Redirect to billing page for users
             }
           });
         } else {
@@ -61,10 +61,5 @@ export class LoginComponent {
         });
       }
     );
-  }
-
-  // Method to navigate to the Register component
-  navigateToRegister() {
-    this.router.navigate(['/register']);
   }
 }
