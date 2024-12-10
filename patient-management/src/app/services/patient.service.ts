@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -26,28 +25,32 @@ export class PatientService {
       date_of_birth
     });
   }
+
   // Get Dashboard Data
   getDashboardData(userId: number): Observable<any> {
     const url = `${this.baseUrl}/api/dashboard/get_dashboard.php`;
     return this.http.get(`${url}?user_id=${userId}`);
   }
 
-  // Get Appointments
-  getAppointments(userId: number): Observable<any> {
-    const url = `${this.baseUrl}/api/appointments/get_appointments.php`;
-    
-    return this.http.get<any>(`${url}?user_id=${userId}`).pipe(
+  // Get Appointments (optionally filter by userId)
+  getAppointments(userId?: number): Observable<any> {
+    let url = `${this.baseUrl}/api/appointments/get_appointments.php`; // Base URL to fetch appointments
+
+    if (userId) {
+      // If userId is provided, append it to the URL
+      url = `${url}?user_id=${userId}`;
+    }
+
+    return this.http.get<any>(url).pipe(
       catchError(this.handleError)
     );
   }
 
-  // PatientService
-
-bookAppointment(data: any): Observable<any> {
-  const url = `${this.baseUrl}/api/appointments/create.php`; // API endpoint to create the appointment
-  return this.http.post(url, data); // Send the data to the backend
-}
-
+  // Book Appointment
+  bookAppointment(data: any): Observable<any> {
+    const url = `${this.baseUrl}/api/appointments/create.php`; // API endpoint to create the appointment
+    return this.http.post(url, data); // Send the data to the backend
+  }
 
   // Cancel Appointment
   cancelAppointment(appointmentId: number): Observable<any> {
@@ -77,5 +80,4 @@ bookAppointment(data: any): Observable<any> {
     // Return a user-friendly error message or rethrow the error
     return throwError('Something went wrong while fetching appointments. Please try again later.');
   }
-   
 }

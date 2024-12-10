@@ -5,10 +5,10 @@
     <h3>Upcoming Appointments</h3>
     <ul>
       <li *ngFor="let appointment of appointments">
-        {{ appointment.date }} - {{ appointment.time }} 
-        (Patient: {{ appointment.patientName }})
+        {{ appointment.date }} - {{ appointment.time }} (Patient: {{ appointment.patientName }})
       </li>
     </ul>
-    <p *ngIf="appointments?.length === 0">No upcoming appointments.</p>
+    <!-- Display the message if there are no appointments -->
+    <p *ngIf="appointments.length === 0">{{ message || 'No upcoming appointments.' }}</p>
   </div>
 </div>

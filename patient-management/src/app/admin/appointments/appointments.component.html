@@ -1,1 +1,22 @@
-<p>appointments works!</p>
+<div class="appointments-container">
+    <h1>Appointments</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Appointment Date</th>
+          <th>Appointment Time</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let appointment of appointments">
+          <td>{{ appointment.user_id }}</td> <!-- Display the user_id -->
+          <td>{{ formatDate(appointment.date) }}</td> <!-- Display formatted date -->
+          <td>{{ formatTime(appointment.time) }}</td> <!-- Display formatted time -->
+          <td>{{ appointment.description }}</td> <!-- Display description -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
