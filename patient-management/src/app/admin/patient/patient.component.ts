@@ -8,8 +8,8 @@ interface User {
   id: number;
   name: string;
   username: string;
-  email: string;
-  role: string;
+  contact_number: string;
+  date_of_birth: string;
 }
 
 @Component({
@@ -111,7 +111,7 @@ export class PatientComponent implements OnInit {
             if (response.success) {
               const index = this.users.findIndex(user => user.id === this.selectedUser!.id);
               if (index !== -1) {
-                this.users[index] = this.selectedUser!;
+                this.users[index] = this.selectedUser!;  // Update the user in the list
               }
               Swal.fire('Saved!', 'User details have been updated.', 'success');
               this.closeModal();

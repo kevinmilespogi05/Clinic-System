@@ -6,28 +6,20 @@ include_once '../../config/database.php';  // Ensure the path is correct
 $database = new Database();
 $pdo = $database->getConnection();
 
-$data = json_decode(file_get_contents("php://input"));
+// Query to fetch users (excluding 'admin' role, as per previous logic)
+$query = "SELECT id, name, username, contact_number, date_of_birth FROM users WHERE username != 'admin'";
 
-if (isset($data->id, $data->name, $data->username)) {
-    $id = $data->id;
-    $name = $data->name;
-    $username = $data->username;
+$stmt = $pdo->prepare($query);
+$stmt->execute();
 
-    // Prepare the update query
-    $query = "UPDATE users SET name = :name, username = :username WHERE id = :id";
-    $stmt = $pdo->prepare($query);
-    
-    $stmt->bindParam(':name', $name);
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':id', $id);
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Execute the query and return response
-    if ($stmt->execute()) {
-        echo json_encode(['success' => true, 'message' => 'User updated successfully']);
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Failed to update user']);
-    }
+if ($users) {
+    // Return users in JSON format
+    echo json_encode(['success' => true, 'data' => $users]);
 } else {
-    echo json_encode(['success' => false, 'message' => 'Invalid data']);
+    // No users found
+    echo json_encode(['success' => false, 'message' => 'No users found']);
 }
+
 ?>
