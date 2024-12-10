@@ -86,6 +86,13 @@ updateProfile(userId: number, updatedData: any): Observable<any> {
   });
 }
 
+// Fetch stats from backend
+getStats(): Observable<any> {
+  const url = `${this.baseUrl}/api/appointments/stats.php`;
+  return this.http.get<any>(url).pipe(
+    catchError(this.handleError)
+  );
+}
 
   // Error handler function for HTTP requests
   private handleError(error: any): Observable<never> {
