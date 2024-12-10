@@ -29,18 +29,25 @@ export class PatientService {
   // Get Dashboard Data
   getDashboardData(userId: number): Observable<any> {
     const url = `${this.baseUrl}/api/dashboard/get_dashboard.php`;
-    return this.http.get(`${url}?user_id=${userId}`);
+    return this.http.get(`${url}?id=${userId}`);
   }
 
-  // Get Appointments (optionally filter by userId)
+  // Get Appointments (optionally filter by id)
   getAppointments(userId?: number): Observable<any> {
     let url = `${this.baseUrl}/api/appointments/get_appointments.php`; // Base URL to fetch appointments
 
     if (userId) {
       // If userId is provided, append it to the URL
-      url = `${url}?user_id=${userId}`;
+      url = `${url}?id=${userId}`;
     }
 
+    return this.http.get<any>(url).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getAppointmentsByName(): Observable<any> {
+    const url = `${this.baseUrl}/api/appointments/get_appointments_with_names.php`; // Assuming this is a new API endpoint
     return this.http.get<any>(url).pipe(
       catchError(this.handleError)
     );
@@ -62,13 +69,13 @@ export class PatientService {
   // Get Profile Data
   getProfile(userId: number): Observable<any> {
     const url = `${this.baseUrl}/api/users/get_profile.php`;
-    return this.http.get(`${url}?user_id=${userId}`);
+    return this.http.get(`${url}?id=${userId}`);
   }
 
   // Update Profile
   updateProfile(userId: number, data: { name: string; contact_number: string; date_of_birth: string }): Observable<any> {
     const url = `${this.baseUrl}/api/users/update_profile.php`;
-    const body = { user_id: userId, ...data };
+    const body = { id: userId, ...data };
     return this.http.post(url, body);
   }
 

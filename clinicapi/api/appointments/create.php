@@ -34,20 +34,37 @@ if (!$data) {
 }
 
 // Validate required fields
-if (empty($data->user_id) || empty($data->date) || empty($data->time)) {
-    echo json_encode(["message" => "Incomplete data. Ensure 'user_id', 'date', and 'time' are provided."]);
+if (empty($data->id) || empty($data->date) || empty($data->time)) {
+    echo json_encode(["message" => "Incomplete data. Ensure 'id', 'date', and 'time' are provided."]);
     exit();
 }
 
-// Prepare the query
-$query = "INSERT INTO appointments (user_id, date, time, description) VALUES (:user_id, :date, :time, :description)";
+// Prepare a query to fetch the user name from the users table
+$query = "SELECT name FROM users WHERE id = :id";
+$stmt = $db->prepare($query);
+$stmt->bindParam(":id", $data->id);
+$stmt->execute();
+
+// Fetch the user name
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+if (!$user) {
+    echo json_encode(["message" => "User not found."]);
+    exit();
+}
+
+$userName = $user['name'];
+
+// Prepare the query to insert into appointments table
+$query = "INSERT INTO appointments (user_id, date, time, description, name) 
+          VALUES (:id, :date, :time, :description, :name)";
 $stmt = $db->prepare($query);
 
 // Bind the parameters
-$stmt->bindParam(":user_id", $data->user_id);
+$stmt->bindParam(":id", $data->id);
 $stmt->bindParam(":date", $data->date);
 $stmt->bindParam(":time", $data->time);
-$stmt->bindParam(":description", $data->description); // Bind description parameter
+$stmt->bindParam(":description", $data->description);
+$stmt->bindParam(":name", $userName); // Bind name parameter
 
 try {
     // Execute the query

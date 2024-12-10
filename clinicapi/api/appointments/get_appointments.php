@@ -12,16 +12,16 @@ try {
     $database = new Database();
     $conn = $database->getConnection();
 
-    // Check if user_id is provided
-    $user_id = isset($_GET['user_id']) ? $_GET['user_id'] : null;
+    // Check if id (user's id) is provided
+    $id = isset($_GET['id']) ? $_GET['id'] : null;
 
-    // If user_id is provided, fetch appointments for that user, otherwise fetch all appointments
-    if ($user_id) {
-        $query = "SELECT * FROM appointments WHERE user_id = :user_id ORDER BY date DESC, time DESC";
+    // If id is provided, fetch appointments for that user, otherwise fetch all appointments
+    if ($id) {
+        $query = "SELECT * FROM appointments WHERE user_id = :id ORDER BY date DESC, time DESC";
         $stmt = $conn->prepare($query);
-        $stmt->bindParam(':user_id', $user_id);
+        $stmt->bindParam(':id', $id);
     } else {
-        // If no user_id is provided, fetch all appointments
+        // If no id is provided, fetch all appointments
         $query = "SELECT * FROM appointments ORDER BY date DESC, time DESC";
         $stmt = $conn->prepare($query);
     }

@@ -22,9 +22,17 @@ export class AppointmentsComponent implements OnInit {
   }
 
   loadAppointments() {
+    // Call the service to get appointments and the name of the patient
     this.patientService.getAppointments().subscribe(
       (data) => {
-        this.appointments = data.appointments;
+        this.appointments = data.appointments.map((appointment: any) => {
+          // Here, we assume that the appointment object already contains the name
+          // If not, fetch the name using an additional API call (this can be handled in the service)
+          return {
+            ...appointment,
+            patient_name: appointment.name // Assuming 'name' is part of the appointment object
+          };
+        });
       },
       (error) => {
         console.error('An error occurred:', error);
@@ -34,14 +42,12 @@ export class AppointmentsComponent implements OnInit {
 
   // Format the time as 'HH:mm' from 'HH:mm:ss'
   formatTime(time: string): string {
-    // Ensure time format is valid and split the string
     const [hours, minutes] = time.split(':');
     return `${hours}:${minutes}`;
   }
 
   // Use DatePipe to format the date (e.g., 'shortDate')
   formatDate(date: string): string {
-    // Check if the input is a valid date string
     if (Date.parse(date)) {
       return this.datePipe.transform(date, 'shortDate') || date;
     }

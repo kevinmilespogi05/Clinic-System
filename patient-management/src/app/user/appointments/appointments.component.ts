@@ -53,7 +53,7 @@ export class AppointmentsComponent implements OnInit {
         if (result.isConfirmed) {
           const dateTime = `${this.newAppointment.date} ${this.newAppointment.time}`;
           const appointmentData = {
-            user_id: Number(userId),
+            id: Number(userId),
             date: this.newAppointment.date,
             time: this.newAppointment.time,
             description: this.newAppointment.description
