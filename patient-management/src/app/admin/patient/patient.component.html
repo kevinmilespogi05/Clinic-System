@@ -1,1 +1,56 @@
-<p>patient works!</p>
+<div class="users-container">
+    <h1>All Users</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.username }}</td>
+          <td>
+            <button (click)="openModal(user)">View</button>
+            <button (click)="confirmDelete(user)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
+<!-- Modal for viewing and editing user details -->
+<div class="modal" *ngIf="selectedUser" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h2>User Details</h2>
+
+    <!-- Display user information or form fields based on edit mode -->
+    <div *ngIf="!isEditing">
+      <p><strong>Name:</strong> {{ selectedUser.name }}</p>
+      <p><strong>Username:</strong> {{ selectedUser.username }}</p>
+  
+      <button (click)="toggleEditMode()">Edit</button>
+      <button (click)="closeModal()">Close</button>
+    </div>
+
+    <!-- Edit mode form -->
+    <div *ngIf="isEditing">
+      <form (ngSubmit)="saveUser()">
+        <div>
+          <label for="name">Name:</label>
+          <input type="text" id="name" [(ngModel)]="selectedUser.name" name="name" required />
+        </div>
+        <div>
+          <label for="username">Username:</label>
+          <input type="text" id="username" [(ngModel)]="selectedUser.username" name="username" required />
+        </div>
+        <button type="submit">Save</button>
+        <button type="button" (click)="toggleEditMode()">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>

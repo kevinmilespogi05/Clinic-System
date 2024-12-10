@@ -8,7 +8,8 @@ import { RegisterComponent } from './user/register/register.component';
 import { DashboardComponent as AdminDashboardComponent } from './admin/dashboard/dashboard.component';
 import { AppointmentsComponent as AdminAppointmentsComponent } from './admin/appointments/appointments.component';
 import { PatientComponent } from './admin/patient/patient.component';
-import { SideNavComponent } from './user/side-nav/side-nav.component';
+import { SideNavComponent as UserSideNavComponent } from './user/side-nav/side-nav.component';
+import { SideNavComponent as AdminSideNavComponent } from './admin/side-nav/side-nav.component';
 
 // Define a layout component for users
 export const routes: Routes = [
@@ -22,7 +23,7 @@ export const routes: Routes = [
   // User routes with SideNav
   {
     path: 'user',
-    component: SideNavComponent, // Wrap routes with the side nav
+    component: UserSideNavComponent, // Wrap routes with the user side nav
     children: [
       { path: 'dashboard', component: UserDashboardComponent, title: 'User Dashboard' },
       { path: 'appointments', component: UserAppointmentsComponent, title: 'User Appointments' },
@@ -30,10 +31,10 @@ export const routes: Routes = [
     ]
   },
 
-  // Admin routes
+  // Admin routes with SideNav
   {
     path: 'admin',
-    component: AdminDashboardComponent, // Replace with an admin layout component if needed
+    component: AdminSideNavComponent, // Wrap routes with the admin side nav
     children: [
       { path: 'dashboard', component: AdminDashboardComponent, title: 'Admin Dashboard' },
       { path: 'appointments', component: AdminAppointmentsComponent, title: 'Admin Appointments' },
