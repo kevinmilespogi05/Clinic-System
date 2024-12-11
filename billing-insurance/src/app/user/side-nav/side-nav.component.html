@@ -1,34 +1,47 @@
 <nav class="side-nav">
+  <!-- Logo Section -->
   <div class="logo-container">
-    <img src="assets/logo.png" alt="Billing Logo" />
-    
+    <img src="/logo.png" alt="Clinic Logo" />
+    <h1 class="title">ClinicPoint</h1>
   </div>
 
+  <!-- Horizontal Line -->
   <div class="horizontal-line"></div>
 
+  <!-- Navigation Links -->
   <ul class="nav-links">
     <li>
-      <a routerLink="/user/billing" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <img src="assets/Billing.png" alt="Billing Icon" />
-        Billing
+      <a routerLink="/admin/invoice" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <img src="/Billing.png" alt="Billing Icon" />
+        Invoice
       </a>
     </li>
     <li>
-      <a routerLink="/user/insurance" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <img src="assets/Insurance.png" alt="Insurance Icon" />
+      <a routerLink="/admin/insurance" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <img src="/Insurance.png" alt="Insurance Icon" />
         Insurance
       </a>
     </li>
+    <li>
+      <a routerLink="/admin/analytics" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <img src="/analytics.png" alt="Analytics Icon" />
+        Analytics
+      </a>
+    </li>
   </ul>
+
+  <!-- Logout Section -->
   <ul class="logout">
     <li>
       <a (click)="logout()">
-        <img src="assets/logout.png" alt="Logout Icon" />
+        <img src="/logout.png" alt="Logout Icon" />
         Logout
       </a>
     </li>
   </ul>
 </nav>
+
+<!-- Content Section -->
 <div class="content">
   <router-outlet></router-outlet>
 </div>
