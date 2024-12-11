@@ -41,18 +41,27 @@ export class AnalyticsComponent implements OnInit {
           {
             label: 'Count',
             data: [
-              stats.paid_invoices, // from your updated API response
-              stats.unpaid_invoices, // from your updated API response
-              stats.approved_claims, // from your updated API response
-              stats.rejected_claims, // from your updated API response
+              stats.paid_invoices,
+              stats.unpaid_invoices,
+              stats.approved_claims,
+              stats.rejected_claims,
               stats.pending_claims
             ],
-            backgroundColor: ['#4caf50', '#f44336', '#2196f3', '#ff9800']
+            backgroundColor: ['#4caf50', '#f44336', '#2196f3', '#ff9800', '#9c27b0']
           }
         ]
       },
       options: {
         responsive: true,
+        scales: {
+          y: {
+            min: 0, // Start y-axis at zero
+            ticks: {
+              stepSize: 1, // Increment by 1
+              precision: 0 // Use whole numbers only
+            }
+          }
+        },
         plugins: {
           legend: {
             display: true,
@@ -62,4 +71,5 @@ export class AnalyticsComponent implements OnInit {
       }
     });
   }
+  
 }
