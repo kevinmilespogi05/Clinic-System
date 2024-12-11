@@ -57,6 +57,14 @@ getInsuranceClaims(userId: number, isAdmin: number): Observable<any[]> {
       .pipe(catchError(this.handleError));
   }
 
+// Fetch stats from backend
+getStats(): Observable<any> {
+  const url = `${this.baseUrl}/api/insurance/stats.php`;
+  return this.http.get<any>(url).pipe(
+    catchError(this.handleError)
+  );
+}
+  
   private handleError(error: any) {
     console.error('An error occurred', error);
     return throwError(error);
