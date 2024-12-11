@@ -3,7 +3,7 @@
   padding: 40px;
   padding-top: 5px;
   box-sizing: border-box;
-  border-radius: 6px;
+  border-radius: 8px;
   background-color: #f4f7fa;
   display: flex;
   flex-direction: column;
@@ -14,11 +14,12 @@
   left: 50%;
   transform: translate(-50%, -50%); /* Center horizontally and vertically */
   font-family: 'Futura Std Condensed Light', sans-serif;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
 }
 
 .appointments-container h1 {
-  margin-bottom: 20px; /* Improved spacing */
-  font-size: 1.8rem;   /* Larger font size for title */
+  margin-bottom: 30px; /* More breathing space */
+  font-size: 2rem;   /* Slightly larger title */
   color: #333;         /* Darker color for better contrast */
   text-align: center;
   font-weight: 700;
@@ -32,7 +33,7 @@ table {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Enhanced shadow for better elevation */
   border-radius: 8px;
   overflow: hidden;
-  margin-top: 20px;
+  margin-top: 30px;
   font-family: 'Futura Std Condensed Light', sans-serif;
 }
 
@@ -40,19 +41,21 @@ thead {
   background-color: #3498db;
   color: white;
   text-align: left;
+  padding: 15px 10px;
 }
 
 th,
 td {
-  padding: 12px 15px;  /* Increased padding for larger cells */
+  padding: 14px 18px;  /* Increased padding for larger cells */
   border-bottom: 1px solid #ddd;
   text-align: left;
+  transition: all 0.2s ease-in-out; /* Smooth transition for hover effects */
 }
 
 th {
-  font-size: 1.1rem; /* Increased font size for headers */
+  font-size: 1.15rem; /* Slightly increased font size for better readability */
   text-transform: uppercase;
-  letter-spacing: 0.05rem; /* Added letter spacing */
+  letter-spacing: 0.05rem;
 }
 
 tbody tr:nth-child(even) {
@@ -65,8 +68,27 @@ tbody tr:hover {
 }
 
 tbody td {
-  font-size: 1rem;  /* Larger font size for readability */
+  font-size: 1.05rem;  /* Slightly larger font for readability */
   color: #555;
+}
+
+/* Button styling */
+.delete-btn {
+  background-color: #e74c3c;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+.delete-btn:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+.delete-btn:focus {
+  outline: none; /* Remove focus outline for a cleaner look */
 }
 
 /* Status-specific styles */
@@ -85,13 +107,14 @@ tbody td {
   font-weight: bold;
 }
 
+/* Media Queries */
 @media (max-width: 768px) {
   .appointments-container {
     padding: 20px; /* Reduced padding for smaller screens */
   }
 
   table {
-    font-size: 0.9rem; /* Adjusted font size for smaller screens */
+    font-size: 0.95rem; /* Adjusted font size for smaller screens */
   }
 
   th,
@@ -100,7 +123,7 @@ tbody td {
   }
 
   thead {
-    font-size: 0.9rem; /* Adjusted header font size */
+    font-size: 1rem; /* Adjusted header font size */
   }
 }
 
@@ -115,6 +138,6 @@ tbody td {
   }
 
   .appointments-container h1 {
-    font-size: 1.5rem; /* Adjusted title size */
+    font-size: 1.6rem; /* Adjusted title size */
   }
 }
