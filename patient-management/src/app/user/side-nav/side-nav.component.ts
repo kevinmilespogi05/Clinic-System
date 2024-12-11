@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router'; // Import RouterModule
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2'; // Import SweetAlert2
 
-
 @Component({
   selector: 'app-side-nav',
   standalone: true, // Mark as standalone component
