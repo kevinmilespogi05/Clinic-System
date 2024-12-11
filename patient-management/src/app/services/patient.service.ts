@@ -75,8 +75,13 @@ deleteAppointment(appointmentId: number): Observable<any> {
     return this.http.post(url, body);
   }
 
- 
-
+  // Fetch Insurance Claims
+    getInsuranceClaims(userId: number): Observable<any> {
+    const url = `${this.baseUrl}/api/insurance/read_all.php`;
+    return this.http.get<any>(`${url}?user_id=${userId}&is_admin=0`).pipe(
+      catchError(this.handleError)
+    );
+    }
 
     // Get Profile Data
     getProfile(userId: number): Observable<any> {

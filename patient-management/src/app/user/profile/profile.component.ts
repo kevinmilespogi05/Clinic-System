@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 export class ProfileComponent implements OnInit {
   userId: number | null = null;
   profileData: any = null;
+  claims: any[] = []; // Holds insurance claims data
   errorMessage: string | null = null;
   isEditing: boolean = false;
   updatedProfileData: any = {};
@@ -24,6 +25,7 @@ export class ProfileComponent implements OnInit {
     this.userId = Number(localStorage.getItem('userId'));
     if (this.userId) {
       this.fetchProfileData(this.userId);
+      this.fetchInsuranceClaims(this.userId); // Fetch insurance claims
     } else {
       this.errorMessage = 'User not logged in';
       this.router.navigate(['/login']);
@@ -43,6 +45,22 @@ export class ProfileComponent implements OnInit {
       error: (error) => {
         console.error('Error fetching profile data:', error);
         this.errorMessage = 'Failed to fetch profile data. Please try again later.';
+      }
+    });
+  }
+
+  fetchInsuranceClaims(userId: number): void {
+    this.patientService.getInsuranceClaims(userId).subscribe({
+      next: (response) => {
+        if (response.length > 0) {
+          this.claims = response;
+        } else {
+          this.claims = [];
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching insurance claims:', error);
+        this.errorMessage = 'Failed to fetch insurance claims. Please try again later.';
       }
     });
   }
