@@ -36,24 +36,31 @@ export class PatientService {
 
   // Get Appointments (optionally filter by id)
   getAppointments(userId?: number): Observable<any> {
-    let url = `${this.baseUrl}/api/appointments/get_appointments.php`; // Base URL to fetch appointments
-
+    let url = `${this.baseUrl}/api/appointments/get_appointments.php`;
+  
     if (userId) {
-      // If userId is provided, append it to the URL
       url = `${url}?id=${userId}`;
     }
-
-    return this.http.get<any>(url).pipe(
-      catchError(this.handleError)
-    );
+  
+    return this.http.get<any>(url).pipe(catchError(this.handleError));
   }
+  
+   // Update appointment status
+updateAppointmentStatus(appointmentId: number, status: string): Observable<any> {
+  const url = `${this.baseUrl}/api/appointments/update_status.php`;
+  return this.http.post<any>(url, { id: appointmentId, status }).pipe(
+    catchError(this.handleError)
+  );
+}
 
-  getAppointmentsByName(): Observable<any> {
-    const url = `${this.baseUrl}/api/appointments/get_appointments_with_names.php`; // Assuming this is a new API endpoint
-    return this.http.get<any>(url).pipe(
-      catchError(this.handleError)
-    );
-  }
+// Delete appointment
+deleteAppointment(appointmentId: number): Observable<any> {
+  const url = `${this.baseUrl}/api/appointments/delete_appointment.php`;
+  return this.http.post<any>(url, { id: appointmentId }).pipe(
+    catchError(this.handleError)
+  );
+}
+
 
   // Book Appointment
   bookAppointment(data: any): Observable<any> {
@@ -67,6 +74,9 @@ export class PatientService {
     const body = { appointment_id: appointmentId };
     return this.http.post(url, body);
   }
+
+ 
+
 
     // Get Profile Data
     getProfile(userId: number): Observable<any> {
