@@ -36,8 +36,29 @@ body {
   color: #34495e;
 }
 
-.status-approved {
-  color: #27ae60;
+.claim-item {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+}
+
+.claim-item p {
+  margin: 5px 0;
+}
+
+.approved {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.rejected {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.pending {
+  color: #ffc107;
   font-weight: bold;
 }
 

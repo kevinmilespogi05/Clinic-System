@@ -44,6 +44,12 @@ export class BillingService {
       .pipe(catchError(this.handleError));
   }
 
+  createInsuranceClaim(claim: any): Observable<any> {
+    return this.http
+      .post<any>(`${this.baseUrl}/api/insurance/create.php`, claim)
+      .pipe(catchError(this.handleError));
+  }
+
   updateInsuranceClaim(claim: any): Observable<any> {
     return this.http
       .put<any>(`${this.baseUrl}/api/insurance/update_status.php`, claim)

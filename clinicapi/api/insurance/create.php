@@ -7,7 +7,7 @@ $db = $database->getConnection();
 $data = json_decode(file_get_contents("php://input"));
 
 if (!empty($data->user_id) && !empty($data->description)) {
-    $query = "INSERT INTO insurance_claims (user_id, description) VALUES (:user_id, :description)";
+    $query = "INSERT INTO insurance_claims (user_id, description, status) VALUES (:user_id, :description, 'pending')";
 
     $stmt = $db->prepare($query);
     $stmt->bindParam(":user_id", $data->user_id);
