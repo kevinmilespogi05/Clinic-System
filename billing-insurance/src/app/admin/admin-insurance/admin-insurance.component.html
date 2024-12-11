@@ -1,1 +1,11 @@
-<p>admin-insurance works!</p>
+<div class="admin-insurance-container">
+  <h2>Admin Insurance Management</h2>
+  <div *ngFor="let claim of claims">
+    <p>Claim ID: {{ claim.id }}</p>
+    <p>Patient ID: {{ claim.user_id }}</p>
+    <p>Description: {{ claim.description }}</p>
+    <p>Status: {{ claim.status }}</p>
+    <button (click)="updateClaimStatus(claim.id, 'approved')">Approve</button>
+    <button (click)="updateClaimStatus(claim.id, 'rejected')">Reject</button>
+  </div>
+</div>

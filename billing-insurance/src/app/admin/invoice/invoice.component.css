@@ -1,141 +1,111 @@
 /* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f7f7f7;
-    color: #333;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f7f7f7;
+  color: #333;
 }
 
 .invoice-management {
-    max-width: 1300px;
-    margin: 50px auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    height: 800px;
+  max-width: 1300px;
+  margin: 50px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 800px;
 }
 
 .invoice-management h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
 }
 
 .generate-invoice,
 .manage-payments {
-    margin-bottom: 20px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
 }
 
 .generate-invoice h2,
 .manage-payments h2 {
-    margin-bottom: 15px;
-    color: #333;
+  margin-bottom: 15px;
+  color: #333;
 }
 
 form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
 form input,
 form select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 
 .submit-btn {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 4px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 4px;
 }
 
 .submit-btn:hover {
-    background-color: #218838;
+  background-color: #218838;
 }
 
 .payment-status {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.1rem;
-    margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
 }
 
 .status {
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 4px;
-    align-self: center;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 4px;
+  align-self: center;
 }
 
 .status.paid {
-    color: white;
-    background-color: #28a745;
+  color: white;
+  background-color: #28a745;
 }
 
 .status.unpaid {
-    color: white;
-    background-color: #dc3545;
-    align-self: center;
-}
-
-.status-buttons {
-    display: none;
-    margin-bottom: 20px;
+  color: white;
+  background-color: #dc3545;
+  align-self: center;
 }
 
 .paid-btn,
 .unpaid-btn {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 4px;
-    margin-right: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 10px;
 }
 
 .paid-btn:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 .unpaid-btn:hover {
-    background-color: #c82333;
-}
-
-.edit-container {
-    position: relative; /* Required for child absolute positioning */
-    height: 100px; /* Adjust height as needed */
-}
-
-.edit-btn {
-    position: absolute; /* Absolute positioning inside the container */
-    bottom: 10px; /* Adjust distance from the bottom */
-    right: 10px; /* Adjust distance from the right */
-    background-color: #ffc107;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-.edit-btn:hover {
-    background-color: #e0a800;
-}
-
-.status-buttons.active {
-    display: block;
+  background-color: #c82333;
 }

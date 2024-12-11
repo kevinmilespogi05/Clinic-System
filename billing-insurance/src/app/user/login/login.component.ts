@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   standalone: true,
-  imports: [FormsModule, CommonModule]
+  imports: [FormsModule, CommonModule],
 })
 export class LoginComponent {
   username: string = '';
@@ -32,7 +32,7 @@ export class LoginComponent {
             title: 'Login Successful!',
             text: 'Welcome back!',
             icon: 'success',
-            confirmButtonText: 'Proceed'
+            confirmButtonText: 'Proceed',
           }).then(() => {
             // Redirect to the billing page for users, or an admin page for admin roles
             if (response.role === 'admin') {
@@ -47,7 +47,7 @@ export class LoginComponent {
             title: 'Login Failed',
             text: response.message, // Display the message from the backend
             icon: 'error',
-            confirmButtonText: 'Retry'
+            confirmButtonText: 'Retry',
           });
         }
       },
@@ -57,7 +57,7 @@ export class LoginComponent {
           title: 'Error',
           text: 'Something went wrong. Please try again later.',
           icon: 'error',
-          confirmButtonText: 'Retry'
+          confirmButtonText: 'Retry',
         });
       }
     );
