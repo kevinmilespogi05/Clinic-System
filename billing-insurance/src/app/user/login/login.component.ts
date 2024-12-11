@@ -27,20 +27,26 @@ export class LoginComponent {
           localStorage.setItem('userId', response.user_id);
           localStorage.setItem('role', response.role);
 
-          // Display success message
-          Swal.fire({
-            title: 'Login Successful!',
-            text: 'Welcome back!',
-            icon: 'success',
-            confirmButtonText: 'Proceed',
-          }).then(() => {
-            // Redirect to the billing page for users, or an admin page for admin roles
-            if (response.role === 'admin') {
+          // Display role-specific success message
+          if (response.role === 'admin') {
+            Swal.fire({
+              title: 'Admin Login Successful!',
+              text: 'Welcome back, Admin!',
+              icon: 'success',
+              confirmButtonText: 'Proceed',
+            }).then(() => {
               this.router.navigate(['admin/invoice']); // Admin dashboard
-            } else {
+            });
+          } else {
+            Swal.fire({
+              title: 'User Login Successful!',
+              text: 'Welcome to your billing portal!',
+              icon: 'success',
+              confirmButtonText: 'Proceed',
+            }).then(() => {
               this.router.navigate(['user/billing']); // Redirect to billing page for users
-            }
-          });
+            });
+          }
         } else {
           // If login failed, show error message
           Swal.fire({

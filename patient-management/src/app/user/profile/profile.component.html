@@ -7,7 +7,7 @@
     <p><strong>Username:</strong> {{ profileData.username }}</p>
     <p><strong>Contact Number:</strong> {{ profileData.contact_number }}</p>
     <p><strong>Date of Birth:</strong> {{ profileData.date_of_birth }}</p>
-    <p><strong>Medical History:</strong> {{ profileData.medical_history || 'N/A' }}</p>
+    <p><strong>Medical Condition:</strong> {{ profileData.medical_history || 'N/A' }}</p>
   </div>
 
   <!-- Edit button -->
@@ -52,7 +52,7 @@
 
       <!-- Medical History -->
       <div class="form-group">
-        <label for="medical_history">Medical History:</label>
+        <label for="medical_history">Medical Condition:</label>
         <textarea
           id="medical_history"
           [(ngModel)]="updatedProfileData.medical_history"
