@@ -48,10 +48,8 @@ export class InvoiceComponent implements OnInit {
   }
 
   updateInvoiceStatus(invoiceId: number, status: string): void {
-    this.billingService
-      .updateInvoice({ id: invoiceId, status })
-      .subscribe(() => {
-        this.loadInvoices(); // Refresh the invoices list
-      });
+    this.billingService.updateInvoiceStatus(invoiceId, status).subscribe(() => {
+      this.loadInvoices(); // Refresh the invoices list
+    });
   }
 }

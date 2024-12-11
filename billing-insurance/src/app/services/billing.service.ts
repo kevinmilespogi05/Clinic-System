@@ -29,9 +29,12 @@ export class BillingService {
       .pipe(catchError(this.handleError));
   }
 
-  updateInvoice(invoice: any): Observable<any> {
+  updateInvoiceStatus(invoiceId: number, status: string): Observable<any> {
     return this.http
-      .put<any>(`${this.baseUrl}/api/billing/update_payment.php`, invoice)
+      .put<any>(`${this.baseUrl}/api/billing/update_payment.php`, {
+        invoice_id: invoiceId,
+        status,
+      })
       .pipe(catchError(this.handleError));
   }
 
