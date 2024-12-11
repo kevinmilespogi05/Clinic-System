@@ -17,33 +17,47 @@ export class BillingService {
       .pipe(catchError(this.handleError));
   }
 
-  getInvoices(): Observable<any[]> {
-    return this.http
-      .post<any[]>(`${this.baseUrl}/api/billing/read_user.php`, { user_id: 1 })
-      .pipe(catchError(this.handleError));
-  }
-
-  createInvoice(invoice: any): Observable<any> {
-    return this.http
-      .post<any>(`${this.baseUrl}/api/billing/create.php`, invoice)
-      .pipe(catchError(this.handleError));
-  }
-
-  updateInvoiceStatus(invoiceId: number, status: string): Observable<any> {
-    return this.http
-      .put<any>(`${this.baseUrl}/api/billing/update_payment.php`, {
-        invoice_id: invoiceId,
-        status,
-      })
-      .pipe(catchError(this.handleError));
-  }
-
-  // billing.service.ts
-getInsuranceClaims(userId: number, isAdmin: number): Observable<any[]> {
-  const url = `${this.baseUrl}/api/insurance/read_all.php?user_id=${userId}&is_admin=${isAdmin}`;
-  return this.http.get<any[]>(url).pipe(catchError(this.handleError));
+ // Get invoices for a user
+ getInvoices(): Observable<any[]> {
+  return this.http
+    .post<any[]>(`${this.baseUrl}/api/billing/read_user.php`, { user_id: 1 })
+    .pipe(catchError(this.handleError));
 }
 
+// Create an invoice
+createInvoice(invoice: any): Observable<any> {
+  return this.http
+    .post<any>(`${this.baseUrl}/api/billing/create.php`, invoice)
+    .pipe(catchError(this.handleError));
+}
+
+// Update invoice status
+updateInvoiceStatus(invoiceId: number, status: string): Observable<any> {
+  return this.http
+    .put<any>(`${this.baseUrl}/api/billing/update_payment.php`, {
+      invoice_id: invoiceId,
+      status,
+    })
+    .pipe(catchError(this.handleError));
+}
+
+// Update invoice description
+updateInvoiceDescription(invoiceId: number, description: string): Observable<any> {
+  return this.http
+    .put<any>(`${this.baseUrl}/api/billing/update_description.php`, {
+      invoice_id: invoiceId,  // Ensure 'invoice_id' matches the 'id' in the table
+      description: description,
+    })
+    .pipe(catchError(this.handleError));
+}
+
+
+
+  // billing.service.ts
+  getInsuranceClaims(userId: number, isAdmin: number): Observable<any[]> {
+    const url = `${this.baseUrl}/api/insurance/read_all.php?user_id=${userId}&is_admin=${isAdmin}`;
+    return this.http.get<any[]>(url).pipe(catchError(this.handleError));
+  }
 
   createInsuranceClaim(claim: any): Observable<any> {
     return this.http
@@ -57,13 +71,13 @@ getInsuranceClaims(userId: number, isAdmin: number): Observable<any[]> {
       .pipe(catchError(this.handleError));
   }
 
-// Fetch stats from backend
-getStats(): Observable<any> {
-  const url = `${this.baseUrl}/api/insurance/stats.php`;
-  return this.http.get<any>(url).pipe(
-    catchError(this.handleError)
-  );
-}
+  // Fetch stats from backend
+  getStats(): Observable<any> {
+    const url = `${this.baseUrl}/api/insurance/stats.php`;
+    return this.http.get<any>(url).pipe(
+      catchError(this.handleError)
+    );
+  }
   
   private handleError(error: any) {
     console.error('An error occurred', error);

@@ -1,14 +1,21 @@
-<div class="billing-container">
-  <h1>Billing and Insurance Management System</h1>
-  <div class="invoices-container">
-    <h2>Invoices</h2>
-    <table>
+<div class="billing-section">
+  <h1>User Billing</h1>
+  <table>
+    <thead>
       <tr>
-        <td>Invoice No. 2024034</td>
-        <td><a href="#">View</a></td>
-        <td><a href="#">Download</a></td>
-        <td class="status-paid">Paid</td>
+        <th>Invoice Number</th>
+        <th>Status</th>
+        <th>Action</th>
       </tr>
-    </table>
-  </div>
+    </thead>
+    <tbody>
+      <tr *ngFor="let invoice of invoices">
+        <td>{{ invoice.invoice_number }}</td>
+        <td>{{ invoice.status }}</td>
+        <td>
+          <button (click)="generateInvoice(invoice)">View & Download</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
