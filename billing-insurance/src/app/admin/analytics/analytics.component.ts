@@ -36,15 +36,16 @@ export class AnalyticsComponent implements OnInit {
     new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['Paid Invoices', 'Unpaid Invoices', 'Accepted Claims', 'Rejected Claims'],
+        labels: ['Paid Invoices', 'Unpaid Invoices', 'Approved Claims', 'Rejected Claims', 'Pending Claims'],
         datasets: [
           {
             label: 'Count',
             data: [
               stats.paid_invoices, // from your updated API response
               stats.unpaid_invoices, // from your updated API response
-              stats.accepted_claims, // from your updated API response
-              stats.rejected_claims // from your updated API response
+              stats.approved_claims, // from your updated API response
+              stats.rejected_claims, // from your updated API response
+              stats.pending_claims
             ],
             backgroundColor: ['#4caf50', '#f44336', '#2196f3', '#ff9800']
           }

@@ -15,7 +15,8 @@ try {
                 (SELECT COUNT(*) FROM invoices WHERE status = 'paid') AS paid_invoices,
                 (SELECT COUNT(*) FROM invoices WHERE status = 'unpaid') AS unpaid_invoices,
                 (SELECT COUNT(*) FROM insurance_claims WHERE status = 'approved') AS approved_claims,
-                (SELECT COUNT(*) FROM insurance_claims WHERE status = 'rejected') AS rejected_claims
+                (SELECT COUNT(*) FROM insurance_claims WHERE status = 'rejected') AS rejected_claims,
+                (SELECT COUNT(*) FROM insurance_claims WHERE status = 'pending') AS pending_claims
               FROM dual"; // Using 'dual' as a dummy table for SELECT without needing an actual table
 
     $stmt = $db->prepare($query);
