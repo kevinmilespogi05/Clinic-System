@@ -7,7 +7,7 @@
     max-width: 900px; /* Reduced max width */
     margin: 20px auto;
     font-family: 'Futura Std Condensed Light', sans-serif;
-    overflow: hidden;
+    overflow: hidden; /* Hide overflow */
 
     /* Move container a little to the right */
     position: relative;

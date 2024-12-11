@@ -74,7 +74,6 @@ button:hover {
     transform: translateY(-4px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
-
 /* Responsiveness */
 @media (max-width: 600px) {
     .profile-details {
@@ -143,49 +142,6 @@ button:hover {
     border-color: #28a745; /* Green border on focus */
     box-shadow: 0 0 6px rgba(40, 167, 69, 0.3);
     outline: none;
-}
-
-/* Textarea Styling */
-.profile-container textarea {
-    height: 120px;
-    resize: vertical; /* Allow resizing vertically */
-}
-
-/* Submit and Cancel Buttons (Inside Form) */
-.profile-container .form-actions {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-.profile-container .form-actions button {
-    padding: 14px 22px;
-    font-size: 1rem;
-    border-radius: 6px;
-    width: 48%;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.profile-container .form-actions button[type="submit"] {
-    background-color: #28a745;
-    color: white;
-}
-
-.profile-container .form-actions button[type="submit"]:hover {
-    background-color: #218838;
-    transform: translateY(-4px);
-}
-
-.profile-container .form-actions button.cancel {
-    background-color: #e74c3c;
-    color: white;
-}
-
-.profile-container .form-actions button.cancel:hover {
-    background-color: #c0392b;
-    transform: translateY(-4px);
 }
 
 
@@ -284,12 +240,10 @@ span.pending {
         padding: 25px;
         margin: 25px;
     }
-
     h1,
     .insurance-status-container h2 {
         font-size: 2.2rem; /* Adjusted heading for mobile */
     }
-
     .profile-details p,
     .claim-item p {
         font-size: 1.1rem;
