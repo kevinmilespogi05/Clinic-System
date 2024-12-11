@@ -1,165 +1,143 @@
 .appointments-container {
-  padding: 30px; /* Increased padding for better spacing */
-  background-color: #ffffff; /* Clean white background */
-  border-radius: 12px; /* Subtle rounded corners */
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Slightly deeper shadow for a modern effect */
-  max-width: 1000px; /* Increase max-width for a more spacious layout */
-  margin: 30px auto; /* Center the container vertically */
+  max-width: 90%;
+  padding: 40px;
+  padding-top: 5px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  background-color: #f4f7fa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center horizontally and vertically */
   font-family: 'Futura Std Condensed Light', sans-serif;
-  text-align: center;
-  position: relative; /* Required for positioning */
-  left: 5%; 
-  
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
 }
 
 .appointments-container h1 {
-  margin-bottom: 30px;
-  font-size: 2.4rem;
-  color: #2c3e50;
+  margin-bottom: 30px; /* More breathing space */
+  font-size: 2rem;   /* Slightly larger title */
+  color: #333;         /* Darker color for better contrast */
+  text-align: center;
   font-weight: 700;
 }
 
 table {
   width: 100%;
+  max-width: 1000px; /* Table maximum width */
   border-collapse: collapse;
-  background-color: #fff;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Clean subtle shadow */
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Enhanced shadow for better elevation */
   border-radius: 8px;
   overflow: hidden;
   margin-top: 30px;
-  table-layout: fixed;
+  font-family: 'Futura Std Condensed Light', sans-serif;
 }
 
 thead {
-  background-color: #1abc9c; /* Fresh mint color */
+  background-color: #3498db;
   color: white;
   text-align: left;
-  padding: 18px 14px;
-  font-size: 1.2rem;
-  font-weight: 600;
+  padding: 15px 10px;
 }
 
 th,
 td {
-  padding: 16px 20px; /* Increased padding for a more airy feel */
+  padding: 14px 18px;  /* Increased padding for larger cells */
   border-bottom: 1px solid #ddd;
   text-align: left;
-  font-size: 1.1rem;
-  transition: background-color 0.3s ease;
+  transition: all 0.2s ease-in-out; /* Smooth transition for hover effects */
 }
 
 th {
-  font-size: 1.1rem;
+  font-size: 1.15rem; /* Slightly increased font size for better readability */
   text-transform: uppercase;
-  letter-spacing: 0.03rem;
+  letter-spacing: 0.05rem;
 }
 
 tbody tr:nth-child(even) {
-  background-color: #f9f9f9; /* Very light grey rows for contrast */
+  background-color: #f9f9f9;
 }
 
 tbody tr:hover {
-  background-color: #eafaf4; /* Soft hover effect */
-  cursor: pointer;
+  background-color: #f1f1f1;
+  cursor: pointer; /* Indicate hoverable rows */
 }
 
 tbody td {
-  color: #333; /* Dark text for readability */
+  font-size: 1.05rem;  /* Slightly larger font for readability */
+  color: #555;
 }
 
+/* Button styling */
 .delete-btn {
   background-color: #e74c3c;
   color: white;
-  padding: 12px 20px;
+  padding: 8px 16px;
   border: none;
-  border-radius: 8px; /* Slightly rounder corners */
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 1rem;
+  transition: background-color 0.3s ease; /* Smooth background color transition */
 }
 
 .delete-btn:hover {
-  background-color: #c0392b;
+  background-color: #c0392b; /* Darker red on hover */
 }
 
 .delete-btn:focus {
-  outline: none;
+  outline: none; /* Remove focus outline for a cleaner look */
 }
 
+/* Status-specific styles */
 .status-pending {
-  color: #f39c12;
+  color: orange;
   font-weight: bold;
 }
 
 .status-confirmed {
-  color: #27ae60;
+  color: green;
   font-weight: bold;
 }
 
 .status-cancelled {
-  color: #e74c3c;
+  color: red;
   font-weight: bold;
 }
 
 /* Media Queries */
-@media (max-width: 1024px) {
-  .appointments-container {
-    padding: 25px;
-  }
-
-  table {
-    font-size: 1rem;
-  }
-
-  th,
-  td {
-    padding: 14px 12px;
-  }
-}
-
 @media (max-width: 768px) {
   .appointments-container {
-    padding: 20px;
+    padding: 20px; /* Reduced padding for smaller screens */
   }
 
   table {
-    font-size: 0.95rem;
-    overflow-x: auto; /* Horizontal scrolling for small screens */
-    display: block; /* Makes the table scrollable */
+    font-size: 0.95rem; /* Adjusted font size for smaller screens */
   }
 
   th,
   td {
-    padding: 14px 12px;
+    padding: 10px 8px; /* Adjusted padding for mobile */
   }
 
-  .appointments-container h1 {
-    font-size: 1.8rem;
+  thead {
+    font-size: 1rem; /* Adjusted header font size */
   }
 }
 
 @media (max-width: 480px) {
-  .appointments-container {
-    padding: 18px;
-  }
-
   table {
-    font-size: 0.85rem;
-    overflow-x: auto;
-    display: block;
+    font-size: 0.85rem; /* Further reduced font size for very small screens */
   }
 
   th,
   td {
-    padding: 12px 10px;
+    padding: 8px 6px; /* Compact padding for very small screens */
   }
 
   .appointments-container h1 {
-    font-size: 1.6rem;
-  }
-
-  .delete-btn {
-    padding: 10px 15px;
-    font-size: 0.9rem;
+    font-size: 1.6rem; /* Adjusted title size */
   }
 }
