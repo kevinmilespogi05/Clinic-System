@@ -4,6 +4,9 @@ import { LoginComponent } from './user/login/login.component';
 import { AdminInsuranceComponent } from './admin/admin-insurance/admin-insurance.component';
 import { AnalyticsComponent } from './admin/analytics/analytics.component';
 import { InvoiceComponent } from './admin/invoice/invoice.component';
+import { BillingComponent } from './user/login/billing/billing.component';
+import { InsuranceComponent } from './user/login/insurance/insurance.component';
+import { SideNavComponent as UserSideNavComponent } from './user/side-nav/side-nav.component';
 import { SideNavComponent as AdminSideNavComponent } from './admin/side-nav/side-nav.component';
 
 // Define routes
@@ -13,6 +16,16 @@ export const routes: Routes = [
 
   // Authentication routes
   { path: 'login', component: LoginComponent, title: 'Login' },
+
+  // User routes with SideNav
+  {
+    path: 'user',
+    component: UserSideNavComponent, // Wrap routes with the user side nav
+    children: [
+      { path: 'billing', component: BillingComponent, title: 'Billing' },
+      { path: 'insurance', component: InsuranceComponent, title: 'Insurance' },
+    ],
+  },
 
   // Admin routes with SideNav
   {

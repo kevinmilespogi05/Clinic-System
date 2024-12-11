@@ -17,6 +17,10 @@ export class AdminInsuranceComponent implements OnInit {
   constructor(private billingService: BillingService) {}
 
   ngOnInit(): void {
+    this.loadClaims();
+  }
+
+  loadClaims(): void {
     this.billingService.getInsuranceClaims().subscribe((data: any[]) => {
       this.claims = data;
     });
@@ -26,7 +30,7 @@ export class AdminInsuranceComponent implements OnInit {
     this.billingService
       .updateInsuranceClaim({ id: claimId, status })
       .subscribe(() => {
-        this.ngOnInit(); // Refresh the claims list
+        this.loadClaims(); // Refresh the claims list
       });
   }
 }

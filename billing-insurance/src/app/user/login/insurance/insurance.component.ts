@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-insurance',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './insurance.component.html',
-  styleUrl: './insurance.component.css'
+  styleUrls: ['./insurance.component.css'],
 })
-export class InsuranceComponent {
-
-}
+export class InsuranceComponent {}

@@ -1,76 +1,75 @@
 /* Set the background color of the entire page */
 body {
-    background-color: #c5c4c4; /* Light grey background */
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
+  background-color: #c5c4c4; /* Light grey background */
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
 }
 
 /* General container styling */
 .billing-container {
-    padding: 0; /* Remove extra padding */
-    background-color: #f9f9f9;
-    max-width: 1350px; /* Increase the width */
-    margin: 0 auto; /* Center the container */
-    font-family: 'Poppins', sans-serif;
-    text-align: center;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    height: 930px;
-
+  padding: 0; /* Remove extra padding */
+  background-color: #f9f9f9;
+  max-width: 1350px; /* Increase the width */
+  margin: 0 auto; /* Center the container */
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  height: 930px;
 }
 
 /* Heading styling */
 .billing-container h1 {
-    font-size: 2rem;
-    color: #2c3e50;
-    margin: 20px 0;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin: 20px 0;
 }
 
 /* Invoices section container */
 .invoices-container {
-    background-color: #ffffff;
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    margin-top: 0; /* Move to the very top */
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  margin-top: 0; /* Move to the very top */
 }
 
 /* Invoices heading */
 .invoices-container h2 {
-    text-align: left;
-    font-size: 1.5rem;
-    color: #34495e;
-    margin-bottom: 15px;
+  text-align: left;
+  font-size: 1.5rem;
+  color: #34495e;
+  margin-bottom: 15px;
 }
 
 /* Table styling */
 .invoices-container table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
 }
 
 .invoices-container table td {
-    padding: 15px;
-    font-size: 1rem;
-    color: #34495e;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
+  padding: 15px;
+  font-size: 1rem;
+  color: #34495e;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
 }
 
 .invoices-container table a {
-    color: #3498db;
-    text-decoration: none;
-    font-weight: 500;
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 500;
 }
 
 .invoices-container table a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 /* Paid status */
 .status-paid {
-    color: #27ae60;
-    font-weight: bold;
+  color: #27ae60;
+  font-weight: bold;
 }
