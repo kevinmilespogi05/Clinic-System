@@ -8,7 +8,7 @@
     max-width: 900px; /* Maximum width for readability */
     font-family: 'Roboto', sans-serif; /* Modern font */
     transition: transform 0.3s ease-in-out;
-    margin-left: 290px;
+    margin-left: 350px;
 }
 
 .profile-container:hover {
