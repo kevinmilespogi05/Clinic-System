@@ -28,12 +28,16 @@ export class InsuranceComponent implements OnInit {
     this.loadClaims();
   }
 
-  loadClaims(): void {
-    const userId = parseInt(localStorage.getItem('userId') || '0', 10);
-    this.billingService.getInsuranceClaims().subscribe((data: any[]) => {
-      this.claims = data;
-    });
-  }
+ // insurance.component.ts (user)
+loadClaims(): void {
+  const userId = parseInt(localStorage.getItem('userId') || '0', 10);
+  const isAdmin = localStorage.getItem('role') === 'admin' ? 1 : 0;  // Assuming 'role' is stored as 'admin' or 'user'
+  
+  this.billingService.getInsuranceClaims(userId, isAdmin).subscribe((data: any[]) => {
+    this.claims = data;
+  });
+}
+
 
   createClaim(): void {
     if (this.claimForm.valid) {

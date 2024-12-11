@@ -20,11 +20,14 @@ export class AdminInsuranceComponent implements OnInit {
     this.loadClaims();
   }
 
-  loadClaims(): void {
-    this.billingService.getInsuranceClaims().subscribe((data: any[]) => {
-      this.claims = data;
-    });
-  }
+ // admin-insurance.component.ts (admin)
+loadClaims(): void {
+  const isAdmin = 1;  // Admin flag
+  this.billingService.getInsuranceClaims(0, isAdmin).subscribe((data: any[]) => {  // Passing '0' as userId for admin
+    this.claims = data;
+  });
+}
+
 
   updateClaimStatus(claimId: number, status: string): void {
     this.billingService

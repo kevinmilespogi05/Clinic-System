@@ -38,11 +38,12 @@ export class BillingService {
       .pipe(catchError(this.handleError));
   }
 
-  getInsuranceClaims(): Observable<any[]> {
-    return this.http
-      .get<any[]>(`${this.baseUrl}/api/insurance/read_all.php`)
-      .pipe(catchError(this.handleError));
-  }
+  // billing.service.ts
+getInsuranceClaims(userId: number, isAdmin: number): Observable<any[]> {
+  const url = `${this.baseUrl}/api/insurance/read_all.php?user_id=${userId}&is_admin=${isAdmin}`;
+  return this.http.get<any[]>(url).pipe(catchError(this.handleError));
+}
+
 
   createInsuranceClaim(claim: any): Observable<any> {
     return this.http
