@@ -1,0 +1,112 @@
+/* Side Navigation */
+.side-nav {
+  width: 220px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: #006d77; /* Medical green-blue color */
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  transition: width 0.3s ease;
+}
+
+/* Logo Section */
+.logo-container {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo-container img.logo {
+  max-width: 100px;
+  height: auto;
+  margin-bottom: 10px;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Horizontal Line */
+.horizontal-line {
+  border-top: 2px solid #ffffff;
+  width: 80%;
+  margin: 10px auto;
+}
+
+/* Navigation Links */
+.nav-links,
+.logout {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-links li,
+.logout li {
+  margin: 15px 0;
+}
+
+.nav-links a,
+.logout a {
+  color: #ffffff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-links a i,
+.logout a i {
+  font-size: 1.2rem;
+}
+
+/* Hover Effects */
+.nav-links a:hover,
+.logout a:hover {
+  background-color: #004f55;
+  transform: translateX(5px);
+}
+
+/* Active Link Highlight */
+.nav-links a.active {
+  background-color: #004f55;
+  font-weight: bold;
+}
+
+/* Logout Section */
+.logout {
+  margin-top: auto;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .side-nav {
+    width: 180px;
+  }
+
+  .nav-links a,
+  .logout a {
+    font-size: 0.9rem;
+    padding: 8px 10px;
+  }
+
+  .logo-container img.logo {
+    max-width: 80px;
+  }
+}

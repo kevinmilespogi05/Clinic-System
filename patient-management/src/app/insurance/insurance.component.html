@@ -1,0 +1,60 @@
+<div class="billing-container">
+  <h1><i class="bi bi-file-earmark-medical"></i> Billing and Insurance Management System</h1>
+
+  <!-- Insurance Claim Status Section -->
+  <div class="insurance-status-container">
+    <h2><i class="bi bi-shield-lock"></i> Insurance Claim Status</h2>
+    <div *ngFor="let claim of claims" class="claim-item">
+      <p><strong>Claim ID:</strong> {{ claim.id }}</p>
+      <p><strong>Description:</strong> {{ claim.description }}</p>
+      <p>
+        <strong>Status:</strong>
+        <span
+          [ngClass]="{
+            approved: claim.status === 'approved',
+            rejected: claim.status === 'rejected',
+            pending: claim.status === 'pending'
+          }"
+          >{{ claim.status }}</span
+        >
+      </p>
+    </div>
+  </div>
+
+  <!-- New Insurance Claim Form Section -->
+  <div class="insurance-form-container">
+    <h2><i class="bi bi-file-earmark-plus"></i> New Insurance Claim Form</h2>
+    <form [formGroup]="claimForm" (ngSubmit)="createClaim()">
+      <div class="form-group">
+        <label for="patient-name"><i class="bi bi-person"></i> Patient Name:</label>
+        <input
+          type="text"
+          id="patient-name"
+          formControlName="patient_name"
+          placeholder="Enter patient name"
+        />
+      </div>
+      <div class="form-group">
+        <label for="service-type"><i class="bi bi-tools"></i> Service Type:</label>
+        <select id="service-type" formControlName="service_type">
+          <option value="" disabled selected>Select service type</option>
+          <option value="consultation">Consultation</option>
+          <option value="surgery">Surgery</option>
+          <option value="therapy">Therapy</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="claim-description"><i class="bi bi-file-earmark-text"></i> Claim Description:</label>
+        <textarea
+          id="claim-description"
+          formControlName="claim_description"
+          rows="4"
+          placeholder="Enter claim description"
+        ></textarea>
+      </div>
+      <button type="submit" class="btn-submit">
+        <i class="bi bi-check-circle"></i> Submit
+      </button>
+    </form>
+  </div>
+</div>

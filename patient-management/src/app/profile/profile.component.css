@@ -1,0 +1,212 @@
+/* Profile Container */
+.profile-container {
+    padding: 35px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    margin: 50px auto;
+    max-width: 900px;
+    font-family: 'Roboto', sans-serif;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    margin-left: 350px;
+}
+
+.profile-container:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Profile Header */
+h1 {
+    color: #2c3e50;
+    font-size: 2.8rem;
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: 700;
+    text-transform: capitalize;
+    letter-spacing: 1.5px;
+}
+
+/* Profile Data Section */
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.profile-details .profile-data-container {
+    padding: 15px;
+    background: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-details p {
+    font-size: 1.2rem;
+    color: #34495e;
+    margin-bottom: 10px;
+    line-height: 1.8;
+}
+
+.profile-details strong {
+    font-weight: 700;
+    color: #28a745;
+}
+
+/* Edit Profile Button */
+button {
+    padding: 12px 25px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    display: block;
+    margin: 25px auto;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: #218838;
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Icon Styling */
+button i {
+    margin-right: 8px;
+}
+
+/* Profile Edit Form Styling */
+.profile-container .form-group {
+    margin-bottom: 20px;
+}
+
+/* Label Styling */
+.profile-container label {
+    display: block;
+    font-size: 1.1rem;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+/* Input and Textarea Fields */
+.profile-container input,
+.profile-container textarea {
+    width: 100%;
+    padding: 12px 18px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #2c3e50;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Focused State for Input Fields */
+.profile-container input:focus,
+.profile-container textarea:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 6px rgba(40, 167, 69, 0.3);
+    outline: none;
+}
+
+/* Submit and Cancel Buttons (Inside Form) */
+.profile-container .form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.profile-container .form-actions button {
+    padding: 14px 22px;
+    font-size: 1rem;
+    border-radius: 6px;
+    width: 48%;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-container .form-actions button[type="submit"] {
+    background-color: #28a745;
+    color: white;
+}
+
+.profile-container .form-actions button[type="submit"]:hover {
+    background-color: #218838;
+    transform: translateY(-4px);
+}
+
+.profile-container .form-actions button.cancel {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.profile-container .form-actions button.cancel:hover {
+    background-color: #c0392b;
+    transform: translateY(-4px);
+}
+
+
+/* Insurance Section Container */
+.insurance-status-container {
+    padding: 35px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    margin: 50px auto;
+    max-width: 900px;
+    font-family: 'Roboto', sans-serif;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    margin-left: 350px;
+}
+
+.insurance-status-container:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Insurance Section Header */
+.insurance-status-container h2 {
+    color: #34495e;
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* Individual Claim Item */
+.claim-item {
+    padding: 18px;
+    background: #ffffff;
+    border-radius: 10px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Claim Status Styling */
+.claim-item span {
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 6px;
+    color: white;
+}
+
+.claim-item .approved {
+    background-color: #28a745;
+}
+
+.claim-item .rejected {
+    background-color: #e74c3c;
+}
+
+.claim-item .pending {
+    background-color: #f39c12;
+}

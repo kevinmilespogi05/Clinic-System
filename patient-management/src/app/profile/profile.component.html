@@ -1,0 +1,103 @@
+<!-- Profile Section -->
+<div class="profile-container" *ngIf="profileData; else errorTemplate">
+  <h1>Welcome, {{ profileData.name }}</h1>
+  
+  <!-- Profile Data -->
+  <div class="profile-details">
+    <p><strong>Username:</strong> {{ profileData.username }}</p>
+    <p><strong>Contact Number:</strong> {{ profileData.contact_number }}</p>
+    <p><strong>Date of Birth:</strong> {{ profileData.date_of_birth }}</p>
+    <p><strong>Medical Condition:</strong> {{ profileData.medical_history || 'N/A' }}</p>
+  </div>
+
+  <!-- Edit button -->
+  <button *ngIf="!isEditing" (click)="toggleEdit()">
+      <i class="bi bi-pencil-fill"></i> Edit Profile
+  </button>
+
+  <!-- Profile Edit Form -->
+  <div *ngIf="isEditing">
+    <h2>Edit Profile</h2>
+    <form (ngSubmit)="updateProfile()">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          [(ngModel)]="updatedProfileData.name"
+          name="name"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="contact_number">Contact Number:</label>
+        <input
+          type="text"
+          id="contact_number"
+          [(ngModel)]="updatedProfileData.contact_number"
+          name="contact_number"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="date_of_birth">Date of Birth:</label>
+        <input
+          type="date"
+          id="date_of_birth"
+          [(ngModel)]="updatedProfileData.date_of_birth"
+          name="date_of_birth"
+          required
+        />
+      </div>
+
+      <!-- Medical History -->
+      <div class="form-group">
+        <label for="medical_history">Medical Condition:</label>
+        <textarea
+          id="medical_history"
+          [(ngModel)]="updatedProfileData.medical_history"
+          name="medical_history"
+        ></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit">
+          <i class="bi bi-check-circle"></i> Save Changes
+        </button>
+        <button type="button" class="cancel" (click)="toggleEdit()">
+          <i class="bi bi-x-circle"></i> Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Insurance Claim Status Section -->
+<div class="insurance-status-container">
+  <h2>Insurance Claim Status</h2>
+  
+  <div *ngFor="let claim of claims" class="claim-item">
+    <p><strong>Claim ID:</strong> {{ claim.id }}</p>
+    <p><strong>Description:</strong> {{ claim.description }}</p>
+    <p>
+      <strong>Status:</strong>
+      <span
+        [ngClass]="{
+          approved: claim.status === 'approved',
+          rejected: claim.status === 'rejected',
+          pending: claim.status === 'pending'
+        }"
+        >{{ claim.status }}</span
+      >
+    </p>
+  </div>
+</div>
+
+<ng-template #errorTemplate>
+  <div class="error-message">
+    <p *ngIf="errorMessage">{{ errorMessage }}</p>
+    <p *ngIf="!errorMessage">Loading...</p>
+  </div>
+</ng-template>

@@ -38,7 +38,7 @@ export class PatientService {
   }
 
   getDashboardData(userId: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/api/dashboard/get_dashboard.php?id=${userId}`);
+    return this.http.get<any>(`${this.baseUrl}/api/dashboard/get_dashboard.php?id=${userId}`);
   }
 
   getProfile(userId: number): Observable<any> {
@@ -107,7 +107,7 @@ export class PatientService {
       });
     });
   }
-  
+
   // Billing Management
   getInvoices(): Observable<any[]> {
     return this.http
@@ -121,15 +121,16 @@ export class PatientService {
       .pipe(catchError(this.handleError));
   }
 
-  updateInvoiceStatus(invoiceId: number, status: string): Observable<any> {
-    return this.http
-      .put<any>(`${this.baseUrl}/api/billing/update_payment.php`, {
-        invoice_id: invoiceId,
-        status,
-      })
-      .pipe(catchError(this.handleError));
-  }
+ updateInvoiceStatus(invoiceId: number, status: string): Observable<any> {
+  return this.http
+    .put<any>(`${this.baseUrl}/api/billing/update_payment.php`, {
+      id: invoiceId,
+      status, // 'paid' or 'unpaid'
+    })
+    .pipe(catchError(this.handleError));
+}
 
+  
   updateInvoiceDescription(invoiceId: number, description: string): Observable<any> {
     return this.http
       .put<any>(`${this.baseUrl}/api/billing/update_description.php`, {

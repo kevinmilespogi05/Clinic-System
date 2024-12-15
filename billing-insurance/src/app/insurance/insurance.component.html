@@ -1,0 +1,22 @@
+<div class="admin-insurance-container">
+    <h2>Admin Insurance Management</h2>
+    <div *ngFor="let claim of claims" class="claim-item">
+      <p>Claim ID: {{ claim.id }}</p>
+      <p>Patient Username: {{ claim.username }}</p>
+      <p>Description: {{ claim.description }}</p>
+      <p>
+        Status:
+        <span
+          [ngClass]="{
+            approved: claim.status === 'approved',
+            rejected: claim.status === 'rejected',
+            pending: claim.status === 'pending'
+          }"
+          >{{ claim.status }}</span
+        >
+      </p>
+      <button (click)="updateClaimStatus(claim.id, 'approved')">Approve</button>
+      <button (click)="updateClaimStatus(claim.id, 'rejected')">Reject</button>
+    </div>
+  </div>
+  

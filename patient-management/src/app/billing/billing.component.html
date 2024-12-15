@@ -1,0 +1,22 @@
+<div class="billing-section">
+    <h1>User Billing</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Invoice Number</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let invoice of invoices">
+          <td>{{ invoice.invoice_number }}</td>
+          <td>{{ invoice.status }}</td>
+          <td>
+            <button (click)="generateInvoice(invoice)">View & Download</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

@@ -1,0 +1,160 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f3f3f3; /* Slightly lighter background for consistency */
+  color: #333;
+}
+
+/* Invoice Management Container */
+.invoice-management {
+  max-width: 1000px;
+  margin: 50px auto;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Soft and larger shadow */
+}
+
+.invoice-management h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #27ae60; /* Clinic green for heading */
+  font-size: 2rem;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Generate Invoice and Manage Payments Sections */
+.generate-invoice,
+.manage-payments {
+  margin-bottom: 20px;
+  padding: 30px;
+  border: none;
+  border-radius: 12px;
+  background-color: #f9fafb;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.generate-invoice h2,
+.manage-payments h2 {
+  margin-bottom: 15px;
+  color: #27ae60;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+/* Form Fields */
+form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #34495e;
+}
+
+form input,
+form select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input:focus,
+form select:focus {
+  border-color: #27ae60;
+  outline: none;
+  box-shadow: 0 0 5px rgba(39, 174, 96, 0.5);
+}
+
+/* Buttons */
+.submit-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Payment Status */
+.payment-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Status Labels */
+.status {
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.status.paid {
+  color: white;
+  background-color: #28a745;
+}
+
+.status.unpaid {
+  color: white;
+  background-color: #e74c3c;
+}
+
+/* Action Buttons */
+.paid-btn,
+.unpaid-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .invoice-management {
+    padding: 15px;
+  }
+
+  .generate-invoice,
+  .manage-payments {
+    padding: 20px;
+  }
+
+  .payment-status {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .paid-btn,
+  .unpaid-btn {
+    margin-top: 10px;
+  }
+}

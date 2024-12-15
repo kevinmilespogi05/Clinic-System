@@ -1,0 +1,69 @@
+<div class="invoice-management">
+  <h1><i class="bi bi-file-earmark-earmark"></i> Invoice Management</h1>
+
+  <!-- Generate Invoice Section -->
+  <div class="generate-invoice">
+    <h2><i class="bi bi-file-earmark-plus"></i> Generate Invoice</h2>
+    <form [formGroup]="invoiceForm" (ngSubmit)="createInvoice()">
+      <label for="patient-name"><i class="bi bi-person"></i> Patient Name:</label>
+      <input
+        type="text"
+        id="patient-name"
+        formControlName="patient_name"
+        placeholder="Enter patient name"
+      />
+
+      <label for="service-type"><i class="bi bi-briefcase"></i> Service Type:</label>
+      <select id="service-type" formControlName="service_type">
+        <option value="" disabled selected>Select service type</option>
+        <option value="consultation">Consultation</option>
+        <option value="surgery">Surgery</option>
+        <option value="therapy">Therapy</option>
+      </select>
+
+      <label for="claim-description"><i class="bi bi-clipboard"></i> Claim Description:</label>
+      <input
+        type="text"
+        id="claim-description"
+        formControlName="claim_description"
+        placeholder="Enter claim description"
+      />
+
+      <button type="submit" class="submit-btn">
+        <i class="bi bi-check-circle"></i> Submit
+      </button>
+    </form>
+  </div>
+
+  <!-- Manage Payments Section -->
+  <div class="manage-payments">
+    <h2><i class="bi bi-credit-card"></i> Manage Payments</h2>
+    <div *ngFor="let invoice of invoices" class="payment-status">
+      <span><i class="bi bi-file-earmark-text"></i> Invoice No. {{ invoice.id }}</span>
+      <span
+        id="status-text"
+        class="status"
+        [ngClass]="{
+          paid: invoice.status === 'paid',
+          unpaid: invoice.status === 'unpaid'
+        }"
+        ><i class="bi" [ngClass]="{
+          'bi-check-circle': invoice.status === 'paid',
+          'bi-x-circle': invoice.status === 'unpaid'
+        }"></i> {{ invoice.status }}</span
+      >
+      <button
+        class="paid-btn"
+        (click)="updateInvoiceStatus(invoice.id, 'paid')"
+      >
+        <i class="bi bi-check-circle"></i> Mark as Paid
+      </button>
+      <button
+        class="unpaid-btn"
+        (click)="updateInvoiceStatus(invoice.id, 'unpaid')"
+      >
+        <i class="bi bi-x-circle"></i> Mark as Unpaid
+      </button>
+    </div>
+  </div>
+</div>

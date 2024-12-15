@@ -1,0 +1,58 @@
+<head>
+  <!-- Bootstrap Icons Link -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+
+<nav class="side-nav">
+    <h1 class="title">ClinicPoint</h1>
+
+  <div class="horizontal-line"></div>
+
+  <!-- Navigation Links -->
+  <ul class="nav-links">
+    <!-- Analytics -->
+    <li>
+      <a routerLink="/analytics" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <i class="bi bi-bar-chart"></i> Analytics
+      </a>
+    </li>
+    <!-- Appointments -->
+    <li>
+      <a routerLink="/appointments" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <i class="bi bi-calendar-check"></i> Appointments
+      </a>
+    </li>
+    <!-- Insurance -->
+    <li>
+      <a routerLink="/insurance" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <i class="bi bi-shield-check"></i> Insurance
+      </a>
+    </li>
+    <!-- Invoice -->
+    <li>
+      <a routerLink="/invoice" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <i class="bi bi-receipt"></i> Invoice
+      </a>
+    </li>
+    <!-- Patients -->
+    <li>
+      <a routerLink="/patient" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <i class="bi bi-people"></i> Patients
+      </a>
+    </li>
+  </ul>
+
+  <!-- Logout Section -->
+  <ul class="logout">
+    <li>
+      <a (click)="logout()">
+        <i class="bi bi-box-arrow-right"></i> Logout
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<!-- Main Content -->
+<div class="content">
+  <router-outlet></router-outlet>
+</div>
