@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PatientService } from '../services/patient.service';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import Swal from 'sweetalert2';  // Import SweetAlert2
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-appointments',
@@ -14,7 +14,18 @@ import Swal from 'sweetalert2';  // Import SweetAlert2
 })
 export class AppointmentsComponent implements OnInit {
   appointments: any[] = [];
-  newAppointment: any = {};
+  appointmentSlots = [
+    { day: 'Monday', time: '10:00 AM - 11:00 AM' },
+    { day: 'Tuesday', time: '10:00 AM - 11:00 AM' },
+    { day: 'Wednesday', time: '10:00 AM - 11:00 AM' },
+    { day: 'Thursday', time: '10:00 AM - 11:00 AM' },
+    { day: 'Friday', time: '10:00 AM - 11:00 AM' },
+    { day: 'Monday', time: '11:00 AM - 12:00 PM' },
+    { day: 'Tuesday', time: '11:00 AM - 12:00 PM' },
+    { day: 'Wednesday', time: '11:00 AM - 12:00 PM' },
+    { day: 'Thursday', time: '11:00 AM - 12:00 PM' },
+    { day: 'Friday', time: '11:00 AM - 12:00 PM' }
+  ];
 
   constructor(private patientService: PatientService) {}
 
@@ -36,14 +47,12 @@ export class AppointmentsComponent implements OnInit {
     }
   }
 
-  // Handle the form submission to book an appointment
-  bookAppointment(): void {
+  bookAppointment(slot: any): void {
     const userId = localStorage.getItem('userId');
-    if (userId && this.newAppointment.date && this.newAppointment.time) {
-      // Show confirmation before proceeding
+    if (userId) {
       Swal.fire({
         title: 'Are you sure?',
-        text: 'Do you want to book this appointment?',
+        text: `Do you want to book this appointment on ${slot.day} at ${slot.time}?`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Yes, book it!',
@@ -51,66 +60,52 @@ export class AppointmentsComponent implements OnInit {
         reverseButtons: true
       }).then((result) => {
         if (result.isConfirmed) {
-          const dateTime = `${this.newAppointment.date} ${this.newAppointment.time}`;
-          const appointmentData = {
-            id: Number(userId),
-            date: this.newAppointment.date,
-            time: this.newAppointment.time,
-            description: this.newAppointment.description
+          const newAppointment = {
+            id: Date.now(), // Temporary unique ID for local UI update
+            day: slot.day,
+            time: slot.time
           };
 
-          console.log('Booking Appointment with data:', appointmentData); // Add logging to check form data
+          // Directly add the appointment to the UI
+          this.appointments.push(newAppointment);
 
-          // Call the service to book the appointment
+          const appointmentData = {
+            id: Number(userId),
+            day: slot.day,
+            time: slot.time
+          };
+
           this.patientService.bookAppointment(appointmentData).subscribe(
             (response) => {
               console.log('Appointment booked successfully:', response);
-              // Show success alert
               Swal.fire({
                 title: 'Success!',
                 text: 'Your appointment has been booked successfully.',
                 icon: 'success',
                 confirmButtonText: 'OK'
-              }).then(() => {
-                // Refresh the appointments list
-                this.fetchAppointments();
-                // Clear the form after successful booking
-                this.newAppointment = {};
               });
             },
             (error) => {
               console.error('Error booking appointment:', error);
-              // Show error alert
+
               Swal.fire({
                 title: 'Error!',
                 text: 'There was an error booking your appointment. Please try again later.',
                 icon: 'error',
                 confirmButtonText: 'OK'
               });
+
+              // Rollback: Remove the appointment if backend call fails
+              this.appointments = this.appointments.filter(
+                (appt) => appt.id !== newAppointment.id
+              );
             }
           );
-        } else {
-          // If canceled, show info alert
-          Swal.fire({
-            title: 'Canceled',
-            text: 'Your appointment booking has been canceled.',
-            icon: 'info',
-            confirmButtonText: 'OK'
-          });
         }
-      });
-    } else {
-      // Show validation error alert
-      Swal.fire({
-        title: 'Validation Error!',
-        text: 'Please fill in all required fields before submitting.',
-        icon: 'warning',
-        confirmButtonText: 'OK'
       });
     }
   }
 
-  // Cancel Appointment
   cancelAppointment(appointmentId: number): void {
     Swal.fire({
       title: 'Are you sure?',
@@ -125,17 +120,22 @@ export class AppointmentsComponent implements OnInit {
         this.patientService.cancelAppointment(appointmentId).subscribe(
           (response) => {
             console.log('Appointment canceled:', response);
+
+            // Remove appointment from the local list
+            this.appointments = this.appointments.filter(
+              (appt) => appt.id !== appointmentId
+            );
+
             Swal.fire({
               title: 'Cancelled',
               text: 'Your appointment has been cancelled.',
               icon: 'success',
               confirmButtonText: 'OK'
-            }).then(() => {
-              this.fetchAppointments();  // Refresh the appointment list
             });
           },
           (error) => {
             console.error('Error canceling appointment:', error);
+
             Swal.fire({
               title: 'Error!',
               text: 'There was an error canceling your appointment. Please try again later.',

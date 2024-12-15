@@ -1,37 +1,29 @@
-<div class="appointments-container">
-  <!-- Book Appointment Section -->
-  <div class="booking-container shadow-lg p-4 rounded">
-    <h2>Book an Appointment</h2>
-    <form (ngSubmit)="bookAppointment()" #appointmentForm="ngForm">
-      <div class="mb-3">
-        <label for="date" class="form-label">Select Date:</label>
-        <input type="date" id="date" name="date" [(ngModel)]="newAppointment.date" class="form-control" required>
+<div class="appointment-container">
+  <!-- Book an Appointment Section -->
+  <div class="card">
+    <div class="card-title">Book an Appointment</div>
+    <div class="slot-container">
+      <div class="slot" *ngFor="let slot of appointmentSlots">
+        <div class="slot-day">{{ slot.day }}</div>
+        <div class="slot-time">{{ slot.time }}</div>
+        <button class="book-btn" (click)="bookAppointment(slot)">BOOK</button>
       </div>
-  
-      <div class="mb-3">
-        <label for="time" class="form-label">Select Time:</label>
-        <input type="time" id="time" name="time" [(ngModel)]="newAppointment.time" class="form-control" required>
-      </div>
-  
-      <div class="mb-3">
-        <label for="description" class="form-label">Description:</label>
-        <textarea id="description" name="description" [(ngModel)]="newAppointment.description" rows="3" class="form-control" placeholder="Enter description"></textarea>
-      </div>
-  
-      <button type="submit" class="btn btn-primary" [disabled]="appointmentForm.invalid">Book Appointment</button>
-    </form>
+    </div>
   </div>
-  
-  <!-- Booked Appointments Section -->
-  <div class="appointments-list shadow-lg p-4 rounded mt-4">
-    <h2>Your Appointments</h2>
-    <div *ngFor="let appointment of appointments" class="appointment-item">
-      <div class="appointment-details">
-        <p><strong>Date:</strong> {{ appointment.date }} <strong>Time:</strong> {{ appointment.time }}</p>
-        <p><strong>Description:</strong> {{ appointment.description }}</p>
-        <p><strong>Status:</strong> {{ appointment.status }}</p>
+
+  <!-- Existing Appointments Section -->
+  <div class="card appointment-card">
+    <div class="card-title">Appointments</div>
+    <div class="appointment-list">
+      <div class="appointment-item" *ngFor="let appointment of appointments">
+        <div class="appointment-details">
+          <div class="appointment-day">{{ appointment.day }}</div>
+          <div class="appointment-time">{{ appointment.time }}</div>
+        </div>
+        <button class="cancel-btn" (click)="cancelAppointment(appointment.id)">
+          CANCEL
+        </button>
       </div>
-      <button class="btn btn-danger" *ngIf="appointment.status === 'booked'" (click)="cancelAppointment(appointment.id)">Cancel</button>
     </div>
   </div>
 </div>
