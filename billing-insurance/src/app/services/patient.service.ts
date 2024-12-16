@@ -121,16 +121,15 @@ export class PatientService {
       .pipe(catchError(this.handleError));
   }
 
- updateInvoiceStatus(invoiceId: number, status: string): Observable<any> {
-  return this.http
-    .put<any>(`${this.baseUrl}/api/billing/update_payment.php`, {
-      id: invoiceId,
-      status, // 'paid' or 'unpaid'
-    })
-    .pipe(catchError(this.handleError));
-}
+  updateInvoiceStatus(invoiceId: number, status: string): Observable<any> {
+    return this.http
+      .put<any>(`${this.baseUrl}/api/billing/update_payment.php`, {
+        id: invoiceId,
+        status, // 'paid' or 'unpaid'
+      })
+      .pipe(catchError(this.handleError));
+  }
 
-  
   updateInvoiceDescription(invoiceId: number, description: string): Observable<any> {
     return this.http
       .put<any>(`${this.baseUrl}/api/billing/update_description.php`, {

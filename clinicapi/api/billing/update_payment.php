@@ -30,8 +30,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
         $id = $data['id']; // Invoice ID
         $status = $data['status']; // e.g., 'paid' or 'unpaid'
 
+        // Validate the status field
+        if (!in_array($status, ['paid', 'unpaid'])) {
+            http_response_code(400);
+            echo json_encode([
+                "success" => false,
+                "message" => "Invalid status. Accepted values are 'paid' or 'unpaid'."
+            ]);
+            exit();
+        }
+
         // Update query
-        $query = "UPDATE invoices SET status = :status, updated_at = NOW() WHERE id = :id";
+        $query = "UPDATE invoices SET status = :status WHERE id = :id";
         $stmt = $db->prepare($query);
 
         // Bind parameters
@@ -67,15 +77,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
         "message" => "Method Not Allowed. Use PUT."
     ]);
 }
-
-// Validate the status field
-if (!in_array($status, ['paid', 'unpaid'])) {
-    http_response_code(400);
-    echo json_encode([
-        "success" => false,
-        "message" => "Invalid status. Accepted values are 'paid' or 'unpaid'."
-    ]);
-    exit();
-}
-
 ?>

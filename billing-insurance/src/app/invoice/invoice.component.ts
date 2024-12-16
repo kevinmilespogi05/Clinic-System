@@ -47,11 +47,10 @@ export class InvoiceComponent implements OnInit {
       });
     }
   }
-  
 
   updateInvoiceStatus(invoiceId: number, status: string): void {
     this.patientService.updateInvoiceStatus(invoiceId, status).subscribe(() => {
       this.loadInvoices(); // Refresh the invoices list
     });
   }
-}  
+}
