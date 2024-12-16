@@ -15,16 +15,16 @@ import Swal from 'sweetalert2';
 export class AppointmentsComponent implements OnInit {
   appointments: any[] = [];
   appointmentSlots = [
-    { day: 'Monday', time: '10:00 AM - 11:00 AM' },
-    { day: 'Tuesday', time: '10:00 AM - 11:00 AM' },
-    { day: 'Wednesday', time: '10:00 AM - 11:00 AM' },
-    { day: 'Thursday', time: '10:00 AM - 11:00 AM' },
-    { day: 'Friday', time: '10:00 AM - 11:00 AM' },
-    { day: 'Monday', time: '11:00 AM - 12:00 PM' },
-    { day: 'Tuesday', time: '11:00 AM - 12:00 PM' },
-    { day: 'Wednesday', time: '11:00 AM - 12:00 PM' },
-    { day: 'Thursday', time: '11:00 AM - 12:00 PM' },
-    { day: 'Friday', time: '11:00 AM - 12:00 PM' }
+    { day: 'Monday', time: '10:00 AM - 11:00 AM', date: '2024-12-18' }, // Add appropriate dates
+    { day: 'Tuesday', time: '10:00 AM - 11:00 AM', date: '2024-12-19' },
+    { day: 'Wednesday', time: '10:00 AM - 11:00 AM', date: '2024-12-20' },
+    { day: 'Thursday', time: '10:00 AM - 11:00 AM', date: '2024-12-21' },
+    { day: 'Friday', time: '10:00 AM - 11:00 AM', date: '2024-12-22' },
+    { day: 'Monday', time: '11:00 AM - 12:00 PM', date: '2024-12-18' },
+    { day: 'Tuesday', time: '11:00 AM - 12:00 PM', date: '2024-12-19' },
+    { day: 'Wednesday', time: '11:00 AM - 12:00 PM', date: '2024-12-20' },
+    { day: 'Thursday', time: '11:00 AM - 12:00 PM', date: '2024-12-21' },
+    { day: 'Friday', time: '11:00 AM - 12:00 PM', date: '2024-12-22' }
   ];
 
   constructor(private patientService: PatientService) {}
@@ -52,7 +52,7 @@ export class AppointmentsComponent implements OnInit {
     if (userId) {
       Swal.fire({
         title: 'Are you sure?',
-        text: `Do you want to book this appointment on ${slot.day} at ${slot.time}?`,
+        text: `Do you want to book this appointment on ${slot.date} (${slot.day}) at ${slot.time}?`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Yes, book it!',
@@ -63,7 +63,8 @@ export class AppointmentsComponent implements OnInit {
           const newAppointment = {
             id: Date.now(), // Temporary unique ID for local UI update
             day: slot.day,
-            time: slot.time
+            time: slot.time,
+            date: slot.date
           };
 
           // Directly add the appointment to the UI
@@ -72,7 +73,8 @@ export class AppointmentsComponent implements OnInit {
           const appointmentData = {
             id: Number(userId),
             day: slot.day,
-            time: slot.time
+            time: slot.time,
+            date: slot.date
           };
 
           this.patientService.bookAppointment(appointmentData).subscribe(
@@ -148,3 +150,4 @@ export class AppointmentsComponent implements OnInit {
     });
   }
 }
+
