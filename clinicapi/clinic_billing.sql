@@ -104,25 +104,42 @@ INSERT INTO `invoices` (`id`, `user_id`, `description`, `status`, `created_at`) 
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `medical_records` text DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `name` varchar(255) NOT NULL,
-  `contact_number` varchar(20) NOT NULL,
-  `date_of_birth` date DEFAULT NULL,
-  `medical_history` text NOT NULL,
-  `role` enum('admin','user') NOT NULL DEFAULT 'user'
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(255) NOT NULL,         -- New field for first name
+  `last_name` varchar(255) NOT NULL,          -- New field for last name
+  `username` varchar(50) NOT NULL,            -- Username field
+  `password` varchar(255) NOT NULL,           -- Password field
+  `medical_records` text DEFAULT NULL,        -- Medical records (optional)
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),  -- Timestamp when user was created
+  `contact_number` varchar(15) NOT NULL,      -- Contact number (with country code, max 15 characters)
+  `date_of_birth` date DEFAULT NULL,          -- Date of birth
+  `medical_history` text NOT NULL,            -- Medical history
+  `role` enum('admin', 'user') NOT NULL DEFAULT 'user',  -- User role (admin or user)
+
+  -- Billing Information Fields
+  `card_first_name` varchar(255) NOT NULL,    -- Billing card first name
+  `card_last_name` varchar(255) NOT NULL,     -- Billing card last name
+  `card_number` varchar(20) NOT NULL,         -- Billing card number
+  `card_expiry` varchar(7) NOT NULL,          -- Card expiry in MM/YYYY format
+  `card_security_code` varchar(4) NOT NULL,   -- CVV
+  `billing_address` varchar(255) NOT NULL,    -- Billing address
+  `billing_city` varchar(100) NOT NULL,       -- Billing city
+  `billing_state` varchar(100) NOT NULL,      -- Billing state
+  `billing_postal_code` varchar(10) NOT NULL, -- Billing postal code
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `medical_records`, `created_at`, `name`, `contact_number`, `date_of_birth`, `medical_history`, `role`) VALUES
-(1, 'admin', '$2y$10$uSa9VcjLIhfwpkuA2waNL.KCgBa8lRH8inUVYqOEOy4jywV9bm4ai', NULL, '2024-12-08 07:04:59', 'ADMINISTRATOR', '09926591335', '2003-11-22', '', 'admin'),
-(15, 'acgbm', '$2y$10$9FVsrYDLUM7dti3yAY.52OWmGITNM4pSGQPhOV0zHeJrtIbpXJs/2', NULL, '2024-12-10 12:04:12', 'Ac Gabriel Manalo', '09926591335', '2003-11-22', '', 'user');
+INSERT INTO `users` (`id`, `username`, `password`, `medical_records`, `created_at`, `first_name`, `last_name`, `contact_number`, `date_of_birth`, `medical_history`, `role`) 
+VALUES
+(1, 'admin', '$2y$10$uSa9VcjLIhfwpkuA2waNL.KCgBa8lRH8inUVYqOEOy4jywV9bm4ai', NULL, '2024-12-08 07:04:59', 'ADMINISTRATOR', '', '09926591335', '2003-11-22', '', 'admin'),
+(15, 'acgbm', '$2y$10$9FVsrYDLUM7dti3yAY.52OWmGITNM4pSGQPhOV0zHeJrtIbpXJs/2', NULL, '2024-12-10 12:04:12', 'Ac Gabriel', 'Manalo', '09926591335', '2003-11-22', '', 'user');
+
 
 --
 -- Indexes for dumped tables
@@ -151,9 +168,6 @@ ALTER TABLE `invoices`
 --
 -- Indexes for table `users`
 --
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- AUTO_INCREMENT for dumped tables

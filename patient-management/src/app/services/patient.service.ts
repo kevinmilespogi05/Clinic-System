@@ -19,22 +19,8 @@ export class PatientService {
   }
 
   // Patient Management
-  register(
-    username: string,
-    password: string,
-    name: string,
-    contact_number: string,
-    date_of_birth: string,
-    medicalHistory: string
-  ): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/api/users/register.php`, {
-      username,
-      password,
-      name,
-      contact_number,
-      date_of_birth,
-      medicalHistory,
-    });
+  register(userDetails: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/api/users/register.php`, userDetails);
   }
 
   getDashboardData(userId: number): Observable<any> {

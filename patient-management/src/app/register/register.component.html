@@ -1,89 +1,307 @@
-<div class="register-container">
-    <h2>Register</h2>
+   <!-- Register Container -->
+<div class="container mt-5 register-container">
+    <h2 class="text-center mb-4">Register</h2>
 
     <form (ngSubmit)="register()" novalidate>
-        <!-- Name Field -->
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input 
-                type="text" 
-                id="name" 
-                [(ngModel)]="name" 
-                name="name" 
-                required 
-                placeholder="Enter your name" 
-                aria-label="Name">
+        <!-- First Name -->
+        <div class="form-group row">
+            <label for="first_name" class="col-sm-2 col-form-label">
+                <i class="bi bi-person"></i> First Name:
+            </label>
+            <div class="col-sm-10 input-group">
+                <input 
+                    type="text" 
+                    id="first_name" 
+                    [(ngModel)]="first_name" 
+                    name="first_name" 
+                    class="form-control" 
+                    required 
+                    placeholder="Enter your first name" 
+                    aria-label="First Name">
+            </div>
         </div>
 
-        <!-- Username Field -->
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input 
-                type="text" 
-                id="username" 
-                [(ngModel)]="username" 
-                name="username" 
-                required 
-                placeholder="Enter your username" 
-                aria-label="Username">
+        <!-- Last Name -->
+        <div class="form-group row">
+            <label for="last_name" class="col-sm-2 col-form-label">
+                <i class="bi bi-person"></i> Last Name:
+            </label>
+            <div class="col-sm-10 input-group">
+                <input 
+                    type="text" 
+                    id="last_name" 
+                    [(ngModel)]="last_name" 
+                    name="last_name" 
+                    class="form-control" 
+                    required 
+                    placeholder="Enter your last name" 
+                    aria-label="Last Name">
+            </div>
         </div>
 
-        <!-- Password Field -->
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input 
-                type="password" 
-                id="password" 
-                [(ngModel)]="password" 
-                name="password" 
-                required 
-                placeholder="Enter your password" 
-                aria-label="Password">
+        <!-- Username -->
+        <div class="form-group row">
+            <label for="username" class="col-sm-2 col-form-label">
+                <i class="bi bi-person-circle"></i> Username:
+            </label>
+            <div class="col-sm-10 input-group">
+                <input 
+                    type="text" 
+                    id="username" 
+                    [(ngModel)]="username" 
+                    name="username" 
+                    class="form-control" 
+                    required 
+                    placeholder="Enter your username" 
+                    aria-label="Username">
+            </div>
         </div>
 
-        <!-- Contact Number Field -->
-        <div class="form-group">
-            <label for="contact_number">Contact Number:</label>
-            <input 
-                type="text" 
-                id="contact_number" 
-                [(ngModel)]="contact_number" 
-                name="contact_number" 
-                required 
-                placeholder="Enter your contact number" 
-                aria-label="Contact Number">
+        <!-- Password -->
+        <div class="form-group row">
+            <label for="password" class="col-sm-2 col-form-label">
+                <i class="bi bi-lock"></i> Password:
+            </label>
+            <div class="col-sm-10 input-group">
+                <input 
+                    type="password" 
+                    id="password" 
+                    [(ngModel)]="password" 
+                    name="password" 
+                    class="form-control" 
+                    required 
+                    placeholder="Enter your password" 
+                    aria-label="Password">
+            </div>
         </div>
 
-        <!-- Date of Birth Field -->
-        <div class="form-group">
-            <label for="date_of_birth">Date of Birth:</label>
-            <input 
-                type="date" 
-                id="date_of_birth" 
-                [(ngModel)]="date_of_birth" 
-                name="date_of_birth" 
-                required 
-                aria-label="Date of Birth">
+        <!-- Contact Number -->
+        <div class="form-group row">
+            <label for="contact_number" class="col-sm-2 col-form-label">
+                <i class="bi bi-telephone"></i> Contact Number:
+            </label>
+            <div class="col-sm-10 input-group">
+                <input 
+                    type="text" 
+                    id="contact_number" 
+                    [(ngModel)]="contact_number" 
+                    name="contact_number" 
+                    class="form-control" 
+                    required 
+                    placeholder="Enter your contact number" 
+                    aria-label="Contact Number" 
+                    maxlength="10" 
+                    pattern="^\d{10}$" 
+                    title="Contact number must be 10 digits long" />
+            </div>
         </div>
 
-        <!-- Medical History Field -->
-        <div class="form-group">
-            <label for="medical_history">Medical Condition:</label>
-            <textarea 
-                id="medical_history" 
-                [(ngModel)]="medicalHistory" 
-                name="medical_history" 
-                required 
-                placeholder="Enter your medical history" 
-                aria-label="Medical History"></textarea>
+        <!-- Date of Birth -->
+        <div class="form-group row">
+            <label for="date_of_birth" class="col-sm-2 col-form-label">
+                <i class="bi bi-calendar"></i> Date of Birth:
+            </label>
+            <div class="col-sm-10 input-group">
+                <input 
+                    type="date" 
+                    id="date_of_birth" 
+                    [(ngModel)]="date_of_birth" 
+                    name="date_of_birth" 
+                    class="form-control" 
+                    required 
+                    aria-label="Date of Birth">
+            </div>
         </div>
 
-        <!-- Register Button -->
-        <div class="form-group">
-            <button type="submit" aria-label="Register">Register</button>
+        <!-- Medical History -->
+        <div class="form-group row">
+            <label for="medical_history" class="col-sm-2 col-form-label">
+                <i class="bi bi-journal-medical"></i> Medical History:
+            </label>
+            <div class="col-sm-10">
+                <textarea 
+                    id="medical_history" 
+                    [(ngModel)]="medical_history" 
+                    name="medical_history" 
+                    class="form-control" 
+                    required 
+                    placeholder="Enter your medical history" 
+                    aria-label="Medical History"></textarea>
+            </div>
         </div>
-    </form>
+        <!-- End of Register Container -->
 
-    <!-- Back Button -->
-    <button (click)="goBack()" aria-label="Back to Login">Back to Login</button>
+      <!-- Billing Information Container -->
+      <div class="billing-container mt-4">
+        <h3 class="text-center mb-3">Billing Information</h3>
+
+        <!-- Card First Name -->
+        <div class="form-group row">
+            <label for="card_first_name" class="col-sm-2 col-form-label">
+                <i class="bi bi-person-fill"></i> Card First Name:
+            </label>
+            <div class="col-sm-10">
+                <input 
+                    type="text" 
+                    id="card_first_name" 
+                    [(ngModel)]="card_first_name" 
+                    name="card_first_name" 
+                    class="form-control" 
+                    required 
+                    placeholder="Enter cardholder's first name" 
+                    aria-label="Card First Name">
+            </div>
+        </div>
+
+            <!-- Card Last Name -->
+            <div class="form-group row">
+                <label for="card_last_name" class="col-sm-2 col-form-label">
+                    <i class="bi bi-person-fill"></i> Card Last Name:
+                </label>
+                <div class="col-sm-10">
+                    <input 
+                        type="text" 
+                        id="card_last_name" 
+                        [(ngModel)]="card_last_name" 
+                        name="card_last_name" 
+                        class="form-control" 
+                        required 
+                        placeholder="Enter cardholder's last name" 
+                        aria-label="Card Last Name">
+                </div>
+            </div>
+
+            <!-- Card Number -->
+            <div class="form-group row">
+                <label for="card_number" class="col-sm-2 col-form-label">
+                    <i class="bi bi-credit-card"></i> Card Number:
+                </label>
+                <div class="col-sm-10">
+                    <input 
+                        type="text" 
+                        id="card_number" 
+                        [(ngModel)]="card_number" 
+                        name="card_number" 
+                        class="form-control" 
+                        required 
+                        placeholder="Enter card number" 
+                        aria-label="Card Number">
+                </div>
+            </div>
+
+            <!-- Card Expiry -->
+            <div class="form-group row">
+                <label for="card_expiry" class="col-sm-2 col-form-label">
+                    <i class="bi bi-calendar-check"></i> Card Expiry (MM/YYYY):
+                </label>
+                <div class="col-sm-10">
+                    <input 
+                        type="month" 
+                        id="card_expiry" 
+                        [(ngModel)]="card_expiry" 
+                        name="card_expiry" 
+                        class="form-control" 
+                        required 
+                        aria-label="Card Expiry">
+                </div>
+            </div>
+
+            <!-- Card Security Code -->
+            <div class="form-group row">
+                <label for="card_security_code" class="col-sm-2 col-form-label">
+                    <i class="bi bi-lock-fill"></i> Card Security Code (CVV):
+                </label>
+                <div class="col-sm-10">
+                    <input 
+                        type="text" 
+                        id="card_security_code" 
+                        [(ngModel)]="card_security_code" 
+                        name="card_security_code" 
+                        class="form-control" 
+                        required 
+                        placeholder="CVV" 
+                        aria-label="Card Security Code">
+                </div>
+            </div>
+
+            <!-- Billing Address -->
+            <div class="form-group row">
+                <label for="billing_address" class="col-sm-2 col-form-label">
+                    <i class="bi bi-house-door"></i> Billing Address:
+                </label>
+                <div class="col-sm-10">
+                    <input 
+                        type="text" 
+                        id="billing_address" 
+                        [(ngModel)]="billing_address" 
+                        name="billing_address" 
+                        class="form-control" 
+                        required 
+                        placeholder="Enter billing address" 
+                        aria-label="Billing Address">
+                </div>
+            </div>
+
+            <!-- Billing City -->
+            <div class="form-group row">
+                <label for="billing_city" class="col-sm-2 col-form-label">
+                    <i class="bi bi-building"></i> Billing City:
+                </label>
+                <div class="col-sm-10">
+                    <input 
+                        type="text" 
+                        id="billing_city" 
+                        [(ngModel)]="billing_city" 
+                        name="billing_city" 
+                        class="form-control" 
+                        required 
+                        placeholder="Enter billing city" 
+                        aria-label="Billing City">
+                </div>
+            </div>
+
+            <!-- Billing State -->
+            <div class="form-group row">
+                <label for="billing_state" class="col-sm-2 col-form-label">
+                    <i class="bi bi-geo-alt-fill"></i> Billing State:
+                </label>
+                <div class="col-sm-10">
+                    <input 
+                        type="text" 
+                        id="billing_state" 
+                        [(ngModel)]="billing_state" 
+                        name="billing_state" 
+                        class="form-control" 
+                        required 
+                        placeholder="Enter billing state" 
+                        aria-label="Billing State">
+                </div>
+            </div>
+
+            <!-- Billing Postal Code -->
+            <div class="form-group row">
+                <label for="billing_postal_code" class="col-sm-2 col-form-label">
+                    <i class="bi bi-postage"></i> Billing Postal Code:
+                </label>
+                <div class="col-sm-10">
+                    <input 
+                        type="text" 
+                        id="billing_postal_code" 
+                        [(ngModel)]="billing_postal_code" 
+                        name="billing_postal_code" 
+                        class="form-control" 
+                        required 
+                        placeholder="Enter postal code" 
+                        aria-label="Billing Postal Code">
+                </div>
+            </div>
+        </div>
+
+        <form #form="ngForm" (ngSubmit)="register()" novalidate>
+            <!-- Form Fields Here -->
+            <button type="submit" class="btn btn-primary btn-block mt-4" [disabled]="!form.valid">Submit</button>
+        </form>
+        
+   </form>
 </div>
+  <!-- Billing Information Container -->

@@ -26,14 +26,23 @@ $user = new User($db);
 $data = json_decode(file_get_contents("php://input"));
 
 // Validate input data
-if (!empty($data->username) && !empty($data->password) && !empty($data->name) && !empty($data->contact_number) && !empty($data->date_of_birth) && !empty($data->medicalHistory)) {
+if (
+    !empty($data->username) && 
+    !empty($data->password) && 
+    !empty($data->first_name) && 
+    !empty($data->last_name) && 
+    !empty($data->contact_number) && 
+    !empty($data->date_of_birth) && 
+    !empty($data->medical_history)
+) {
     // Sanitize and assign values
+    $user->first_name = htmlspecialchars(strip_tags($data->first_name));
+    $user->last_name = htmlspecialchars(strip_tags($data->last_name));
     $user->username = htmlspecialchars(strip_tags($data->username));
     $user->password = password_hash(htmlspecialchars(strip_tags($data->password)), PASSWORD_DEFAULT);  // Hashing the password
-    $user->name = htmlspecialchars(strip_tags($data->name));
     $user->contact_number = htmlspecialchars(strip_tags($data->contact_number));
     $user->date_of_birth = htmlspecialchars(strip_tags($data->date_of_birth));
-    $user->medical_history = htmlspecialchars(strip_tags($data->medicalHistory)); // Handle medical history
+    $user->medical_history = htmlspecialchars(strip_tags($data->medical_history)); // Handle medical history
 
     // Attempt to register the user
     if ($user->register()) {
@@ -47,5 +56,4 @@ if (!empty($data->username) && !empty($data->password) && !empty($data->name) &&
     http_response_code(400); // Bad Request
     echo json_encode(["success" => false, "message" => "All fields are required."]);
 }
-
 ?>
