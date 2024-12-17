@@ -81,6 +81,7 @@ export class PatientService {
       id: appointmentId,
     }).pipe(catchError(this.handleError));
   }
+  
 
   // Combined Stats (Billing + Appointments)
   getCombinedStats(): Observable<any> {

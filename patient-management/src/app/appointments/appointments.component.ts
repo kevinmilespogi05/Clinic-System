@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 export class AppointmentsComponent implements OnInit {
   appointments: any[] = [];
   appointmentSlots = [
-    { day: 'Monday', time: '10:00 AM - 11:00 AM', date: '2024-12-18' }, // Add appropriate dates
+    { day: 'Monday', time: '10:00 AM - 11:00 AM', date: '2024-12-18' },
     { day: 'Tuesday', time: '10:00 AM - 11:00 AM', date: '2024-12-19' },
     { day: 'Wednesday', time: '10:00 AM - 11:00 AM', date: '2024-12-20' },
     { day: 'Thursday', time: '10:00 AM - 11:00 AM', date: '2024-12-21' },
@@ -50,61 +50,29 @@ export class AppointmentsComponent implements OnInit {
   bookAppointment(slot: any): void {
     const userId = localStorage.getItem('userId');
     if (userId) {
-      Swal.fire({
-        title: 'Are you sure?',
-        text: `Do you want to book this appointment on ${slot.date} (${slot.day}) at ${slot.time}?`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, book it!',
-        cancelButtonText: 'No, cancel',
-        reverseButtons: true
-      }).then((result) => {
-        if (result.isConfirmed) {
-          const newAppointment = {
-            id: Date.now(), // Temporary unique ID for local UI update
-            day: slot.day,
-            time: slot.time,
-            date: slot.date
-          };
+      const newAppointment = {
+        id: Date.now(), // Temporary ID
+        day: slot.day,
+        time: slot.time,
+        date: slot.date,
+        status: 'pending', // Set initial status to pending
+      };
 
-          // Directly add the appointment to the UI
-          this.appointments.push(newAppointment);
+      // Add to local list for immediate UI feedback
+      this.appointments.push(newAppointment);
 
-          const appointmentData = {
-            id: Number(userId),
-            day: slot.day,
-            time: slot.time,
-            date: slot.date
-          };
-
-          this.patientService.bookAppointment(appointmentData).subscribe(
-            (response) => {
-              console.log('Appointment booked successfully:', response);
-              Swal.fire({
-                title: 'Success!',
-                text: 'Your appointment has been booked successfully.',
-                icon: 'success',
-                confirmButtonText: 'OK'
-              });
-            },
-            (error) => {
-              console.error('Error booking appointment:', error);
-
-              Swal.fire({
-                title: 'Error!',
-                text: 'There was an error booking your appointment. Please try again later.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-              });
-
-              // Rollback: Remove the appointment if backend call fails
-              this.appointments = this.appointments.filter(
-                (appt) => appt.id !== newAppointment.id
-              );
-            }
-          );
-        }
-      });
+      this.patientService
+        .bookAppointment({
+          userId: Number(userId),
+          day: slot.day,
+          time: slot.time,
+          date: slot.date,
+          status: 'pending', // Ensure status is sent to the backend
+        })
+        .subscribe(
+          () => Swal.fire('Success', 'Appointment is pending approval', 'success'),
+          () => Swal.fire('Error', 'Failed to book', 'error')
+        );
     }
   }
 
@@ -128,26 +96,27 @@ export class AppointmentsComponent implements OnInit {
               (appt) => appt.id !== appointmentId
             );
 
-            Swal.fire({
-              title: 'Cancelled',
-              text: 'Your appointment has been cancelled.',
-              icon: 'success',
-              confirmButtonText: 'OK'
-            });
+            Swal.fire('Cancelled', 'Your appointment has been cancelled.', 'success');
           },
           (error) => {
             console.error('Error canceling appointment:', error);
-
-            Swal.fire({
-              title: 'Error!',
-              text: 'There was an error canceling your appointment. Please try again later.',
-              icon: 'error',
-              confirmButtonText: 'OK'
-            });
+            Swal.fire('Error!', 'Failed to cancel appointment. Please try again later.', 'error');
           }
         );
       }
     });
   }
-}
 
+  getStatusClass(status: string): string {
+    switch (status.toLowerCase()) {
+      case 'pending':
+        return 'status-pending';
+      case 'approved':
+        return 'status-approved';
+      case 'cancelled':
+        return 'status-cancelled';
+      default:
+        return '';
+    }
+  }
+}
