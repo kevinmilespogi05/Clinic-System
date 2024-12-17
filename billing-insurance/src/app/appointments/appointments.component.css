@@ -1,3 +1,119 @@
+.admin-container {
+  padding: 30px; /* Spacious padding */
+  background-color: #ffffff; /* Clean white background */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Modern shadow effect */
+  max-width: 800px; /* A bit narrower for a cleaner look */
+  margin: 30px auto; /* Center the container */
+  font-family: 'Futura Std Condensed Light', sans-serif;
+
+  h2 {
+    font-size: 2rem;
+    color: #2c3e50;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .appointment-item {
+    display: flex;
+    justify-content: space-between; /* Space between text and buttons */
+    align-items: center;
+    background-color: #f9f9f9; /* Light grey background */
+    border: 1px solid #e0e0e0; /* Subtle border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 12px 16px; /* Padding for spacing */
+    margin-bottom: 15px; /* Margin between items */
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #eafaf4; /* Soft hover effect */
+    }
+
+    div {
+      font-size: 1.1rem;
+      color: #333;
+      font-weight: 500;
+    }
+
+    button {
+      background-color: #1abc9c; /* Fresh mint color for buttons */
+      color: #fff;
+      padding: 8px 12px;
+      margin-left: 8px; /* Space between buttons */
+      border: none;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #16a085; /* Darker mint on hover */
+      }
+
+      &:focus {
+        outline: none;
+      }
+
+      &.approve-btn {
+        background-color: #27ae60;
+
+        &:hover {
+          background-color: #229954;
+        }
+      }
+
+      &.decline-btn {
+        background-color: #e74c3c;
+
+        &:hover {
+          background-color: #c0392b;
+        }
+      }
+
+      &.edit-btn {
+        background-color: #f39c12;
+
+        &:hover {
+          background-color: #e67e22;
+        }
+      }
+    }
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin-container {
+    padding: 20px;
+    max-width: 100%;
+  }
+
+  .appointment-item {
+    flex-direction: column;
+    align-items: flex-start;
+
+    div {
+      margin-bottom: 10px;
+    }
+
+    button {
+      width: 100%; /* Full width buttons on smaller screens */
+      margin: 5px 0;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-container {
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+}
+
 .appointments-container {
     padding: 30px; /* Increased padding for better spacing */
     background-color: #ffffff; /* Clean white background */
