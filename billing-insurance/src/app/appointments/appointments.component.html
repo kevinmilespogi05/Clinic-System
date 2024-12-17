@@ -1,3 +1,12 @@
+<div class="admin-container">
+  <h2>Pending Appointments</h2>
+  <div class="appointment-item" *ngFor="let appt of appointments">
+    <div>{{ appt.date }} | {{ appt.time }} | {{ appt.status }}</div>
+    <button (click)="approve(appt.id)">Approve</button>
+    <button (click)="decline(appt.id)">Decline</button>
+  </div>
+</div>
+
 <div class="appointments-container">
   <h1><i class="bi bi-calendar-check"></i> Appointments</h1>
   <table>
