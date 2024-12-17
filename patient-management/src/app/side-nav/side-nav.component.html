@@ -1,38 +1,31 @@
-<!-- Include Bootstrap Icons CDN -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
 <nav class="side-nav">
-    <h1 class="title">ClinicPoint</h1>
+  <h1 class="title">ClinicPoint</h1>
+  <p class="username" *ngIf="username">Welcome, {{ username }}!</p>
 
   <div class="horizontal-line"></div>
 
   <!-- Navigation Links -->
   <ul class="nav-links">
-    <!-- Dashboard -->
     <li>
       <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <i class="bi bi-house-door"></i> Dashboard
       </a>
     </li>
-    <!-- Appointments -->
     <li>
       <a routerLink="/appointments" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <i class="bi bi-calendar-check"></i> Appointments
       </a>
     </li>
-    <!-- Profile -->
     <li>
       <a routerLink="/profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <i class="bi bi-person-circle"></i> Profile
       </a>
     </li>
-    <!-- Billing -->
     <li>
       <a routerLink="/billing" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <i class="bi bi-credit-card"></i> Billing
       </a>
     </li>
-    <!-- Insurance -->
     <li>
       <a routerLink="/insurance" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <i class="bi bi-file-earmark-medical"></i> Insurance
@@ -40,18 +33,15 @@
     </li>
   </ul>
 
-  <!-- Logout Section -->
   <ul class="logout">
     <li>
       <a (click)="logout()">
-        <img src="assets/logout.png" alt="Logout Icon" />
-        Logout
+        <i class="bi bi-box-arrow-right"></i> Logout
       </a>
     </li>
   </ul>
 </nav>
 
-<!-- Main Content -->
 <div class="content">
   <router-outlet></router-outlet>
 </div>

@@ -109,7 +109,6 @@ CREATE TABLE `users` (
   `last_name` varchar(255) NOT NULL,          -- New field for last name
   `username` varchar(50) NOT NULL,            -- Username field
   `password` varchar(255) NOT NULL,           -- Password field
-  `medical_records` text DEFAULT NULL,        -- Medical records (optional)
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),  -- Timestamp when user was created
   `contact_number` varchar(15) NOT NULL,      -- Contact number (with country code, max 15 characters)
   `date_of_birth` date DEFAULT NULL,          -- Date of birth

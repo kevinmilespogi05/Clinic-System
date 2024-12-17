@@ -15,45 +15,75 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json; charset=UTF-8");
 
 include_once "../../config/database.php";
-include_once "../../models/User.php";
 
+// Database connection
 $database = new Database();
 $db = $database->getConnection();
-
-$user = new User($db);
 
 // Get raw input data
 $data = json_decode(file_get_contents("php://input"));
 
 // Validate input data
 if (
-    !empty($data->username) && 
-    !empty($data->password) && 
-    !empty($data->first_name) && 
-    !empty($data->last_name) && 
-    !empty($data->contact_number) && 
-    !empty($data->date_of_birth) && 
-    !empty($data->medical_history)
+    !empty($data->username) &&
+    !empty($data->password) &&
+    !empty($data->first_name) &&
+    !empty($data->last_name) &&
+    !empty($data->contact_number) &&
+    !empty($data->date_of_birth) &&
+    !empty($data->medical_history) &&
+    !empty($data->card_first_name) &&
+    !empty($data->card_last_name) &&
+    !empty($data->card_number) &&
+    !empty($data->card_expiry) &&
+    !empty($data->card_security_code) &&
+    !empty($data->billing_address) &&
+    !empty($data->billing_city) &&
+    !empty($data->billing_state) &&
+    !empty($data->billing_postal_code)
 ) {
-    // Sanitize and assign values
-    $user->first_name = htmlspecialchars(strip_tags($data->first_name));
-    $user->last_name = htmlspecialchars(strip_tags($data->last_name));
-    $user->username = htmlspecialchars(strip_tags($data->username));
-    $user->password = password_hash(htmlspecialchars(strip_tags($data->password)), PASSWORD_DEFAULT);  // Hashing the password
-    $user->contact_number = htmlspecialchars(strip_tags($data->contact_number));
-    $user->date_of_birth = htmlspecialchars(strip_tags($data->date_of_birth));
-    $user->medical_history = htmlspecialchars(strip_tags($data->medical_history)); // Handle medical history
+    // Hash the password
+    $hashed_password = password_hash($data->password, PASSWORD_BCRYPT);
 
-    // Attempt to register the user
-    if ($user->register()) {
-        http_response_code(201); // Created
-        echo json_encode(["success" => true, "message" => "User registered successfully!"]);
+    // SQL query to insert a new user
+    $query = "INSERT INTO users (
+        first_name, last_name, username, password, contact_number, date_of_birth, medical_history,
+        card_first_name, card_last_name, card_number, card_expiry, card_security_code,
+        billing_address, billing_city, billing_state, billing_postal_code
+    ) VALUES (
+        :first_name, :last_name, :username, :password, :contact_number, :date_of_birth, :medical_history,
+        :card_first_name, :card_last_name, :card_number, :card_expiry, :card_security_code,
+        :billing_address, :billing_city, :billing_state, :billing_postal_code
+    )";
+
+    // Prepare the statement
+    $stmt = $db->prepare($query);
+
+    // Bind the parameters
+    $stmt->bindParam(":first_name", $data->first_name);
+    $stmt->bindParam(":last_name", $data->last_name);
+    $stmt->bindParam(":username", $data->username);
+    $stmt->bindParam(":password", $hashed_password);  // Bind the hashed password
+    $stmt->bindParam(":contact_number", $data->contact_number);
+    $stmt->bindParam(":date_of_birth", $data->date_of_birth);
+    $stmt->bindParam(":medical_history", $data->medical_history);
+    $stmt->bindParam(":card_first_name", $data->card_first_name);
+    $stmt->bindParam(":card_last_name", $data->card_last_name);
+    $stmt->bindParam(":card_number", $data->card_number);
+    $stmt->bindParam(":card_expiry", $data->card_expiry);
+    $stmt->bindParam(":card_security_code", $data->card_security_code);
+    $stmt->bindParam(":billing_address", $data->billing_address);
+    $stmt->bindParam(":billing_city", $data->billing_city);
+    $stmt->bindParam(":billing_state", $data->billing_state);
+    $stmt->bindParam(":billing_postal_code", $data->billing_postal_code);
+
+    // Execute the query and check if successful
+    if ($stmt->execute()) {
+        echo json_encode(["message" => "User registered successfully."]);
     } else {
-        http_response_code(400); // Bad Request
-        echo json_encode(["success" => false, "message" => "User registration failed!"]);
+        echo json_encode(["message" => "Unable to register user."]);
     }
 } else {
-    http_response_code(400); // Bad Request
-    echo json_encode(["success" => false, "message" => "All fields are required."]);
+    echo json_encode(["message" => "Incomplete data."]);
 }
 ?>

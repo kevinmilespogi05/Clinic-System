@@ -103,6 +103,15 @@ export class RegisterComponent {
     }
   }
 
+  validateNumberInput(event: KeyboardEvent): void {
+    const inputChar = event.key;
+  
+    // Allow only numbers (0-9) and control keys like Backspace
+    if (!/^\d$/.test(inputChar) && event.key !== 'Backspace') {
+      event.preventDefault();
+    }
+  }
+  
   goBack() {
     this.router.navigate(['/login']); // Navigate back to the login page
   }

@@ -17,7 +17,7 @@ export class ProfileComponent implements OnInit {
   claims: any[] = []; // Holds insurance claims data
   errorMessage: string | null = null;
   isEditing: boolean = false;
-  updatedProfileData: any = {};
+  updatedProfileData: any = {}; // For holding data during editing
 
   constructor(private patientService: PatientService, private router: Router) {}
 
@@ -37,6 +37,7 @@ export class ProfileComponent implements OnInit {
       next: (response) => {
         if (response.success) {
           this.profileData = response.data;
+          console.log('Profile Data:', this.profileData); // Debugging
           this.updatedProfileData = { ...this.profileData }; // Initialize data for editing
         } else {
           this.errorMessage = response.message || 'Profile data not found.';
@@ -67,6 +68,10 @@ export class ProfileComponent implements OnInit {
 
   toggleEdit(): void {
     this.isEditing = !this.isEditing;
+    if (!this.isEditing) {
+      // Reset to the profileData when exiting edit mode
+      this.updatedProfileData = { ...this.profileData };
+    }
   }
 
   updateProfile(): void {
@@ -75,8 +80,8 @@ export class ProfileComponent implements OnInit {
       this.patientService.updateProfile(this.userId, this.updatedProfileData).subscribe({
         next: (response) => {
           if (response.success) {
-            this.profileData = { ...this.updatedProfileData };
-            this.isEditing = false;
+            this.profileData = { ...this.updatedProfileData }; // Update profileData after success
+            this.isEditing = false; // Exit edit mode
           } else {
             this.errorMessage = response.message || 'Failed to update profile.';
           }

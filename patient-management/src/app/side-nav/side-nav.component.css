@@ -12,37 +12,51 @@
   padding: 20px 15px;
   box-sizing: border-box;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
   font-family: 'Futura Std Condensed Light', sans-serif;
-  transition: width 0.3s ease;
 }
 
-/* Logo Container */
-.logo-container {
-  text-align: center;
-  margin-bottom: 20px;
-  transition: transform 0.3s ease;
-}
-
-.logo-container img {
-  max-width: 70%;
-  height: auto;
-  border-radius: 50%;
-  transition: transform 0.3s ease;
-}
-
+/* Title Styling */
 .title {
-  margin-top: 8px;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: bold;
   color: #ecf0f1;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Username Display */
+.username {
+  font-size: 1rem;                /* Slightly larger font size */
+  font-weight: bold;              /* Bold text to make it pop */
+  color: #2c3e50;                 /* Dark text for contrast */
+  background: linear-gradient(90deg, #e67e22, #f39c12); /* Vibrant gradient background */
+  padding: 8px 12px;              /* Padding for a badge-like look */
+  border-radius: 20px;            /* Rounded corners for a pill shape */
+  text-align: center;             /* Centered text */
+  margin: 10px 0 20px;            /* Space above and below */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  letter-spacing: 0.5px;          /* Slight spacing between letters */
+  text-transform: capitalize;     /* Capitalize text for uniformity */
+  transition: transform 0.3s, box-shadow 0.3s; /* Smooth hover effects */
+}
+
+.username:hover {
+  transform: scale(1.05);         /* Slightly enlarges on hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Intensifies shadow on hover */
+}
+
+
+/* Horizontal Line for Separation */
+.horizontal-line {
+  border-top: 2px solid #7c95ad;
+  margin: 10px auto;
+  width: 80%;
 }
 
 /* Navigation Links */
 .nav-links, .logout {
-  list-style-type: none;
+  list-style: none;
   padding: 0;
   margin: 0;
 }
@@ -51,106 +65,51 @@
   margin: 15px 0;
 }
 
-/* Horizontal Line for Separation */
-.horizontal-line {
-  border-top: 3px solid #7c95ad;
-  width: 90%;
-  margin-left: 10px;
-}
-
 .nav-links a, .logout a {
   color: #ecf0f1;
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 15px;
+  gap: 12px;
+  padding: 10px 12px;
   border-radius: 8px;
   font-size: 1rem;
-  transition: background-color 0.3s, transform 0.2s;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.nav-links a i, .logout a img {
-  font-size: 18px; /* Bootstrap icon size */
+.nav-links a i, .logout a i {
+  font-size: 1.2rem;
   transition: transform 0.3s ease;
 }
 
-/* Hover effect for Dashboard, Appointments, Profile, and Logout */
+/* Hover and Active State */
 .nav-links a:hover, .logout a:hover {
   background-color: #34495e;
   transform: translateX(5px);
 }
 
-.nav-links a:hover i, .logout a:hover img {
-  transform: scale(1.1); /* Icon scales up on hover */
+.nav-links a:hover i, .logout a:hover i {
+  transform: scale(1.1);
 }
 
-/* Active Link Highlight */
-.nav-links a.active, .logout a.active {
+.nav-links a.active {
   background-color: #162331;
-  color: white;
 }
 
 /* Logout Section */
 .logout {
   margin-top: auto;
-  margin-bottom: 10px; /* Reduced margin to make the logout section smaller */
 }
 
-.logout li {
-  margin-top: 15px; /* Reduced space between logout and previous links */
-}
-
-.logout a {
-  display: flex;
-  align-items: center;
-  gap: 8px; /* Reduced space between icon and text */
-  padding: 6px 12px; /* Reduced padding for a smaller button */
-  font-size: 0.9rem; /* Smaller font size */
-  transition: background-color 0.3s, transform 0.2s;
-}
-
-.logout a img {
-  width: 16px; /* Smaller icon size */
-  height: 16px; /* Smaller icon size */
-  transition: transform 0.3s ease;
-}
-
-/* Hover effect for Logout */
-.logout a:hover {
-  background-color: #34495e;
-  transform: translateX(5px); /* Slight move on hover */
-}
-
-.logout a:hover img {
-  transform: scale(1.1); /* Icon scales up on hover */
-}
-
-/* Media Queries for Responsiveness */
+/* Media Queries */
 @media (max-width: 768px) {
   .side-nav {
-      width: 200px;
-      padding: 15px 10px;
-  }
-
-  .side-nav:hover {
-      width: 220px;
-  }
-
-  .logo-container img {
-      max-width: 80%;
+    width: 200px;
+    padding: 15px;
   }
 
   .nav-links a, .logout a {
-      font-size: 0.95rem;
-      padding: 8px 12px;
-  }
-  .nav-links a.active, .nav-links a:hover {
-      background-color: #34495e;
-      transform: translateX(5px);
-  }
-
-  .nav-links a.active i, .nav-links a:hover i {
-      transform: scale(1.1);
+    font-size: 0.95rem;
+    padding: 8px 10px;
   }
 }

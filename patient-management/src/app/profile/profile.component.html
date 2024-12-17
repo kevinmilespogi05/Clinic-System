@@ -1,18 +1,28 @@
 <!-- Profile Section -->
 <div class="profile-container" *ngIf="profileData; else errorTemplate">
-  <h1>Welcome, {{ profileData.name }}</h1>
-  
+  <h1>Welcome, {{ profileData.first_name }} {{ profileData.last_name }}</h1>
+
   <!-- Profile Data -->
   <div class="profile-details">
     <p><strong>Username:</strong> {{ profileData.username }}</p>
     <p><strong>Contact Number:</strong> {{ profileData.contact_number }}</p>
     <p><strong>Date of Birth:</strong> {{ profileData.date_of_birth }}</p>
     <p><strong>Medical Condition:</strong> {{ profileData.medical_history || 'N/A' }}</p>
+
+    <!-- Billing Information -->
+    <h3>Billing Information</h3>
+    <p><strong>Cardholder Name:</strong> {{ profileData.card_first_name || 'N/A' }} {{ profileData.card_last_name || 'N/A' }}</p>
+    <p><strong>Card Number:</strong> {{ profileData.card_number || 'N/A' }}</p>
+    <p><strong>Expiry Date:</strong> {{ profileData.card_expiry || 'N/A' }}</p>
+    <p><strong>Billing Address:</strong> {{ profileData.billing_address || 'N/A' }}</p>
+    <p><strong>City:</strong> {{ profileData.billing_city || 'N/A' }}</p>
+    <p><strong>State:</strong> {{ profileData.billing_state || 'N/A' }}</p>
+    <p><strong>Postal Code:</strong> {{ profileData.billing_postal_code || 'N/A' }}</p>
   </div>
 
   <!-- Edit button -->
   <button *ngIf="!isEditing" (click)="toggleEdit()">
-      <i class="bi bi-pencil-fill"></i> Edit Profile
+    <i class="bi bi-pencil-fill"></i> Edit Profile
   </button>
 
   <!-- Profile Edit Form -->
@@ -20,12 +30,23 @@
     <h2>Edit Profile</h2>
     <form (ngSubmit)="updateProfile()">
       <div class="form-group">
-        <label for="name">Name:</label>
+        <label for="first_name">First Name:</label>
         <input
           type="text"
-          id="name"
-          [(ngModel)]="updatedProfileData.name"
-          name="name"
+          id="first_name"
+          [(ngModel)]="updatedProfileData.first_name"
+          name="first_name"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="last_name">Last Name:</label>
+        <input
+          type="text"
+          id="last_name"
+          [(ngModel)]="updatedProfileData.last_name"
+          name="last_name"
           required
         />
       </div>
@@ -52,7 +73,6 @@
         />
       </div>
 
-      <!-- Medical History -->
       <div class="form-group">
         <label for="medical_history">Medical Condition:</label>
         <textarea
@@ -60,6 +80,107 @@
           [(ngModel)]="updatedProfileData.medical_history"
           name="medical_history"
         ></textarea>
+      </div>
+
+      <!-- Billing Information Fields -->
+      <h3>Billing Information</h3>
+      <div class="form-group">
+        <label for="card_first_name">Cardholder First Name:</label>
+        <input
+          type="text"
+          id="card_first_name"
+          [(ngModel)]="updatedProfileData.card_first_name"
+          name="card_first_name"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="card_last_name">Cardholder Last Name:</label>
+        <input
+          type="text"
+          id="card_last_name"
+          [(ngModel)]="updatedProfileData.card_last_name"
+          name="card_last_name"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="card_number">Card Number:</label>
+        <input
+          type="text"
+          id="card_number"
+          [(ngModel)]="updatedProfileData.card_number"
+          name="card_number"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="card_expiry">Card Expiry (MM/YYYY):</label>
+        <input
+          type="text"
+          id="card_expiry"
+          [(ngModel)]="updatedProfileData.card_expiry"
+          name="card_expiry"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="card_security_code">Card Security Code (CVV):</label>
+        <input
+          type="text"
+          id="card_security_code"
+          [(ngModel)]="updatedProfileData.card_security_code"
+          name="card_security_code"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="billing_address">Billing Address:</label>
+        <input
+          type="text"
+          id="billing_address"
+          [(ngModel)]="updatedProfileData.billing_address"
+          name="billing_address"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="billing_city">Billing City:</label>
+        <input
+          type="text"
+          id="billing_city"
+          [(ngModel)]="updatedProfileData.billing_city"
+          name="billing_city"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="billing_state">Billing State:</label>
+        <input
+          type="text"
+          id="billing_state"
+          [(ngModel)]="updatedProfileData.billing_state"
+          name="billing_state"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="billing_postal_code">Billing Postal Code:</label>
+        <input
+          type="text"
+          id="billing_postal_code"
+          [(ngModel)]="updatedProfileData.billing_postal_code"
+          name="billing_postal_code"
+          required
+        />
       </div>
 
       <div class="form-actions">
@@ -73,6 +194,15 @@
     </form>
   </div>
 </div>
+
+<!-- Error Template -->
+<ng-template #errorTemplate>
+  <div class="error-message">
+    <p *ngIf="errorMessage">{{ errorMessage }}</p>
+    <p *ngIf="!errorMessage">Loading...</p>
+  </div>
+</ng-template>
+
 
 <!-- Insurance Claim Status Section -->
 <div class="insurance-status-container">

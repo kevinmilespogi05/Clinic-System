@@ -90,9 +90,9 @@
                     required 
                     placeholder="Enter your contact number" 
                     aria-label="Contact Number" 
-                    maxlength="10" 
-                    pattern="^\d{10}$" 
-                    title="Contact number must be 10 digits long" />
+                    maxlength="11" 
+                    pattern="^\d{11}$" 
+                    title="Contact number must be 11 digits long" />
             </div>
         </div>
 
@@ -171,23 +171,29 @@
                 </div>
             </div>
 
-            <!-- Card Number -->
-            <div class="form-group row">
-                <label for="card_number" class="col-sm-2 col-form-label">
-                    <i class="bi bi-credit-card"></i> Card Number:
-                </label>
-                <div class="col-sm-10">
-                    <input 
-                        type="text" 
-                        id="card_number" 
-                        [(ngModel)]="card_number" 
-                        name="card_number" 
-                        class="form-control" 
-                        required 
-                        placeholder="Enter card number" 
-                        aria-label="Card Number">
-                </div>
-            </div>
+      <!-- Card Number -->
+<div class="form-group row">
+    <label for="card_number" class="col-sm-2 col-form-label">
+        <i class="bi bi-credit-card"></i> Card Number:
+    </label>
+    <div class="col-sm-10">
+        <input 
+            type="text" 
+            id="card_number" 
+            [(ngModel)]="card_number" 
+            name="card_number" 
+            class="form-control" 
+            required 
+            placeholder="Enter card number" 
+            aria-label="Card Number"
+            maxlength="19"
+            pattern="[0-9]*"
+            inputmode="numeric" 
+            (keypress)="validateNumberInput($event)"
+        >
+    </div>
+</div>
+
 
             <!-- Card Expiry -->
             <div class="form-group row">
