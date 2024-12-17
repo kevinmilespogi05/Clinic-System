@@ -14,7 +14,7 @@
     <tbody>
       <tr *ngFor="let user of users">
         <td>{{ user.id }}</td>
-        <td>{{ user.name }}</td>
+        <td>{{ user.first_name }} {{ user.last_name }}</td>
         <td>{{ user.username }}</td>
         <td>{{ user.contact_number }}</td>
         <td>{{ user.date_of_birth | date }}</td>
@@ -31,52 +31,108 @@
   </table>
 </div>
 
-<!-- Modal for viewing and editing user details -->
 <div class="modal" *ngIf="selectedUser" (click)="closeModal()">
-<div class="modal-content" (click)="$event.stopPropagation()">
-  <h2><i class="bi bi-person-fill"></i> User Records</h2>
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h2><i class="bi bi-person-fill"></i> User Records</h2>
 
-  <!-- Display user information or form fields based on edit mode -->
-  <div *ngIf="!isEditing">
-    <p><strong>Name:</strong> {{ selectedUser.name }}</p>
-    <p><strong>Username:</strong> {{ selectedUser.username }}</p>
-    <p><strong>Contact Number:</strong> {{ selectedUser.contact_number }}</p>
-    <p><strong>Date of Birth:</strong> {{ selectedUser.date_of_birth | date }}</p>
+    <!-- Display user information -->
+    <div *ngIf="!isEditing">
+      <p><strong>Name:</strong> {{ selectedUser.first_name }} {{ selectedUser.last_name }}</p>
+      <p><strong>Username:</strong> {{ selectedUser.username }}</p>
+      <p><strong>Contact Number:</strong> {{ selectedUser.contact_number }}</p>
+      <p><strong>Date of Birth:</strong> {{ selectedUser.date_of_birth | date }}</p>
+      <p><strong>Medical History:</strong> {{ selectedUser.medical_history }}</p>
+      <p><strong>Role:</strong> {{ selectedUser.role }}</p>
 
-    <button (click)="toggleEditMode()">
-      <i class="bi bi-pencil-square"></i> Edit
-    </button>
-    <button (click)="closeModal()">
-      <i class="bi bi-x-circle"></i> Close
-    </button>
-  </div>
+      <!-- Card Information -->
+      <p><strong>Card First Name:</strong> {{ selectedUser.card_first_name }}</p>
+      <p><strong>Card Last Name:</strong> {{ selectedUser.card_last_name }}</p>
+      <p><strong>Card Number:</strong> {{ selectedUser.card_number }}</p>
+      <p><strong>Card Expiry:</strong> {{ selectedUser.card_expiry }}</p>
+      <p><strong>Card Security Code:</strong> {{ selectedUser.card_security_code }}</p>
 
-  <!-- Edit mode form -->
-  <div *ngIf="isEditing">
-    <form (ngSubmit)="saveUser()">
-      <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" [(ngModel)]="selectedUser.name" name="name" required />
-      </div>
-      <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" [(ngModel)]="selectedUser.username" name="username" required />
-      </div>
-      <div>
-        <label for="contact_number">Contact Number:</label>
-        <input type="text" id="contact_number" [(ngModel)]="selectedUser.contact_number" name="contact_number" required />
-      </div>
-      <div>
-        <label for="date_of_birth">Date of Birth:</label>
-        <input type="date" id="date_of_birth" [(ngModel)]="selectedUser.date_of_birth" name="date_of_birth" required />
-      </div>
-      <button type="submit">
-        <i class="bi bi-save"></i> Save
+      <!-- Billing Information -->
+      <p><strong>Billing Address:</strong> {{ selectedUser.billing_address }}</p>
+      <p><strong>Billing City:</strong> {{ selectedUser.billing_city }}</p>
+      <p><strong>Billing State:</strong> {{ selectedUser.billing_state }}</p>
+      <p><strong>Billing Postal Code:</strong> {{ selectedUser.billing_postal_code }}</p>
+
+      <button (click)="toggleEditMode()">
+        <i class="bi bi-pencil-square"></i> Edit
       </button>
-      <button type="button" (click)="toggleEditMode()">
-        <i class="bi bi-x-circle"></i> Cancel
+      <button (click)="closeModal()">
+        <i class="bi bi-x-circle"></i> Close
       </button>
-    </form>
+    </div>
+
+    <!-- Edit mode form -->
+    <div *ngIf="isEditing">
+      <form (ngSubmit)="saveUser()">
+        <div>
+          <label for="first_name">First Name:</label>
+          <input type="text" id="first_name" [(ngModel)]="selectedUser.first_name" name="first_name" required />
+        </div>
+        <div>
+          <label for="last_name">Last Name:</label>
+          <input type="text" id="last_name" [(ngModel)]="selectedUser.last_name" name="last_name" required />
+        </div>
+        <div>
+          <label for="contact_number">Contact Number:</label>
+          <input type="text" id="contact_number" [(ngModel)]="selectedUser.contact_number" name="contact_number" required />
+        </div>
+        <div>
+          <label for="date_of_birth">Date of Birth:</label>
+          <input type="date" id="date_of_birth" [(ngModel)]="selectedUser.date_of_birth" name="date_of_birth" required />
+        </div>
+
+        <!-- Card Information Edit Fields -->
+        <div>
+          <label for="card_first_name">Card First Name:</label>
+          <input type="text" id="card_first_name" [(ngModel)]="selectedUser.card_first_name" name="card_first_name" />
+        </div>
+        <div>
+          <label for="card_last_name">Card Last Name:</label>
+          <input type="text" id="card_last_name" [(ngModel)]="selectedUser.card_last_name" name="card_last_name" />
+        </div>
+        <div>
+          <label for="card_number">Card Number:</label>
+          <input type="text" id="card_number" [(ngModel)]="selectedUser.card_number" name="card_number" />
+        </div>
+        <div>
+          <label for="card_expiry">Card Expiry:</label>
+          <input type="month" id="card_expiry" [(ngModel)]="selectedUser.card_expiry" name="card_expiry" />
+        </div>
+        <div>
+          <label for="card_security_code">Card Security Code:</label>
+          <input type="text" id="card_security_code" [(ngModel)]="selectedUser.card_security_code" name="card_security_code" />
+        </div>
+
+        <!-- Billing Information Edit Fields -->
+        <div>
+          <label for="billing_address">Billing Address:</label>
+          <input type="text" id="billing_address" [(ngModel)]="selectedUser.billing_address" name="billing_address" />
+        </div>
+        <div>
+          <label for="billing_city">Billing City:</label>
+          <input type="text" id="billing_city" [(ngModel)]="selectedUser.billing_city" name="billing_city" />
+        </div>
+        <div>
+          <label for="billing_state">Billing State:</label>
+          <input type="text" id="billing_state" [(ngModel)]="selectedUser.billing_state" name="billing_state" />
+        </div>
+        <div>
+          <label for="billing_postal_code">Billing Postal Code:</label>
+          <input type="text" id="billing_postal_code" [(ngModel)]="selectedUser.billing_postal_code" name="billing_postal_code" />
+        </div>
+
+        <button type="submit">
+          <i class="bi bi-save"></i> Save
+        </button>
+        <button type="button" (click)="toggleEditMode()">
+          <i class="bi bi-x-circle"></i> Cancel
+        </button>
+      </form>
+    </div>
   </div>
 </div>
-</div>
+

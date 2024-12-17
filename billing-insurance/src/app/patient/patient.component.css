@@ -1,104 +1,123 @@
+/* General Reset and Basic Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f8f9;
+}
+
 /* Container for the users list */
 .users-container {
-    padding: 12px; /* Reduced padding */
-    background-color: #fff;
-    border-radius: 8px; /* Reduced border radius */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Further reduced box shadow */
-    max-width: 900px; /* Reduced max width */
-    margin: 20px auto;
-    font-family: 'Futura Std Condensed Light', sans-serif;
-    overflow: hidden;
-
-    /* Move container a little to the right */
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    max-width: 1100px;
+    margin: 30px auto;
     position: relative;
-    left: 6%; /* Adjust this to move the container to the right */
 }
 
 /* Title of the users list */
 .users-container h1 {
     text-align: center;
     color: #2c3e50;
-    font-size: 1.8rem; /* Smaller font size */
-    margin-bottom: 18px; /* Reduced margin */
-    font-weight: 600;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    font-weight: 700;
+    text-transform: uppercase;
 }
 
 /* Styling for the user table */
 .users-container table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 12px; /* Reduced margin */
+    margin-top: 10px;
 }
 
 /* Styling for the header row */
 .users-container table th, .users-container table td {
-    padding: 7px; /* Reduced padding */
+    padding: 15px;
     text-align: left;
     border: 1px solid #ddd;
+    transition: all 0.3s ease;
 }
 
+/* Header styling */
 .users-container table th {
-    background-color: #3498db;
+    background-color: #00b894; /* Clinic-like color */
     color: white;
-    font-size: 0.95rem; /* Smaller font size */
+    font-size: 1.1rem;
     font-weight: bold;
 }
 
+/* Table data styling */
 .users-container table td {
-    background-color: #f9f9f9;
+    background-color: #fafafa; /* Soft background for data */
     color: #34495e;
-    font-size: 0.9rem; /* Smaller font size */
+    font-size: 1rem;
     vertical-align: middle;
 }
 
 /* Hover effect for rows */
 .users-container table tr:hover {
-    background-color: #ecf0f1; /* Light grey background on hover */
+    background-color: #e9f7f3; /* Slight green tint on hover */
 }
 
 /* Button Styles */
 button {
-    padding: 7px; /* Reduced padding */
-    background-color: #3498db;
+    padding: 12px 20px;
+    background-color: #00b894; /* Clinic-like green */
     color: white;
     border: none;
     cursor: pointer;
-    margin: 4px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    margin: 6px;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+button i {
+    margin-right: 8px;
 }
 
 button:hover {
-    background-color: #2980b9;
+    background-color: #098a72; /* Darker green on hover */
+    transform: scale(1.05);
 }
 
 button:disabled {
-    background-color: #ccc;
+    background-color: #bdc3c7;
     cursor: not-allowed;
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
     .users-container table {
-        font-size: 0.85rem; /* Even smaller font for medium screens */
+        font-size: 0.95rem;
     }
 
     .users-container h1 {
-        font-size: 1.7rem; /* Smaller heading for medium screens */
+        font-size: 2rem;
     }
 }
 
 @media (max-width: 600px) {
     .users-container table th, .users-container table td {
-        padding: 6px; /* Further reduced padding for mobile screens */
+        padding: 12px;
     }
 
     .users-container h1 {
-        font-size: 1.5rem; /* Even smaller heading for mobile */
+        font-size: 1.6rem;
     }
 }
 
-/* General Modal Styles */
+/* Modal Styling */
 .modal {
     position: fixed;
     top: 0;
@@ -109,66 +128,87 @@ button:disabled {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2000;
 }
 
-/* Modal Content Styling */
 .modal-content {
-    background-color: white;
-    padding: 15px; /* Reduced padding */
-    border-radius: 8px;
-    width: 320px; /* Smaller width */
-    max-width: 100%;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Reduced box shadow */
+    position: relative;
+    background-color: #fff;
+    padding: 30px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80%;
+    overflow-y: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Modal Title Styling */
-.modal-content h2 {
-    font-size: 1.4rem; /* Smaller title font size */
-    margin-bottom: 12px; /* Reduced margin */
+h2 {
+    margin-top: 0;
+    color: #00b894; /* Clinic-like color */
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+button {
+    margin: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 1rem;
     color: #2c3e50;
-    text-align: center;
 }
 
-/* Form Input Fields in Modal */
-.modal-content input {
+form input {
+    padding: 12px;
+    margin-top: 5px;
     width: 100%;
-    padding: 8px; /* Reduced padding */
-    margin-bottom: 12px; /* Reduced margin */
+    box-sizing: border-box;
+    border-radius: 8px;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 0.9rem; /* Smaller font size */
-    transition: border-color 0.3s ease;
+    font-size: 1rem;
 }
 
-/* Focus effect for inputs in modal */
-.modal-content input:focus {
-    border-color: #3498db;
+form input:focus {
+    border-color: #00b894; /* Clinic-like color on focus */
     outline: none;
 }
 
-/* Modal Action Buttons */
-.modal-content button {
-    width: 48%;
-    margin: 5px 1%;
-    padding: 10px; /* Reduced padding */
-    background-color: #3498db;
+form button[type="submit"],
+form button[type="button"] {
+    background-color: #00b894;
     color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 12px 20px;
+    border-radius: 8px;
     border: none;
-    border-radius: 5px;
-    font-size: 0.9rem; /* Smaller font size */
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.modal-content button:hover {
-    background-color: #2980b9;
+form button[type="submit"]:hover,
+form button[type="button"]:hover {
+    background-color: #098a72;
 }
 
-/* Close Button */
-.modal-content button[type="button"] {
+/* Modal Close Button */
+button.close {
     background-color: #e74c3c;
+    color: white;
+    font-weight: bold;
 }
 
-.modal-content button[type="button"]:hover {
+button.close:hover {
     background-color: #c0392b;
 }

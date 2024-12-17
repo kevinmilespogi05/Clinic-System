@@ -6,10 +6,23 @@ import Swal from 'sweetalert2';  // Import SweetAlert2
 
 interface User {
   id: number;
-  name: string;
+  first_name: string;
+  last_name: string;
   username: string;
   contact_number: string;
   date_of_birth: string;
+  medical_history?: string;
+  medical_records?: string;
+  role?: string;
+  card_first_name?: string;
+  card_last_name?: string;
+  card_number?: string;
+  card_expiry?: string;
+  card_security_code?: string;
+  billing_address?: string;
+  billing_city?: string;
+  billing_state?: string;
+  billing_postal_code?: string;
 }
 
 @Component({
@@ -25,8 +38,9 @@ export class PatientComponent implements OnInit {
   userToDelete: User | null = null;  // Store the user to be deleted
   isEditing: boolean = false;  // Flag for edit mode
   apiUrl: string = 'http://localhost/Clinic-System/clinicapi/api/users/getUsers.php';
+  profileApiUrl: string = 'http://localhost/Clinic-System/clinicapi/api/users/get_profile.php';
   deleteApiUrl: string = 'http://localhost/Clinic-System/clinicapi/api/users/delete.php';
-  updateApiUrl: string = 'http://localhost/Clinic-System/clinicapi/api/users/updateUser.php';  // Endpoint for updating user
+  updateApiUrl: string = 'http://localhost/Clinic-System/clinicapi/api/users/updateUser.php';
 
   constructor(private http: HttpClient) {}
 
@@ -38,7 +52,6 @@ export class PatientComponent implements OnInit {
     this.http.get<any>(this.apiUrl).subscribe({
       next: (response) => {
         if (response && response.success) {
-          // Filter out the user with username 'admin'
           this.users = response.data.filter((user: User) => user.username !== 'admin');
         } else {
           console.error('Failed to fetch users:', response?.message);
@@ -56,21 +69,20 @@ export class PatientComponent implements OnInit {
   }
 
   closeModal(): void {
-    this.selectedUser = null;  // Close the modal by setting selectedUser to null
-    this.isEditing = false;  // Reset edit mode
+    this.selectedUser = null;  // Close the modal
+    this.isEditing = false;
   }
 
   toggleEditMode(): void {
-    this.isEditing = !this.isEditing;  // Toggle edit mode
+    this.isEditing = !this.isEditing;
   }
 
   confirmDelete(user: User): void {
-    this.userToDelete = user;  // Set the user to delete
+    this.userToDelete = user;
 
-    // Use SweetAlert2 for the delete confirmation modal
     Swal.fire({
       title: 'Are you sure?',
-      text: `Do you want to delete user ${user.name}?`,
+      text: `Do you want to delete user ${user.first_name} ${user.last_name}?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it!',
@@ -89,9 +101,8 @@ export class PatientComponent implements OnInit {
     this.http.post<any>(this.deleteApiUrl, { user_id: this.userToDelete.id }).subscribe({
       next: (response) => {
         if (response.success) {
-          // Remove the user from the users array
           this.users = this.users.filter(user => user.id !== this.userToDelete!.id);
-          Swal.fire('Deleted!', `User ${this.userToDelete?.name} has been deleted.`, 'success');
+          Swal.fire('Deleted!', `User ${this.userToDelete?.first_name} ${this.userToDelete?.last_name} has been deleted.`, 'success');
         } else {
           console.error('Failed to delete user:', response?.message);
         }
@@ -105,25 +116,24 @@ export class PatientComponent implements OnInit {
 
   saveUser(): void {
     if (this.selectedUser) {
-      this.http.post<any>(this.updateApiUrl, this.selectedUser)
-        .subscribe({
-          next: (response) => {
-            if (response.success) {
-              const index = this.users.findIndex(user => user.id === this.selectedUser!.id);
-              if (index !== -1) {
-                this.users[index] = this.selectedUser!;  // Update the user in the list
-              }
-              Swal.fire('Saved!', 'User details have been updated.', 'success');
-              this.closeModal();
-            } else {
-              Swal.fire('Error', 'Failed to update user: ' + response?.message, 'error');
+      this.http.post<any>(this.updateApiUrl, this.selectedUser).subscribe({
+        next: (response) => {
+          if (response.success) {
+            const index = this.users.findIndex(user => user.id === this.selectedUser!.id);
+            if (index !== -1) {
+              this.users[index] = this.selectedUser!;
             }
-          },
-          error: (error) => {
-            console.error('Error saving user:', error);
-            Swal.fire('Error', 'There was an error saving the user: ' + error.message, 'error');
-          },
-        });
+            Swal.fire('Saved!', 'User details have been updated.', 'success');
+            this.closeModal();
+          } else {
+            Swal.fire('Error', 'Failed to update user: ' + response?.message, 'error');
+          }
+        },
+        error: (error) => {
+          console.error('Error saving user:', error);
+          Swal.fire('Error', 'There was an error saving the user: ' + error.message, 'error');
+        },
+      });
     }
   }
 }
