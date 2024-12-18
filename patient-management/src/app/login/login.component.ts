@@ -38,13 +38,14 @@ export class LoginComponent {
           } else {
             Swal.fire({
               title: 'User Login Successful!',
-              text: 'Welcome back!',
+              text: `Welcome, ${response.first_name}!`,  // Personalized welcome message
               icon: 'success',
               confirmButtonText: 'Proceed'
             }).then(() => {
               this.router.navigate(['dashboard']);
             });
           }
+          
         } else {
           Swal.fire({
             title: 'Login Failed',

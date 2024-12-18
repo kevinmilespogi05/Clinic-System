@@ -20,7 +20,7 @@ export const routes: Routes = [
     path: '',
     component: SideNavComponent,
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'appointments', component: AppointmentsComponent },
       { path: 'billing', component: BillingComponent },
