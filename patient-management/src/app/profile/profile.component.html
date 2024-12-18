@@ -15,8 +15,8 @@
     <p><strong>Card Number:</strong> {{ profileData.card_number || 'N/A' }}</p>
     <p><strong>Expiry Date:</strong> {{ profileData.card_expiry || 'N/A' }}</p>
     <p><strong>Billing Address:</strong> {{ profileData.billing_address || 'N/A' }}</p>
-    <p><strong>City:</strong> {{ profileData.billing_city || 'N/A' }}</p>
-    <p><strong>State:</strong> {{ profileData.billing_state || 'N/A' }}</p>
+    <p><strong>City:</strong> {{ profileData.city || 'N/A' }}</p>
+    <p><strong>Province:</strong> {{ profileData.province || 'N/A' }}</p>
     <p><strong>Postal Code:</strong> {{ profileData.billing_postal_code || 'N/A' }}</p>
   </div>
 
@@ -151,23 +151,23 @@
       </div>
 
       <div class="form-group">
-        <label for="billing_city">Billing City:</label>
+        <label for="city">City:</label>
         <input
           type="text"
-          id="billing_city"
-          [(ngModel)]="updatedProfileData.billing_city"
-          name="billing_city"
+          id="city"
+          [(ngModel)]="updatedProfileData.city"
+          name="city"
           required
         />
       </div>
 
       <div class="form-group">
-        <label for="billing_state">Billing State:</label>
+        <label for="province">Province:</label>
         <input
           type="text"
-          id="billing_state"
-          [(ngModel)]="updatedProfileData.billing_state"
-          name="billing_state"
+          id="province"
+          [(ngModel)]="updatedProfileData.province"
+          name="province"
           required
         />
       </div>

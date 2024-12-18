@@ -38,8 +38,8 @@ if (
     !empty($data->card_expiry) &&
     !empty($data->card_security_code) &&
     !empty($data->billing_address) &&
-    !empty($data->billing_city) &&
-    !empty($data->billing_state) &&
+    !empty($data->city) &&
+    !empty($data->province) &&
     !empty($data->billing_postal_code)
 ) {
     // Hash the password
@@ -49,11 +49,11 @@ if (
     $query = "INSERT INTO users (
         first_name, last_name, username, password, contact_number, date_of_birth, medical_history,
         card_first_name, card_last_name, card_number, card_expiry, card_security_code,
-        billing_address, billing_city, billing_state, billing_postal_code
+        billing_address, city, province, billing_postal_code
     ) VALUES (
         :first_name, :last_name, :username, :password, :contact_number, :date_of_birth, :medical_history,
         :card_first_name, :card_last_name, :card_number, :card_expiry, :card_security_code,
-        :billing_address, :billing_city, :billing_state, :billing_postal_code
+        :billing_address, :city, :province, :billing_postal_code
     )";
 
     // Prepare the statement
@@ -73,8 +73,8 @@ if (
     $stmt->bindParam(":card_expiry", $data->card_expiry);
     $stmt->bindParam(":card_security_code", $data->card_security_code);
     $stmt->bindParam(":billing_address", $data->billing_address);
-    $stmt->bindParam(":billing_city", $data->billing_city);
-    $stmt->bindParam(":billing_state", $data->billing_state);
+    $stmt->bindParam(":city", $data->city);
+    $stmt->bindParam(":province", $data->province);
     $stmt->bindParam(":billing_postal_code", $data->billing_postal_code);
 
     // Execute the query and check if successful

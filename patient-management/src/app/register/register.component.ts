@@ -30,8 +30,8 @@ export class RegisterComponent {
   card_expiry: string = '';
   card_security_code: string = '';
   billing_address: string = '';
-  billing_city: string = '';
-  billing_state: string = '';
+  city: string = '';
+  province: string = '';
   billing_postal_code: string = ''; // Add this property for postal code
 
   constructor(private patientService: PatientService, private router: Router) {}
@@ -65,8 +65,8 @@ export class RegisterComponent {
             card_expiry: this.card_expiry,
             card_security_code: this.card_security_code,
             billing_address: this.billing_address,
-            billing_city: this.billing_city,
-            billing_state: this.billing_state,
+            city: this.city, // Updated
+            province: this.province, // Updated
             billing_postal_code: this.billing_postal_code, // Include the billing postal code
           };
 

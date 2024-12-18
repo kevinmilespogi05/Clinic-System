@@ -45,8 +45,8 @@ export class PatientService {
       card_expiry: updatedData.card_expiry,
       card_security_code: updatedData.card_security_code,
       billing_address: updatedData.billing_address,
-      billing_city: updatedData.billing_city,
-      billing_state: updatedData.billing_state,
+      city: updatedData.city,
+      province: updatedData.province,
       billing_postal_code: updatedData.billing_postal_code
     });
   }

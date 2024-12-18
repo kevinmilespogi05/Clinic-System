@@ -22,8 +22,7 @@ if (isset($_GET['id'])) {
                 username, 
                 contact_number, 
                 date_of_birth, 
-                medical_history, 
-                medical_records, 
+                medical_history,  
                 role, 
                 card_first_name, 
                 card_last_name, 
@@ -31,8 +30,8 @@ if (isset($_GET['id'])) {
                 card_expiry, 
                 card_security_code, 
                 billing_address, 
-                billing_city, 
-                billing_state, 
+                city, 
+                province, 
                 billing_postal_code
             FROM users 
             WHERE id = :user_id

@@ -20,8 +20,8 @@ class User {
     public $card_expiry;
     public $card_security_code;
     public $billing_address;
-    public $billing_city;
-    public $billing_state;
+    public $city;                 // Renamed from billing_city
+    public $province;             // Renamed from billing_state
     public $billing_postal_code;
 
     public function __construct($db) {
@@ -39,11 +39,11 @@ class User {
         $query = "INSERT INTO " . $this->table_name . " 
             (first_name, last_name, username, password, contact_number, date_of_birth, medical_history, 
              card_first_name, card_last_name, card_number, card_expiry, card_security_code, 
-             billing_address, billing_city, billing_state, billing_postal_code)
+             billing_address, city, province, billing_postal_code)
             VALUES 
             (:first_name, :last_name, :username, :password, :contact_number, :date_of_birth, :medical_history, 
              :card_first_name, :card_last_name, :card_number, :card_expiry, :card_security_code, 
-             :billing_address, :billing_city, :billing_state, :billing_postal_code)";
+             :billing_address, :city, :province, :billing_postal_code)";
 
         // Prepare the statement
         $stmt = $this->conn->prepare($query);
@@ -62,8 +62,8 @@ class User {
         $this->card_expiry = htmlspecialchars(strip_tags($this->card_expiry));
         $this->card_security_code = htmlspecialchars(strip_tags($this->card_security_code));
         $this->billing_address = htmlspecialchars(strip_tags($this->billing_address));
-        $this->billing_city = htmlspecialchars(strip_tags($this->billing_city));
-        $this->billing_state = htmlspecialchars(strip_tags($this->billing_state));
+        $this->city = htmlspecialchars(strip_tags($this->city));                 // Updated field
+        $this->province = htmlspecialchars(strip_tags($this->province));         // Updated field
         $this->billing_postal_code = htmlspecialchars(strip_tags($this->billing_postal_code));
 
         // Bind the parameters
@@ -80,8 +80,8 @@ class User {
         $stmt->bindParam(':card_expiry', $this->card_expiry);
         $stmt->bindParam(':card_security_code', $this->card_security_code);
         $stmt->bindParam(':billing_address', $this->billing_address);
-        $stmt->bindParam(':billing_city', $this->billing_city);
-        $stmt->bindParam(':billing_state', $this->billing_state);
+        $stmt->bindParam(':city', $this->city);                 // Updated field
+        $stmt->bindParam(':province', $this->province);         // Updated field
         $stmt->bindParam(':billing_postal_code', $this->billing_postal_code);
 
         // Execute the query and check if successful

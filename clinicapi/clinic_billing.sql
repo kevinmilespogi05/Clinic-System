@@ -122,8 +122,8 @@ CREATE TABLE `users` (
   `card_expiry` varchar(7) NOT NULL,          -- Card expiry in MM/YYYY format
   `card_security_code` varchar(4) NOT NULL,   -- CVV
   `billing_address` varchar(255) NOT NULL,    -- Billing address
-  `billing_city` varchar(100) NOT NULL,       -- Billing city
-  `billing_state` varchar(100) NOT NULL,      -- Billing state
+  `city` varchar(100) NOT NULL,               -- City
+  `province` varchar(100) NOT NULL,           -- Province
   `billing_postal_code` varchar(10) NOT NULL, -- Billing postal code
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
@@ -136,9 +136,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `password`, `medical_records`, `created_at`, `first_name`, `last_name`, `contact_number`, `date_of_birth`, `medical_history`, `role`) 
 VALUES
-(1, 'admin', '$2y$10$uSa9VcjLIhfwpkuA2waNL.KCgBa8lRH8inUVYqOEOy4jywV9bm4ai', NULL, '2024-12-08 07:04:59', 'ADMINISTRATOR', '', '09926591335', '2003-11-22', '', 'admin'),
-(15, 'acgbm', '$2y$10$9FVsrYDLUM7dti3yAY.52OWmGITNM4pSGQPhOV0zHeJrtIbpXJs/2', NULL, '2024-12-10 12:04:12', 'Ac Gabriel', 'Manalo', '09926591335', '2003-11-22', '', 'user');
-
+(1, 'admin', '$2y$10$uSa9VcjLIhfwpkuA2waNL.KCgBa8lRH8inUVYqOEOy4jywV9bm4ai', NULL, '2024-12-08 07:04:59', 'ADMINISTRATOR', '', '09926591335', '2003-11-22', '', 'admin')
 
 --
 -- Indexes for dumped tables

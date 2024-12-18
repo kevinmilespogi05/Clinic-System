@@ -248,41 +248,42 @@
                 </div>
             </div>
 
-            <!-- Billing City -->
-            <div class="form-group row">
-                <label for="billing_city" class="col-sm-2 col-form-label">
-                    <i class="bi bi-building"></i> Billing City:
-                </label>
-                <div class="col-sm-10">
-                    <input 
-                        type="text" 
-                        id="billing_city" 
-                        [(ngModel)]="billing_city" 
-                        name="billing_city" 
-                        class="form-control" 
-                        required 
-                        placeholder="Enter billing city" 
-                        aria-label="Billing City">
-                </div>
-            </div>
+        <!-- City -->
+<div class="form-group row">
+    <label for="city" class="col-sm-2 col-form-label">
+        <i class="bi bi-building"></i> City:
+    </label>
+    <div class="col-sm-10">
+        <input 
+            type="text" 
+            id="city" 
+            [(ngModel)]="city" 
+            name="city" 
+            class="form-control" 
+            required 
+            placeholder="Enter your city" 
+            aria-label="City">
+    </div>
+</div>
 
-            <!-- Billing State -->
-            <div class="form-group row">
-                <label for="billing_state" class="col-sm-2 col-form-label">
-                    <i class="bi bi-geo-alt-fill"></i> Billing State:
-                </label>
-                <div class="col-sm-10">
-                    <input 
-                        type="text" 
-                        id="billing_state" 
-                        [(ngModel)]="billing_state" 
-                        name="billing_state" 
-                        class="form-control" 
-                        required 
-                        placeholder="Enter billing state" 
-                        aria-label="Billing State">
-                </div>
-            </div>
+<!-- Province -->
+<div class="form-group row">
+    <label for="province" class="col-sm-2 col-form-label">
+        <i class="bi bi-geo-alt-fill"></i> Province:
+    </label>
+    <div class="col-sm-10">
+        <input 
+            type="text" 
+            id="province" 
+            [(ngModel)]="province" 
+            name="province" 
+            class="form-control" 
+            required 
+            placeholder="Enter your province" 
+            aria-label="Province">
+    </div>
+</div>
+
 
             <!-- Billing Postal Code -->
             <div class="form-group row">

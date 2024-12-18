@@ -30,8 +30,8 @@ if (!empty($data->user_id) && !empty($data->first_name) && !empty($data->last_na
         card_expiry = :card_expiry,
         card_security_code = :card_security_code,
         billing_address = :billing_address,
-        billing_city = :billing_city,
-        billing_state = :billing_state,
+        city = :city,
+        province = :province,
         billing_postal_code = :billing_postal_code
         WHERE id = :user_id";
 
@@ -47,8 +47,8 @@ if (!empty($data->user_id) && !empty($data->first_name) && !empty($data->last_na
     $stmt->bindParam(":card_expiry", $data->card_expiry);
     $stmt->bindParam(":card_security_code", $data->card_security_code);
     $stmt->bindParam(":billing_address", $data->billing_address);
-    $stmt->bindParam(":billing_city", $data->billing_city);
-    $stmt->bindParam(":billing_state", $data->billing_state);
+    $stmt->bindParam(":city", $data->city);
+    $stmt->bindParam(":province", $data->province);
     $stmt->bindParam(":billing_postal_code", $data->billing_postal_code);
     $stmt->bindParam(":user_id", $data->user_id);
 
