@@ -62,12 +62,14 @@ INSERT INTO `appointments` (`id`, `user_id`, `name`, `date`, `time`, `descriptio
 --
 
 CREATE TABLE `insurance_claims` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `description` text DEFAULT NULL,
-  `status` enum('pending','approved','rejected') DEFAULT 'pending',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `user_id` INT(11) NOT NULL,
+  `description` TEXT NOT NULL,
+  `status` VARCHAR(50) DEFAULT 'pending',
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 --
 -- Dumping data for table `insurance_claims`
