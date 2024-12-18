@@ -15,12 +15,14 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
 
+  // Redirect to login page by default when the app is accessed
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+
   // Protected routes wrapped with UserSideNavComponent
   {
     path: '',
     component: SideNavComponent,
     children: [
-      { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'appointments', component: AppointmentsComponent },
       { path: 'billing', component: BillingComponent },
