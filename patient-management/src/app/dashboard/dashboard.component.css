@@ -1,41 +1,72 @@
-/* Custom Dashboard Styling */
-.dashboard-container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 20px;
+/* General body styling */
+body {
+  background-color: #f3f3f3; /* Light grey background */
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
 }
 
+/* Dashboard Container */
+.dashboard-container {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 30px;
+  background-color: #ffffff; /* White clean background */
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  transition: all 0.3s ease-in-out;
+}
+
+.dashboard-container:hover {
+  transform: scale(1.02); /* Subtle zoom effect on hover */
+}
+
+/* Appointments Section */
 .appointments-section {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 /* Table Styling */
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 20px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for the table */
 }
 
 table th, table td {
   text-align: center;
-  padding: 12px 15px;
+  padding: 15px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
 }
 
 table th {
-  background-color: #2c3e50;
-  color: white;
+  background-color: #34495e; /* Dark slate blue */
+  color: #ffffff;
 }
 
 table td {
-  background-color: #ecf0f1;
+  background-color: #f9fafb; /* Light grey background for rows */
+  color: #2c3e50;
+}
+
+table tr:hover td {
+  background-color: #eaf8f0; /* Light green highlight on hover */
+  cursor: pointer;
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .dashboard-container {
-    padding: 10px;
+    padding: 15px;
   }
 
   table th, table td {
-    padding: 8px 10px;
+    padding: 10px 12px;
+    font-size: 0.9rem;
   }
 }
