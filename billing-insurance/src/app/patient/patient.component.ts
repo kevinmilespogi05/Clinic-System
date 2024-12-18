@@ -20,8 +20,8 @@ interface User {
   card_expiry?: string;
   card_security_code?: string;
   billing_address?: string;
-  billing_city?: string;
-  billing_state?: string;
+  city?: string;
+  province?: string;
   billing_postal_code?: string;
 }
 

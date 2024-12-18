@@ -53,8 +53,8 @@
 
       <!-- Billing Information -->
       <p><strong>Billing Address:</strong> {{ selectedUser.billing_address }}</p>
-      <p><strong>Billing City:</strong> {{ selectedUser.billing_city }}</p>
-      <p><strong>Billing State:</strong> {{ selectedUser.billing_state }}</p>
+      <p><strong>City:</strong> {{ selectedUser.city }}</p>
+      <p><strong>Province:</strong> {{ selectedUser.province }}</p>
       <p><strong>Billing Postal Code:</strong> {{ selectedUser.billing_postal_code }}</p>
 
       <button (click)="toggleEditMode()">
@@ -113,12 +113,12 @@
           <input type="text" id="billing_address" [(ngModel)]="selectedUser.billing_address" name="billing_address" />
         </div>
         <div>
-          <label for="billing_city">Billing City:</label>
-          <input type="text" id="billing_city" [(ngModel)]="selectedUser.billing_city" name="billing_city" />
+          <label for="city">City:</label>
+          <input type="text" id="city" [(ngModel)]="selectedUser.city" name="city" />
         </div>
         <div>
-          <label for="billing_state">Billing State:</label>
-          <input type="text" id="billing_state" [(ngModel)]="selectedUser.billing_state" name="billing_state" />
+          <label for="province">Province:</label>
+          <input type="text" id="province" [(ngModel)]="selectedUser.province" name="province" />
         </div>
         <div>
           <label for="billing_postal_code">Billing Postal Code:</label>
