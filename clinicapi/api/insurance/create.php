@@ -14,7 +14,8 @@ if (!empty($data->user_id) && !empty($data->description)) {
     $stmt->bindParam(":description", $data->description);
 
     if ($stmt->execute()) {
-        echo json_encode(["message" => "Insurance claim submitted successfully."]);
+        $last_id = $db->lastInsertId(); // Get the last inserted ID
+        echo json_encode(["message" => "Insurance claim submitted successfully.", "claim_id" => $last_id]);
     } else {
         echo json_encode(["message" => "Failed to submit insurance claim."]);
     }

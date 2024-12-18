@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PatientService } from '../services/patient.service';
 
-
 @Component({
   selector: 'app-insurance',
   standalone: true,
@@ -29,16 +28,14 @@ export class InsuranceComponent implements OnInit {
     this.loadClaims();
   }
 
- // insurance.component.ts (user)
-loadClaims(): void {
-  const userId = parseInt(localStorage.getItem('userId') || '0', 10);
-  const isAdmin = localStorage.getItem('role') === 'admin' ? 1 : 0;  // Assuming 'role' is stored as 'admin' or 'user'
-  
-  this.patientService.getInsuranceClaims(userId, isAdmin).subscribe((data: any[]) => {
-    this.claims = data;
-  });
-}
+  loadClaims(): void {
+    const userId = parseInt(localStorage.getItem('userId') || '0', 10);
+    const isAdmin = localStorage.getItem('role') === 'admin' ? 1 : 0;
 
+    this.patientService.getInsuranceClaims(userId, isAdmin).subscribe((data: any[]) => {
+      this.claims = data;
+    });
+  }
 
   createClaim(): void {
     if (this.claimForm.valid) {
@@ -46,7 +43,8 @@ loadClaims(): void {
         user_id: parseInt(localStorage.getItem('userId') || '0', 10),
         description: `${this.claimForm.value.service_type}: ${this.claimForm.value.claim_description}`,
       };
-      this.patientService.createInsuranceClaim(claimData).subscribe(() => {
+      this.patientService.createInsuranceClaim(claimData).subscribe((response: any) => {
+        console.log('New Claim ID:', response.claim_id); // Log the new claim ID
         this.loadClaims(); // Refresh the claims list
         this.claimForm.reset(); // Reset the form
       });

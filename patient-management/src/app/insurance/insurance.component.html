@@ -10,13 +10,15 @@
       <p>
         <strong>Status:</strong>
         <span
+          class="status-badge"
           [ngClass]="{
-            approved: claim.status === 'approved',
-            rejected: claim.status === 'rejected',
-            pending: claim.status === 'pending'
+            'status-approved': claim.status === 'approved',
+            'status-declined': claim.status === 'declined',
+            'status-pending': claim.status === 'pending'
           }"
-          >{{ claim.status }}</span
         >
+          {{ claim.status | titlecase }}
+        </span>
       </p>
     </div>
   </div>

@@ -112,3 +112,27 @@ body {
 .btn-submit:hover {
   background-color: #2980b9; /* Darker blue on hover */
 }
+
+/* Status badge styling */
+.status-badge {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  color: white;
+}
+
+/* Specific status colors */
+.status-pending {
+  background-color: #f1c40f; /* Yellow for pending */
+}
+
+.status-approved {
+  background-color: #27ae60; /* Green for approved */
+}
+
+.status-declined {
+  background-color: #e74c3c; /* Red for declined */
+}

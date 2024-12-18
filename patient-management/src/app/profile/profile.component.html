@@ -202,32 +202,3 @@
     <p *ngIf="!errorMessage">Loading...</p>
   </div>
 </ng-template>
-
-
-<!-- Insurance Claim Status Section -->
-<div class="insurance-status-container">
-  <h2>Insurance Claim Status</h2>
-  
-  <div *ngFor="let claim of claims" class="claim-item">
-    <p><strong>Claim ID:</strong> {{ claim.id }}</p>
-    <p><strong>Description:</strong> {{ claim.description }}</p>
-    <p>
-      <strong>Status:</strong>
-      <span
-        [ngClass]="{
-          approved: claim.status === 'approved',
-          rejected: claim.status === 'rejected',
-          pending: claim.status === 'pending'
-        }"
-        >{{ claim.status }}</span
-      >
-    </p>
-  </div>
-</div>
-
-<ng-template #errorTemplate>
-  <div class="error-message">
-    <p *ngIf="errorMessage">{{ errorMessage }}</p>
-    <p *ngIf="!errorMessage">Loading...</p>
-  </div>
-</ng-template>
