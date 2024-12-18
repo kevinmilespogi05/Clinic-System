@@ -94,17 +94,27 @@ export class PatientService {
         (appointmentsStats) => {
           this.getRequest('api/billing/stats.php').subscribe(
             (billingStats) => {
-              const combinedStats = { ...appointmentsStats.data, ...billingStats.data };
-              observer.next(combinedStats);
-              observer.complete();
+              this.getRequest('api/insurance/stats.php').subscribe(  // New request to fetch the stats
+                (stats) => {
+                  const combinedStats = {
+                    ...appointmentsStats.data,
+                    ...billingStats.data,
+                    ...stats.data  // Merge the new stats with the existing ones
+                  };
+                  observer.next(combinedStats);
+                  observer.complete();
+                },
+                (error) => observer.error(error)  // Handle error for stats.php request
+              );
             },
-            (error) => observer.error(error)
+            (error) => observer.error(error)  // Handle error for billingStats request
           );
         },
-        (error) => observer.error(error)
+        (error) => observer.error(error)  // Handle error for appointmentsStats request
       );
     });
   }
+  
 
   /** ======================= Billing Management ================= */
   getInvoices(): Observable<any[]> {
