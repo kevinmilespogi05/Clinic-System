@@ -11,24 +11,19 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
 -- Database: `clinic_billing`
---
 
 -- --------------------------------------------------------
 
---
 -- Table structure for table `appointments`
---
 
 CREATE TABLE `appointments` (
-  `id` int(11) NOT NULL,
+  id INT(11) AUTO_INCREMENT PRIMARY KEY, 
   `user_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `date` date NOT NULL,
@@ -38,9 +33,7 @@ CREATE TABLE `appointments` (
   `status` enum('booked','cancelled') NOT NULL DEFAULT 'booked'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
 -- Dumping data for table `appointments`
---
 
 INSERT INTO `appointments` (`id`, `user_id`, `name`, `date`, `time`, `description`, `created_at`, `status`) VALUES
 (12, 9, 'kevin', '2024-12-15', '10:30:00', 'Dental Checkup', '2024-12-10 04:43:40', 'booked'),
@@ -57,9 +50,7 @@ INSERT INTO `appointments` (`id`, `user_id`, `name`, `date`, `time`, `descriptio
 
 -- --------------------------------------------------------
 
---
 -- Table structure for table `insurance_claims`
---
 
 CREATE TABLE `insurance_claims` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -70,40 +61,32 @@ CREATE TABLE `insurance_claims` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-
---
 -- Dumping data for table `insurance_claims`
---
 
 INSERT INTO `insurance_claims` (`id`, `user_id`, `description`, `status`, `created_at`) VALUES
 (1, 1, 'Claim for hospital expenses', 'pending', '2024-12-08 07:39:46');
 
 -- --------------------------------------------------------
 
---
 -- Table structure for table `invoices`
---
 
 CREATE TABLE `invoices` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `description` text DEFAULT NULL,
   `status` enum('paid','unpaid') DEFAULT 'unpaid',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
 -- Dumping data for table `invoices`
---
 
 INSERT INTO `invoices` (`id`, `user_id`, `description`, `status`, `created_at`) VALUES
 (1, 1, 'Consultation Fee', 'unpaid', '2024-12-08 07:38:10');
 
 -- --------------------------------------------------------
 
---
 -- Table structure for table `users`
---
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -131,86 +114,58 @@ CREATE TABLE `users` (
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-
---
 -- Dumping data for table `users`
---
 
-INSERT INTO `users` (`id`, `username`, `password`, `medical_records`, `created_at`, `first_name`, `last_name`, `contact_number`, `date_of_birth`, `medical_history`, `role`) 
+INSERT INTO `users` (`id`, `username`, `password`, `medical_history`, `created_at`, `first_name`, `last_name`, `contact_number`, `date_of_birth`, `medical_history`, `role`) 
 VALUES
-(1, 'admin', '$2y$10$uSa9VcjLIhfwpkuA2waNL.KCgBa8lRH8inUVYqOEOy4jywV9bm4ai', NULL, '2024-12-08 07:04:59', 'ADMINISTRATOR', '', '09926591335', '2003-11-22', '', 'admin')
+(1, 'admin', '$2y$10$uSa9VcjLIhfwpkuA2waNL.KCgBa8lRH8inUVYqOEOy4jywV9bm4ai', '', '2024-12-08 07:04:59', 'ADMINISTRATOR', '', '09926591335', '2003-11-22', '', 'admin');
 
---
 -- Indexes for dumped tables
---
 
---
 -- Indexes for table `appointments`
---
 ALTER TABLE `appointments`
   ADD PRIMARY KEY (`id`);
 
---
 -- Indexes for table `insurance_claims`
---
 ALTER TABLE `insurance_claims`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
 
---
 -- Indexes for table `invoices`
---
 ALTER TABLE `invoices`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
 
---
 -- Indexes for table `users`
---
 
---
 -- AUTO_INCREMENT for dumped tables
---
 
---
 -- AUTO_INCREMENT for table `appointments`
---
 ALTER TABLE `appointments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
---
 -- AUTO_INCREMENT for table `insurance_claims`
---
 ALTER TABLE `insurance_claims`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
---
 -- AUTO_INCREMENT for table `invoices`
---
 ALTER TABLE `invoices`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
---
 -- AUTO_INCREMENT for table `users`
---
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
---
 -- Constraints for dumped tables
---
 
---
 -- Constraints for table `insurance_claims`
---
 ALTER TABLE `insurance_claims`
   ADD CONSTRAINT `insurance_claims_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
---
 -- Constraints for table `invoices`
---
 ALTER TABLE `invoices`
   ADD CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
