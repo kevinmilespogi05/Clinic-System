@@ -33,13 +33,6 @@
           </div>
         </div>
         <button
-          class="approve-btn"
-          *ngIf="appointment.status === 'pending'"
-          (click)="approveAppointment(appointment.id)"
-        >
-          APPROVE
-        </button>
-        <button
           class="cancel-btn"
           *ngIf="appointment.status !== 'cancelled'"
           (click)="cancelAppointment(appointment.id)"
