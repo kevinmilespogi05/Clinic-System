@@ -6,11 +6,12 @@ $db = $database->getConnection();
 
 $data = json_decode(file_get_contents("php://input"));
 
-if (!empty($data->appointment_id)) {
-    $query = "UPDATE appointments SET status = 'cancelled' WHERE id = :appointment_id";
+if (!empty($data->appointment_id) && !empty($data->reason)) {
+    $query = "UPDATE appointments SET status = 'cancelled', cancellation_reason = :reason WHERE id = :appointment_id";
 
     $stmt = $db->prepare($query);
     $stmt->bindParam(":appointment_id", $data->appointment_id);
+    $stmt->bindParam(":reason", $data->reason);
 
     if ($stmt->execute()) {
         echo json_encode(["message" => "Appointment cancelled successfully."]);

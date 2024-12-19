@@ -20,10 +20,24 @@
           <div class="appointment-day">{{ appointment.day }}</div>
           <div class="appointment-time">{{ appointment.time }}</div>
           <div class="appointment-status">
-            Status: <span [ngClass]="getStatusClass(appointment.status)">{{ appointment.status }}</span>
+            Status:
+            <span [ngClass]="getStatusClass(appointment.status)">{{
+              appointment.status
+            }}</span>
           </div>
         </div>
-        <button class="cancel-btn" *ngIf="appointment.status !== 'cancelled'" (click)="cancelAppointment(appointment.id)">
+        <button
+          class="approve-btn"
+          *ngIf="appointment.status === 'pending'"
+          (click)="approveAppointment(appointment.id)"
+        >
+          APPROVE
+        </button>
+        <button
+          class="cancel-btn"
+          *ngIf="appointment.status !== 'cancelled'"
+          (click)="cancelAppointment(appointment.id)"
+        >
           CANCEL
         </button>
       </div>

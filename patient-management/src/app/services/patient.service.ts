@@ -20,17 +20,24 @@ export class PatientService {
 
   // Patient Management
   register(userDetails: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/api/users/register.php`, userDetails);
+    return this.http.post<any>(
+      `${this.baseUrl}/api/users/register.php`,
+      userDetails
+    );
   }
 
   getDashboardData(userId: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/api/dashboard/get_dashboard.php?id=${userId}`);
+    return this.http.get(
+      `${this.baseUrl}/api/dashboard/get_dashboard.php?id=${userId}`
+    );
   }
 
   getProfile(userId: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/api/users/get_profile.php?id=${userId}`);
+    return this.http.get<any>(
+      `${this.baseUrl}/api/users/get_profile.php?id=${userId}`
+    );
   }
-  
+
   updateProfile(userId: number, updatedData: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/api/users/update_profile.php`, {
       user_id: userId,
@@ -47,10 +54,9 @@ export class PatientService {
       billing_address: updatedData.billing_address,
       city: updatedData.city,
       province: updatedData.province,
-      billing_postal_code: updatedData.billing_postal_code
+      billing_postal_code: updatedData.billing_postal_code,
     });
   }
-  
 
   // Appointments Management
   getAppointments(userId?: number): Observable<any> {
@@ -65,47 +71,58 @@ export class PatientService {
     return this.http.post(`${this.baseUrl}/api/appointments/create.php`, data);
   }
 
-  cancelAppointment(appointmentId: number): Observable<any> {
-    return this.http.post(`${this.baseUrl}/api/appointments/cancel.php`, { appointment_id: appointmentId });
+  cancelAppointment(appointmentId: number, reason: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/api/appointments/cancel.php`, {
+      appointment_id: appointmentId,
+      reason,
+    });
   }
 
-  updateAppointmentStatus(appointmentId: number, status: string): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/api/appointments/update_status.php`, {
-      id: appointmentId,
-      status,
-    }).pipe(catchError(this.handleError));
+  updateAppointmentStatus(
+    appointmentId: number,
+    status: string
+  ): Observable<any> {
+    return this.http
+      .post<any>(`${this.baseUrl}/api/appointments/approve.php`, {
+        id: appointmentId,
+        status,
+      })
+      .pipe(catchError(this.handleError));
   }
 
   deleteAppointment(appointmentId: number): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/api/appointments/delete_appointment.php`, {
-      id: appointmentId,
-    }).pipe(catchError(this.handleError));
+    return this.http
+      .post<any>(`${this.baseUrl}/api/appointments/delete_appointment.php`, {
+        id: appointmentId,
+      })
+      .pipe(catchError(this.handleError));
   }
-  
 
   // Combined Stats (Billing + Appointments)
   getCombinedStats(): Observable<any> {
     return new Observable((observer) => {
       // Fetch appointments stats
-      this.http.get<any>(`${this.baseUrl}/api/appointments/stats.php`).pipe(
-        catchError(this.handleError)
-      ).subscribe((appointmentsStats) => {
-        // Fetch billing stats
-        this.http.get<any>(`${this.baseUrl}/api/billing/stats.php`).pipe(
-          catchError(this.handleError)
-        ).subscribe((billingStats) => {
-          // Combine both stats
-          const combinedStats = {
-            ...appointmentsStats.data,
-            ...billingStats.data
-          };
-          observer.next(combinedStats);
-          observer.complete();
+      this.http
+        .get<any>(`${this.baseUrl}/api/appointments/stats.php`)
+        .pipe(catchError(this.handleError))
+        .subscribe((appointmentsStats) => {
+          // Fetch billing stats
+          this.http
+            .get<any>(`${this.baseUrl}/api/billing/stats.php`)
+            .pipe(catchError(this.handleError))
+            .subscribe((billingStats) => {
+              // Combine both stats
+              const combinedStats = {
+                ...appointmentsStats.data,
+                ...billingStats.data,
+              };
+              observer.next(combinedStats);
+              observer.complete();
+            });
         });
-      });
     });
   }
-  
+
   // Billing Management
   getInvoices(): Observable<any[]> {
     return this.http
@@ -128,7 +145,10 @@ export class PatientService {
       .pipe(catchError(this.handleError));
   }
 
-  updateInvoiceDescription(invoiceId: number, description: string): Observable<any> {
+  updateInvoiceDescription(
+    invoiceId: number,
+    description: string
+  ): Observable<any> {
     return this.http
       .put<any>(`${this.baseUrl}/api/billing/update_description.php`, {
         invoice_id: invoiceId,
@@ -140,7 +160,9 @@ export class PatientService {
   // Insurance Management
   getInsuranceClaims(userId: number, isAdmin: number = 0): Observable<any[]> {
     return this.http
-      .get<any[]>(`${this.baseUrl}/api/insurance/read_all.php?user_id=${userId}&is_admin=${isAdmin}`)
+      .get<any[]>(
+        `${this.baseUrl}/api/insurance/read_all.php?user_id=${userId}&is_admin=${isAdmin}`
+      )
       .pipe(catchError(this.handleError));
   }
 
@@ -157,7 +179,9 @@ export class PatientService {
   }
 
   getInsuranceStats(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/api/insurance/stats.php`).pipe(catchError(this.handleError));
+    return this.http
+      .get<any>(`${this.baseUrl}/api/insurance/stats.php`)
+      .pipe(catchError(this.handleError));
   }
 
   // Error Handler
