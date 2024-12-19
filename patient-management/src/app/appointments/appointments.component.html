@@ -6,7 +6,13 @@
       <div class="slot" *ngFor="let slot of appointmentSlots">
         <div class="slot-day">{{ slot.day }}</div>
         <div class="slot-time">{{ slot.time }}</div>
-        <button class="book-btn" (click)="bookAppointment(slot)">BOOK</button>
+        <button
+          class="book-btn"
+          [disabled]="isSlotOccupied(slot)"
+          (click)="bookAppointment(slot)"
+        >
+          BOOK
+        </button>
       </div>
     </div>
   </div>

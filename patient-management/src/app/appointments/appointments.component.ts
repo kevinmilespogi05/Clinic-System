@@ -47,7 +47,19 @@ export class AppointmentsComponent implements OnInit {
     }
   }
 
+  isSlotOccupied(slot: any): boolean {
+    return this.appointments.some(
+      (appointment) =>
+        appointment.date === slot.date && appointment.time === slot.time
+    );
+  }
+
   bookAppointment(slot: any): void {
+    if (this.isSlotOccupied(slot)) {
+      Swal.fire('Error', 'This slot is already occupied.', 'error');
+      return;
+    }
+
     const userId = localStorage.getItem('userId');
     if (userId) {
       const newAppointment = {
