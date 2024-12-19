@@ -28,15 +28,6 @@
     <h2><i class="bi bi-file-earmark-plus"></i> New Insurance Claim Form</h2>
     <form [formGroup]="claimForm" (ngSubmit)="createClaim()">
       <div class="form-group">
-        <label for="patient-name"><i class="bi bi-person"></i> Patient Name:</label>
-        <input
-          type="text"
-          id="patient-name"
-          formControlName="patient_name"
-          placeholder="Enter patient name"
-        />
-      </div>
-      <div class="form-group">
         <label for="service-type"><i class="bi bi-tools"></i> Service Type:</label>
         <select id="service-type" formControlName="service_type">
           <option value="" disabled selected>Select service type</option>
