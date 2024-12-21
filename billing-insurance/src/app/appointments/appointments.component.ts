@@ -15,6 +15,9 @@ import Swal from 'sweetalert2'; // Import SweetAlert2
 })
 export class AppointmentsComponent implements OnInit {
   appointments: any[] = [];
+  selectedStatus: string = 'approved'; // Default status for modal
+  showEditModal: boolean = false; // Flag for showing the modal
+  selectedAppointment: any = null; // To hold the appointment being edited
 
   constructor(private patientService: PatientService, private datePipe: DatePipe) {}
 
@@ -22,23 +25,38 @@ export class AppointmentsComponent implements OnInit {
     this.loadAppointments();
   }
 
-  loadAppointments() {
+  loadAppointments(): void {
     this.patientService.getAppointments().subscribe(
-      (data) => {
-        // Filter out appointments where the status is 'Cancelled'
-        this.appointments = data.appointments
-          .filter((appointment: any) => appointment.status?.toLowerCase() !== 'cancelled')
-          .map((appointment: any) => ({
+      (data: any) => {
+        if (data && data.appointments && Array.isArray(data.appointments)) {
+          // Remove the filter for cancelled appointments to load all data
+          this.appointments = data.appointments.map((appointment: any) => ({
             ...appointment,
-            patient_name: appointment.name, // Map patient name
-            status: appointment.status || 'Pending', // Default status if not present
+            patient_name: appointment.username,
+            status: appointment.status || 'Pending',
           }));
+        } else if (data.error) {
+          console.error('Appointments data is not in the expected format', data.error);
+          Swal.fire({
+            title: 'Error',
+            text: data.error,
+            icon: 'error',
+            confirmButtonText: 'Retry',
+          });
+        }
       },
-      (error) => {
+      (error: any) => {
         console.error('An error occurred:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Unable to load appointments.',
+          icon: 'error',
+          confirmButtonText: 'Retry',
+        });
       }
     );
   }
+  
 
   formatTime(time: string): string {
     const [hours, minutes] = time.split(':');
@@ -49,20 +67,7 @@ export class AppointmentsComponent implements OnInit {
     if (Date.parse(date)) {
       return this.datePipe.transform(date, 'shortDate') || date;
     }
-    return date; // Return original if not a valid date
-  }
-
-  getStatusClass(status: string): string {
-    switch (status.toLowerCase()) {
-      case 'pending':
-        return 'status-pending';
-      case 'confirmed':
-        return 'status-confirmed';
-      case 'cancelled':
-        return 'status-cancelled';
-      default:
-        return '';
-    }
+    return date;
   }
 
   // Approve Appointment
@@ -70,7 +75,7 @@ export class AppointmentsComponent implements OnInit {
     this.patientService.approveAppointment(appointmentId).subscribe(
       (response) => {
         Swal.fire('Success', 'The appointment has been approved.', 'success');
-        this.loadAppointments();
+        this.loadAppointments(); // Reload appointments
       },
       (error) => {
         console.error('Failed to approve appointment:', error);
@@ -94,7 +99,7 @@ export class AppointmentsComponent implements OnInit {
         this.patientService.declineAppointment(appointmentId).subscribe(
           (response) => {
             Swal.fire('Declined', 'The appointment has been declined.', 'success');
-            this.loadAppointments();
+            this.loadAppointments(); // Reload appointments
           },
           (error) => {
             console.error('Failed to decline appointment:', error);
@@ -105,48 +110,33 @@ export class AppointmentsComponent implements OnInit {
     });
   }
 
-  // Edit Appointment
-  edit(appointment: any): void {
-    Swal.fire({
-      title: 'Edit Appointment',
-      html: `
-        <input id="swal-input-title" class="swal2-input" placeholder="Title" value="${appointment.title}">
-        <input id="swal-input-date" class="swal2-input" type="date" value="${appointment.date}">
-        <input id="swal-input-time" class="swal2-input" type="time" value="${appointment.time}">
-      `,
-      focusConfirm: false,
-      showCancelButton: true,
-      preConfirm: () => {
-        const updatedTitle = (document.getElementById('swal-input-title') as HTMLInputElement).value;
-        const updatedDate = (document.getElementById('swal-input-date') as HTMLInputElement).value;
-        const updatedTime = (document.getElementById('swal-input-time') as HTMLInputElement).value;
-
-        return { title: updatedTitle, date: updatedDate, time: updatedTime };
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const updatedAppointment = {
-          ...appointment,
-          title: result.value?.title,
-          date: result.value?.date,
-          time: result.value?.time,
-        };
-
-        this.patientService.updateAppointment(updatedAppointment).subscribe(
-          (response) => {
-            Swal.fire('Updated', 'The appointment has been updated.', 'success');
-            this.loadAppointments();
-          },
-          (error) => {
-            console.error('Failed to update appointment:', error);
-            Swal.fire('Error', 'Failed to update the appointment.', 'error');
-          }
-        );
-      }
-    });
+  openEditModal(appointment: any): void {
+    this.selectedAppointment = appointment;
+    this.selectedStatus = appointment.status.toLowerCase() === 'approved' ? 'approved' : 'cancelled';
+    this.showEditModal = true;
   }
 
-  // Delete Appointment Method with SweetAlert2 Confirmation
+  closeEditModal(): void {
+    this.showEditModal = false;
+  }
+
+  updateStatus(): void {
+    if (this.selectedAppointment) {
+      this.patientService.updateAppointmentStatus(this.selectedAppointment.id, this.selectedStatus).subscribe(
+        (response: any) => {
+          Swal.fire('Success', 'The appointment status has been updated.', 'success');
+          this.loadAppointments(); // Reload appointments after status update
+          this.closeEditModal();
+        },
+        (error: any) => {
+          console.error('Failed to update appointment status:', error);
+          Swal.fire('Error', 'Failed to update the appointment status.', 'error');
+        }
+      );
+    }
+  }
+  
+
   deleteAppointment(appointmentId: number): void {
     Swal.fire({
       title: 'Are you sure?',
@@ -159,11 +149,11 @@ export class AppointmentsComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.patientService.deleteAppointment(appointmentId).subscribe(
-          (response) => {
+          (response: any) => {
             Swal.fire('Deleted!', 'The appointment has been deleted.', 'success');
             this.loadAppointments();
           },
-          (error) => {
+          (error: any) => {
             console.error('Failed to delete appointment:', error);
             Swal.fire('Error', 'Failed to delete the appointment.', 'error');
           }

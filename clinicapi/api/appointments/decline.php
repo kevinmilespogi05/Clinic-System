@@ -7,20 +7,19 @@ include_once '../../config/database.php';
 $data = json_decode(file_get_contents("php://input"));
 
 if (isset($data->id)) {
-    $appointmentId = $data->id;
-
     try {
         $database = new Database();
         $conn = $database->getConnection();
 
-        $query = "DELETE FROM appointments WHERE id = :id";
+        // Update appointment status to 'cancelled'
+        $query = "UPDATE appointments SET status = 'cancelled' WHERE id = :id";
         $stmt = $conn->prepare($query);
-        $stmt->bindParam(':id', $appointmentId, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $data->id);
 
         if ($stmt->execute()) {
-            echo json_encode(["message" => "Appointment deleted successfully"]);
+            echo json_encode(["message" => "Appointment declined"]);
         } else {
-            echo json_encode(["error" => "Failed to delete appointment"]);
+            echo json_encode(["error" => "Failed to decline appointment"]);
         }
     } catch (Exception $e) {
         echo json_encode(["error" => "Error occurred", "details" => $e->getMessage()]);

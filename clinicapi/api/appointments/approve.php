@@ -11,6 +11,7 @@ if (isset($data->id) && isset($data->status)) {
         $database = new Database();
         $conn = $database->getConnection();
 
+        // Update appointment status to 'approved'
         $query = "UPDATE appointments SET status = :status WHERE id = :id";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':id', $data->id);

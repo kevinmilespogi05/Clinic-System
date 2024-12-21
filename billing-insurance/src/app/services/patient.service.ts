@@ -44,48 +44,40 @@ export class PatientService {
   }
 
   /** ======================= Appointments Management ================= */
-  getAppointments(userId?: number): Observable<any> {
-    const url = userId ? `api/appointments/get_appointments.php?id=${userId}` : 'api/appointments/get_appointments.php';
-    return this.getRequest(url);
+  getAppointments() {
+    const role = localStorage.getItem('role');
+    const id = localStorage.getItem('userId');
+  
+    return this.http.get<any>(`${this.baseUrl}/api/appointments/get_appointments.php?role=${role}&id=${id}`);
   }
-
-  bookAppointment(data: any): Observable<any> {
-    return this.postRequest('api/appointments/create.php', data);
-  }
-
-  cancelAppointment(appointmentId: number): Observable<any> {
-    return this.postRequest('api/appointments/cancel.php', { appointment_id: appointmentId });
-  }
-
-  updateAppointmentStatus(appointmentId: number, status: string): Observable<any> {
-    return this.postRequest('api/appointments/update_status.php', {
-      id: appointmentId,
-      status,
-    });
-  }
-
-  // New methods for appointment approval, decline, and update
-  approveAppointment(appointmentId: number): Observable<any> {
+  
+   // Update appointment status (approve or decline)
+   updateAppointmentStatus(appointmentId: number, status: string): Observable<any> {
     return this.http
-      .post<any>(`${this.baseUrl}/api/appointments/approve.php`, { id: appointmentId })
+      .post<any>(`${this.baseUrl}/api/appointments/update_status.php`, { id: appointmentId, status: status })
       .pipe(catchError(this.handleError));
   }
 
-  declineAppointment(appointmentId: number): Observable<any> {
+   // Approve an appointment
+   approveAppointment(appointmentId: number): Observable<any> {
     return this.http
-      .post<any>(`${this.baseUrl}/api/appointments/decline.php`, { id: appointmentId })
+      .post<any>(`${this.baseUrl}/api/appointments/approve.php`, { id: appointmentId, status: 'approved' })
       .pipe(catchError(this.handleError));
   }
 
-  updateAppointment(appointmentData: any): Observable<any> {
-    return this.http
-      .post<any>(`${this.baseUrl}/api/appointments/update.php`, appointmentData)
-      .pipe(catchError(this.handleError));
-  }
+ // Decline an appointment
+ declineAppointment(appointmentId: number): Observable<any> {
+  return this.http
+    .post<any>(`${this.baseUrl}/api/appointments/decline.php`, { id: appointmentId })
+    .pipe(catchError(this.handleError));
+}
 
-  deleteAppointment(appointmentId: number): Observable<any> {
-    return this.postRequest('api/appointments/delete_appointment.php', { id: appointmentId });
-  }
+deleteAppointment(appointmentId: number): Observable<any> {
+  return this.http
+    .post<any>(`${this.baseUrl}/api/appointments/delete_appointment.php`, { id: appointmentId })
+    .pipe(catchError(this.handleError));
+}
+
 
   /** ======================= Combined Stats (Billing & Appointments) ================= */
   getCombinedStats(): Observable<any> {

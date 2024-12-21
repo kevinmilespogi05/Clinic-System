@@ -6,21 +6,26 @@ import { InsuranceComponent } from './insurance/insurance.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { PatientComponent } from './patient/patient.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
+import { LoginComponent } from './login/login.component';
 
 export const routes: Routes = [
-  {
-    path: '',
-    component: SideNavComponent, // Parent component
+  { 
+    path: 'login', 
+    component: LoginComponent 
+  },
+  { 
+    path: '', 
+    component: SideNavComponent, 
     children: [
-      { path: 'analytics', component: AnalyticsComponent },
       { path: 'appointments', component: AppointmentsComponent },
+      { path: 'analytics', component: AnalyticsComponent },
       { path: 'insurance', component: InsuranceComponent },
       { path: 'invoice', component: InvoiceComponent },
       { path: 'patient', component: PatientComponent },
-      { path: '', redirectTo: 'analytics', pathMatch: 'full' }, // Default route
-    ],
+      { path: '', redirectTo: 'appointments', pathMatch: 'full' },
+    ] 
   },
-  { path: '**', redirectTo: '' }, // Fallback route
+  { path: '**', redirectTo: 'login' }, // Redirect to login for unknown routes
 ];
 
 @NgModule({

@@ -68,14 +68,7 @@ export class PatientService {
   }
 
   bookAppointment(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/api/appointments/create.php`, data);
-  }
-
-  cancelAppointment(appointmentId: number, reason: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/api/appointments/cancel.php`, {
-      appointment_id: appointmentId,
-      reason,
-    });
+    return this.http.post(`${this.baseUrl}/api/appointments/book.php`, data);
   }
 
   updateAppointmentStatus(
@@ -89,6 +82,15 @@ export class PatientService {
       })
       .pipe(catchError(this.handleError));
   }
+  
+  cancelAppointment(appointmentId: number, reason: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/api/appointments/cancel.php`, {
+      appointment_id: appointmentId,
+      reason,
+    });
+  }
+
+ 
 
   deleteAppointment(appointmentId: number): Observable<any> {
     return this.http

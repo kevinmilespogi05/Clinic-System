@@ -1,281 +1,318 @@
+/* Admin Container Styles */
 .admin-container {
-  padding: 30px; /* Spacious padding */
-  background-color: #ffffff; /* Clean white background */
-  border-radius: 12px; /* Rounded corners */
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Modern shadow effect */
-  max-width: 800px; /* A bit narrower for a cleaner look */
-  margin: 30px auto; /* Center the container */
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 30px auto;
   font-family: 'Futura Std Condensed Light', sans-serif;
+}
 
-  h2 {
-    font-size: 2rem;
-    color: #2c3e50;
-    font-weight: 700;
-    margin-bottom: 20px;
-    text-align: center;
+.admin-container h2 {
+  font-size: 2rem;
+  color: #2c3e50;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.appointment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.appointment-item:hover {
+  background-color: #eafaf4;
+}
+
+.appointment-item div {
+  font-size: 1.1rem;
+  color: #333;
+  font-weight: 500;
+}
+
+button {
+  background-color: #1abc9c;
+  color: #fff;
+  padding: 8px 12px;
+  margin-left: 8px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #16a085;
+}
+
+button:focus {
+  outline: none;
+}
+
+button.approve-btn {
+  background-color: #27ae60;
+}
+
+button.approve-btn:hover {
+  background-color: #229954;
+}
+
+button.decline-btn {
+  background-color: #e74c3c;
+}
+
+button.decline-btn:hover {
+  background-color: #c0392b;
+}
+
+button.edit-btn {
+  background-color: #f39c12;
+}
+
+button.edit-btn:hover {
+  background-color: #e67e22;
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Dark background with transparency */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  max-width: 100%;
+  text-align: center;
+}
+
+.modal-content h2 {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.modal-content select {
+  width: 100%;
+  padding: 10px;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 20px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-actions button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.modal-actions button:first-child {
+  background-color: #27ae60;
+  color: white;
+}
+
+.modal-actions button:first-child:hover {
+  background-color: #229954;
+}
+
+.modal-actions button:last-child {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.modal-actions button:last-child:hover {
+  background-color: #c0392b;
+}
+
+/* Appointments Table Styles */
+.appointments-container {
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
+  margin: 30px auto;
+  font-family: 'Futura Std Condensed Light', sans-serif;
+  text-align: center;
+  position: relative;
+}
+
+.appointments-container h1 {
+  margin-bottom: 30px;
+  font-size: 2.4rem;
+  color: #2c3e50;
+  font-weight: 700;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 30px;
+  table-layout: fixed;
+}
+
+thead {
+  background-color: #1abc9c;
+  color: white;
+  text-align: left;
+  padding: 18px 14px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+th,
+td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+}
+
+th {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03rem;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+  background-color: #eafaf4;
+  cursor: pointer;
+}
+
+tbody td {
+  color: #333;
+}
+
+.delete-btn {
+  background-color: #e74c3c;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+}
+
+.delete-btn:focus {
+  outline: none;
+}
+
+.status-pending {
+  color: #f39c12;
+  font-weight: bold;
+}
+
+.status-confirmed {
+  color: #27ae60;
+  font-weight: bold;
+}
+
+.status-cancelled {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+/* Media Queries */
+@media (max-width: 1024px) {
+  .appointments-container {
+    padding: 25px;
   }
 
-  .appointment-item {
-    display: flex;
-    justify-content: space-between; /* Space between text and buttons */
-    align-items: center;
-    background-color: #f9f9f9; /* Light grey background */
-    border: 1px solid #e0e0e0; /* Subtle border */
-    border-radius: 8px; /* Rounded corners */
-    padding: 12px 16px; /* Padding for spacing */
-    margin-bottom: 15px; /* Margin between items */
-    transition: background-color 0.3s ease;
+  table {
+    font-size: 1rem;
+  }
 
-    &:hover {
-      background-color: #eafaf4; /* Soft hover effect */
-    }
-
-    div {
-      font-size: 1.1rem;
-      color: #333;
-      font-weight: 500;
-    }
-
-    button {
-      background-color: #1abc9c; /* Fresh mint color for buttons */
-      color: #fff;
-      padding: 8px 12px;
-      margin-left: 8px; /* Space between buttons */
-      border: none;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-
-      &:hover {
-        background-color: #16a085; /* Darker mint on hover */
-      }
-
-      &:focus {
-        outline: none;
-      }
-
-      &.approve-btn {
-        background-color: #27ae60;
-
-        &:hover {
-          background-color: #229954;
-        }
-      }
-
-      &.decline-btn {
-        background-color: #e74c3c;
-
-        &:hover {
-          background-color: #c0392b;
-        }
-      }
-
-      &.edit-btn {
-        background-color: #f39c12;
-
-        &:hover {
-          background-color: #e67e22;
-        }
-      }
-    }
+  th,
+  td {
+    padding: 14px 12px;
   }
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
-  .admin-container {
+  .appointments-container {
     padding: 20px;
-    max-width: 100%;
   }
 
-  .appointment-item {
-    flex-direction: column;
-    align-items: flex-start;
+  table {
+    font-size: 0.95rem;
+    overflow-x: auto;
+    display: block;
+  }
 
-    div {
-      margin-bottom: 10px;
-    }
+  th,
+  td {
+    padding: 14px 12px;
+  }
 
-    button {
-      width: 100%; /* Full width buttons on smaller screens */
-      margin: 5px 0;
-    }
+  .appointments-container h1 {
+    font-size: 1.8rem;
   }
 }
 
 @media (max-width: 480px) {
-  .admin-container {
-    padding: 15px;
+  .appointments-container {
+    padding: 18px;
   }
 
-  h2 {
-    font-size: 1.6rem;
-  }
-}
-
-.appointments-container {
-    padding: 30px; /* Increased padding for better spacing */
-    background-color: #ffffff; /* Clean white background */
-    border-radius: 12px; /* Subtle rounded corners */
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Slightly deeper shadow for a modern effect */
-    max-width: 1000px; /* Increase max-width for a more spacious layout */
-    margin: 30px auto; /* Center the container vertically */
-    font-family: 'Futura Std Condensed Light', sans-serif;
-    text-align: center;
-    position: relative; /* Required for positioning */
-    left: 5%; /* Moves the container 20% from the left, effectively aligning it to the right */
-  }
-  
-  .appointments-container h1 {
-    margin-bottom: 30px;
-    font-size: 2.4rem;
-    color: #2c3e50;
-    font-weight: 700;
-  }
-  
   table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #fff;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Clean subtle shadow */
-    border-radius: 8px;
-    overflow: hidden;
-    margin-top: 30px;
-    table-layout: fixed;
+    font-size: 0.85rem;
+    overflow-x: auto;
+    display: block;
   }
-  
-  thead {
-    background-color: #1abc9c; /* Fresh mint color */
-    color: white;
-    text-align: left;
-    padding: 18px 14px;
-    font-size: 1.2rem;
-    font-weight: 600;
-  }
-  
+
   th,
   td {
-    padding: 16px 20px; /* Increased padding for a more airy feel */
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-    font-size: 1.1rem;
-    transition: background-color 0.3s ease;
+    padding: 12px 10px;
   }
-  
-  th {
-    font-size: 1.1rem;
-    text-transform: uppercase;
-    letter-spacing: 0.03rem;
+
+  .appointments-container h1 {
+    font-size: 1.6rem;
   }
-  
-  tbody tr:nth-child(even) {
-    background-color: #f9f9f9; /* Very light grey rows for contrast */
-  }
-  
-  tbody tr:hover {
-    background-color: #eafaf4; /* Soft hover effect */
-    cursor: pointer;
-  }
-  
-  tbody td {
-    color: #333; /* Dark text for readability */
-  }
-  
+
   .delete-btn {
-    background-color: #e74c3c;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px; /* Slightly rounder corners */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: 1rem;
+    padding: 10px 15px;
+    font-size: 0.9rem;
   }
-  
-  .delete-btn:hover {
-    background-color: #c0392b;
-  }
-  
-  .delete-btn:focus {
-    outline: none;
-  }
-  
-  .status-pending {
-    color: #f39c12;
-    font-weight: bold;
-  }
-  
-  .status-confirmed {
-    color: #27ae60;
-    font-weight: bold;
-  }
-  
-  .status-cancelled {
-    color: #e74c3c;
-    font-weight: bold;
-  }
-  
-  /* Media Queries */
-  @media (max-width: 1024px) {
-    .appointments-container {
-      padding: 25px;
-    }
-  
-    table {
-      font-size: 1rem;
-    }
-  
-    th,
-    td {
-      padding: 14px 12px;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .appointments-container {
-      padding: 20px;
-    }
-  
-    table {
-      font-size: 0.95rem;
-      overflow-x: auto; /* Horizontal scrolling for small screens */
-      display: block; /* Makes the table scrollable */
-    }
-  
-    th,
-    td {
-      padding: 14px 12px;
-    }
-  
-    .appointments-container h1 {
-      font-size: 1.8rem;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .appointments-container {
-      padding: 18px;
-    }
-  
-    table {
-      font-size: 0.85rem;
-      overflow-x: auto;
-      display: block;
-    }
-  
-    th,
-    td {
-      padding: 12px 10px;
-    }
-  
-    .appointments-container h1 {
-      font-size: 1.6rem;
-    }
-  
-    .delete-btn {
-      padding: 10px 15px;
-      font-size: 0.9rem;
-    }
-  }
-  
+}

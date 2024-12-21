@@ -30,3 +30,4 @@ if (isset($data->id) && isset($data->status)) {
 } else {
     echo json_encode(["error" => "Invalid input"]);
 }
+?>

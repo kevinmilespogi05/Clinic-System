@@ -71,6 +71,12 @@
   cursor: not-allowed;
 }
 
+/* Style for occupied slots */
+.occupied-slot {
+  background-color: #e0e0e0; /* Light gray to show the slot is occupied */
+  opacity: 0.6; /* Dim the slot */
+}
+
 /* Existing Appointments */
 .appointment-card {
   display: flex;

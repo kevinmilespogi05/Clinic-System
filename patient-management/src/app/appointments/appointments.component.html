@@ -3,7 +3,10 @@
   <div class="card">
     <div class="card-title">Book an Appointment</div>
     <div class="slot-container">
-      <div class="slot" *ngFor="let slot of appointmentSlots">
+      <div 
+        class="slot" 
+        [ngClass]="{ 'occupied-slot': isSlotOccupied(slot) }" 
+        *ngFor="let slot of appointmentSlots">
         <div class="slot-day">{{ slot.day }}</div>
         <div class="slot-time">{{ slot.time }}</div>
         <button
@@ -23,14 +26,18 @@
     <div class="appointment-list">
       <div class="appointment-item" *ngFor="let appointment of appointments">
         <div class="appointment-details">
-          <div class="appointment-day">{{ appointment.day }}</div>
-          <div class="appointment-time">{{ appointment.time }}</div>
+          <div class="appointment-day">Day: {{ appointment.day }}</div>
+          <div class="appointment-date">Date: {{ appointment.date }}</div>
+          <div class="appointment-time">Time: {{ appointment.time }}</div>
+          <div class="appointment-description">
+            <strong>Description:</strong> {{ appointment.description }}
+          </div>
           <div class="appointment-status">
             Status:
-            <span [ngClass]="getStatusClass(appointment.status)">{{
-              appointment.status
-            }}</span>
-          </div>
+            <span [ngClass]="getStatusClass(appointment.status)">
+              {{ appointment.status }}
+            </span>
+          </div>          
         </div>
         <button
           class="cancel-btn"
