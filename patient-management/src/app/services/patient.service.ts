@@ -59,13 +59,15 @@ export class PatientService {
   }
 
   // Appointments Management
-  getAppointments(userId?: number): Observable<any> {
-    let url = `${this.baseUrl}/api/appointments/get_appointments.php`;
-    if (userId) {
-      url += `?id=${userId}`;
-    }
-    return this.http.get<any>(url).pipe(catchError(this.handleError));
+getAppointments(userId?: number, role?: string): Observable<any> {
+  let url = `${this.baseUrl}/api/appointments/get_appointments.php`;
+  if (userId && role) {
+    url += `?id=${userId}&role=${role}`;
   }
+  return this.http.get<any>(url).pipe(catchError(this.handleError));
+}
+
+  
 
   bookAppointment(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/api/appointments/book.php`, data);

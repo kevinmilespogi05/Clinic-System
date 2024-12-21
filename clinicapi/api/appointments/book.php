@@ -21,20 +21,21 @@ try {
         // Ensure the date is in the correct format (YYYY-MM-DD)
         $date = date('Y-m-d', strtotime($data->date));  // Converts the input date into the correct format
         
-        // Check if the slot is already booked
-        $conflictQuery = "SELECT COUNT(*) as count 
-                          FROM appointments 
-                          WHERE date = :date AND time = :time AND status = 'booked'";
-        $conflictStmt = $conn->prepare($conflictQuery);
-        $conflictStmt->bindParam(':date', $date);
-        $conflictStmt->bindParam(':time', $data->time);
-        $conflictStmt->execute();
-        $conflictResult = $conflictStmt->fetch(PDO::FETCH_ASSOC);
+    // Check if the slot is already booked or approved
+$conflictQuery = "SELECT COUNT(*) as count 
+FROM appointments 
+WHERE date = :date AND time = :time AND (status = 'booked' OR status = 'approved')";
+$conflictStmt = $conn->prepare($conflictQuery);
+$conflictStmt->bindParam(':date', $date);
+$conflictStmt->bindParam(':time', $data->time);
+$conflictStmt->execute();
+$conflictResult = $conflictStmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($conflictResult['count'] > 0) {
-            echo json_encode(["error" => "The selected slot is already booked."]);
-            exit;
-        }
+if ($conflictResult['count'] > 0) {
+echo json_encode(["error" => "The selected slot is already booked or approved."]);
+exit;
+}
+
 
         // Fetch username from users table based on user_id
         $userQuery = "SELECT username FROM users WHERE id = :user_id";

@@ -35,8 +35,10 @@ export class AppointmentsComponent implements OnInit {
 
   fetchAppointments(): void {
     const userId = localStorage.getItem('userId');
-    if (userId) {
-      this.patientService.getAppointments(Number(userId)).subscribe(
+    const role = localStorage.getItem('role'); // Assuming role is stored in local storage
+    
+    if (userId && role) {
+      this.patientService.getAppointments(Number(userId), role).subscribe(
         (response) => {
           if (response.appointments) {
             this.appointments = response.appointments.map((appointment: any) => {
@@ -61,18 +63,21 @@ export class AppointmentsComponent implements OnInit {
   
 
   isSlotOccupied(slot: any): boolean {
+    // Check if the slot is already booked or approved
     return this.appointments.some(
       (appointment) =>
-        appointment.date === slot.date && appointment.time === slot.time
+        appointment.date === slot.date &&
+        appointment.time === slot.time &&
+        (appointment.status === 'booked' || appointment.status === 'approved')
     );
   }
-
+  
   bookAppointment(slot: any): void {
     if (this.isSlotOccupied(slot)) {
-      Swal.fire('Error', 'This slot is already occupied.', 'error');
+      Swal.fire('Error', 'This slot is already occupied or approved.', 'error');
       return;
     }
-
+  
     const userId = localStorage.getItem('userId');
     if (userId) {
       const description = prompt('Enter the description for the appointment:');
@@ -105,7 +110,7 @@ export class AppointmentsComponent implements OnInit {
       }
     }
   }
-
+  
   cancelAppointment(appointmentId: number): void {
     Swal.fire({
       title: 'Are you sure?',
