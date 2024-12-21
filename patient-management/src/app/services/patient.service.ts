@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+
 @Injectable({
   providedIn: 'root',
 })
@@ -58,6 +59,8 @@ export class PatientService {
     });
   }
 
+  //dashboard components
+  
   // Appointments Management
 getAppointments(userId?: number, role?: string): Observable<any> {
   let url = `${this.baseUrl}/api/appointments/get_appointments.php`;
@@ -66,8 +69,6 @@ getAppointments(userId?: number, role?: string): Observable<any> {
   }
   return this.http.get<any>(url).pipe(catchError(this.handleError));
 }
-
-  
 
   bookAppointment(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/api/appointments/book.php`, data);
@@ -85,14 +86,15 @@ getAppointments(userId?: number, role?: string): Observable<any> {
       .pipe(catchError(this.handleError));
   }
   
-  cancelAppointment(appointmentId: number, reason: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/api/appointments/cancel.php`, {
+  cancelAppointmentWithReason(appointmentId: number, reason: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/api/appointments/cancel.php`, {
       appointment_id: appointmentId,
-      reason,
-    });
+      reason: reason
+    }).pipe(
+      catchError(this.handleError)
+    );
   }
-
- 
+  
 
   deleteAppointment(appointmentId: number): Observable<any> {
     return this.http

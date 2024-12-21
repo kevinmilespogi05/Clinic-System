@@ -1,6 +1,7 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
+header('Content-Type: application/json'); // Added to specify JSON response
 
 include_once '../../config/database.php';
 
@@ -18,7 +19,8 @@ if (!empty($data->appointment_id) && !empty($data->reason)) {
     if ($stmt->execute()) {
         echo json_encode(["message" => "Appointment cancelled successfully."]);
     } else {
-        echo json_encode(["message" => "Failed to cancel appointment."]);
+        $errorInfo = $stmt->errorInfo();
+        echo json_encode(["message" => "Failed to cancel appointment.", "error" => $errorInfo]);
     }
 } else {
     echo json_encode(["message" => "Incomplete data."]);

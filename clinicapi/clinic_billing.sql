@@ -27,15 +27,18 @@ SET time_zone = "+00:00";
 -- Table structure for table `appointments`
 
 CREATE TABLE `appointments` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `date` date NOT NULL,
   `time` time NOT NULL,
   `description` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `status` enum('pending','booked','cancelled','approved') NOT NULL DEFAULT 'pending'
+  `status` enum('pending','booked','cancelled','approved') NOT NULL DEFAULT 'pending',
+  `cancellation_reason` varchar(255) DEFAULT NULL, -- Added cancellation_reason column
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 --
 -- Dumping data for table `appointments`

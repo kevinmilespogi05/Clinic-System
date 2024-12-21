@@ -12,7 +12,7 @@
         <button
           class="book-btn"
           [disabled]="isSlotOccupied(slot)"
-          (click)="bookAppointment(slot)"
+          (click)="openBookingModal(slot)"
         >
           BOOK
         </button>
@@ -42,11 +42,31 @@
         <button
           class="cancel-btn"
           *ngIf="appointment.status !== 'cancelled'"
-          (click)="cancelAppointment(appointment.id)"
+          (click)="openCancelModal(appointment.id)"
         >
           CANCEL
         </button>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Booking Modal -->
+<div class="modal" *ngIf="showBookingModal">
+  <div class="modal-content">
+    <span class="close-btn" (click)="closeBookingModal()">&times;</span>
+    <h3>Enter Appointment Description</h3>
+    <textarea [(ngModel)]="appointmentDescription" placeholder="Enter your description here..." rows="4"></textarea>
+    <button (click)="bookAppointment()" *ngIf="selectedSlot">Confirm Booking</button>
+  </div>
+</div>
+
+<!-- Cancellation Reason Modal -->
+<div class="modal" *ngIf="showModal">
+  <div class="modal-content">
+    <span class="close-btn" (click)="closeCancelModal()">&times;</span>
+    <h3>Enter Cancellation Reason</h3>
+    <textarea [(ngModel)]="cancellationReason" placeholder="Enter your reason here..." rows="4"></textarea>
+    <button (click)="cancelAppointment(appointmentToCancel!)" *ngIf="appointmentToCancel !== null">Confirm Cancellation</button>
   </div>
 </div>

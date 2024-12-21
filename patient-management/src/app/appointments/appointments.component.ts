@@ -27,6 +27,13 @@ export class AppointmentsComponent implements OnInit {
     { day: 'Friday', time: '11:00 AM - 12:00 PM', date: '2024-12-27' },
   ];
 
+  showModal: boolean = false; // Flag to show/hide the cancellation modal
+  showBookingModal: boolean = false; // Flag to show/hide the booking modal
+  cancellationReason: string = ''; // Stores the cancellation reason
+  appointmentDescription: string = ''; // Stores the appointment description
+  appointmentToCancel: number | null = null; // The appointment ID to be cancelled
+  selectedSlot: any = null; // The slot being booked
+
   constructor(private patientService: PatientService) {}
 
   ngOnInit(): void {
@@ -35,7 +42,7 @@ export class AppointmentsComponent implements OnInit {
 
   fetchAppointments(): void {
     const userId = localStorage.getItem('userId');
-    const role = localStorage.getItem('role'); // Assuming role is stored in local storage
+    const role = localStorage.getItem('role');
     
     if (userId && role) {
       this.patientService.getAppointments(Number(userId), role).subscribe(
@@ -43,7 +50,7 @@ export class AppointmentsComponent implements OnInit {
           if (response.appointments) {
             this.appointments = response.appointments.map((appointment: any) => {
               const appointmentDate = new Date(appointment.date);
-              const formattedDate = appointmentDate.toLocaleDateString('en-US'); // Format date
+              const formattedDate = appointmentDate.toLocaleDateString('en-US');
               const dayOfWeek = appointmentDate.toLocaleDateString('en-US', { weekday: 'long' });
   
               return {
@@ -60,10 +67,19 @@ export class AppointmentsComponent implements OnInit {
       );
     }
   }
-  
+
+  openBookingModal(slot: any): void {
+    this.selectedSlot = slot;
+    this.showBookingModal = true;
+  }
+
+  closeBookingModal(): void {
+    this.showBookingModal = false;
+    this.appointmentDescription = '';
+    this.selectedSlot = null;
+  }
 
   isSlotOccupied(slot: any): boolean {
-    // Check if the slot is already booked or approved
     return this.appointments.some(
       (appointment) =>
         appointment.date === slot.date &&
@@ -71,101 +87,71 @@ export class AppointmentsComponent implements OnInit {
         (appointment.status === 'booked' || appointment.status === 'approved')
     );
   }
-  
-  bookAppointment(slot: any): void {
-    if (this.isSlotOccupied(slot)) {
-      Swal.fire('Error', 'This slot is already occupied or approved.', 'error');
+
+  bookAppointment(): void {
+    if (!this.appointmentDescription.trim()) {
+      Swal.fire('Error', 'Please enter a description for the appointment.', 'error');
       return;
     }
-  
+
     const userId = localStorage.getItem('userId');
     if (userId) {
-      const description = prompt('Enter the description for the appointment:');
-      if (description) {
-        this.patientService
-          .bookAppointment({
-            user_id: Number(userId),
-            day: slot.day,
-            time: slot.time,
-            date: slot.date,
-            description: description,
-            status: 'booked',
-          })
-          .subscribe(
-            (response) => {
-              if (response.error) {
-                Swal.fire('Error', response.error, 'error');
-              } else {
-                Swal.fire('Success', 'Appointment successfully booked.', 'success');
-                this.fetchAppointments(); // Re-fetch appointments to update the list
-              }
-            },
-            (error) => {
-              console.error('Error booking appointment:', error);
-              Swal.fire('Error', 'Failed to book appointment. Please try again.', 'error');
-            }
-          );
-      } else {
-        Swal.fire('Error', 'Description is required to book the appointment.', 'error');
-      }
-    }
-  }
-  
-  cancelAppointment(appointmentId: number): void {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'Do you want to cancel this appointment?',
-      icon: 'warning',
-      input: 'text',
-      inputPlaceholder: 'Reason for cancellation',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, cancel it!',
-      cancelButtonText: 'No, keep it',
-      reverseButtons: true,
-    }).then((result) => {
-      if (result.isConfirmed && result.value) {
-        this.patientService
-          .cancelAppointment(appointmentId, result.value)
-          .subscribe(
-            (response) => {
-              this.appointments = this.appointments.filter(
-                (appt) => appt.id !== appointmentId
-              );
-
-              Swal.fire('Cancelled', 'Your appointment has been cancelled.', 'success');
-            },
-            (error) => {
-              console.error('Error canceling appointment:', error);
-              Swal.fire('Error!', 'Failed to cancel appointment. Please try again later.', 'error');
-            }
-          );
-      } else if (!result.value) {
-        Swal.fire('Error', 'Cancellation reason is required', 'error');
-      }
-    });
-  }
-
-  approveAppointment(appointmentId: number): void {
-    this.patientService
-      .updateAppointmentStatus(appointmentId, 'approved')
-      .subscribe(
+      this.patientService.bookAppointment({
+        user_id: Number(userId),
+        day: this.selectedSlot.day,
+        time: this.selectedSlot.time,
+        date: this.selectedSlot.date,
+        description: this.appointmentDescription,
+        status: 'booked',
+      }).subscribe(
         (response) => {
-          this.appointments = this.appointments.map((appt) => {
-            if (appt.id === appointmentId) {
-              appt.status = 'approved';
-            }
-            return appt;
-          });
-  
-          Swal.fire('Approved', 'The appointment has been approved.', 'success');
+          if (response.error) {
+            Swal.fire('Error', response.error, 'error');
+          } else {
+            Swal.fire('Success', 'Appointment successfully booked.', 'success');
+            this.fetchAppointments();
+            this.closeBookingModal();
+          }
         },
         (error) => {
-          console.error('Error approving appointment:', error);
-          Swal.fire('Error!', 'Failed to approve appointment. Please try again later.', 'error');
+          Swal.fire('Error', 'Failed to book appointment. Please try again.', 'error');
         }
       );
+    }
   }
 
+  openCancelModal(appointmentId: number): void {
+    this.appointmentToCancel = appointmentId;
+    this.showModal = true;
+  }
+
+  closeCancelModal(): void {
+    this.showModal = false;
+    this.cancellationReason = '';
+  }
+
+  cancelAppointment(appointmentId: number): void {
+    if (this.cancellationReason.trim() === '') {
+      Swal.fire('Error', 'Please provide a cancellation reason.', 'error');
+      return;
+    }
+
+    this.patientService.cancelAppointmentWithReason(appointmentId, this.cancellationReason).subscribe(
+      (response) => {
+        if (response.message === 'Appointment cancelled successfully.') {
+          Swal.fire('Success', 'Appointment cancelled successfully', 'success');
+          this.fetchAppointments();
+          this.closeCancelModal();
+        } else {
+          Swal.fire('Error', 'Failed to cancel appointment', 'error');
+        }
+      },
+      (error) => {
+        Swal.fire('Error', 'An error occurred while canceling the appointment', 'error');
+      }
+    );
+  }
+  
   getStatusClass(status: string): string {
     switch (status.toLowerCase()) {
       case 'pending':
