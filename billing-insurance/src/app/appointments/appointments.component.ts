@@ -14,10 +14,11 @@ import Swal from 'sweetalert2'; // Import SweetAlert2
   providers: [DatePipe], // Add DatePipe to the providers array
 })
 export class AppointmentsComponent implements OnInit {
+  pendingAppointments: any[] = [];
   appointments: any[] = [];
-  selectedStatus: string = 'approved'; // Default status for modal
-  showEditModal: boolean = false; // Flag for showing the modal
-  selectedAppointment: any = null; // To hold the appointment being edited
+  selectedStatus: string = 'approved';
+  showEditModal: boolean = false;
+  selectedAppointment: any = null;
 
   constructor(private patientService: PatientService, private datePipe: DatePipe) {}
 
@@ -29,33 +30,31 @@ export class AppointmentsComponent implements OnInit {
     this.patientService.getAppointments().subscribe(
       (data: any) => {
         if (data && data.appointments && Array.isArray(data.appointments)) {
-          // Remove the filter for cancelled appointments to load all data
-          this.appointments = data.appointments.map((appointment: any) => ({
-            ...appointment,
-            patient_name: appointment.username,
-            status: appointment.status || 'Pending',
-          }));
-        } else if (data.error) {
-          console.error('Appointments data is not in the expected format', data.error);
-          Swal.fire({
-            title: 'Error',
-            text: data.error,
-            icon: 'error',
-            confirmButtonText: 'Retry',
-          });
+          this.pendingAppointments = data.appointments
+            .filter((appt: any) => appt.status === 'pending')
+            .map((appointment: any) => ({
+              ...appointment,
+              patient_name: appointment.username || 'Unknown Patient', // Ensure fallback value
+            }));
+  
+          this.appointments = data.appointments
+            .filter((appt: any) => appt.status !== 'pending')
+            .map((appointment: any) => ({
+              ...appointment,
+              patient_name: appointment.username || 'Unknown Patient', // Ensure fallback value
+            }));
+        } else {
+          Swal.fire('Error', 'Invalid data format', 'error');
         }
       },
-      (error: any) => {
-        console.error('An error occurred:', error);
-        Swal.fire({
-          title: 'Error',
-          text: 'Unable to load appointments.',
-          icon: 'error',
-          confirmButtonText: 'Retry',
-        });
+      (error) => {
+        console.error('Error loading appointments:', error);
+        Swal.fire('Error', 'Unable to load appointments.', 'error');
       }
     );
   }
+  
+  
   
 
   formatTime(time: string): string {
@@ -64,51 +63,59 @@ export class AppointmentsComponent implements OnInit {
   }
 
   formatDate(date: string): string {
-    if (Date.parse(date)) {
-      return this.datePipe.transform(date, 'shortDate') || date;
-    }
-    return date;
+    return this.datePipe.transform(date, 'shortDate') || date;
   }
 
   // Approve Appointment
   approve(appointmentId: number): void {
     this.patientService.approveAppointment(appointmentId).subscribe(
-      (response) => {
-        Swal.fire('Success', 'The appointment has been approved.', 'success');
-        this.loadAppointments(); // Reload appointments
+      () => {
+        Swal.fire('Success', 'Appointment approved.', 'success');
+        this.moveAppointment(appointmentId, 'approved');
       },
       (error) => {
-        console.error('Failed to approve appointment:', error);
-        Swal.fire('Error', 'Failed to approve the appointment.', 'error');
+        console.error('Error approving appointment:', error);
+        Swal.fire('Error', 'Failed to approve appointment.', 'error');
       }
     );
   }
 
-  // Decline Appointment
-  decline(appointmentId: number): void {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'Do you want to decline this appointment?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Yes, decline it!',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.patientService.declineAppointment(appointmentId).subscribe(
-          (response) => {
-            Swal.fire('Declined', 'The appointment has been declined.', 'success');
-            this.loadAppointments(); // Reload appointments
-          },
-          (error) => {
-            console.error('Failed to decline appointment:', error);
-            Swal.fire('Error', 'Failed to decline the appointment.', 'error');
-          }
-        );
-      }
-    });
+// Decline Appointment
+decline(appointmentId: number): void {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'Do you want to decline this appointment?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, decline it!',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.patientService.declineAppointment(appointmentId).subscribe(
+        () => {
+          Swal.fire('Declined', 'Appointment declined.', 'success');
+          this.moveAppointment(appointmentId, 'cancelled');
+        },
+        (error) => {
+          console.error('Error declining appointment:', error);
+          Swal.fire('Error', 'Failed to decline appointment.', 'error');
+        }
+      );
+    }
+  });
+}
+
+moveAppointment(appointmentId: number, newStatus: string): void {
+  const appointmentIndex = this.pendingAppointments.findIndex((appt) => appt.id === appointmentId);
+  if (appointmentIndex > -1) {
+    const appointment = { ...this.pendingAppointments[appointmentIndex], status: newStatus };
+    this.pendingAppointments.splice(appointmentIndex, 1);
+    this.appointments.push(appointment);
   }
+}
+
+  
 
   openEditModal(appointment: any): void {
     this.selectedAppointment = appointment;
@@ -149,13 +156,13 @@ export class AppointmentsComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.patientService.deleteAppointment(appointmentId).subscribe(
-          (response: any) => {
-            Swal.fire('Deleted!', 'The appointment has been deleted.', 'success');
-            this.loadAppointments();
+          () => {
+            Swal.fire('Deleted!', 'Appointment deleted.', 'success');
+            this.appointments = this.appointments.filter((appt) => appt.id !== appointmentId);
           },
-          (error: any) => {
-            console.error('Failed to delete appointment:', error);
-            Swal.fire('Error', 'Failed to delete the appointment.', 'error');
+          (error) => {
+            console.error('Error deleting appointment:', error);
+            Swal.fire('Error', 'Failed to delete appointment.', 'error');
           }
         );
       }

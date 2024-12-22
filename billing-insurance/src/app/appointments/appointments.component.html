@@ -1,9 +1,9 @@
 <div class="admin-container">
   <h2>Pending Appointments</h2>
-  <div class="appointment-item" *ngFor="let appt of appointments">
+  <div class="appointment-item" *ngFor="let appt of pendingAppointments">
     <div>{{ appt.date }} | {{ appt.time }} | {{ appt.status }}</div>
-    <button *ngIf="appt.status === 'pending'" (click)="approve(appt.id)">Approve</button>
-    <button *ngIf="appt.status === 'pending'" (click)="decline(appt.id)">Decline</button>
+    <button (click)="approve(appt.id)">Approve</button>
+    <button (click)="decline(appt.id)">Decline</button>
   </div>
 </div>
 
@@ -17,7 +17,7 @@
         <th>Appointment Time</th>
         <th>Description</th>
         <th>Status</th>
-        <th>Actions</th> <!-- Add Actions Column -->
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -28,8 +28,6 @@
         <td>{{ appointment.description }}</td>
         <td>{{ appointment.status | titlecase }}</td>
         <td>
-          <!-- Edit button for changing the appointment status -->
-          <button class="edit-btn" (click)="openEditModal(appointment)">Edit</button>
           <button class="delete-btn" (click)="deleteAppointment(appointment.id)">
             <i class="bi bi-trash"></i> Delete
           </button>
@@ -38,20 +36,3 @@
     </tbody>
   </table>
 </div>
-
-<!-- Edit Status Modal -->
-<div *ngIf="showEditModal" class="modal">
-  <div class="modal-content">
-    <h2>Edit Appointment Status</h2>
-    <p>Change the status for this appointment:</p>
-    <select [(ngModel)]="selectedStatus">
-      <option value="approved">Approve</option>
-      <option value="cancelled">Decline</option>
-    </select>
-    <div class="modal-actions">
-      <button (click)="updateStatus()">Update Status</button>
-      <button (click)="closeEditModal()">Cancel</button>
-    </div>
-  </div>
-</div>
-
