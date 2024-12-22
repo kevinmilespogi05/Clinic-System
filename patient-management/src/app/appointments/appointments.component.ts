@@ -15,17 +15,23 @@ import Swal from 'sweetalert2';
 export class AppointmentsComponent implements OnInit {
   appointments: any[] = [];
   appointmentSlots = [
-    { day: 'Monday', time: '10:00 AM - 11:00 AM', date: '2024-12-16' },
-    { day: 'Tuesday', time: '10:00 AM - 11:00 AM', date: '2024-12-17' },
-    { day: 'Wednesday', time: '10:00 AM - 11:00 AM', date: '2024-12-18' },
-    { day: 'Thursday', time: '10:00 AM - 11:00 AM', date: '2024-12-19' },
-    { day: 'Friday', time: '10:00 AM - 11:00 AM', date: '2024-12-20' },
-    { day: 'Monday', time: '11:00 AM - 12:00 PM', date: '2024-12-23' },
-    { day: 'Tuesday', time: '11:00 AM - 12:00 PM', date: '2024-12-24' },
-    { day: 'Wednesday', time: '11:00 AM - 12:00 PM', date: '2024-12-25' },
-    { day: 'Thursday', time: '11:00 AM - 12:00 PM', date: '2024-12-26' },
-    { day: 'Friday', time: '11:00 AM - 12:00 PM', date: '2024-12-27' },
-  ];
+  { day: 'Monday', time: '10:00 AM - 11:00 AM', date: '2024-12-16' },
+  { day: 'Monday', time: '11:00 AM - 12:00 PM', date: '2024-12-16' },
+  { day: 'Tuesday', time: '10:00 AM - 11:00 AM', date: '2024-12-17' },
+  { day: 'Tuesday', time: '11:00 AM - 12:00 PM', date: '2024-12-17' },
+  { day: 'Wednesday', time: '10:00 AM - 11:00 AM', date: '2024-12-18' },
+  { day: 'Wednesday', time: '11:00 AM - 12:00 PM', date: '2024-12-18' },
+  { day: 'Thursday', time: '10:00 AM - 11:00 AM', date: '2024-12-19' },
+  { day: 'Thursday', time: '11:00 AM - 12:00 PM', date: '2024-12-19' },
+  { day: 'Friday', time: '10:00 AM - 11:00 AM', date: '2024-12-20' },
+  { day: 'Friday', time: '11:00 AM - 12:00 PM', date: '2024-12-20' },
+  { day: 'Monday', time: '12:00 PM - 01:00 PM', date: '2024-12-23' },
+  { day: 'Tuesday', time: '12:00 PM - 01:00 PM', date: '2024-12-24' },
+  { day: 'Wednesday', time: '12:00 PM - 01:00 PM', date: '2024-12-25' },
+  { day: 'Thursday', time: '12:00 PM - 01:00 PM', date: '2024-12-26' },
+  { day: 'Friday', time: '12:00 PM - 01:00 PM', date: '2024-12-27' },
+];
+
 
   showModal: boolean = false; // Flag to show/hide the cancellation modal
   showBookingModal: boolean = false; // Flag to show/hide the booking modal

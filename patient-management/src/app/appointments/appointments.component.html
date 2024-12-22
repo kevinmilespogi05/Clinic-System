@@ -8,6 +8,7 @@
         [ngClass]="{ 'occupied-slot': isSlotOccupied(slot) }" 
         *ngFor="let slot of appointmentSlots">
         <div class="slot-day">{{ slot.day }}</div>
+        <div class="slot-date">{{ slot.date | date:'longDate' }}</div> <!-- Add date display -->
         <div class="slot-time">{{ slot.time }}</div>
         <button
           class="book-btn"
