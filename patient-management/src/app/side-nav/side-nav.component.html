@@ -1,4 +1,15 @@
-<nav class="side-nav">
+<!-- Toggle Button -->
+<div class="toggle-container">
+  <button
+    class="toggle-btn"
+    (click)="toggleSideNav()"
+    aria-label="Toggle Side Navigation"
+  >
+    <i class="bi bi-list"></i>
+  </button>
+</div>
+
+<nav class="side-nav" [class.closed]="!isNavOpen">
   <h1 class="title">ClinicPoint</h1>
   <p class="username" *ngIf="username">Welcome, {{ username }}!</p>
 
@@ -37,6 +48,6 @@
   </ul>
 </nav>
 
-<div class="content">
+<div class="content" [class.full-width]="!isNavOpen">
   <router-outlet></router-outlet>
 </div>

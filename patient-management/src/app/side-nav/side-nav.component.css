@@ -1,8 +1,41 @@
+/* Toggle Button Container */
+.toggle-container {
+  position: fixed; /* Fixed to stay in place during scroll */
+  top: 15px; /* Aligns with the top of the viewport */
+  left: 15px; /* Aligns the button within the side navigation */
+  z-index: 1000; /* Ensures it stays above other elements */
+}
+
+/* Toggle Button */
+.toggle-btn {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.toggle-btn:hover {
+  background-color: #34495e;
+  transform: scale(1.1);
+}
+
+.toggle-btn i {
+  font-size: 1.2rem;
+}
+
 /* Side Navigation */
 .side-nav {
   width: 180px;
   position: fixed;
-  top: 0;
+  top: 0; /* Start at the top of the viewport */
   left: 0;
   height: 100%;
   background-color: #2c3e50;
@@ -13,41 +46,79 @@
   box-sizing: border-box;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   font-family: 'Futura Std Condensed Light', sans-serif;
+  transition: transform 0.3s ease, width 0.3s ease;
+  overflow: hidden;
 }
 
-/* Title Styling */
+.side-nav.closed {
+  width: 0;
+  padding: 0;
+}
+
+.side-nav.closed * {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.content {
+  margin-left: 180px;
+  transition: margin-left 0.3s ease;
+}
+
+.content.full-width {
+  margin-left: 0;
+}
+
+/* Title Alignment */
 .title {
+  text-align: center; /* Ensure proper alignment */
+  margin-top: 60px; /* Push title below the toggle button */
   font-size: 1.4rem;
   font-weight: bold;
   color: #ecf0f1;
   text-transform: uppercase;
-  margin-bottom: 10px;
-  text-align: center;
 }
 
-/* Username Display */
+/* Media Query for Smaller Screens */
+@media (max-width: 768px) {
+  .side-nav {
+    width: 150px; /* Adjust width for smaller screens */
+  }
+
+  .toggle-container {
+    top: 10px;
+    left: 10px;
+  }
+
+  .title {
+    font-size: 1.2rem; /* Adjust title size for smaller screens */
+  }
+}
+
+
+/* Username Styling */
 .username {
-  font-size: 1rem;                /* Slightly larger font size */
-  font-weight: bold;              /* Bold text to make it pop */
-  color: #2c3e50;                 /* Dark text for contrast */
-  background: linear-gradient(90deg, #e67e22, #f39c12); /* Vibrant gradient background */
-  padding: 8px 12px;              /* Padding for a badge-like look */
-  border-radius: 20px;            /* Rounded corners for a pill shape */
-  text-align: center;             /* Centered text */
-  margin: 10px 0 20px;            /* Space above and below */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  letter-spacing: 0.5px;          /* Slight spacing between letters */
-  text-transform: capitalize;     /* Capitalize text for uniformity */
-  transition: transform 0.3s, box-shadow 0.3s; /* Smooth hover effects */
+  font-size: 1rem;
+  font-weight: bold;
+  color: #2c3e50;
+  background: linear-gradient(90deg, #e67e22, #f39c12);
+  padding: 8px 12px;
+  border-radius: 20px;
+  text-align: center;
+  margin: 10px 0 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.5px;
+  text-transform: capitalize;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .username:hover {
-  transform: scale(1.05);         /* Slightly enlarges on hover */
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Intensifies shadow on hover */
+  transform: scale(1.05);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
 
-
-/* Horizontal Line for Separation */
+/* Horizontal Line */
 .horizontal-line {
   border-top: 2px solid #7c95ad;
   margin: 10px auto;
@@ -77,39 +148,7 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.nav-links a i, .logout a i {
-  font-size: 1.2rem;
-  transition: transform 0.3s ease;
-}
-
-/* Hover and Active State */
 .nav-links a:hover, .logout a:hover {
   background-color: #34495e;
   transform: translateX(5px);
-}
-
-.nav-links a:hover i, .logout a:hover i {
-  transform: scale(1.1);
-}
-
-.nav-links a.active {
-  background-color: #162331;
-}
-
-/* Logout Section */
-.logout {
-  margin-top: auto;
-}
-
-/* Media Queries */
-@media (max-width: 768px) {
-  .side-nav {
-    width: 200px;
-    padding: 15px;
-  }
-
-  .nav-links a, .logout a {
-    font-size: 0.95rem;
-    padding: 8px 10px;
-  }
 }

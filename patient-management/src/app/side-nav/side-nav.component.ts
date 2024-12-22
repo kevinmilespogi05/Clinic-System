@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 })
 export class SideNavComponent implements OnInit {
   username: string = ''; // Store username here
+  isNavOpen: boolean = true; // Control Side Nav State
 
   constructor(private router: Router, private http: HttpClient) {}
 
@@ -23,15 +24,12 @@ export class SideNavComponent implements OnInit {
 
   fetchUsername() {
     const userId = localStorage.getItem('userId');
-  
     if (userId) {
       const apiUrl = `http://localhost/Clinic-System/clinicapi/api/users/get_profile.php?id=${userId}`;
-      
       this.http.get<any>(apiUrl).subscribe({
         next: (response) => {
-          console.log('API Response:', response);
           if (response.success && response.data.username) {
-            this.username = response.data.username; // Use full_name here
+            this.username = response.data.username;
           } else {
             console.error('Error fetching username:', response.message);
           }
@@ -44,8 +42,10 @@ export class SideNavComponent implements OnInit {
       console.warn('No user ID found in localStorage');
     }
   }
-  
-  
+
+  toggleSideNav() {
+    this.isNavOpen = !this.isNavOpen;
+  }
 
   logout() {
     Swal.fire({
