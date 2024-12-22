@@ -1,69 +1,85 @@
 /* Overall container styling */
 .appointment-container {
-  padding: 20px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 30px;
+  background-color: #f4f7fa;
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
 }
 
 /* Card styling */
 .card {
   background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 25px;
   width: 90%;
   max-width: 1200px;
   margin: auto;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
 }
 
 .card-title {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: bold;
   margin-bottom: 20px;
   text-align: left;
+  color: #333;
 }
 
 /* Book an Appointment Slots */
 .slot-container {
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 5 slots per row */
-  gap: 15px;
+  gap: 20px;
   text-align: center;
 }
 
 .slot {
-  background-color: #f9f9f9;
-  padding: 15px;
-  border-radius: 8px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.slot:hover {
+  transform: scale(1.05);
 }
 
 .slot-day {
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   color: #333;
 }
 
 .slot-time {
-  color: #555;
-  margin-bottom: 10px;
+  color: #666;
+  margin-bottom: 12px;
 }
 
 .book-btn {
   background-color: #4caf50;
   color: #fff;
   border: none;
-  padding: 8px 12px;
-  font-size: 0.9rem;
-  border-radius: 5px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  border-radius: 6px;
   font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .book-btn:hover {
   background-color: #45a049;
+  transform: scale(1.05);
 }
 
 .book-btn:disabled {
@@ -81,7 +97,7 @@
 .appointment-card {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .appointment-item {
@@ -89,9 +105,14 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
-  background-color: #f4f4f4;
+  background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.appointment-item:hover {
+  background-color: #efefef;
 }
 
 .appointment-details {
@@ -102,11 +123,11 @@
 .appointment-day {
   font-weight: bold;
   color: #333;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 
 .appointment-time {
-  color: #555;
+  color: #666;
   font-size: 1rem;
 }
 
@@ -114,31 +135,34 @@
   background-color: #f44336;
   color: white;
   border: none;
-  padding: 8px 12px;
-  font-size: 0.9rem;
+  padding: 10px 14px;
+  font-size: 1rem;
   font-weight: bold;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .cancel-btn:hover {
   background-color: #d32f2f;
+  transform: scale(1.05);
 }
 
-/* Delete Button Styling */
 .delete-btn {
   background-color: #ff5722; /* Orange color for delete */
   color: white;
   border: none;
-  padding: 8px 12px;
-  font-size: 0.9rem;
+  padding: 10px 14px;
+  font-size: 1rem;
   font-weight: bold;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .delete-btn:hover {
   background-color: #e64a19; /* Darker orange on hover */
+  transform: scale(1.05);
 }
 
 /* Modal Styling */
@@ -148,47 +172,131 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
 }
 
+/* Modal content */
 .modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 400px;
+  background: linear-gradient(135deg, #f9f9f9, #ececec);
+  padding: 40px;
+  border-radius: 12px;
+  width: 480px;
   text-align: center;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  animation: scaleIn 0.3s ease-out;
 }
 
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #f44336; /* Red color on hover */
+}
+
+/* Animation for modal fade in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Animation for modal scale */
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Modal Header */
+.modal h3 {
+  font-size: 1.8rem;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Textarea Styling */
 textarea {
   width: 100%;
-  padding: 10px;
-  margin: 10px 0;
+  padding: 15px;
+  margin: 20px 0;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 6px;
+  resize: vertical;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
 }
 
+textarea:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+/* Button Styling */
 button {
   background-color: #4caf50;
   color: white;
   border: none;
-  padding: 10px 15px;
+  padding: 12px 18px;
   font-size: 1rem;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  margin-top: 15px;
 }
 
 button:hover {
   background-color: #45a049;
+  transform: scale(1.05);
 }
 
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 1.5rem;
-  cursor: pointer;
+/* Payment Modal Styling */
+.payment-summary {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
 }
+
+.payment-summary p {
+  margin: 10px 0;
+}
+
+.payment-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  font-size: 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.payment-btn:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+

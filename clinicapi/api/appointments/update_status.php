@@ -1,33 +1,34 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 include_once '../../config/database.php';
 
+$database = new Database();
+$conn = $database->getConnection();
+
 $data = json_decode(file_get_contents("php://input"));
 
-if (isset($data->id) && isset($data->status)) {
-    $appointmentId = $data->id;
-    $status = $data->status;
+try {
+    if (isset($data->appointment_id) && isset($data->status)) {
+        $appointment_id = $data->appointment_id;
+        $status = $data->status;
 
-    try {
-        $database = new Database();
-        $conn = $database->getConnection();
-
-        $query = "UPDATE appointments SET status = :status WHERE id = :id";
+        $query = "UPDATE appointments SET status = :status WHERE id = :appointment_id";
         $stmt = $conn->prepare($query);
-        $stmt->bindParam(':id', $appointmentId, PDO::PARAM_INT);
-        $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':appointment_id', $appointment_id);
 
         if ($stmt->execute()) {
-            echo json_encode(["message" => "Status updated successfully"]);
+            echo json_encode(["message" => "Appointment status updated successfully."]);
         } else {
-            echo json_encode(["error" => "Failed to update status"]);
+            echo json_encode(["error" => "Failed to update appointment status."]);
         }
-    } catch (Exception $e) {
-        echo json_encode(["error" => "Error occurred", "details" => $e->getMessage()]);
+    } else {
+        echo json_encode(["error" => "Invalid data."]);
     }
-} else {
-    echo json_encode(["error" => "Invalid input"]);
+} catch (Exception $e) {
+    echo json_encode(["error" => "Error: " . $e->getMessage()]);
 }
 ?>

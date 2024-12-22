@@ -15,30 +15,44 @@ import Swal from 'sweetalert2';
 export class AppointmentsComponent implements OnInit {
   appointments: any[] = [];
   appointmentSlots = [
-  { day: 'Monday', time: '10:00 AM - 11:00 AM', date: '2024-12-16' },
-  { day: 'Monday', time: '11:00 AM - 12:00 PM', date: '2024-12-16' },
-  { day: 'Tuesday', time: '10:00 AM - 11:00 AM', date: '2024-12-17' },
-  { day: 'Tuesday', time: '11:00 AM - 12:00 PM', date: '2024-12-17' },
-  { day: 'Wednesday', time: '10:00 AM - 11:00 AM', date: '2024-12-18' },
-  { day: 'Wednesday', time: '11:00 AM - 12:00 PM', date: '2024-12-18' },
-  { day: 'Thursday', time: '10:00 AM - 11:00 AM', date: '2024-12-19' },
-  { day: 'Thursday', time: '11:00 AM - 12:00 PM', date: '2024-12-19' },
-  { day: 'Friday', time: '10:00 AM - 11:00 AM', date: '2024-12-20' },
-  { day: 'Friday', time: '11:00 AM - 12:00 PM', date: '2024-12-20' },
-  { day: 'Monday', time: '12:00 PM - 01:00 PM', date: '2024-12-23' },
-  { day: 'Tuesday', time: '12:00 PM - 01:00 PM', date: '2024-12-24' },
-  { day: 'Wednesday', time: '12:00 PM - 01:00 PM', date: '2024-12-25' },
-  { day: 'Thursday', time: '12:00 PM - 01:00 PM', date: '2024-12-26' },
-  { day: 'Friday', time: '12:00 PM - 01:00 PM', date: '2024-12-27' },
-];
+    { day: 'Monday', time: '10:00 AM - 11:00 AM', date: '2024-12-16' },
+    { day: 'Monday', time: '11:00 AM - 12:00 PM', date: '2024-12-16' },
+    { day: 'Tuesday', time: '10:00 AM - 11:00 AM', date: '2024-12-17' },
+    { day: 'Tuesday', time: '11:00 AM - 12:00 PM', date: '2024-12-17' },
+    { day: 'Wednesday', time: '10:00 AM - 11:00 AM', date: '2024-12-18' },
+    { day: 'Wednesday', time: '11:00 AM - 12:00 PM', date: '2024-12-18' },
+    { day: 'Thursday', time: '10:00 AM - 11:00 AM', date: '2024-12-19' },
+    { day: 'Thursday', time: '11:00 AM - 12:00 PM', date: '2024-12-19' },
+    { day: 'Friday', time: '10:00 AM - 11:00 AM', date: '2024-12-20' },
+    { day: 'Friday', time: '11:00 AM - 12:00 PM', date: '2024-12-20' },
+    { day: 'Monday', time: '12:00 PM - 01:00 PM', date: '2024-12-23' },
+    { day: 'Tuesday', time: '12:00 PM - 01:00 PM', date: '2024-12-24' },
+    { day: 'Wednesday', time: '12:00 PM - 01:00 PM', date: '2024-12-25' },
+    { day: 'Thursday', time: '12:00 PM - 01:00 PM', date: '2024-12-26' },
+    { day: 'Friday', time: '12:00 PM - 01:00 PM', date: '2024-12-27' },
+  ];
 
+  // Variables for modal and payment processing
+  showModal: boolean = false;
+  showBookingModal: boolean = false;
+  showPaymentModal: boolean = false;  // New for payment modal
+  cancellationReason: string = '';
+  appointmentDescription: string = '';
+  appointmentToCancel: number | null = null;
+  selectedSlot: any = null;
+  selectedService: 'Consultation' | 'Surgery' | 'Therapy' = 'Consultation';
+  billAmount: number = 0;
 
-  showModal: boolean = false; // Flag to show/hide the cancellation modal
-  showBookingModal: boolean = false; // Flag to show/hide the booking modal
-  cancellationReason: string = ''; // Stores the cancellation reason
-  appointmentDescription: string = ''; // Stores the appointment description
-  appointmentToCancel: number | null = null; // The appointment ID to be cancelled
-  selectedSlot: any = null; // The slot being booked
+  // Payment form variables
+  creditCardNumber: string = '';
+  expiryDate: string = '';
+  cvv: string = '';
+  cardholderName: string = '';  // New for cardholder name
+  billingAddress: string = '';  // New for billing address
+  appointmentToPay: any = null;  // Store appointment to pay
+
+  // New variable for input amount
+  inputAmount: number | null = null;  // Store the amount entered by the user
 
   constructor(private patientService: PatientService) {}
 
@@ -49,7 +63,7 @@ export class AppointmentsComponent implements OnInit {
   fetchAppointments(): void {
     const userId = localStorage.getItem('userId');
     const role = localStorage.getItem('role');
-    
+  
     if (userId && role) {
       this.patientService.getAppointments(Number(userId), role).subscribe(
         (response) => {
@@ -58,18 +72,11 @@ export class AppointmentsComponent implements OnInit {
               const appointmentDate = new Date(appointment.date);
               const formattedDate = appointmentDate.toLocaleDateString('en-US');
               const dayOfWeek = appointmentDate.toLocaleDateString('en-US', { weekday: 'long' });
-  
-              return {
-                ...appointment,
-                date: formattedDate,
-                day: dayOfWeek,
-              };
+              return { ...appointment, date: formattedDate, day: dayOfWeek };
             });
           }
         },
-        (error) => {
-          console.error('Error fetching appointments:', error);
-        }
+        (error) => console.error('Error fetching appointments:', error)
       );
     }
   }
@@ -85,13 +92,22 @@ export class AppointmentsComponent implements OnInit {
     this.selectedSlot = null;
   }
 
+  calculateBill(): void {
+    const servicePrices = {
+      Consultation: 50,
+      Surgery: 200,
+      Therapy: 100,
+    };
+    this.billAmount = servicePrices[this.selectedService] || 0;
+  }
+
   isSlotOccupied(slot: any): boolean {
     return this.appointments.some(
       (appointment) =>
         appointment.date === slot.date &&
         appointment.time === slot.time &&
-        (appointment.status === 'booked' || appointment.status === 'approved' || appointment.status === 'pending')
-      );
+        ['booked', 'approved', 'pending'].includes(appointment.status)
+    );
   }
 
   bookAppointment(): void {
@@ -108,6 +124,7 @@ export class AppointmentsComponent implements OnInit {
         time: this.selectedSlot.time,
         date: this.selectedSlot.date,
         description: this.appointmentDescription,
+        service: this.selectedService,
         status: 'booked',
       }).subscribe(
         (response) => {
@@ -119,11 +136,62 @@ export class AppointmentsComponent implements OnInit {
             this.closeBookingModal();
           }
         },
-        (error) => {
-          Swal.fire('Error', 'Failed to book appointment. Please try again.', 'error');
-        }
+        (error) => Swal.fire('Error', 'Failed to book appointment. Please try again.', 'error')
       );
     }
+  }
+
+  // Open payment modal
+  openPaymentModal(appointment: any): void {
+    this.appointmentToPay = appointment;  // Store the appointment to be paid
+    this.selectedService = appointment.service;  // Set the service type from the appointment
+    this.calculateBill();  // Recalculate the bill based on the service
+    this.showPaymentModal = true;  // Show the modal
+  }
+
+  // Close payment modal
+  closePaymentModal(): void {
+    this.showPaymentModal = false;
+    this.creditCardNumber = '';
+    this.expiryDate = '';
+    this.cvv = '';
+    this.inputAmount = null;  // Reset the input amount
+  }
+
+  // Process the payment
+  processPayment(event: Event): void {
+    event.preventDefault();
+
+    // If no amount is entered, use the calculated bill amount
+    const amountToPay = this.inputAmount || this.billAmount;
+
+    // Validate form fields
+    if (!this.creditCardNumber || !this.expiryDate || !this.cvv || !this.cardholderName || !this.billingAddress) {
+      Swal.fire('Error', 'Please complete all the payment fields.', 'error');
+      return;
+    }
+
+    const paymentDetails = {
+      cardNumber: this.creditCardNumber,
+      expiryDate: this.expiryDate,
+      cvv: this.cvv,
+      cardholderName: this.cardholderName,
+      billingAddress: this.billingAddress,
+      amount: amountToPay,  // Use the inputAmount or billAmount
+    };
+
+    this.patientService.processPayment(paymentDetails).subscribe(
+      (response) => {
+        if (response.success) {
+          Swal.fire('Success', 'Payment successful!', 'success');
+          this.appointmentToPay.status = 'paid'; // Update status
+          this.closePaymentModal();
+        } else {
+          Swal.fire('Error', 'Payment failed. Please try again.', 'error');
+        }
+      },
+      (error) => Swal.fire('Error', 'An error occurred while processing the payment.', 'error')
+    );
   }
 
   openCancelModal(appointmentId: number): void {
@@ -157,7 +225,7 @@ export class AppointmentsComponent implements OnInit {
       }
     );
   }
-  
+
   getStatusClass(status: string): string {
     switch (status.toLowerCase()) {
       case 'pending':
@@ -185,7 +253,7 @@ export class AppointmentsComponent implements OnInit {
           (response) => {
             if (response.message === 'Appointment deleted successfully') {
               Swal.fire('Deleted!', 'The appointment has been deleted.', 'success');
-              this.fetchAppointments();  // Reload the appointments list
+              this.fetchAppointments();
             } else {
               Swal.fire('Error', 'Failed to delete appointment', 'error');
             }
@@ -197,5 +265,4 @@ export class AppointmentsComponent implements OnInit {
       }
     });
   }
-  
 }

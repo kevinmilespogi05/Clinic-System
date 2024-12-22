@@ -15,13 +15,11 @@ try {
     // Retrieve the posted data
     $data = json_decode(file_get_contents("php://input"));
 
-    // Check if all required fields are provided
-    if (isset($data->user_id) && isset($data->day) && isset($data->time) && isset($data->date) && isset($data->description)) {
+    if (isset($data->user_id) && isset($data->day) && isset($data->time) && isset($data->date) && isset($data->description) && isset($data->service)) {
         
-        // Ensure the date is in the correct format (YYYY-MM-DD)
-        $date = date('Y-m-d', strtotime($data->date));  // Converts the input date into the correct format
+        $date = date('Y-m-d', strtotime($data->date));
         
-        // Check if the slot is already booked, approved, or pending
+        // Check for conflicting appointments (already booked, approved, or pending)
         $conflictQuery = "SELECT COUNT(*) as count 
         FROM appointments 
         WHERE date = :date AND time = :time AND (status = 'booked' OR status = 'approved' OR status = 'pending')";
@@ -36,7 +34,7 @@ try {
             exit;
         }
 
-        // Fetch username from users table based on user_id
+        // Fetch username from users table
         $userQuery = "SELECT username FROM users WHERE id = :user_id";
         $userStmt = $conn->prepare($userQuery);
         $userStmt->bindParam(':user_id', $data->user_id);
@@ -46,21 +44,56 @@ try {
         if ($user) {
             $username = $user['username'];
 
-            // Insert appointment into the database with status 'pending'
-            $query = "INSERT INTO appointments (user_id, username, date, time, description, status) 
-            VALUES (:user_id, :username, :date, :time, :description, 'pending')";  // Set 'pending' as status by default
+            // Determine the price based on the selected service
+            $servicePrice = 0;
+            switch ($data->service) {
+                case 'Consultation':
+                    $servicePrice = 50; // Low cost
+                    break;
+                case 'Surgery':
+                    $servicePrice = 150; // Low cost
+                    break;
+                case 'Therapy':
+                    $servicePrice = 75; // Low cost
+                    break;
+                default:
+                    echo json_encode(["error" => "Invalid service type."]);
+                    exit;
+            }
+
+            // Calculate the bill (assuming 1 day of service for simplicity)
+            $billAmount = $servicePrice;
+
+            // Insert the appointment into the database with a status of 'pending'
+            $query = "INSERT INTO appointments (user_id, username, date, time, description, status, service, payment_status, bill_amount) 
+            VALUES (:user_id, :username, :date, :time, :description, 'pending', :service, 'pending', :bill_amount)";
             $stmt = $conn->prepare($query);
             
-            // Bind the data to the query
             $stmt->bindParam(':user_id', $data->user_id);
             $stmt->bindParam(':username', $username);
-            $stmt->bindParam(':date', $date);  // Use the formatted date here
+            $stmt->bindParam(':date', $date);
             $stmt->bindParam(':time', $data->time);
             $stmt->bindParam(':description', $data->description);
+            $stmt->bindParam(':service', $data->service);
+            $stmt->bindParam(':bill_amount', $billAmount);
 
-            // Execute the query
             if ($stmt->execute()) {
-                echo json_encode(["message" => "Appointment booked successfully."]);
+                // Simulate payment processing
+                $appointment_id = $conn->lastInsertId();
+                // Simulate a successful payment response
+                $paymentSuccess = true; // For fake payment, we assume the payment was successful.
+
+                if ($paymentSuccess) {
+                    // Update payment status to 'paid'
+                    $paymentQuery = "UPDATE appointments SET payment_status = 'paid' WHERE id = :appointment_id";
+                    $paymentStmt = $conn->prepare($paymentQuery);
+                    $paymentStmt->bindParam(':appointment_id', $appointment_id);
+                    $paymentStmt->execute();
+                    
+                    echo json_encode(["message" => "Appointment booked and payment processed successfully."]);
+                } else {
+                    echo json_encode(["error" => "Payment failed."]);
+                }
             } else {
                 echo json_encode(["error" => "Failed to book appointment."]);
             }

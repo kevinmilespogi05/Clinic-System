@@ -15,12 +15,12 @@ $id = isset($_GET['id']) ? $_GET['id'] : null;
 try {
     if ($role === 'admin') {
         // If the user is an admin, fetch all appointments
-        $query = "SELECT id, user_id, username, DATE_FORMAT(date, '%Y-%m-%d') AS date, time, description, status 
+        $query = "SELECT id, user_id, username, DATE_FORMAT(date, '%Y-%m-%d') AS date, time, description, status, service 
                   FROM appointments ORDER BY date ASC, time ASC";
         $stmt = $conn->prepare($query);
     } elseif ($role === 'user' && $id) {
         // If the user is a regular user, filter by their user_id
-        $query = "SELECT id, user_id, username, DATE_FORMAT(date, '%Y-%m-%d') AS date, time, description, status 
+        $query = "SELECT id, user_id, username, DATE_FORMAT(date, '%Y-%m-%d') AS date, time, description, status, service 
                   FROM appointments WHERE user_id = :id ORDER BY date ASC, time ASC";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);

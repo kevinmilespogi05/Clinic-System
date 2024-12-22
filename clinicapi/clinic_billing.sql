@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 21, 2024 at 05:51 AM
+-- Generation Time: Dec 22, 2024 at 05:49 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -25,27 +25,32 @@ SET time_zone = "+00:00";
 
 --
 -- Table structure for table `appointments`
+--
 
 CREATE TABLE `appointments` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `date` date NOT NULL,
   `time` time NOT NULL,
   `description` text DEFAULT NULL,
+  `service` enum('Consultation','Surgery','Therapy') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `status` enum('pending','booked','cancelled','approved') NOT NULL DEFAULT 'pending',
-  `cancellation_reason` varchar(255) DEFAULT NULL, -- Added cancellation_reason column
-  PRIMARY KEY (`id`)
+  `cancellation_reason` varchar(255) DEFAULT NULL,
+  `payment_status` enum('pending','paid','failed') NOT NULL DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 
 --
 -- Dumping data for table `appointments`
 --
 
-INSERT INTO `appointments` (`id`, `user_id`, `username`, `date`, `time`, `description`, `created_at`, `status`) VALUES
-(82, 1, 'kevspogi', '2024-12-18', '10:00:00', 'sdasdasdas', '2024-12-21 04:23:08', 'pending');
+INSERT INTO `appointments` (`id`, `user_id`, `username`, `date`, `time`, `description`, `service`, `created_at`, `status`, `cancellation_reason`, `payment_status`) VALUES
+(6, 2, 'kevspogi', '2024-12-18', '11:00:00', 'mag aayos po ng ngipin', 'Consultation', '2024-12-22 04:10:28', 'pending', NULL, 'pending'),
+(7, 2, 'kevspogi', '2024-12-16', '10:00:00', 'wadadwadwa', 'Surgery', '2024-12-22 04:19:27', 'pending', NULL, 'pending'),
+(8, 2, 'kevspogi', '2024-12-23', '12:00:00', 'wdawdawd', 'Consultation', '2024-12-22 04:30:10', 'pending', NULL, 'pending'),
+(9, 2, 'kevspogi', '2024-12-16', '11:00:00', 'awdawdawd', 'Surgery', '2024-12-22 04:30:26', 'pending', NULL, 'pending'),
+(10, 2, 'kevspogi', '2024-12-17', '11:00:00', 'awdwadawd', 'Consultation', '2024-12-22 04:45:59', 'pending', NULL, 'paid');
 
 -- --------------------------------------------------------
 
@@ -123,7 +128,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `username`, `password`, `created_at`, `contact_number`, `date_of_birth`, `medical_history`, `role`, `card_first_name`, `card_last_name`, `card_number`, `card_expiry`, `card_security_code`, `billing_address`, `city`, `province`, `billing_postal_code`) VALUES
 (1, 'admin', 'admin', 'admin', '$2y$10$uSa9VcjLIhfwpkuA2waNL.KCgBa8lRH8inUVYqOEOy4jywV9bm4ai', '2024-12-07 23:04:59', '09926591335', '2003-11-22', NULL, 'admin', 'admin', 'admin', '4111111111111111', '2026-12', '123', '123 Elm St', 'Olongapo', 'Zambales', '2208'),
-(2, 'Kevin', 'Julhusin', 'kevspogi', '$2y$10$myPMw6o0Ug6aRQaoWJjHGuvbgp735rgupi19Vxok3sZzzTiEUkQUi', '2024-12-20 18:08:20', '09566817487', '2003-05-11', 'pogi', 'user', 'Kevin Miles', 'Julhusin', '4111111111111111111', '2026-12', '123', '123 Elm St, Apt 45', 'Olongapo', 'Zambales', '2208');
+(2, 'Miles', 'Julhusin', 'kevspogi', '$2y$10$myPMw6o0Ug6aRQaoWJjHGuvbgp735rgupi19Vxok3sZzzTiEUkQUi', '2024-12-20 18:08:20', '09566817487', '2003-05-11', 'pogi', 'user', 'Kevin Miles', 'Julhusin', '4111111111111111111', '2026-12', '123', '123 Elm St, Apt 45', 'Olongapo', 'Zambales', '2208'),
+(3, 'Aschille', 'De Leon', 'ase', '$2y$10$Z21MQefnfYzrUayl9gO0jeMT58EAzTOJvQFIUJmnsERhvWFiq.3ie', '2024-12-21 05:16:53', '09566817487', '2003-05-11', 'asdasdasdasdasdas', 'user', 'Aschille ', 'De Leon ', '4123412312412431231', '2028-12', '123', '123 Elm St, Apt 45', 'Olongapo', 'Zambales', '2208');
 
 --
 -- Indexes for dumped tables
@@ -162,7 +168,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `insurance_claims`
@@ -180,7 +186,7 @@ ALTER TABLE `invoices`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

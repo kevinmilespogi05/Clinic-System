@@ -59,51 +59,39 @@ export class PatientService {
     });
   }
 
-  //dashboard components
-  
-  // Appointments Management
-getAppointments(userId?: number, role?: string): Observable<any> {
-  let url = `${this.baseUrl}/api/appointments/get_appointments.php`;
-  if (userId && role) {
-    url += `?id=${userId}&role=${role}`;
-  }
-  return this.http.get<any>(url).pipe(catchError(this.handleError));
-}
 
+  // Appointments Management
+  getAppointments(userId?: number, role?: string): Observable<any> {
+    let url = `${this.baseUrl}/api/appointments/get_appointments.php`;
+    if (userId && role) {
+      url += `?id=${userId}&role=${role}`;
+    }
+    return this.http.get<any>(url).pipe(catchError(this.handleError));
+  }
+
+  
   bookAppointment(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/api/appointments/book.php`, data);
-  }
-
-  updateAppointmentStatus(
-    appointmentId: number,
-    status: string
-  ): Observable<any> {
-    return this.http
-      .post<any>(`${this.baseUrl}/api/appointments/approve.php`, {
-        id: appointmentId,
-        status,
-      })
-      .pipe(catchError(this.handleError));
   }
   
   cancelAppointmentWithReason(appointmentId: number, reason: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/api/appointments/cancel.php`, {
       appointment_id: appointmentId,
       reason: reason
-    }).pipe(
-      catchError(this.handleError)
-    );
+    }).pipe(catchError(this.handleError));
   }
   
 
   deleteAppointment(appointmentId: number): Observable<any> {
-    return this.http
-      .post<any>(`${this.baseUrl}/api/appointments/delete_appointment.php`, {
-        id: appointmentId,
-      })
-      .pipe(catchError(this.handleError));
+    return this.http.post<any>(`${this.baseUrl}/api/appointments/delete_appointment.php`, {
+      id: appointmentId,
+    }).pipe(catchError(this.handleError));
   }
-  
+
+  processPayment(paymentDetails: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/api/payment/process_payment.php`, paymentDetails);
+  }
+
 
   // Combined Stats (Billing + Appointments)
   getCombinedStats(): Observable<any> {
