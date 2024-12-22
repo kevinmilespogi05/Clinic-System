@@ -21,36 +21,43 @@
     </div>
   </div>
 
-  <!-- Existing Appointments Section -->
-  <div class="card appointment-card">
-    <div class="card-title">Appointments</div>
-    <div class="appointment-list">
-      <div class="appointment-item" *ngFor="let appointment of appointments">
-        <div class="appointment-details">
-          <div class="appointment-day">Day: {{ appointment.day }}</div>
-          <div class="appointment-date">Date: {{ appointment.date }}</div>
-          <div class="appointment-time">Time: {{ appointment.time }}</div>
-          <div class="appointment-description">
-            <strong>Description:</strong> {{ appointment.description }}
-          </div>
-          <div class="appointment-status">
-            Status:
-            <span [ngClass]="getStatusClass(appointment.status)">
-              {{ appointment.status }}
-            </span>
-          </div>          
+<!-- Existing Appointments Section -->
+<div class="card appointment-card">
+  <div class="card-title">Appointments</div>
+  <div class="appointment-list">
+    <div class="appointment-item" *ngFor="let appointment of appointments">
+      <div class="appointment-details">
+        <div class="appointment-day">Day: {{ appointment.day }}</div>
+        <div class="appointment-date">Date: {{ appointment.date }}</div>
+        <div class="appointment-time">Time: {{ appointment.time }}</div>
+        <div class="appointment-description">
+          <strong>Description:</strong> {{ appointment.description }}
         </div>
-        <button
-          class="cancel-btn"
-          *ngIf="appointment.status !== 'cancelled'"
-          (click)="openCancelModal(appointment.id)"
-        >
-          CANCEL
-        </button>
+        <div class="appointment-status">
+          Status:
+          <span [ngClass]="getStatusClass(appointment.status)">
+            {{ appointment.status }}
+          </span>
+        </div>          
       </div>
+      <button
+        class="cancel-btn"
+        *ngIf="appointment.status !== 'cancelled'"
+        (click)="openCancelModal(appointment.id)"
+      >
+        CANCEL
+      </button>
+      <button
+        class="delete-btn"
+        *ngIf="appointment.status === 'cancelled'"
+        (click)="deleteAppointment(appointment.id)"
+      >
+        DELETE
+      </button>
     </div>
   </div>
 </div>
+
 
 <!-- Booking Modal -->
 <div class="modal" *ngIf="showBookingModal">

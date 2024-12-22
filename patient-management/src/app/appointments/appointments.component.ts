@@ -90,8 +90,8 @@ export class AppointmentsComponent implements OnInit {
       (appointment) =>
         appointment.date === slot.date &&
         appointment.time === slot.time &&
-        (appointment.status === 'booked' || appointment.status === 'approved')
-    );
+        (appointment.status === 'booked' || appointment.status === 'approved' || appointment.status === 'pending')
+      );
   }
 
   bookAppointment(): void {
@@ -170,4 +170,32 @@ export class AppointmentsComponent implements OnInit {
         return '';
     }
   }
+
+  deleteAppointment(appointmentId: number): void {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This will permanently delete the appointment!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.patientService.deleteAppointment(appointmentId).subscribe(
+          (response) => {
+            if (response.message === 'Appointment deleted successfully') {
+              Swal.fire('Deleted!', 'The appointment has been deleted.', 'success');
+              this.fetchAppointments();  // Reload the appointments list
+            } else {
+              Swal.fire('Error', 'Failed to delete appointment', 'error');
+            }
+          },
+          (error) => {
+            Swal.fire('Error', 'An error occurred while deleting the appointment', 'error');
+          }
+        );
+      }
+    });
+  }
+  
 }

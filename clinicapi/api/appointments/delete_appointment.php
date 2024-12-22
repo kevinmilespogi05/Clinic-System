@@ -21,7 +21,7 @@ if (isset($data->id)) {
             echo json_encode(["message" => "Appointment deleted successfully"]);
         } else {
             echo json_encode(["error" => "Failed to delete appointment"]);
-        }
+        }        
     } catch (Exception $e) {
         echo json_encode(["error" => "Error occurred", "details" => $e->getMessage()]);
     }

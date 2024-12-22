@@ -125,6 +125,22 @@
   background-color: #d32f2f;
 }
 
+/* Delete Button Styling */
+.delete-btn {
+  background-color: #ff5722; /* Orange color for delete */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: #e64a19; /* Darker orange on hover */
+}
+
 /* Modal Styling */
 .modal {
   position: fixed;

@@ -103,6 +103,7 @@ getAppointments(userId?: number, role?: string): Observable<any> {
       })
       .pipe(catchError(this.handleError));
   }
+  
 
   // Combined Stats (Billing + Appointments)
   getCombinedStats(): Observable<any> {
