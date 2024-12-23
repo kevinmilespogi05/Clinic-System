@@ -34,14 +34,14 @@ export class AppointmentsComponent implements OnInit {
             .filter((appt: any) => appt.status === 'pending')
             .map((appointment: any) => ({
               ...appointment,
-              patient_name: appointment.username || 'Unknown Patient', // Ensure fallback value
+              patient_name: appointment.username || 'Unknown Patient',
             }));
-  
+    
           this.appointments = data.appointments
             .filter((appt: any) => appt.status !== 'pending')
             .map((appointment: any) => ({
               ...appointment,
-              patient_name: appointment.username || 'Unknown Patient', // Ensure fallback value
+              patient_name: appointment.username || 'Unknown Patient',
             }));
         } else {
           Swal.fire('Error', 'Invalid data format', 'error');
@@ -53,6 +53,7 @@ export class AppointmentsComponent implements OnInit {
       }
     );
   }
+  
   
   
   
@@ -110,10 +111,15 @@ moveAppointment(appointmentId: number, newStatus: string): void {
   const appointmentIndex = this.pendingAppointments.findIndex((appt) => appt.id === appointmentId);
   if (appointmentIndex > -1) {
     const appointment = { ...this.pendingAppointments[appointmentIndex], status: newStatus };
-    this.pendingAppointments.splice(appointmentIndex, 1);
-    this.appointments.push(appointment);
+    
+    // Check if the appointment has been approved before moving it to the appointments section
+    if (newStatus === 'approved' && appointment.payment_status === 'paid') {
+      this.pendingAppointments.splice(appointmentIndex, 1);
+      this.appointments.push(appointment);
+    }
   }
 }
+
 
   
 

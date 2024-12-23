@@ -92,6 +92,14 @@ export class PatientService {
     return this.http.post(`${this.baseUrl}/api/payment/process_payment.php`, paymentDetails);
   }
 
+   // Payment Confirmation (after successful payment)
+   confirmPayment(appointmentId: number, paymentStatus: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/api/payment/payment_success.php`, {
+      appointment_id: appointmentId,
+      payment_status: paymentStatus
+    }).pipe(catchError(this.handleError));
+  }
+
 
   // Combined Stats (Billing + Appointments)
   getCombinedStats(): Observable<any> {

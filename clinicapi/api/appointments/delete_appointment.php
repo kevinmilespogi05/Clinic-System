@@ -13,16 +13,39 @@ if (isset($data->id)) {
         $database = new Database();
         $conn = $database->getConnection();
 
-        $query = "DELETE FROM appointments WHERE id = :id";
-        $stmt = $conn->prepare($query);
-        $stmt->bindParam(':id', $appointmentId, PDO::PARAM_INT);
+        // Start a transaction to ensure both operations are executed together
+        $conn->beginTransaction();
 
-        if ($stmt->execute()) {
-            echo json_encode(["message" => "Appointment deleted successfully"]);
+        // Delete payment associated with the appointment
+        $paymentQuery = "DELETE FROM payments WHERE appointment_id = :appointment_id";
+        $paymentStmt = $conn->prepare($paymentQuery);
+        $paymentStmt->bindParam(':appointment_id', $appointmentId, PDO::PARAM_INT);
+        $paymentStmt->execute();
+        // Log the number of rows affected by the payments deletion
+        error_log("Rows affected by payment deletion: " . $paymentStmt->rowCount());
+
+        // Delete the appointment
+        $appointmentQuery = "DELETE FROM appointments WHERE id = :id";
+        $appointmentStmt = $conn->prepare($appointmentQuery);
+        $appointmentStmt->bindParam(':id', $appointmentId, PDO::PARAM_INT);
+        $appointmentStmt->execute();
+        
+        // Log the number of rows affected by the appointment deletion
+        error_log("Rows affected by appointment deletion: " . $appointmentStmt->rowCount());
+
+        if ($appointmentStmt->rowCount() > 0) {
+            // Commit the transaction
+            $conn->commit();
+            echo json_encode(["message" => "Appointment and associated payment deleted successfully"]);
         } else {
-            echo json_encode(["error" => "Failed to delete appointment"]);
-        }        
+            // Rollback the transaction if no rows were affected
+            $conn->rollBack();
+            echo json_encode(["error" => "Appointment not found or failed to delete"]);
+        }
+
     } catch (Exception $e) {
+        // Rollback the transaction in case of error
+        $conn->rollBack();
         echo json_encode(["error" => "Error occurred", "details" => $e->getMessage()]);
     }
 } else {

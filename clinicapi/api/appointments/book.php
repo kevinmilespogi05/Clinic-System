@@ -51,10 +51,10 @@ try {
                     $servicePrice = 50; // Low cost
                     break;
                 case 'Surgery':
-                    $servicePrice = 150; // Low cost
+                    $servicePrice = 150; // Medium cost
                     break;
                 case 'Therapy':
-                    $servicePrice = 75; // Low cost
+                    $servicePrice = 75; // Medium cost
                     break;
                 default:
                     echo json_encode(["error" => "Invalid service type."]);
@@ -78,22 +78,8 @@ try {
             $stmt->bindParam(':bill_amount', $billAmount);
 
             if ($stmt->execute()) {
-                // Simulate payment processing
-                $appointment_id = $conn->lastInsertId();
-                // Simulate a successful payment response
-                $paymentSuccess = true; // For fake payment, we assume the payment was successful.
-
-                if ($paymentSuccess) {
-                    // Update payment status to 'paid'
-                    $paymentQuery = "UPDATE appointments SET payment_status = 'paid' WHERE id = :appointment_id";
-                    $paymentStmt = $conn->prepare($paymentQuery);
-                    $paymentStmt->bindParam(':appointment_id', $appointment_id);
-                    $paymentStmt->execute();
-                    
-                    echo json_encode(["message" => "Appointment booked and payment processed successfully."]);
-                } else {
-                    echo json_encode(["error" => "Payment failed."]);
-                }
+                // Return response indicating successful booking
+                echo json_encode(["message" => "Appointment booked successfully. Please complete the payment to confirm."]);
             } else {
                 echo json_encode(["error" => "Failed to book appointment."]);
             }

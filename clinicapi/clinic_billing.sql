@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 22, 2024 at 05:49 AM
+-- Generation Time: Dec 23, 2024 at 04:54 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,19 +38,9 @@ CREATE TABLE `appointments` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `status` enum('pending','booked','cancelled','approved') NOT NULL DEFAULT 'pending',
   `cancellation_reason` varchar(255) DEFAULT NULL,
-  `payment_status` enum('pending','paid','failed') NOT NULL DEFAULT 'pending'
+  `payment_status` enum('pending','paid','failed') NOT NULL DEFAULT 'pending',
+  `bill_amount` decimal(10,2) NOT NULL DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `appointments`
---
-
-INSERT INTO `appointments` (`id`, `user_id`, `username`, `date`, `time`, `description`, `service`, `created_at`, `status`, `cancellation_reason`, `payment_status`) VALUES
-(6, 2, 'kevspogi', '2024-12-18', '11:00:00', 'mag aayos po ng ngipin', 'Consultation', '2024-12-22 04:10:28', 'pending', NULL, 'pending'),
-(7, 2, 'kevspogi', '2024-12-16', '10:00:00', 'wadadwadwa', 'Surgery', '2024-12-22 04:19:27', 'pending', NULL, 'pending'),
-(8, 2, 'kevspogi', '2024-12-23', '12:00:00', 'wdawdawd', 'Consultation', '2024-12-22 04:30:10', 'pending', NULL, 'pending'),
-(9, 2, 'kevspogi', '2024-12-16', '11:00:00', 'awdawdawd', 'Surgery', '2024-12-22 04:30:26', 'pending', NULL, 'pending'),
-(10, 2, 'kevspogi', '2024-12-17', '11:00:00', 'awdwadawd', 'Consultation', '2024-12-22 04:45:59', 'pending', NULL, 'paid');
 
 -- --------------------------------------------------------
 
@@ -93,6 +83,22 @@ CREATE TABLE `invoices` (
 
 INSERT INTO `invoices` (`id`, `user_id`, `description`, `status`, `created_at`) VALUES
 (1, 1, 'Consultation Fee', 'unpaid', '2024-12-08 07:38:10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payments`
+--
+
+CREATE TABLE `payments` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `appointment_id` int(11) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `payment_method` varchar(50) NOT NULL,
+  `status` enum('pending','paid','failed') NOT NULL DEFAULT 'pending',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -154,6 +160,12 @@ ALTER TABLE `invoices`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `payments`
+--
+ALTER TABLE `payments`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -168,7 +180,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `insurance_claims`
@@ -181,6 +193,12 @@ ALTER TABLE `insurance_claims`
 --
 ALTER TABLE `invoices`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `payments`
+--
+ALTER TABLE `payments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`

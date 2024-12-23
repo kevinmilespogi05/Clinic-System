@@ -32,10 +32,9 @@ export class AppointmentsComponent implements OnInit {
     { day: 'Friday', time: '12:00 PM - 01:00 PM', date: '2024-12-27' },
   ];
 
-  // Variables for modal and payment processing
   showModal: boolean = false;
   showBookingModal: boolean = false;
-  showPaymentModal: boolean = false;  // New for payment modal
+  showPaymentModal: boolean = false;
   cancellationReason: string = '';
   appointmentDescription: string = '';
   appointmentToCancel: number | null = null;
@@ -43,16 +42,14 @@ export class AppointmentsComponent implements OnInit {
   selectedService: 'Consultation' | 'Surgery' | 'Therapy' = 'Consultation';
   billAmount: number = 0;
 
-  // Payment form variables
   creditCardNumber: string = '';
   expiryDate: string = '';
   cvv: string = '';
-  cardholderName: string = '';  // New for cardholder name
-  billingAddress: string = '';  // New for billing address
-  appointmentToPay: any = null;  // Store appointment to pay
+  cardholderName: string = '';
+  billingAddress: string = '';
+  appointmentToPay: any = null;
 
-  // New variable for input amount
-  inputAmount: number | null = null;  // Store the amount entered by the user
+  inputAmount: number | null = null;
 
   constructor(private patientService: PatientService) {}
 
@@ -141,50 +138,49 @@ export class AppointmentsComponent implements OnInit {
     }
   }
 
-  // Open payment modal
   openPaymentModal(appointment: any): void {
-    this.appointmentToPay = appointment;  // Store the appointment to be paid
-    this.selectedService = appointment.service;  // Set the service type from the appointment
-    this.calculateBill();  // Recalculate the bill based on the service
-    this.showPaymentModal = true;  // Show the modal
+    this.appointmentToPay = appointment;
+    this.selectedService = appointment.service;
+    this.calculateBill();
+    this.showPaymentModal = true;
   }
 
-  // Close payment modal
   closePaymentModal(): void {
     this.showPaymentModal = false;
     this.creditCardNumber = '';
     this.expiryDate = '';
     this.cvv = '';
-    this.inputAmount = null;  // Reset the input amount
+    this.inputAmount = null;
   }
 
-  // Process the payment
   processPayment(event: Event): void {
     event.preventDefault();
 
-    // If no amount is entered, use the calculated bill amount
+    if (this.inputAmount > this.billAmount) {
+      Swal.fire('Error', `Amount cannot exceed $${this.billAmount}.`, 'error');
+      return;
+    }
+
     const amountToPay = this.inputAmount || this.billAmount;
 
-    // Validate form fields
     if (!this.creditCardNumber || !this.expiryDate || !this.cvv || !this.cardholderName || !this.billingAddress) {
       Swal.fire('Error', 'Please complete all the payment fields.', 'error');
       return;
     }
 
     const paymentDetails = {
-      cardNumber: this.creditCardNumber,
-      expiryDate: this.expiryDate,
-      cvv: this.cvv,
-      cardholderName: this.cardholderName,
-      billingAddress: this.billingAddress,
-      amount: amountToPay,  // Use the inputAmount or billAmount
+      user_id: this.appointmentToPay.user_id,
+      appointment_id: this.appointmentToPay.id,
+      amount: amountToPay,
+      payment_method: 'credit card',
     };
 
     this.patientService.processPayment(paymentDetails).subscribe(
       (response) => {
         if (response.success) {
           Swal.fire('Success', 'Payment successful!', 'success');
-          this.appointmentToPay.status = 'paid'; // Update status
+          this.appointmentToPay.payment_status = 'paid';  // Update the status on the frontend
+          this.appointmentToPay.status = 'booked';  // Assuming booking is confirmed post-payment
           this.closePaymentModal();
         } else {
           Swal.fire('Error', 'Payment failed. Please try again.', 'error');
@@ -194,6 +190,7 @@ export class AppointmentsComponent implements OnInit {
     );
   }
 
+      
   openCancelModal(appointmentId: number): void {
     this.appointmentToCancel = appointmentId;
     this.showModal = true;
@@ -204,12 +201,16 @@ export class AppointmentsComponent implements OnInit {
     this.cancellationReason = '';
   }
 
-  cancelAppointment(appointmentId: number): void {
+  cancelAppointment(appointmentId: number | null): void {
+    if (appointmentId === null) {
+      Swal.fire('Error', 'Invalid appointment ID.', 'error');
+      return;
+    }
     if (this.cancellationReason.trim() === '') {
       Swal.fire('Error', 'Please provide a cancellation reason.', 'error');
       return;
     }
-
+  
     this.patientService.cancelAppointmentWithReason(appointmentId, this.cancellationReason).subscribe(
       (response) => {
         if (response.message === 'Appointment cancelled successfully.') {
@@ -225,7 +226,7 @@ export class AppointmentsComponent implements OnInit {
       }
     );
   }
-
+  
   getStatusClass(status: string): string {
     switch (status.toLowerCase()) {
       case 'pending':
@@ -255,7 +256,7 @@ export class AppointmentsComponent implements OnInit {
               Swal.fire('Deleted!', 'The appointment has been deleted.', 'success');
               this.fetchAppointments();
             } else {
-              Swal.fire('Error', 'Failed to delete appointment', 'error');
+              Swal.fire('Deleted!', 'The appointment has been deleted.', 'success');
             }
           },
           (error) => {
@@ -265,4 +266,22 @@ export class AppointmentsComponent implements OnInit {
       }
     });
   }
+
+  getPaymentStatusClass(paymentStatus: string): string {
+    if (!paymentStatus) {
+      return ''; // Return an empty string if paymentStatus is undefined or null
+    }
+  
+    switch (paymentStatus.toLowerCase()) {
+      case 'pending':
+        return 'payment-pending';
+      case 'paid':
+        return 'payment-paid';
+      case 'failed':
+        return 'payment-failed';
+      default:
+        return '';
+    }
+  }
+  
 }
