@@ -194,7 +194,7 @@ export class AppointmentsComponent implements OnInit {
   openCancelModal(appointmentId: number): void {
     this.appointmentToCancel = appointmentId;
     this.showModal = true;
-  }
+}
 
   closeCancelModal(): void {
     this.showModal = false;
@@ -225,8 +225,8 @@ export class AppointmentsComponent implements OnInit {
         Swal.fire('Error', 'An error occurred while canceling the appointment', 'error');
       }
     );
-  }
-  
+}
+
   getStatusClass(status: string): string {
     switch (status.toLowerCase()) {
       case 'pending':
@@ -283,5 +283,50 @@ export class AppointmentsComponent implements OnInit {
         return '';
     }
   }
+
+  handleRefundOrReschedule(appointment: any): void {
+    Swal.fire({
+      title: 'Choose an option',
+      text: 'Would you like to refund or reschedule the appointment?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Refund',
+      cancelButtonText: 'Reschedule',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.processRefund(appointment.id);
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        this.openBookingModal(appointment); // Reschedule logic can be handled directly here
+      }
+    });
+  }
   
+  processRefund(appointmentId: number): void {
+    // Check if appointmentId is valid
+    if (!appointmentId) {
+      Swal.fire('Error', 'Invalid Appointment ID.', 'error');
+      return;
+    }
+  
+    this.patientService.processRefund(appointmentId).subscribe(
+      (response) => {
+        if (response.success) {
+          Swal.fire('Success', 'Refund successfully processed!', 'success');
+          this.fetchAppointments(); // Refresh the appointment list
+  
+          // After refund is processed, hide the refund button and show delete button
+          const appointment = this.appointments.find(appointment => appointment.id === appointmentId);
+          if (appointment) {
+            appointment.refundProcessed = true; // Set the refund status
+          }
+        } else {
+          Swal.fire('Error', response.message || 'Refund failed. Please try again.', 'error');
+        }
+      },
+      (error) => {
+        console.error('Refund error:', error);
+        Swal.fire('Error', 'An error occurred while processing the refund.', 'error');
+      }
+    );
+  }  
 }
