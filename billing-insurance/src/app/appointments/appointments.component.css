@@ -316,3 +316,32 @@ tbody td {
     font-size: 0.9rem;
   }
 }
+
+/* Responsive Description for Appointments Table */
+table .description {
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limit to 2 lines */
+  -webkit-box-orient: vertical;
+  white-space: normal;
+}
+
+@media (max-width: 768px) {
+  table .description {
+    -webkit-line-clamp: 3; /* Show more lines on smaller screens */
+    font-size: 0.95rem; /* Slightly smaller font */
+  }
+}
+
+@media (max-width: 480px) {
+  table .description {
+    -webkit-line-clamp: 4; /* Further adjustment for very small screens */
+    font-size: 0.85rem; /* Smaller font for better fit */
+  }
+}
+
+
+

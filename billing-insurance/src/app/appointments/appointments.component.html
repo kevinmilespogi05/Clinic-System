@@ -2,10 +2,10 @@
   <h2>Pending Appointments</h2>
   <div class="appointment-item" *ngFor="let appt of pendingAppointments">
     <div>
-      {{ appt.date }} | {{ appt.time }} | {{ appt.status }} 
+      {{ appt.date }} | {{ appt.time }} | {{ appt.status }}
       <div><strong>Patient:</strong> {{ appt.patient_name }}</div>
-      <div><strong>Description:</strong> {{ appt.description }}</div>
-      <div><strong>Payment Status:</strong> {{ appt.payment_status | titlecase }}</div> <!-- Payment Status Display -->
+      <div class="description"><strong>Description:</strong> {{ appt.description }}</div>
+      <div><strong>Payment Status:</strong> {{ appt.payment_status | titlecase }}</div>
     </div>
     <button (click)="approve(appt.id)">Approve</button>
     <button (click)="decline(appt.id)">Decline</button>
@@ -31,7 +31,7 @@
         <td>{{ appointment.patient_name }}</td>
         <td>{{ formatDate(appointment.date) }}</td>
         <td>{{ formatTime(appointment.time) }}</td>
-        <td>{{ appointment.description }}</td>
+        <td class="description">{{ appointment.description }}</td>
         <td>{{ appointment.status | titlecase }}</td>
         <td>
           <button class="delete-btn" (click)="deleteAppointment(appointment.id)">
@@ -42,3 +42,4 @@
     </tbody>
   </table>
 </div>
+
