@@ -35,13 +35,14 @@ $payment_status = "paid"; // This should be set based on actual payment gateway 
 try {
     $pdo->beginTransaction();
 
-    // Step 1: Update the appointment status
-    $appointment_query = "UPDATE appointments SET status = 'booked', payment_status = 'paid' WHERE id = :appointment_id";
+    // Step 1: Update the appointment's payment status only if payment is successful
+    $appointment_query = "UPDATE appointments SET payment_status = :payment_status WHERE id = :appointment_id";
     $stmt = $pdo->prepare($appointment_query);
+    $stmt->bindParam(":payment_status", $payment_status);
     $stmt->bindParam(":appointment_id", $appointment_id);
 
     if (!$stmt->execute()) {
-        throw new Exception("Failed to update appointment status.");
+        throw new Exception("Failed to update appointment payment status.");
     }
 
     // Step 2: Insert the payment details into the payments table
@@ -60,7 +61,7 @@ try {
 
     // Commit the transaction
     $pdo->commit();
-    echo json_encode(["success" => "Payment processed successfully and appointment confirmed."]);
+    echo json_encode(["success" => "Payment processed successfully and payment status updated."]);
 } catch (Exception $e) {
     $pdo->rollBack();
     echo json_encode(["error" => $e->getMessage()]);

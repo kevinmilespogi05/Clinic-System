@@ -1,44 +1,59 @@
 <?php
-// Include the database connection file
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+
 include_once '../../config/database.php';
 
-// Instantiate the database connection
 $database = new Database();
-$conn = $database->getConnection(); // Get the PDO connection
+$conn = $database->getConnection();
 
-// Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Get the raw POST data (JSON)
     $data = json_decode(file_get_contents("php://input"), true);
 
-    // Validate the 'appointment_id' parameter
     if (!isset($data['appointment_id']) || empty($data['appointment_id'])) {
         echo json_encode(['success' => false, 'message' => 'Appointment ID is required.']);
         exit;
     }
 
-    // Sanitize the appointment_id to prevent SQL injection
     $appointment_id = htmlspecialchars(strip_tags($data['appointment_id']));
 
-    // Prepare the SQL query to update the status of the appointment
-    $query = "UPDATE appointments SET status = 'cancelled', payment_status = 'failed' WHERE id = :appointment_id";
-    
-    // Prepare the statement
-    $stmt = $conn->prepare($query);
+    // Fetch the appointment to check its current status
+    $query_check = "SELECT payment_status, refund_status FROM appointments WHERE id = :appointment_id";
+    $stmt_check = $conn->prepare($query_check);
+    $stmt_check->bindParam(':appointment_id', $appointment_id, PDO::PARAM_INT);
+    $stmt_check->execute();
+    $appointment = $stmt_check->fetch(PDO::FETCH_ASSOC);
 
-    // Bind the parameters
+    if (!$appointment) {
+        echo json_encode(['success' => false, 'message' => 'Appointment not found.']);
+        exit;
+    }
+
+    if ($appointment['payment_status'] !== 'paid') {
+        echo json_encode(['success' => false, 'message' => 'Refund not possible for unpaid appointments.']);
+        exit;
+    }
+
+    if ($appointment['refund_status'] !== 'none') {
+        echo json_encode(['success' => false, 'message' => 'Refund has already been requested or processed.']);
+        exit;
+    }
+
+    // Update the refund status and appointment status
+    $query = "UPDATE appointments 
+              SET status = 'cancelled', payment_status = 'failed', refund_status = 'processed' 
+              WHERE id = :appointment_id";
+
+    $stmt = $conn->prepare($query);
     $stmt->bindParam(':appointment_id', $appointment_id, PDO::PARAM_INT);
 
-    // Execute the query and check if the update is successful
     if ($stmt->execute()) {
-        // Check if any rows were affected, meaning the appointment ID exists
         if ($stmt->rowCount() > 0) {
             echo json_encode(['success' => true, 'message' => 'Refund processed successfully.']);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Appointment not found or already processed.']);
+            echo json_encode(['success' => false, 'message' => 'Appointment update failed.']);
         }
     } else {
-        // If query fails, output the error
         echo json_encode(['success' => false, 'message' => 'Refund processing failed.']);
     }
 } else {
