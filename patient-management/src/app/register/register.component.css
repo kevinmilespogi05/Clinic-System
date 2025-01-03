@@ -1,286 +1,214 @@
-/* Register Form Container */
+/* General Styling */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #0f4b8f; /* Matches the animated circle background */
+  color: #2c3e50;
+}
+
+/* Animated Background */
+.area {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+  background-color: #0f4b8f;
+}
+
+.circles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.circles li {
+  position: absolute;
+  list-style: none;
+  display: block;
+  background-color: rgba(255, 255, 255, 0.2);
+  animation: animate 25s linear infinite;
+  bottom: -150px;
+  border-radius: 50%;
+}
+
+/* Individual Circle Styling */
+.circles li:nth-child(1) {
+  left: 25%;
+  width: 80px;
+  height: 80px;
+  animation-delay: 0s;
+}
+
+.circles li:nth-child(2) {
+  left: 10%;
+  width: 20px;
+  height: 20px;
+  animation-delay: 2s;
+  animation-duration: 12s;
+}
+
+.circles li:nth-child(3) {
+  left: 70%;
+  width: 20px;
+  height: 20px;
+  animation-delay: 4s;
+}
+
+.circles li:nth-child(4) {
+  left: 40%;
+  width: 60px;
+  height: 60px;
+  animation-delay: 0s;
+  animation-duration: 18s;
+}
+
+.circles li:nth-child(5) {
+  left: 65%;
+  width: 40px;
+  height: 40px;
+  animation-delay: 0s;
+}
+
+.circles li:nth-child(6) {
+  left: 75%;
+  width: 110px;
+  height: 110px;
+  animation-delay: 3s;
+}
+
+.circles li:nth-child(7) {
+  left: 35%;
+  width: 150px;
+  height: 150px;
+  animation-delay: 7s;
+}
+
+.circles li:nth-child(8) {
+  left: 50%;
+  width: 25px;
+  height: 25px;
+  animation-delay: 15s;
+  animation-duration: 45s;
+}
+
+.circles li:nth-child(9) {
+  left: 20%;
+  width: 15px;
+  height: 15px;
+  animation-delay: 2s;
+  animation-duration: 35s;
+}
+
+.circles li:nth-child(10) {
+  left: 85%;
+  width: 150px;
+  height: 150px;
+  animation-delay: 0s;
+  animation-duration: 11s;
+}
+
+/* Keyframes for Animated Background */
+@keyframes animate {
+  0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 1;
+      border-radius: 0;
+  }
+  100% {
+      transform: translateY(-1000px) rotate(720deg);
+      opacity: 0;
+      border-radius: 50%;
+  }
+}
+
+/* Register Container */
 .register-container {
-    max-width: 450px;
-    margin: 60px auto;
-    padding: 30px;
-    border-radius: 10px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    font-family: 'Roboto', sans-serif;
-    animation: fadeInUp 1.5s ease-out; /* Fade-in animation with upward motion */
+  max-width: 800px; /* Wider layout */
+  margin: 5% auto;
+  padding: 40px;
+  border-radius: 15px; /* More rounded corners */
+  background: linear-gradient(145deg, #ffffff, #f1f1f1); /* Soft gradient background */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+  animation: fadeIn 1.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Spacing between elements */
+  border: 1px solid #ddd; /* Light border */
+}
+
+/* Keyframes for Register Container Fade In */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(50px);
   }
-  
-  /* Fade-In Up Animation */
-  @keyframes fadeInUp {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
+  to {
+      opacity: 1;
+      transform: translateY(0);
   }
-  
-  /* Heading */
-  h2 {
-    text-align: center;
-    font-size: 2rem;
-    color: #2c3e50;
-    margin-bottom: 20px;
-    font-weight: 600;
-    animation: slideIn 1s ease-out; /* Slide-in animation for heading */
-  }
-  
-  /* Slide-In Animation */
-  @keyframes slideIn {
-    0% { opacity: 0; transform: translateX(-50px); }
-    100% { opacity: 1; transform: translateX(0); }
-  }
-  
-  /* Form Group */
-  .form-group {
-    margin-bottom: 20px;
-    opacity: 0;
-    animation: fadeInUp 1s ease-out forwards; /* Input fields fade-in animation */
-    animation-delay: 0.3s; /* Staggered input animation */
-  }
-  
-  /* Input Fields */
-  input, textarea {
-    padding: 12px;
-    font-size: 16px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100%;
-    box-sizing: border-box;
-    transition: all 0.3s ease;
-    animation: inputFadeIn 0.8s ease-out; /* Input field fade-in animation */
-  }
-  
-  input:focus, textarea:focus {
-    border-color: #3498db;
-    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
-    outline: none;
-    animation: inputFocus 0.3s ease-out; /* Animation when input is focused */
-  }
-  
-  /* Input Fade-In Animation */
-  @keyframes inputFadeIn {
-    0% { opacity: 0; transform: translateY(10px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
-  
-  /* Input Focus Animation */
-  @keyframes inputFocus {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.05); }
-  }
-  
-  /* Submit Button */
-  button {
-    padding: 12px 20px;
-    font-size: 16px;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    animation: buttonFadeIn 1s ease-out; /* Button fade-in animation */
-    animation-delay: 0.6s; /* Delay button animation */
-  }
-  
-  /* Button Fade-In Animation */
-  @keyframes buttonFadeIn {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
-  
-  button:hover {
-    background-color: #218838;
-    transform: translateY(-2px);
-  }
-  
-  /* Back Button */
-  button[type="button"] {
-    background-color: #f39c12;
-    color: #fff;
-    margin-top: 20px;
-    width: 100%;
-  }
-  
-  button[type="button"]:hover {
-    background-color: #e67e22;
-    transform: translateY(-2px);
-  }
-  
-  /* Error Message */
-  .error-message {
-    color: #e74c3c;
-    font-size: 14px;
-    text-align: center;
-    margin-top: 10px;
-    opacity: 0;
-    animation: slideUp 0.5s ease-out forwards; /* Slide-up animation for error messages */
-    animation-delay: 0.8s; /* Delay for error message */
-  }
-  
-  /* Slide-Up Animation */
-  @keyframes slideUp {
-    0% { transform: translateY(20px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
-  }
-  
-  /* Form Animation */
-  @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-  }
-  
+}
+
+/* Input and Button Styling */
+input,
+button {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 10px; /* Rounded inputs and buttons */
+  font-size: 16px;
+  background-color: #fff;
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+input:focus,
+button:focus {
+  outline: none;
+  border-color: #0f4b8f;
+  box-shadow: 0 0 8px rgba(15, 75, 143, 0.6); /* Focus shadow */
+}
+
+input:hover,
+button:hover {
+  background-color: #f1f1f1; /* Hover effect */
+}
+
+/* Button Styling */
+button {
+  background-color: #0f8f1a; /* Button background */
+  color: #fff;
+  border: none; /* Remove button border */
+}
+
+button:hover {
+  background-color: #0f8f1a; /* Darken button on hover */
+}
+
+/* Form Title Styling */
+.register-container h2 {
+  text-align: center;
+  font-size: 50px;
+  color: #0f4b8f; /* Accent color for titles */
+  margin-bottom: 20px;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
   .register-container {
-    animation: fadeIn 1s ease-in-out;
+      margin: 20px;
+      padding: 20px;
   }
-  
-  /* Responsiveness */
-  @media (max-width: 600px) {
-    .register-container {
-        padding: 20px;
-        margin: 30px auto;
-    }
-  
-    h2 {
-        font-size: 1.6rem;
-    }
-  
-    input, button {
-        font-size: 14px;
-    }
+
+  input,
+  button {
+      font-size: 14px;
   }
-  
-  .area{
-    position: fixed; /* Ensures the background stays fixed and covers the screen */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh; /* Full viewport height */
-    overflow: hidden;
-    z-index: -1; /* Pushes the background behind other content */
-    background: #0f4b8f;
-  }
-  
-  .circles{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-  
-  .circles li{
-    position: absolute;
-    display: block;
-    list-style: none;
-    width: 20px;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.2);
-    animation: animate 25s linear infinite;
-    bottom: -150px;
-  
-  }
-  
-  .circles li:nth-child(1){
-    left: 25%;
-    width: 80px;
-    height: 80px;
-    animation-delay: 0s;
-  }
-  
-  
-  .circles li:nth-child(2){
-    left: 10%;
-    width: 20px;
-    height: 20px;
-    animation-delay: 2s;
-    animation-duration: 12s;
-  }
-  
-  .circles li:nth-child(3){
-    left: 70%;
-    width: 20px;
-    height: 20px;
-    animation-delay: 4s;
-  }
-  
-  .circles li:nth-child(4){
-    left: 40%;
-    width: 60px;
-    height: 60px;
-    animation-delay: 0s;
-    animation-duration: 18s;
-  }
-  
-  .circles li:nth-child(5){
-    left: 65%;
-    width: 20px;
-    height: 20px;
-    animation-delay: 0s;
-  }
-  
-  .circles li:nth-child(6){
-    left: 75%;
-    width: 110px;
-    height: 110px;
-    animation-delay: 3s;
-  }
-  
-  .circles li:nth-child(7){
-    left: 35%;
-    width: 150px;
-    height: 150px;
-    animation-delay: 7s;
-  }
-  
-  .circles li:nth-child(8){
-    left: 50%;
-    width: 25px;
-    height: 25px;
-    animation-delay: 15s;
-    animation-duration: 45s;
-  }
-  
-  .circles li:nth-child(9){
-    left: 20%;
-    width: 15px;
-    height: 15px;
-    animation-delay: 2s;
-    animation-duration: 35s;
-  }
-  
-  .circles li:nth-child(10){
-    left: 85%;
-    width: 150px;
-    height: 150px;
-    animation-delay: 0s;
-    animation-duration: 11s;
-  }
-  
-  
-  
-  @keyframes animate {
-  
-    0%{
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-        border-radius: 0;
-    }
-  
-    100%{
-        transform: translateY(-1000px) rotate(720deg);
-        opacity: 0;
-        border-radius: 50%;
-    }
-  
-  }
-  
+}
