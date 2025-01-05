@@ -33,7 +33,7 @@
   color: #333;
 }
 
-/* Book an Appointment Slots */
+/* Slot container and booking buttons */
 .slot-container {
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 5 slots per row */
@@ -89,8 +89,8 @@
 
 /* Style for occupied slots */
 .occupied-slot {
-  background-color: #e0e0e0; /* Light gray to show the slot is occupied */
-  opacity: 0.6; /* Dim the slot */
+  background-color: #e0e0e0;
+  opacity: 0.6;
 }
 
 /* Existing Appointments */
@@ -131,7 +131,7 @@
   font-size: 1rem;
 }
 
-.cancel-btn {
+.cancel-btn, .delete-btn, .payment-btn {
   background-color: #f44336;
   color: white;
   border: none;
@@ -143,26 +143,25 @@
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.cancel-btn:hover {
+.cancel-btn:hover, .delete-btn:hover, .payment-btn:hover {
   background-color: #d32f2f;
   transform: scale(1.05);
 }
 
 .delete-btn {
-  background-color: #ff5722; /* Orange color for delete */
-  color: white;
-  border: none;
-  padding: 10px 14px;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  background-color: #ff5722;
 }
 
 .delete-btn:hover {
-  background-color: #e64a19; /* Darker orange on hover */
-  transform: scale(1.05);
+  background-color: #e64a19;
+}
+
+.payment-btn {
+  background-color: #4caf50;
+}
+
+.payment-btn:hover {
+  background-color: #45a049;
 }
 
 /* Modal Styling */
@@ -203,10 +202,10 @@
 }
 
 .close-btn:hover {
-  color: #f44336; /* Red color on hover */
+  color: #f44336;
 }
 
-/* Animation for modal fade in */
+/* Modal Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -216,7 +215,6 @@
   }
 }
 
-/* Animation for modal scale */
 @keyframes scaleIn {
   from {
     transform: scale(0.9);
@@ -300,3 +298,39 @@ button:hover {
   transform: scale(1.05);
 }
 
+/* Error handling */
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+input[type="text"], input[type="number"], input[type="month"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus, input[type="number"]:focus, input[type="month"]:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+select:focus {
+  border-color: #4caf50;
+  outline: none;
+}
