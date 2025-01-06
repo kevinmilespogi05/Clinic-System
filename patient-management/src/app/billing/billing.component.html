@@ -17,9 +17,10 @@
         <td>{{ invoice.description }}</td>
         <td>{{ invoice.created_at | date: 'short' }}</td>
         <td>
-          <button (click)="generateInvoice(invoice)">Download</button>
+          <button class="btn" (click)="generateInvoice(invoice)">Download</button>
+          <button class="btn" (click)="previewInvoice(invoice)">Preview</button>
         </td>
       </tr>
-    </tbody>    
+    </tbody>
   </table>
 </div>
