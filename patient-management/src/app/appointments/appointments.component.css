@@ -334,3 +334,26 @@ select:focus {
   border-color: #4caf50;
   outline: none;
 }
+/* Button container with spacing */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+/* Cancel button styling */
+.cancel-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.cancel-btn:hover {
+  background-color: #d32f2f;
+  transform: scale(1.05);
+}
