@@ -36,17 +36,31 @@ export class InvoiceComponent implements OnInit {
 
   createInvoice(): void {
     if (this.invoiceForm.valid) {
-      const invoiceData = {
-        user_id: 1, // Replace with actual user ID
-        description: `${this.invoiceForm.value.service_type}: ${this.invoiceForm.value.claim_description}`,
-        status: 'unpaid', // Set the default status, can be changed later
-      };
-      this.patientService.createInvoice(invoiceData).subscribe(() => {
-        this.loadInvoices(); // Refresh the invoices list
-        this.invoiceForm.reset(); // Reset the form
+      const username = this.invoiceForm.value.patient_name;
+      const serviceType = this.invoiceForm.value.service_type;
+      const claimDescription = this.invoiceForm.value.claim_description;
+  
+      // First, fetch the user ID based on the username
+      this.patientService.getUserByUsername(username).subscribe((userData: any) => {
+        if (userData && userData.id) {
+          const invoiceData = {
+            user_id: userData.id, // Use the fetched user ID
+            description: `${serviceType}: ${claimDescription}`,
+            status: 'unpaid', // Set the default status
+          };
+  
+          // Now create the invoice
+          this.patientService.createInvoice(invoiceData).subscribe(() => {
+            this.loadInvoices(); // Refresh the invoices list
+            this.invoiceForm.reset(); // Reset the form
+          });
+        } else {
+          alert('User not found!');
+        }
       });
     }
   }
+  
 
   updateInvoiceStatus(invoiceId: number, status: string): void {
     this.patientService.updateInvoiceStatus(invoiceId, status).subscribe(() => {

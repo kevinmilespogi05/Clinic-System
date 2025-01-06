@@ -159,7 +159,13 @@ export class PatientService {
     });
   }
 
-  // Billing Management
+ // Billing Management
+getInvoicesByUserId(userId: number): Observable<any[]> {
+  return this.http
+    .post<any[]>(`${this.baseUrl}/api/billing/get_user_invoices.php`, { userId })
+    .pipe(catchError(this.handleError));
+}
+
   getInvoices(): Observable<any[]> {
     return this.http
       .post<any[]>(`${this.baseUrl}/api/billing/read_user.php`, { user_id: 1 })

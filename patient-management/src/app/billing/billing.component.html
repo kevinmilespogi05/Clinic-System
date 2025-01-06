@@ -5,6 +5,8 @@
       <tr>
         <th>Invoice Number</th>
         <th>Status</th>
+        <th>Description</th>
+        <th>Created At</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -12,6 +14,8 @@
       <tr *ngFor="let invoice of invoices">
         <td>{{ invoice.id }}</td>
         <td>{{ invoice.status }}</td>
+        <td>{{ invoice.description }}</td>
+        <td>{{ invoice.created_at | date: 'short' }}</td>
         <td>
           <button (click)="generateInvoice(invoice)">Download</button>
         </td>

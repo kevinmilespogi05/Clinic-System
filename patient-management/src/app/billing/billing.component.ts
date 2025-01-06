@@ -11,58 +11,51 @@ import jsPDF from 'jspdf';
   styleUrls: ['./billing.component.css'],
 })
 export class BillingComponent implements OnInit {
-  invoices: any[] = []; // List of invoices
+  invoices: any[] = []; // Initialize invoices array
+  userId: number = 0; // User ID
 
   constructor(private patientService: PatientService) {}
 
   ngOnInit(): void {
+    // Retrieve logged-in user's ID from local storage or a user service
+    this.userId = this.getLoggedInUserId();
     this.fetchInvoices();
   }
 
+  getLoggedInUserId(): number {
+    // Retrieve the user ID from localStorage (or replace with your user service)
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user.id || 0; // Return user ID or 0 if not found
+  }
+
   fetchInvoices(): void {
-    this.patientService.getInvoices().subscribe(
-      (data) => {
-        this.invoices = data;
-        console.log('Fetched invoices:', this.invoices);  // Log the invoices to check the structure
-      },
-      (error) => {
-        console.error('Error fetching invoices:', error);
-      }
-    );
+    if (this.userId) {
+      // Fetch invoices using PatientService
+      this.patientService.getInvoicesByUserId(this.userId).subscribe(
+        (data) => {
+          this.invoices = data;
+          console.log('Fetched invoices:', this.invoices);
+        },
+        (error) => {
+          console.error('Error fetching invoices:', error);
+        }
+      );
+    } else {
+      console.error('No user ID found');
+    }
   }
 
   generateInvoice(invoice: any): void {
     const doc = new jsPDF();
     doc.setFontSize(12);
     doc.text('Invoice Receipt', 10, 10);
-    doc.text(`Invoice Number: ${invoice.id}`, 10, 20);  // Use 'id' instead of 'invoice_number'
+    doc.text(`Invoice Number: ${invoice.id}`, 10, 20);
     doc.text(`Status: ${invoice.status}`, 10, 30);
-    doc.text('Thank you for your payment!', 10, 50);
-  
-    // Prepare the description
-    const description = "Invoice Generated"; // Example description
-  
-    // Log the data being sent to the server
-    console.log('Sending data to update invoice description:', {
-      invoice_id: invoice.id,  // Use 'id' here
-      description: description
-    });
-  
-    // Call service to update the invoice description
-    if (invoice.id) {  // Check if 'id' exists
-      this.patientService.updateInvoiceDescription(invoice.id, description).subscribe(
-        (response) => {
-          console.log('Invoice description updated', response);
-        },
-        (error) => {
-          console.error('Error updating description:', error);
-        }
-      );
-    } else {
-      console.error('Invoice ID is missing!');
-    }
-  
+    doc.text(`Description: ${invoice.description || 'N/A'}`, 10, 40);
+    doc.text(`Created At: ${new Date(invoice.created_at).toLocaleString()}`, 10, 50);
+    doc.text('Thank you for your payment!', 10, 70);
+
     // Save the PDF
-    doc.save(`Invoice_${invoice.id}.pdf`);  // Use 'id' here
-  }  
+    doc.save(`Invoice_${invoice.id}.pdf`);
+  }
 }

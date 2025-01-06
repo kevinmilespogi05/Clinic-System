@@ -109,6 +109,11 @@ deleteAppointment(appointmentId: number): Observable<any> {
   
 
   /** ======================= Billing Management ================= */
+
+  getUserByUsername(username: string): Observable<any> {
+    return this.postRequest('api/billing/get_user_by_username.php', { username });
+  }
+  
   getInvoices(): Observable<any[]> {
     return this.postRequest('api/billing/read_user.php', { user_id: 1 });
   }
