@@ -152,3 +152,14 @@
   background-color: #34495e;
   transform: translateX(5px);
 }
+
+/* Logout Button */
+.logout {
+  margin-top: auto; /* Pushes logout button to the bottom */
+  user-select: none; /* Prevents text selection */
+}
+
+.logout a:hover {
+  background-color: #34495e;
+  transform: translateX(5px);
+}
