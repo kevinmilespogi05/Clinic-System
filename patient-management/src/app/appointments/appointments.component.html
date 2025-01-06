@@ -106,7 +106,7 @@
       </div>
 
       <div *ngIf="billAmount > 0" class="bill-section">
-        <h4>Bill: ${{ billAmount }}</h4>
+        <h4>Bill: ₱{{ billAmount }}</h4>
       </div>
 
       <button (click)="bookAppointment()" *ngIf="selectedSlot"><i class="bi bi-check-circle"></i> Confirm Booking</button>
@@ -151,14 +151,20 @@
           placeholder="Enter amount to pay" 
         />
         <p *ngIf="inputAmount && inputAmount > billAmount" class="error">
-          Amount cannot exceed ${{ billAmount }}.
+          Amount cannot exceed ₱{{ billAmount }}.
         </p>
       </div>
       <div class="payment-summary">
-        <p><strong>Total Bill Amount:</strong> ${{ billAmount }}</p>
+        <p><strong>Total Bill Amount:</strong> ₱{{ billAmount }}</p>
       </div>
-      <button type="submit"><i class="bi bi-check-circle"></i> Submit Payment</button>
-      <button type="button" (click)="closePaymentModal()"><i class="bi bi-x-circle"></i> Cancel</button>
+      <div class="button-group">
+        <button type="submit" class="payment-btn">
+          <i class="bi bi-check-circle"></i> Submit Payment
+        </button>
+        <button type="button" class="cancel-btn" (click)="closePaymentModal()">
+          <i class="bi bi-x-circle"></i> Cancel
+        </button>
+      </div>      
     </form>
   </div>
 </div>
