@@ -17,10 +17,18 @@ export class BillingComponent implements OnInit {
   constructor(private patientService: PatientService) {}
 
   ngOnInit(): void {
-    // Retrieve logged-in user's ID from local storage or a user service
+    // Retrieve logged-in user's ID from local storage
     this.userId = this.getLoggedInUserId();
-    this.fetchInvoices();
+    console.log('Logged-in user ID:', this.userId); // Debugging log
+  
+    if (this.userId) {
+      this.fetchInvoices();
+    } else {
+      console.error('No user ID found in localStorage');
+    }
   }
+  
+  
 
   getLoggedInUserId(): number {
     // Retrieve the user ID from localStorage (or replace with your user service)

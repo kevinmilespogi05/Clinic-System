@@ -10,9 +10,8 @@ if (!empty($data->userId)) {
     try {
         $userId = htmlspecialchars(strip_tags($data->userId));
 
-        // Update the query to include the first_name from the users table
+        // Query to get invoices by user ID
         $query = "SELECT id, description, status, created_at FROM invoices WHERE user_id = :user_id";
-
 
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
