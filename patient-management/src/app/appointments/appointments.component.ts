@@ -15,21 +15,21 @@ import Swal from 'sweetalert2';
 export class AppointmentsComponent implements OnInit {
   appointments: any[] = [];
   appointmentSlots = [
-    { day: 'Monday', time: '10:00 AM - 11:00 AM', date: '2024-12-16' },
-    { day: 'Monday', time: '11:00 AM - 12:00 PM', date: '2024-12-16' },
-    { day: 'Tuesday', time: '10:00 AM - 11:00 AM', date: '2024-12-17' },
-    { day: 'Tuesday', time: '11:00 AM - 12:00 PM', date: '2024-12-17' },
-    { day: 'Wednesday', time: '10:00 AM - 11:00 AM', date: '2024-12-18' },
-    { day: 'Wednesday', time: '11:00 AM - 12:00 PM', date: '2024-12-18' },
-    { day: 'Thursday', time: '10:00 AM - 11:00 AM', date: '2024-12-19' },
-    { day: 'Thursday', time: '11:00 AM - 12:00 PM', date: '2024-12-19' },
-    { day: 'Friday', time: '10:00 AM - 11:00 AM', date: '2024-12-20' },
-    { day: 'Friday', time: '11:00 AM - 12:00 PM', date: '2024-12-20' },
-    { day: 'Monday', time: '12:00 PM - 01:00 PM', date: '2024-12-23' },
-    { day: 'Tuesday', time: '12:00 PM - 01:00 PM', date: '2024-12-24' },
-    { day: 'Wednesday', time: '12:00 PM - 01:00 PM', date: '2024-12-25' },
-    { day: 'Thursday', time: '12:00 PM - 01:00 PM', date: '2024-12-26' },
-    { day: 'Friday', time: '12:00 PM - 01:00 PM', date: '2024-12-27' },
+    { day: 'Monday', time: '10:00 AM - 11:00 AM', date: '2025-1-13' },
+    { day: 'Monday', time: '3:00 PM - 4:00 PM', date: '2025-1-13' },
+    { day: 'Tuesday', time: '10:00 AM - 11:00 AM', date: '2025-1-14' },
+    { day: 'Tuesday', time: '3:00 PM - 4:00 PM', date: '2025-1-14' },
+    { day: 'Wednesday', time: '10:00 AM - 11:00 AM', date: '2025-1-15' },
+    { day: 'Wednesday', time: '3:00 PM - 4:00 PM', date: '2025-1-15' },
+    { day: 'Thursday', time: '10:00 AM - 11:00 AM', date: '2025-1-16' },
+    { day: 'Thursday', time: '3:00 PM - 4:00 PM', date: '2025-1-16' },
+    { day: 'Friday', time: '10:00 AM - 11:00 AM', date: '2025-1-17' },
+    { day: 'Friday', time: '3:00 PM - 4:00 PM', date: '2025-1-17' },
+    { day: 'Monday', time: '12:00 PM - 01:00 PM', date: '2025-1-20' },
+    { day: 'Tuesday', time: '12:00 PM - 01:00 PM', date: '2025-1-21' },
+    { day: 'Wednesday', time: '12:00 PM - 01:00 PM', date: '2025-1-22' },
+    { day: 'Thursday', time: '12:00 PM - 01:00 PM', date: '2025-1-23' },
+    { day: 'Friday', time: '12:00 PM - 01:00 PM', date: '2025-1-24' },
   ];
 
   showModal: boolean = false;
@@ -91,9 +91,9 @@ export class AppointmentsComponent implements OnInit {
 
   calculateBill(): void {
     const servicePrices = {
-      Consultation: 50,
-      Surgery: 200,
-      Therapy: 100,
+      Consultation: 150,
+      Surgery: 75000,
+      Therapy: 10000,
     };
     this.billAmount = servicePrices[this.selectedService] || 0;
   }
