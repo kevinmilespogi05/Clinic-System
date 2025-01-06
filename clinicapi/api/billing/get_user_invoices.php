@@ -10,8 +10,18 @@ if (!empty($data->userId)) {
     try {
         $userId = htmlspecialchars(strip_tags($data->userId));
 
-        // Query to get invoices by user ID
-        $query = "SELECT id, description, status, created_at FROM invoices WHERE user_id = :user_id";
+        // Query to get invoices with related details
+        $query = "
+            SELECT 
+                i.id AS invoice_id, i.description, i.status AS invoice_status, i.created_at AS invoice_date,
+                a.date AS appointment_date, a.time AS appointment_time, a.service, a.bill_amount,
+                u.first_name, u.last_name, u.contact_number, u.billing_address, u.city, u.province,
+                p.amount AS payment_amount, p.payment_method, p.status AS payment_status
+            FROM invoices i
+            LEFT JOIN appointments a ON i.user_id = a.user_id
+            LEFT JOIN users u ON i.user_id = u.id
+            LEFT JOIN payments p ON i.user_id = p.user_id
+            WHERE i.user_id = :user_id";
 
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
@@ -20,10 +30,29 @@ if (!empty($data->userId)) {
         $invoices = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $invoices[] = [
-                'id' => $row['id'],
+                'invoice_id' => $row['invoice_id'],
                 'description' => $row['description'],
-                'status' => $row['status'],
-                'created_at' => $row['created_at'],
+                'invoice_status' => $row['invoice_status'],
+                'invoice_date' => $row['invoice_date'],
+                'appointment' => [
+                    'date' => $row['appointment_date'],
+                    'time' => $row['appointment_time'],
+                    'service' => $row['service'],
+                    'bill_amount' => $row['bill_amount'],
+                ],
+                'user' => [
+                    'first_name' => $row['first_name'],
+                    'last_name' => $row['last_name'],
+                    'contact_number' => $row['contact_number'],
+                    'billing_address' => $row['billing_address'],
+                    'city' => $row['city'],
+                    'province' => $row['province'],
+                ],
+                'payment' => [
+                    'amount' => $row['payment_amount'],
+                    'method' => $row['payment_method'],
+                    'status' => $row['payment_status'],
+                ],
             ];
         }
 

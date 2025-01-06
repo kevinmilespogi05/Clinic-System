@@ -95,8 +95,12 @@ export class AppointmentsComponent implements OnInit {
       Surgery: 75000,
       Therapy: 10000,
     };
-    this.billAmount = servicePrices[this.selectedService] || 0;
+  
+    // Ensure proper casing for service key lookup
+    const formattedService = this.selectedService.charAt(0).toUpperCase() + this.selectedService.slice(1).toLowerCase();
+    this.billAmount = servicePrices[formattedService] || 0;
   }
+  
 
   isSlotOccupied(slot: any): boolean {
     return this.appointments.some(
