@@ -167,6 +167,7 @@ export class PatientService {
 }
 
 
+
   getInvoices(): Observable<any[]> {
     return this.http
       .post<any[]>(`${this.baseUrl}/api/billing/read_user.php`, { user_id: 1 })

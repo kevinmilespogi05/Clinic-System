@@ -115,9 +115,9 @@ deleteAppointment(appointmentId: number): Observable<any> {
   }
   
   getInvoices(): Observable<any[]> {
-    return this.postRequest('api/billing/read_user.php', { user_id: 1 });
+    return this.getRequest('api/billing/get_invoices.php'); // Use the endpoint that fetches all invoices
   }
-
+  
   createInvoice(invoice: any): Observable<any> {
     return this.postRequest('api/billing/create.php', invoice);
   }
