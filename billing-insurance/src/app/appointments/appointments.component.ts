@@ -176,27 +176,31 @@ moveAppointment(appointmentId: number, newStatus: string): void {
     });
   }
 
-  // Generate billing for an appointment
-  generateInvoice(appointmentId: number): void {
-    // Ensure the appointment is not already paid before generating the invoice
-    const appointment = this.appointments.find(appt => appt.id === appointmentId);
-    
-    if (appointment && appointment.payment_status !== 'paid') {
-      this.patientService.generateInvoice(appointmentId).subscribe(
-        (response) => {
-          if (response.success) {
-            Swal.fire('Success', 'Invoice generated successfully.', 'success');
-            this.loadAppointments(); // Reload appointments to show updated data
-          } else {
-            Swal.fire('Error', response.message, 'error');
-          }
-        },
-        (error) => {
-          console.error('Error generating invoice:', error);
-          Swal.fire('Error', 'Failed to generate invoice.', 'error');
+generateInvoice(appointmentId: number): void {
+  // Find the appointment by its ID
+  const appointment = this.appointments.find(appt => appt.id === appointmentId);
+
+  // Proceed only if the payment status is 'paid'
+  if (appointment && appointment.payment_status === 'paid') {
+    this.patientService.generateInvoice(appointmentId).subscribe(
+      (response) => {
+        if (response.success) {
+          Swal.fire('Success', 'Invoice generated successfully.', 'success');
+          this.loadAppointments(); // Reload appointments to show updated data
+        } else {
+          Swal.fire('Error', response.message, 'error');
         }
-      );
-    }
+      },
+      (error) => {
+        console.error('Error generating invoice:', error);
+        Swal.fire('Error', 'Failed to generate invoice.', 'error');
+      }
+    );
+  } else {
+    // If the appointment is not paid, show an error message
+    Swal.fire('Error', 'Invoice can only be generated for paid appointments.', 'error');
   }
+}
+
   
 }

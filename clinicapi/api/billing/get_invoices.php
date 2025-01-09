@@ -7,7 +7,7 @@ $database = new Database();
 $conn = $database->getConnection();  // Use the PDO connection
 
 // Fetch invoices for a specific user (optional filter by user_id)
-$sql = "SELECT id, user_id, description, status, created_at FROM invoices";
+$sql = "SELECT id, user_id, description, created_at FROM invoices";  // Removed 'status' column from SELECT
 $stmt = $conn->prepare($sql);  // Use PDO's prepare method
 $stmt->execute();  // Execute the query
 

@@ -39,8 +39,8 @@ $user_id = $appointment['user_id'];
 $description = "Service: " . $appointment['service'] . ", Description: " . $appointment['description'];
 $bill_amount = $appointment['bill_amount'];
 
-// Insert invoice into the invoices table
-$insertQuery = "INSERT INTO invoices (user_id, description, status, created_at) VALUES (:user_id, :description, 'unpaid', NOW())";
+// Insert invoice into the invoices table without the status column
+$insertQuery = "INSERT INTO invoices (user_id, description, created_at) VALUES (:user_id, :description, NOW())";
 $insertStmt = $conn->prepare($insertQuery);
 $insertStmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 $insertStmt->bindParam(':description', $description, PDO::PARAM_STR);

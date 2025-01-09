@@ -42,13 +42,12 @@
             <i class="bi bi-trash"></i> Delete
           </button>
           
-          <!-- Invoice Generation Button -->
+          <!-- Invoice Generation Button (Only enabled if payment_status is 'paid') -->
           <button 
             class="generate-invoice-btn" 
             (click)="generateInvoice(appointment.id)" 
-            [disabled]="appointment.payment_status === 'paid'"
-            [class.disabled]="appointment.payment_status === 'paid'"
-          >
+            [disabled]="appointment.payment_status !== 'paid'"
+            [class.disabled]="appointment.payment_status !== 'paid'">
             Generate Invoice
           </button>
         </td>
