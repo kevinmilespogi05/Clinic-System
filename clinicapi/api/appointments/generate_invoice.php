@@ -4,16 +4,14 @@ include_once '../../config/database.php';
 
 header('Content-Type: application/json');
 
-// Create a new instance of the Database class
 $database = new Database();
-$conn = $database->getConnection(); // Use the getConnection method
+$conn = $database->getConnection();
 
 if (!$conn) {
     echo json_encode(["success" => false, "message" => "Database connection failed."]);
     exit();
 }
 
-// Retrieve the request data
 $data = json_decode(file_get_contents("php://input"), true);
 
 if (is_null($data) || !isset($data['appointment_id'])) {
@@ -37,9 +35,20 @@ if ($stmt->rowCount() === 0) {
 $appointment = $stmt->fetch(PDO::FETCH_ASSOC);
 $user_id = $appointment['user_id'];
 $description = "Service: " . $appointment['service'] . ", Description: " . $appointment['description'];
-$bill_amount = $appointment['bill_amount'];
 
-// Insert invoice into the invoices table without the status column
+// Check if an invoice already exists for this appointment
+$checkInvoiceQuery = "SELECT id FROM invoices WHERE user_id = :user_id AND description = :description LIMIT 1";
+$checkInvoiceStmt = $conn->prepare($checkInvoiceQuery);
+$checkInvoiceStmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+$checkInvoiceStmt->bindParam(':description', $description, PDO::PARAM_STR);
+$checkInvoiceStmt->execute();
+
+if ($checkInvoiceStmt->rowCount() > 0) {
+    echo json_encode(["success" => false, "message" => "Invoice already exists for this appointment."]);
+    exit();
+}
+
+// Insert a new invoice if no existing invoice is found
 $insertQuery = "INSERT INTO invoices (user_id, description, created_at) VALUES (:user_id, :description, NOW())";
 $insertStmt = $conn->prepare($insertQuery);
 $insertStmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
