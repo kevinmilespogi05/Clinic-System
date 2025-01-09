@@ -175,4 +175,23 @@ moveAppointment(appointmentId: number, newStatus: string): void {
       }
     });
   }
+
+  // Generate billing for an appointment
+generateInvoice(appointmentId: number): void {
+  this.patientService.generateInvoice(appointmentId).subscribe(
+    (response: any) => {
+      if (response.success) {
+        Swal.fire('Success', 'Invoice generated successfully.', 'success');
+        this.loadAppointments(); // Reload appointments to update the status
+      } else {
+        Swal.fire('Error', response.message, 'error');
+      }
+    },
+    (error) => {
+      console.error('Error generating invoice:', error);
+      Swal.fire('Error', 'Failed to generate invoice.', 'error');
+    }
+  );
+}
+
 }

@@ -78,6 +78,16 @@ deleteAppointment(appointmentId: number): Observable<any> {
     .pipe(catchError(this.handleError));
 }
 
+generateInvoice(appointmentId: number): Observable<any> {
+  return this.http
+    .post<any>(
+      `${this.baseUrl}/api/appointments/generate_invoice.php`, 
+      { appointment_id: appointmentId },
+      { headers: { 'Content-Type': 'application/json' } } // Ensure header is set
+    )
+    .pipe(catchError(this.handleError));
+}
+
 
   /** ======================= Combined Stats (Billing & Appointments) ================= */
   getCombinedStats(): Observable<any> {

@@ -41,8 +41,15 @@
           <button class="delete-btn" (click)="deleteAppointment(appointment.id)">
             <i class="bi bi-trash"></i> Delete
           </button>
+          <button 
+            class="billing-btn" 
+            (click)="generateInvoice(appointment.id)" 
+            [disabled]="appointment.payment_status === 'paid'">
+            <i class="bi bi-receipt"></i> Generate Billing
+          </button>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
+
