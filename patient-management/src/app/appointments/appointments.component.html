@@ -1,37 +1,179 @@
 <div class="appointment-container">
+  <!-- Book an Appointment Section -->
   <div class="card">
     <div class="card-title">Book an Appointment</div>
     <div class="slot-container">
-      <div class="slot" [ngClass]="{ 'occupied-slot': isSlotOccupied(slot) }" *ngFor="let slot of appointmentSlots">
+      <div 
+        class="slot" 
+        [ngClass]="{ 'occupied-slot': isSlotOccupied(slot) }" 
+        *ngFor="let slot of appointmentSlots">
         <div class="slot-day">{{ slot.day }}</div>
         <div class="slot-date">{{ slot.date | date:'longDate' }}</div>
         <div class="slot-time">{{ slot.time }}</div>
-        <button class="book-btn" [disabled]="isSlotOccupied(slot)" (click)="openBookingModal(slot)">
+        <button
+          class="book-btn"
+          [disabled]="isSlotOccupied(slot)"
+          (click)="openBookingModal(slot)"
+        >
           <i class="bi bi-calendar-plus"></i> Book
         </button>
       </div>
     </div>
   </div>
 
+  <!-- Existing Appointments Section -->
   <div class="card appointment-card">
-    <div class="card-title">Existing Appointments</div>
+    <div class="card-title">Appointments</div>
     <div class="appointment-list">
       <div class="appointment-item" *ngFor="let appointment of appointments">
         <div class="appointment-details">
           <div class="appointment-day">Day: {{ appointment.day }}</div>
           <div class="appointment-date">Date: {{ appointment.date }}</div>
           <div class="appointment-time">Time: {{ appointment.time }}</div>
-          <div class="appointment-description"><strong>Description:</strong> {{ appointment.description }}</div>
-          <div class="appointment-status">Status: <span [ngClass]="getStatusClass(appointment.status)">{{ appointment.status }}</span></div>
-          <div class="appointment-service"><strong>Service:</strong> {{ appointment.service }}</div>
+          <div class="appointment-description">
+            <strong>Description:</strong> {{ appointment.description }}
+          </div>
+          <div class="appointment-status">
+            Status:
+            <span [ngClass]="getStatusClass(appointment.status)">
+              {{ appointment.status }}
+            </span>
+          </div>
+          <div class="appointment-service">
+            <strong>Service:</strong> {{ appointment.service }}
+          </div>
+          <div class="payment-status">
+            Payment Status: 
+            <span [ngClass]="getPaymentStatusClass(appointment.payment_status)">
+              {{ appointment.payment_status }}
+            </span>
+          </div>
         </div>
-        <button class="cancel-btn" *ngIf="appointment.status !== 'cancelled'" (click)="openCancelModal(appointment.id)">
+
+        <button
+          class="cancel-btn"
+          *ngIf="appointment.status !== 'cancelled'"
+          (click)="openCancelModal(appointment.id)"
+        >
           <i class="bi bi-x-circle"></i> Cancel
         </button>
-        <button class="payment-btn" *ngIf="appointment.status === 'pending' && appointment.payment_status === 'pending'" (click)="openPaymentModal(appointment)">
+
+        <button
+          class="delete-btn"
+          *ngIf="appointment.status === 'cancelled'"
+          (click)="deleteAppointment(appointment.id)"
+        >
+          <i class="bi bi-trash"></i> Delete
+        </button>
+
+        <button
+          *ngIf="appointment.status === 'pending' && appointment.payment_status === 'pending'"
+          class="payment-btn"
+          (click)="openPaymentModal(appointment)"
+        >
           <i class="bi bi-credit-card"></i> Pay Now
         </button>
+
+        <button 
+          *ngIf="appointment.status === 'cancelled' && !appointment.refundProcessed" 
+          (click)="handleRefundOrReschedule(appointment)"
+        >
+          <i class="bi bi-arrow-repeat"></i> Refund
+        </button>
       </div>
+    </div>
+  </div>
+
+  <!-- Booking Modal -->
+  <div class="modal" *ngIf="showBookingModal">
+    <div class="modal-content">
+      <span class="close-btn" (click)="closeBookingModal()">&times;</span>
+      <h3>Enter Appointment Description</h3>
+      <textarea [(ngModel)]="appointmentDescription" placeholder="Enter your description here..." rows="4"></textarea>
+
+      <div class="form-group">
+        <label for="service">Select Service:</label>
+        <select id="service" [(ngModel)]="selectedService" (change)="calculateBill()">
+          <option value="Consultation">Consultation</option>
+          <option value="Surgery">Surgery</option>
+          <option value="Therapy">Therapy</option>
+        </select>
+      </div>
+
+      <div *ngIf="billAmount > 0" class="bill-section">
+        <h4>Bill: ₱{{ billAmount }}</h4>
+      </div>
+
+      <button (click)="bookAppointment()" *ngIf="selectedSlot"><i class="bi bi-check-circle"></i> Confirm Booking</button>
+    </div>
+  </div>
+
+  <!-- Payment Modal -->
+<div class="modal" *ngIf="showPaymentModal">
+  <div class="modal-content">
+    <span class="close-btn" (click)="closePaymentModal()">&times;</span>
+    <h3>Payment</h3>
+    <form (submit)="processPayment($event)">
+      <div>
+        <label for="creditCard">Credit Card Number</label>
+        <input type="text" id="creditCard" [(ngModel)]="creditCardNumber" name="creditCard" required />
+      </div>
+      <div>
+        <label for="cardholderName">Cardholder's Name</label>
+        <input type="text" id="cardholderName" [(ngModel)]="cardholderName" name="cardholderName" required />
+      </div>
+      <div>
+        <label for="expiryDate">Expiry Date</label>
+        <input type="month" id="expiryDate" [(ngModel)]="expiryDate" name="expiryDate" required />
+      </div>
+      <div>
+        <label for="cvv">CVV</label>
+        <input type="text" id="cvv" [(ngModel)]="cvv" name="cvv" required placeholder="XXX" />
+      </div>
+      <div>
+        <label for="billingAddress">Billing Address</label>
+        <input type="text" id="billingAddress" [(ngModel)]="billingAddress" name="billingAddress" required />
+      </div>
+      <div>
+        <label for="amount">Amount</label>
+        <input 
+          type="number" 
+          id="amount" 
+          [(ngModel)]="inputAmount" 
+          name="amount" 
+          [max]="billAmount" 
+          required 
+          placeholder="Enter amount to pay" 
+        />
+        <p *ngIf="inputAmount && inputAmount > billAmount" class="error">
+          Amount cannot exceed ₱{{ billAmount }}.
+        </p>
+      </div>
+      <div class="payment-summary">
+        <p><strong>Total Bill Amount:</strong> ₱{{ billAmount }}</p>
+      </div>
+      <div class="button-group">
+        <button type="submit" class="payment-btn">
+          <i class="bi bi-check-circle"></i> Submit Payment
+        </button>
+        <button type="button" class="cancel-btn" (click)="closePaymentModal()">
+          <i class="bi bi-x-circle"></i> Cancel
+        </button>
+      </div>      
+    </form>
+  </div>
+</div>
+
+
+  <!-- Cancellation Reason Modal -->
+  <div class="modal" *ngIf="showModal">
+    <div class="modal-content">
+      <span class="close-btn" (click)="closeCancelModal()">&times;</span>
+      <h3>Enter Cancellation Reason</h3>
+      <textarea [(ngModel)]="cancellationReason" placeholder="Enter your reason here..." rows="4"></textarea>
+      <button (click)="cancelAppointment(appointmentToCancel!)" *ngIf="appointmentToCancel !== null">
+        <i class="bi bi-check-circle"></i> Confirm Cancellation
+      </button>
     </div>
   </div>
 </div>
