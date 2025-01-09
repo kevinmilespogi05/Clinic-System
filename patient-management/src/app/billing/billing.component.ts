@@ -48,27 +48,29 @@ export class BillingComponent implements OnInit {
     doc.text(`Invoice Number: ${invoice.invoice_id}`, 10, 20);
     doc.text(`Description: ${invoice.description || 'N/A'}`, 10, 30);
     doc.text(`Created At: ${new Date(invoice.invoice_date).toLocaleString()}`, 10, 40);
-
+  
     doc.text('User Details:', 10, 60);
     doc.text(`Name: ${invoice.user.first_name} ${invoice.user.last_name}`, 10, 70);
     doc.text(`Contact: ${invoice.user.contact_number}`, 10, 80);
     doc.text(`Billing Address: ${invoice.user.billing_address}, ${invoice.user.city}, ${invoice.user.province}`, 10, 90);
-
+  
     doc.text('Appointment Details:', 10, 110);
     doc.text(`Date: ${invoice.appointment.date}`, 10, 120);
     doc.text(`Time: ${invoice.appointment.time}`, 10, 130);
     doc.text(`Service: ${invoice.appointment.service}`, 10, 140);
     doc.text(`Bill Amount: ${invoice.appointment.bill_amount}`, 10, 150);
-
+  
     doc.text('Payment Details:', 10, 170);
     doc.text(`Amount: ${invoice.payment.amount}`, 10, 180);
     doc.text(`Method: ${invoice.payment.method}`, 10, 190);
-
+    doc.text(`Payment Status: ${invoice.payment.status}`, 10, 200);  
+  
     doc.text('Thank you for your payment!', 10, 210);
-
+  
     // Save the PDF
     doc.save(`Invoice_${invoice.invoice_id}.pdf`);
   }
+  
 
   previewInvoice(invoice: any): void {
     const doc = new jsPDF();

@@ -1,30 +1,37 @@
+/* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f8fb; /* Light background to reduce strain */
+    margin: 0;
+    padding: 0;
+    color: #34495e; /* Dark text color for readability */
+}
+
 /* Profile Container */
 .profile-container {
     padding: 35px;
     background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
     margin: 50px auto;
-    max-width: 900px;
-    font-family: 'Roboto', sans-serif;
+    max-width: 1000px;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    margin-left: 200px;
 }
 
 .profile-container:hover {
-    transform: scale(1.02);
+    transform: scale(1.02); /* Slight scale-up effect on hover */
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 /* Profile Header */
 h1 {
-    color: #2c3e50;
+    color: #2c3e50; /* Elegant dark color */
     font-size: 2.8rem;
     margin-bottom: 25px;
     text-align: center;
     font-weight: 700;
     text-transform: capitalize;
-    letter-spacing: 1.5px;
+    letter-spacing: 1.5px; /* Subtle spacing for a cleaner header */
 }
 
 /* Profile Data Section */
@@ -36,13 +43,13 @@ h1 {
 
 .profile-details .profile-data-container {
     padding: 15px;
-    background: #f4f4f4;
+    background: #f8f8f8;
     border-radius: 8px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1); /* Soft shadow on individual data cards */
 }
 
 .profile-details p {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #34495e;
     margin-bottom: 10px;
     line-height: 1.8;
@@ -50,13 +57,13 @@ h1 {
 
 .profile-details strong {
     font-weight: 700;
-    color: #28a745;
+    color: #2980b9; /* Soft blue for labels */
 }
 
 /* Edit Profile Button */
 button {
     padding: 12px 25px;
-    background-color: #28a745;
+    background-color: #2980b9; /* Vibrant blue for action buttons */
     color: white;
     border: none;
     cursor: pointer;
@@ -70,12 +77,11 @@ button {
 }
 
 button:hover {
-    background-color: #218838;
-    transform: translateY(-4px);
+    background-color: #3498db; /* Light blue on hover */
+    transform: translateY(-4px); /* Slight lifting effect */
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Icon Styling */
 button i {
     margin-right: 8px;
 }
@@ -110,8 +116,8 @@ button i {
 /* Focused State for Input Fields */
 .profile-container input:focus,
 .profile-container textarea:focus {
-    border-color: #28a745;
-    box-shadow: 0 0 6px rgba(40, 167, 69, 0.3);
+    border-color: #2980b9;
+    box-shadow: 0 0 6px rgba(41, 128, 185, 0.3);
     outline: none;
 }
 
@@ -133,12 +139,12 @@ button i {
 }
 
 .profile-container .form-actions button[type="submit"] {
-    background-color: #28a745;
+    background-color: #2980b9;
     color: white;
 }
 
 .profile-container .form-actions button[type="submit"]:hover {
-    background-color: #218838;
+    background-color: #3498db;
     transform: translateY(-4px);
 }
 
@@ -152,18 +158,33 @@ button i {
     transform: translateY(-4px);
 }
 
+/* Additional Space Utilization: Adding a Sidebar */
+.profile-container .sidebar {
+    width: 300px;
+    padding: 20px;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+    margin-left: 30px;
+}
+
+.sidebar h3 {
+    color: #2c3e50;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
 
 /* Insurance Section Container */
 .insurance-status-container {
     padding: 35px;
     background: #f9f9f9;
-    border-radius: 12px;
+    border-radius: 15px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
     margin: 50px auto;
-    max-width: 900px;
+    max-width: 1000px;
     font-family: 'Roboto', sans-serif;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    margin-left: 350px;
 }
 
 .insurance-status-container:hover {
@@ -209,4 +230,69 @@ button i {
 
 .claim-item .pending {
     background-color: #f39c12;
+}
+
+/* Footer */
+footer {
+    background-color: #2c3e50;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+    font-size: 1rem;
+    border-top: 2px solid #34495e;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .profile-container,
+    .insurance-status-container {
+        margin-left: 20px;
+        margin-right: 20px;
+        padding: 20px;
+    }
+
+    .profile-container .sidebar {
+        display: none; /* Hide sidebar on smaller screens */
+    }
+
+    button {
+        font-size: 16px;
+    }
+
+    .form-group label {
+        font-size: 1rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 0.95rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .form-actions button {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    .profile-details p {
+        font-size: 0.95rem;
+    }
+
+    .profile-container {
+        padding: 15px;
+    }
+
+    footer {
+        font-size: 0.9rem;
+    }
 }

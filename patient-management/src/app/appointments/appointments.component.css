@@ -1,359 +1,117 @@
-/* Overall container styling */
+/* Appointment Page Styling */
 .appointment-container {
   padding: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  background-color: #f4f7fa;
+  background-color: #ecf0f1; /* Soft light gray background */
   min-height: 100vh;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
-/* Card styling */
 .card {
   background-color: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   padding: 25px;
-  width: 90%;
-  max-width: 1200px;
-  margin: auto;
-  transition: transform 0.3s ease;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-10px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
 .card-title {
-  font-size: 1.8rem;
-  font-weight: bold;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #34495e;
   margin-bottom: 20px;
-  text-align: left;
-  color: #333;
+  text-align: center;
 }
 
-/* Slot container and booking buttons */
 .slot-container {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 slots per row */
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-  text-align: center;
 }
 
 .slot {
   background-color: #ffffff;
-  padding: 20px;
+  padding: 18px;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-size: 1rem;
-  transition: transform 0.3s ease;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .slot:hover {
   transform: scale(1.05);
-}
-
-.slot-day {
-  font-weight: bold;
-  margin-bottom: 12px;
-  color: #333;
-}
-
-.slot-time {
-  color: #666;
-  margin-bottom: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .book-btn {
-  background-color: #4caf50;
-  color: #fff;
+  background-color: #2980b9;  /* Soft blue */
+  color: white;
   border: none;
-  padding: 10px 14px;
-  font-size: 1rem;
-  border-radius: 6px;
-  font-weight: bold;
+  padding: 12px 20px;
+  font-size: 1.2rem;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .book-btn:hover {
-  background-color: #45a049;
+  background-color: #3498db;
   transform: scale(1.05);
 }
 
-.book-btn:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-/* Style for occupied slots */
-.occupied-slot {
-  background-color: #e0e0e0;
-  opacity: 0.6;
-}
-
-/* Existing Appointments */
-.appointment-card {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.appointment-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
-}
-
-.appointment-item:hover {
-  background-color: #efefef;
-}
-
-.appointment-details {
-  display: flex;
-  flex-direction: column;
-}
-
-.appointment-day {
-  font-weight: bold;
-  color: #333;
-  font-size: 1.2rem;
-}
-
-.appointment-time {
-  color: #666;
-  font-size: 1rem;
-}
-
-.cancel-btn, .delete-btn, .payment-btn {
-  background-color: #f44336;
+.cancel-btn, .payment-btn {
+  background-color: #e74c3c;  /* Red */
   color: white;
-  border: none;
-  padding: 10px 14px;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: 6px;
+  padding: 12px 18px;
+  font-size: 1.2rem;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.cancel-btn:hover, .delete-btn:hover, .payment-btn:hover {
-  background-color: #d32f2f;
+.cancel-btn:hover, .payment-btn:hover {
+  background-color: #c0392b;
   transform: scale(1.05);
-}
-
-.delete-btn {
-  background-color: #ff5722;
-}
-
-.delete-btn:hover {
-  background-color: #e64a19;
-}
-
-.payment-btn {
-  background-color: #4caf50;
-}
-
-.payment-btn:hover {
-  background-color: #45a049;
 }
 
 /* Modal Styling */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease-out;
-}
-
-/* Modal content */
 .modal-content {
-  background: linear-gradient(135deg, #f9f9f9, #ececec);
-  padding: 40px;
+  background-color: #ffffff;
   border-radius: 12px;
-  width: 480px;
-  text-align: center;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  animation: scaleIn 0.3s ease-out;
+  padding: 30px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Close button */
-.close-btn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  font-size: 1.6rem;
-  cursor: pointer;
-  color: #333;
-  transition: color 0.3s ease;
-}
-
-.close-btn:hover {
-  color: #f44336;
-}
-
-/* Modal Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    transform: scale(0.9);
-  }
-  to {
-    transform: scale(1);
-  }
-}
-
-/* Modal Header */
-.modal h3 {
-  font-size: 1.8rem;
-  color: #333;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-/* Textarea Styling */
-textarea {
-  width: 100%;
-  padding: 15px;
-  margin: 20px 0;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  resize: vertical;
-  font-size: 1rem;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease;
-}
-
-textarea:focus {
-  border-color: #4caf50;
-  outline: none;
-}
-
-/* Button Styling */
-button {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 12px 18px;
-  font-size: 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-  margin-top: 15px;
-}
-
-button:hover {
-  background-color: #45a049;
-  transform: scale(1.05);
-}
-
-/* Payment Modal Styling */
-.payment-summary {
-  margin-top: 20px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #333;
-}
-
-.payment-summary p {
-  margin: 10px 0;
-}
-
-.payment-btn {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 12px 18px;
-  font-size: 1.2rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.payment-btn:hover {
-  background-color: #45a049;
-  transform: scale(1.05);
-}
-
-/* Error handling */
-.error {
-  color: red;
-  font-size: 0.9rem;
-  margin-top: 5px;
-}
-
-input[type="text"], input[type="number"], input[type="month"] {
+textarea, input {
   width: 100%;
   padding: 12px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-top: 10px;
 }
 
-input[type="text"]:focus, input[type="number"]:focus, input[type="month"]:focus {
-  border-color: #4caf50;
-  outline: none;
+textarea:focus, input:focus {
+  outline-color: #2980b9;
+  border-color: #2980b9;
 }
 
-select {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
+/* Responsive Grid Layout for Slots */
+@media (max-width: 1024px) {
+  .slot-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-select:focus {
-  border-color: #4caf50;
-  outline: none;
-}
-/* Button container with spacing */
-.button-group {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
-}
+@media (max-width: 768px) {
+  .slot-container {
+    grid-template-columns: 1fr;
+  }
 
-/* Cancel button styling */
-.cancel-btn {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  padding: 12px 18px;
-  font-size: 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.cancel-btn:hover {
-  background-color: #d32f2f;
-  transform: scale(1.05);
+  .card {
+    padding: 20px;
+  }
 }

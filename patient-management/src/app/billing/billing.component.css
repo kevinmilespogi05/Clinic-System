@@ -1,20 +1,22 @@
 /* General body styling */
 body {
-  background-color: #f3f3f3; /* Light grey background */
+  background-color: #f4f6f7; /* Light neutral background for the body */
   margin: 0;
   padding: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif; /* More modern font */
 }
 
 /* Billing section container */
 .billing-section {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* Ensure it stretches to occupy available space */
   padding: 30px;
-  background-color: #ffffff; /* White clean background */
+  background-color: #ffffff; /* Clean white background */
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
-  max-width: 800px;
+  max-width: 100%; /* Allow the section to expand */
   margin: 20px auto; /* Centered alignment */
-  font-family: "Roboto", sans-serif;
   transition: all 0.3s ease-in-out;
 }
 
@@ -27,47 +29,48 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  background-color: #f9fafb;
+  background-color: #fafafa; /* Slightly darker background for the table */
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Add shadow for a clean look */
 }
 
-th,
-td {
+th, td {
   border: 1px solid #ddd;
-  padding: 12px;
+  padding: 14px;
   text-align: left;
   font-size: 1rem;
+  color: #34495e; /* Dark gray text for better readability */
 }
 
 th {
-  background-color: #f4f4f4;
+  background-color: #d1e8d3; /* Soft mint color for headers */
   font-weight: 600;
   font-size: 1.1rem;
 }
 
 /* Hover effect for rows */
 tr:hover {
-  background-color: #f1f1f1; /* Light hover effect for rows */
+  background-color: #e9f7f2; /* Soft hover effect for rows */
   transition: background-color 0.3s ease;
 }
 
 /* Buttons */
 .btn {
-  padding: 10px 20px;
-  background-color: #3498db;
+  padding: 12px 20px;
+  background-color: #62c9b1; /* Mint green for buttons */
   color: white;
   font-size: 1rem;
   font-weight: 600;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .btn:hover {
-  background-color: #2980b9; /* Darker blue on hover */
+  background-color: #4db79e; /* Darker mint green on hover */
+  transform: translateY(-2px); /* Slight lift effect */
 }
 
 /* Status badge styling */
@@ -83,7 +86,7 @@ tr:hover {
 
 /* Specific status colors */
 .status-pending {
-  background-color: #f1c40f; /* Yellow for pending */
+  background-color: #f39c12; /* Yellow for pending */
 }
 
 .status-approved {
@@ -92,4 +95,89 @@ tr:hover {
 
 .status-declined {
   background-color: #e74c3c; /* Red for declined */
+}
+
+/* Responsive Styling */
+@media (max-width: 1024px) {
+  .billing-section {
+    padding: 20px;
+  }
+
+  table th, table td {
+    font-size: 0.9rem;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 10px 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .billing-section {
+    padding: 15px;
+    margin: 10px;
+  }
+
+  table th, table td {
+    font-size: 0.85rem;
+  }
+
+  .btn {
+    font-size: 0.85rem;
+    padding: 8px 12px;
+  }
+
+  /* Stack table buttons vertically on smaller screens */
+  td button {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  /* Make the billing section full-width for better use of space */
+  .billing-section {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Stack the title above the table */
+  .billing-section h1 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  /* Adjust table padding */
+  table th, table td {
+    padding: 10px;
+  }
+
+  /* Reduce button size on very small screens */
+  .btn {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+
+  /* Ensure the table takes full width */
+  table {
+    width: 100%;
+  }
+}
+
+/* Additional specific status styles */
+.status-pending {
+  background-color: #f39c12;
+  color: white;
+}
+
+.status-paid {
+  background-color: #2ecc71; /* Green for paid */
+  color: white;
+}
+
+.status-failed {
+  background-color: #e74c3c; /* Red for failed */
+  color: white;
 }

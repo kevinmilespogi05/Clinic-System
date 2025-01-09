@@ -4,7 +4,7 @@
     <thead>
       <tr>
         <th>Invoice Number</th>
-        <th>Status</th>
+        <th>Payment Status</th> <!-- Replaced Status column with Payment Status -->
         <th>Description</th>
         <th>Created At</th>
         <th>Action</th>
@@ -13,7 +13,13 @@
     <tbody>
       <tr *ngFor="let invoice of invoices">
         <td>{{ invoice.invoice_id }}</td>
-        <td>{{ invoice.invoice_status }}</td>
+        <td>
+          <span class="status-badge" [ngClass]="{
+            'status-pending': invoice.payment.status === 'pending',
+            'status-paid': invoice.payment.status === 'paid',
+            'status-failed': invoice.payment.status === 'failed'
+          }">{{ invoice.payment.status }}</span>
+        </td> <!-- Display Payment Status -->
         <td>{{ invoice.description }}</td>
         <td>{{ invoice.invoice_date | date: 'short' }}</td>
         <td>

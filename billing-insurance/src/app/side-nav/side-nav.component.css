@@ -1,11 +1,11 @@
 /* Side Navigation */
 .side-nav {
-  width: 220px;
+  width: 250px;
   position: fixed;
   top: 0;
   left: 0;
   height: 100%;
-  background-color: #006d77; /* Medical green-blue color */
+  background-color: #006d77; /* Clinic-themed green-blue color */
   color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -14,31 +14,19 @@
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   font-family: 'Arial', sans-serif;
   transition: width 0.3s ease;
+  z-index: 10; /* Ensure it stays on top */
 }
 
-/* Logo Section */
-.logo-container {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.logo-container img.logo {
-  max-width: 100px;
-  height: auto;
-  margin-bottom: 10px;
-  border-radius: 50%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
+/* Title and Logo */
 .title {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: bold;
   color: #ffffff;
   text-transform: uppercase;
   letter-spacing: 1px;
+  margin-bottom: 30px;
 }
 
-/* Horizontal Line */
 .horizontal-line {
   border-top: 2px solid #ffffff;
   width: 80%;
@@ -55,7 +43,7 @@
 
 .nav-links li,
 .logout li {
-  margin: 15px 0;
+  margin: 20px 0;
 }
 
 .nav-links a,
@@ -65,15 +53,15 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 15px;
+  padding: 12px 20px;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 1.1rem;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .nav-links a i,
 .logout a i {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 
 /* Hover Effects */
@@ -94,19 +82,55 @@
   margin-top: auto;
 }
 
+/* Main Content */
+.content {
+  margin-left: 250px; /* Space for side-nav */
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+  min-height: 100vh; /* Ensure full screen height */
+}
+
 /* Media Queries */
+@media (max-width: 1024px) {
+  .side-nav {
+    width: 220px;
+  }
+
+  .content {
+    margin-left: 220px;
+  }
+}
+
 @media (max-width: 768px) {
   .side-nav {
     width: 180px;
+    padding: 15px;
+  }
+
+  .content {
+    margin-left: 180px;
   }
 
   .nav-links a,
   .logout a {
-    font-size: 0.9rem;
-    padding: 8px 10px;
+    font-size: 1rem;
+    padding: 10px 12px;
   }
 
-  .logo-container img.logo {
-    max-width: 80px;
+  .title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .side-nav {
+    width: 100%;
+    height: auto;
+    position: static;
+    box-shadow: none;
+  }
+
+  .content {
+    margin-left: 0;
   }
 }

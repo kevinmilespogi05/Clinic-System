@@ -17,7 +17,7 @@ export class AnalyticsComponent implements OnInit {
 
   fetchCombinedStats(): void {
     this.patientService.getCombinedStats().subscribe(
-      (response: any) => {  // Explicitly typing 'response' as 'any'
+      (response: any) => {
         if (response) {
           const stats = response;
           this.renderCombinedChart(stats);
@@ -25,7 +25,7 @@ export class AnalyticsComponent implements OnInit {
           console.error('Failed to fetch stats:', response.message);
         }
       },
-      (error: any) => {  // Explicitly typing 'error' as 'any'
+      (error: any) => {
         console.error('Error fetching stats:', error);
       }
     );
@@ -49,14 +49,14 @@ export class AnalyticsComponent implements OnInit {
               stats.approved_claims,
               stats.rejected_claims,
               stats.pending_claims,
-              0, 0, 0, 0 // Fill with zeros for the appointment-related labels
+              0, 0, 0, 0 // Fill with zeros for appointment-related labels
             ],
             backgroundColor: ['#4caf50', '#f44336', '#2196f3', '#ff9800', '#9c27b0', '#ffffff', '#ffffff', '#ffffff', '#ffffff']
           },
           {
             label: 'Appointments Stats',
             data: [
-              0, 0, 0, 0, 0, // Fill with zeros for the billing-related labels
+              0, 0, 0, 0, 0, // Fill with zeros for billing-related labels
               stats.total_appointments,
               stats.total_patients,
               stats.booked_count,

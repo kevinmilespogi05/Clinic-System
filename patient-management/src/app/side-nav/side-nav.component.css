@@ -1,135 +1,50 @@
-/* Toggle Button Container */
-.toggle-container {
-  position: fixed; /* Fixed to stay in place during scroll */
-  top: 15px; /* Aligns with the top of the viewport */
-  left: 15px; /* Aligns the button within the side navigation */
-  z-index: 1000; /* Ensures it stays above other elements */
-}
-
-/* Toggle Button */
-.toggle-btn {
-  background-color: #2c3e50;
-  color: #ecf0f1;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.toggle-btn:hover {
-  background-color: #34495e;
-  transform: scale(1.1);
-}
-
-.toggle-btn i {
-  font-size: 1.2rem;
-}
-
-/* Side Navigation */
+/* Side Navigation Styling */
 .side-nav {
-  width: 180px;
+  width: 250px;
   position: fixed;
-  top: 0; /* Start at the top of the viewport */
+  top: 0;
   left: 0;
   height: 100%;
-  background-color: #2c3e50;
-  color: #ecf0f1;
+  background: linear-gradient(135deg, #2c3e50, #34495e); /* Dark gradient */
+  color: #ecf0f1; /* Light text */
   display: flex;
   flex-direction: column;
-  padding: 20px 15px;
+  padding: 20px;
   box-sizing: border-box;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-  font-family: 'Futura Std Condensed Light', sans-serif;
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', sans-serif;
   transition: transform 0.3s ease, width 0.3s ease;
-  overflow: hidden;
 }
 
 .side-nav.closed {
   width: 0;
-  padding: 0;
+  visibility: hidden;
 }
 
-.side-nav.closed * {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-.content {
-  margin-left: 180px;
-  transition: margin-left 0.3s ease;
-}
-
-.content.full-width {
-  margin-left: 0;
-}
-
-/* Title Alignment */
 .title {
-  text-align: center; /* Ensure proper alignment */
-  margin-top: 60px; /* Push title below the toggle button */
-  font-size: 1.4rem;
-  font-weight: bold;
+  font-size: 1.7rem;
+  font-weight: 600;
   color: #ecf0f1;
   text-transform: uppercase;
-}
-
-/* Media Query for Smaller Screens */
-@media (max-width: 768px) {
-  .side-nav {
-    width: 150px; /* Adjust width for smaller screens */
-  }
-
-  .toggle-container {
-    top: 10px;
-    left: 10px;
-  }
-
-  .title {
-    font-size: 1.2rem; /* Adjust title size for smaller screens */
-  }
-}
-
-
-/* Username Styling */
-.username {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #2c3e50;
-  background: linear-gradient(90deg, #e67e22, #f39c12);
-  padding: 8px 12px;
-  border-radius: 20px;
+  margin-top: 20px;
   text-align: center;
-  margin: 10px 0 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  letter-spacing: 0.5px;
-  text-transform: capitalize;
-  transition: transform 0.3s, box-shadow 0.3s;
+  letter-spacing: 2px;
 }
 
-.username:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+.username {
+  color: #ecf0f1;
+  font-size: 1.2rem;
+  background: #2c3e50;
+  padding: 12px;
+  border-radius: 50px;
+  margin: 15px 0;
+  text-align: center;
 }
 
-/* Horizontal Line */
-.horizontal-line {
-  border-top: 2px solid #7c95ad;
-  margin: 10px auto;
-  width: 80%;
-}
-
-/* Navigation Links */
 .nav-links, .logout {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin-top: 30px;
 }
 
 .nav-links li, .logout li {
@@ -139,27 +54,71 @@
 .nav-links a, .logout a {
   color: #ecf0f1;
   text-decoration: none;
+  padding: 12px;
+  font-size: 1.1rem;
+  border-radius: 8px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 12px;
-  border-radius: 8px;
-  font-size: 1rem;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .nav-links a:hover, .logout a:hover {
-  background-color: #34495e;
-  transform: translateX(5px);
+  background-color: #2980b9;  /* Hover color */
+  transform: translateX(6px);
 }
 
-/* Logout Button */
 .logout {
-  margin-top: auto; /* Pushes logout button to the bottom */
-  user-select: none; /* Prevents text selection */
+  margin-top: auto;
 }
 
-.logout a:hover {
-  background-color: #34495e;
-  transform: translateX(5px);
+/* Toggle Button */
+.toggle-btn {
+  background-color: #ecf0f1;
+  color: #34495e;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease;
+}
+
+.toggle-btn:hover {
+  background-color: #2980b9;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.content {
+  margin-left: 250px;
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+}
+
+/* Make the content take full width when the side nav is closed */
+.content.full-width {
+  margin-left: 0;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .side-nav {
+    width: 220px;
+    padding: 15px;
+  }
+
+  .toggle-btn {
+    display: block;
+  }
+
+  .side-nav.closed {
+    visibility: hidden;
+  }
+
+  .content {
+    margin-left: 0;
+  }
 }

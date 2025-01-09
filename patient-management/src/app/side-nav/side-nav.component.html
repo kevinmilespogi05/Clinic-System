@@ -1,10 +1,6 @@
-<!-- Toggle Button -->
+<!-- Toggle Button for Mobile View -->
 <div class="toggle-container">
-  <button
-    class="toggle-btn"
-    (click)="toggleSideNav()"
-    aria-label="Toggle Side Navigation"
-  >
+  <button class="toggle-btn" (click)="toggleSideNav()" aria-label="Toggle Side Navigation">
     <i class="bi bi-list"></i>
   </button>
 </div>
@@ -17,34 +13,13 @@
 
   <!-- Navigation Links -->
   <ul class="nav-links">
-    <li>
-      <a routerLink="/appointments" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <i class="bi bi-calendar-check"></i> Appointments
-      </a>
-    </li>
-    <li>
-      <a routerLink="/billing" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <i class="bi bi-credit-card"></i> Billing
-      </a>
-    </li>
-    <li>
-      <a routerLink="/insurance" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <i class="bi bi-file-earmark-medical"></i> Insurance
-      </a>
-    </li>
-    <li>
-      <a routerLink="/profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <i class="bi bi-person-circle"></i> Profile
-      </a>
-    </li>
+    <li><a routerLink="/appointments" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="bi bi-calendar-check"></i> Appointments</a></li>
+    <li><a routerLink="/billing" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="bi bi-credit-card"></i> Billing</a></li>
+    <li><a routerLink="/profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="bi bi-person-circle"></i> Profile</a></li>
   </ul>
 
   <ul class="logout">
-    <li>
-      <a (click)="logout()">
-        <i class="bi bi-box-arrow-right"></i> Logout
-      </a>
-    </li>
+    <li><a (click)="logout()"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
   </ul>
 </nav>
 
