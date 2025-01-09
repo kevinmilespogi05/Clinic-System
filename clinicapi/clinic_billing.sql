@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 03, 2025 at 08:27 AM
+-- Generation Time: Jan 09, 2025 at 02:25 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -45,6 +45,13 @@ CREATE TABLE `appointments` (
   `policy_number` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `appointments`
+--
+
+INSERT INTO `appointments` (`id`, `user_id`, `username`, `date`, `time`, `description`, `service`, `created_at`, `status`, `cancellation_reason`, `payment_status`, `bill_amount`, `refund_status`, `insurance_provider`, `policy_number`) VALUES
+(11, 3, 'ase', '2025-01-16', '03:00:00', 'wd123', 'Therapy', '2025-01-09 13:20:02', 'approved', NULL, 'paid', 10000.00, 'none', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -64,8 +71,9 @@ CREATE TABLE `insurance_claims` (
 --
 
 INSERT INTO `insurance_claims` (`id`, `user_id`, `description`, `status`, `created_at`) VALUES
-(1, 1, 'Claim for hospital expenses', 'approved', '2024-12-08 07:39:46'),
-(2, 2, 'consultation: sdsfsdf', 'approved', '2024-12-26 02:55:16');
+(1, 1, 'Claim for hospital expenses', 'rejected', '2024-12-08 07:39:46'),
+(2, 2, 'consultation: sdsfsdf', 'approved', '2024-12-26 02:55:16'),
+(3, 6, 'consultation: sakit paa', 'approved', '2025-01-06 12:32:16');
 
 -- --------------------------------------------------------
 
@@ -76,8 +84,8 @@ INSERT INTO `insurance_claims` (`id`, `user_id`, `description`, `status`, `creat
 CREATE TABLE `invoices` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `services` text DEFAULT NULL,
   `description` text DEFAULT NULL,
-  `status` enum('paid','unpaid') DEFAULT 'unpaid',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -85,8 +93,8 @@ CREATE TABLE `invoices` (
 -- Dumping data for table `invoices`
 --
 
-INSERT INTO `invoices` (`id`, `user_id`, `description`, `status`, `created_at`) VALUES
-(1, 1, 'Consultation Fee', 'unpaid', '2024-12-08 07:38:10');
+INSERT INTO `invoices` (`id`, `user_id`, `services`, `description`, `created_at`) VALUES
+(3, 3, NULL, 'Service: Therapy, Description: wd123', '2025-01-09 13:20:31');
 
 -- --------------------------------------------------------
 
@@ -112,7 +120,10 @@ INSERT INTO `payments` (`id`, `user_id`, `appointment_id`, `amount`, `payment_me
 (11, 2, 26, 100.00, 'credit card', 'paid', '2024-12-23 04:39:12'),
 (12, 2, 27, 100.00, 'credit card', 'paid', '2024-12-23 04:41:25'),
 (13, 2, 28, 100.00, 'credit card', 'paid', '2024-12-23 05:11:05'),
-(20, 2, 55, 50.00, 'credit card', 'paid', '2025-01-03 07:25:29');
+(20, 2, 55, 50.00, 'credit card', 'paid', '2025-01-03 07:25:29'),
+(22, 6, 58, 200.00, 'credit card', 'paid', '2025-01-06 14:43:42'),
+(25, 3, 10, 150.00, 'credit card', 'paid', '2025-01-09 12:24:41'),
+(26, 3, 11, 10000.00, 'credit card', 'paid', '2025-01-09 13:20:12');
 
 -- --------------------------------------------------------
 
@@ -148,8 +159,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `username`, `password`, `created_at`, `contact_number`, `date_of_birth`, `medical_history`, `role`, `card_first_name`, `card_last_name`, `card_number`, `card_expiry`, `card_security_code`, `billing_address`, `city`, `province`, `billing_postal_code`) VALUES
 (1, 'admin', 'admin', 'admin', '$2y$10$uSa9VcjLIhfwpkuA2waNL.KCgBa8lRH8inUVYqOEOy4jywV9bm4ai', '2024-12-07 15:04:59', '09926591335', '2003-11-22', NULL, 'admin', 'admin', 'admin', '4111111111111111', '2026-12', '123', '123 Elm St', 'Olongapo', 'Zambales', '2208'),
-(2, 'Miles', 'Julhusin', 'kevspogi', '$2y$10$myPMw6o0Ug6aRQaoWJjHGuvbgp735rgupi19Vxok3sZzzTiEUkQUi', '2024-12-20 10:08:20', '09566817487', '2003-05-11', 'pogi', 'user', 'Kevin Miles', 'Julhusin', '4111111111111111111', '2026-12', '123', '123 Elm St, Apt 45', 'Olongapo', 'Zambales', '2208'),
-(3, 'Aschille', 'De Leon', 'ase', '$2y$10$Z21MQefnfYzrUayl9gO0jeMT58EAzTOJvQFIUJmnsERhvWFiq.3ie', '2024-12-20 21:16:53', '09566817487', '2003-05-11', 'asdasdasdasdasdas', 'user', 'Aschille ', 'De Leon ', '4123412312412431231', '2028-12', '123', '123 Elm St, Apt 45', 'Olongapo', 'Zambales', '2208');
+(3, 'Aschille', 'De Leon', 'ase', '$2y$10$Z21MQefnfYzrUayl9gO0jeMT58EAzTOJvQFIUJmnsERhvWFiq.3ie', '2024-12-20 21:16:53', '09566817487', '2003-05-11', 'asdasdasdasdasdas', 'user', 'Aschille ', 'De Leon ', '4123412312412431231', '2028-12', '123', '123 Elm St, Apt 45', 'Olongapo', 'Zambales', '2208'),
+(6, 'Kevin', 'Julhusin', 'kevspogi', '$2y$10$KJf.4MUTK7h3PH2Lo2JiAue5znJE96RPzh1hTY.bjeLLs1ojMjm.S', '2025-01-05 12:54:49', '09566817487', '2003-05-11', 'sakit sa paa', 'user', 'Kevin', 'Julhusin', '4111111111111111111', '2322-12', '123', '123 Elm St, Apt 45', 'Olongapo', 'Castillejos', '2208');
 
 --
 -- Indexes for dumped tables
@@ -159,7 +170,11 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `username`, `password`, `c
 -- Indexes for table `appointments`
 --
 ALTER TABLE `appointments`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `status` (`status`),
+  ADD KEY `payment_status` (`payment_status`),
+  ADD KEY `refund_status` (`refund_status`);
 
 --
 -- Indexes for table `insurance_claims`
@@ -194,31 +209,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `insurance_claims`
 --
 ALTER TABLE `insurance_claims`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
