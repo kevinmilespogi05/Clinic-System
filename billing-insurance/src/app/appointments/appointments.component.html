@@ -1,3 +1,4 @@
+<!-- Pending Appointments Section -->
 <div class="admin-container">
   <h2>Pending Appointments</h2>
   <div class="appointment-item" *ngFor="let appt of pendingAppointments">
@@ -5,6 +6,7 @@
       {{ appt.date }} | {{ appt.time }} | {{ appt.status }}
       <div><strong>Patient:</strong> {{ appt.patient_name }}</div>
       <div class="description"><strong>Description:</strong> {{ appt.description }}</div>
+      <div><strong>Service:</strong> {{ appt.service }}</div>
       <div><strong>Payment Status:</strong> {{ appt.payment_status | titlecase }}</div>
     </div>
     <button (click)="approve(appt.id)">Approve</button>
@@ -12,7 +14,7 @@
   </div>
 </div>
 
-
+<!-- Appointments Table Section -->
 <div class="appointments-container">
   <h1><i class="bi bi-calendar-check"></i> Appointments</h1>
   <table>
@@ -22,6 +24,7 @@
         <th>Appointment Date</th>
         <th>Appointment Time</th>
         <th>Description</th>
+        <th>Service</th>
         <th>Status</th>
         <th>Actions</th>
       </tr>
@@ -32,6 +35,7 @@
         <td>{{ formatDate(appointment.date) }}</td>
         <td>{{ formatTime(appointment.time) }}</td>
         <td class="description">{{ appointment.description }}</td>
+        <td>{{ appointment.service }}</td>
         <td>{{ appointment.status | titlecase }}</td>
         <td>
           <button class="delete-btn" (click)="deleteAppointment(appointment.id)">
@@ -42,4 +46,3 @@
     </tbody>
   </table>
 </div>
-
