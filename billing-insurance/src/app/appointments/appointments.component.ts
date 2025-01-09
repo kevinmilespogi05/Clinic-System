@@ -85,27 +85,28 @@ export class AppointmentsComponent implements OnInit {
 decline(appointmentId: number): void {
   Swal.fire({
     title: 'Are you sure?',
-    text: 'Do you want to decline this appointment?',
+    text: 'Do you want to cancel this appointment?',
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#d33',
     cancelButtonColor: '#3085d6',
-    confirmButtonText: 'Yes, decline it!',
+    confirmButtonText: 'Yes, cancel it!',
   }).then((result) => {
     if (result.isConfirmed) {
       this.patientService.declineAppointment(appointmentId).subscribe(
         () => {
-          Swal.fire('Declined', 'Appointment declined.', 'success');
-          this.moveAppointment(appointmentId, 'cancelled');
+          Swal.fire('Cancelled', 'Appointment has been cancelled and deleted.', 'success');
+          this.loadAppointments(); // Reload the list after deletion
         },
         (error) => {
-          console.error('Error declining appointment:', error);
-          Swal.fire('Error', 'Failed to decline appointment.', 'error');
+          console.error('Error cancelling appointment:', error);
+          Swal.fire('Error', 'Failed to cancel appointment.', 'error');
         }
       );
     }
   });
 }
+
 
 moveAppointment(appointmentId: number, newStatus: string): void {
   const appointmentIndex = this.pendingAppointments.findIndex((appt) => appt.id === appointmentId);

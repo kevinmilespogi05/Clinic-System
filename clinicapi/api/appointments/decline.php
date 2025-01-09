@@ -11,15 +11,15 @@ if (isset($data->id)) {
         $database = new Database();
         $conn = $database->getConnection();
 
-        // Update appointment status to 'cancelled'
-        $query = "UPDATE appointments SET status = 'cancelled' WHERE id = :id";
+        // Delete the appointment instead of updating its status
+        $query = "DELETE FROM appointments WHERE id = :id";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':id', $data->id);
 
         if ($stmt->execute()) {
-            echo json_encode(["message" => "Appointment declined"]);
+            echo json_encode(["message" => "Appointment deleted"]);
         } else {
-            echo json_encode(["error" => "Failed to decline appointment"]);
+            echo json_encode(["error" => "Failed to delete appointment"]);
         }
     } catch (Exception $e) {
         echo json_encode(["error" => "Error occurred", "details" => $e->getMessage()]);
