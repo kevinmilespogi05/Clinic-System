@@ -15,8 +15,8 @@ import Swal from 'sweetalert2';
 export class AppointmentsComponent implements OnInit {
   appointments: any[] = [];
   selectedDate: Date = new Date(2025, 0, 1); // January 1, 2025
-  currentMonth: number = this.selectedDate.getMonth(); // Current month
-  currentYear: number = this.selectedDate.getFullYear(); // Current year
+  currentMonth: number = 0; // Initialize to January (0)
+  currentYear: number = 2025; // Initialize to 2025
   selectedAppointment: any;
   showModal: boolean = false;
   showBookingModal: boolean = false;
@@ -46,11 +46,18 @@ export class AppointmentsComponent implements OnInit {
     const role = localStorage.getItem('role');
   
     if (userId && role) {
+      // Ensure selectedDate is correctly set before making the API call
+      this.selectedDate = new Date(this.currentYear, this.currentMonth, 1);
+  
       this.patientService.getAppointments(Number(userId), role).subscribe(
         (response) => {
           if (response.appointments) {
             this.appointments = response.appointments.map((appointment: any) => {
+              console.log('Appointment Date:', appointment.date); // Check the format
               const appointmentDate = new Date(appointment.date);
+              if (isNaN(appointmentDate.getTime())) {
+                console.error('Invalid date:', appointment.date);
+              }
               const formattedDate = appointmentDate.toLocaleDateString('en-US');
               const dayOfWeek = appointmentDate.toLocaleDateString('en-US', { weekday: 'long' });
               return { ...appointment, date: formattedDate, day: dayOfWeek };
@@ -61,6 +68,8 @@ export class AppointmentsComponent implements OnInit {
       );
     }
   }
+  
+  
 
   changeMonth(direction: string): void {
     if (direction === 'next') {
@@ -78,10 +87,10 @@ export class AppointmentsComponent implements OnInit {
         this.currentMonth--;
       }
     }
-    this.selectedDate = new Date(this.currentYear, this.currentMonth);  // Set new selected date
+    this.selectedDate = new Date(this.currentYear, this.currentMonth, 1);  // Update the selectedDate
   }
   
-
+  
   openBookingModal(appointment: any): void {
     // Your existing logic for opening the booking modal and populating it with appointment data.
     this.selectedAppointment = appointment; // Example: store the appointment to reschedule.
@@ -133,14 +142,15 @@ export class AppointmentsComponent implements OnInit {
   // Implementing the daysInMonth() method
   daysInMonth(): Date[] {
     const days: Date[] = [];
-    const lastDayOfMonth = new Date(this.currentYear, this.currentMonth + 1, 0);
-    const firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1);
+    const lastDayOfMonth = new Date(this.currentYear, this.currentMonth + 1, 0); // Last day of the month
+    const firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1); // First day of the month
     
     for (let date = firstDayOfMonth; date <= lastDayOfMonth; date.setDate(date.getDate() + 1)) {
-      days.push(new Date(date));
+      days.push(new Date(date)); // Push each day of the month
     }
     return days;
   }
+  
 
   calculateBill(): void {
     switch (this.selectedService) {

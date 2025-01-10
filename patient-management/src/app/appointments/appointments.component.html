@@ -12,7 +12,7 @@
       </div>
       <div class="calendar-grid">
         <div class="calendar-day" *ngFor="let day of daysInMonth()">
-          <span>{{ day | date:'d' }}</span>
+          <span>{{ day | date:'EEEE, MMMM d, yyyy' }}</span>
           <button 
             *ngIf="!isDateBooked(day)"
             (click)="openBookingModal(day)"
