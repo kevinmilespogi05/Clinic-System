@@ -14,24 +14,10 @@ import Swal from 'sweetalert2';
 })
 export class AppointmentsComponent implements OnInit {
   appointments: any[] = [];
-  appointmentSlots = [
-    { day: 'Monday', time: '10:00 AM - 11:00 AM', date: '2025-1-13' },
-    { day: 'Monday', time: '3:00 PM - 4:00 PM', date: '2025-1-13' },
-    { day: 'Tuesday', time: '10:00 AM - 11:00 AM', date: '2025-1-14' },
-    { day: 'Tuesday', time: '3:00 PM - 4:00 PM', date: '2025-1-14' },
-    { day: 'Wednesday', time: '10:00 AM - 11:00 AM', date: '2025-1-15' },
-    { day: 'Wednesday', time: '3:00 PM - 4:00 PM', date: '2025-1-15' },
-    { day: 'Thursday', time: '10:00 AM - 11:00 AM', date: '2025-1-16' },
-    { day: 'Thursday', time: '3:00 PM - 4:00 PM', date: '2025-1-16' },
-    { day: 'Friday', time: '10:00 AM - 11:00 AM', date: '2025-1-17' },
-    { day: 'Friday', time: '3:00 PM - 4:00 PM', date: '2025-1-17' },
-    { day: 'Monday', time: '12:00 PM - 01:00 PM', date: '2025-1-20' },
-    { day: 'Tuesday', time: '12:00 PM - 01:00 PM', date: '2025-1-21' },
-    { day: 'Wednesday', time: '12:00 PM - 01:00 PM', date: '2025-1-22' },
-    { day: 'Thursday', time: '12:00 PM - 01:00 PM', date: '2025-1-23' },
-    { day: 'Friday', time: '12:00 PM - 01:00 PM', date: '2025-1-24' },
-  ];
-
+  selectedDate: Date = new Date(2025, 0, 1); // January 1, 2025
+  currentMonth: number = this.selectedDate.getMonth(); // Current month
+  currentYear: number = this.selectedDate.getFullYear(); // Current year
+  selectedAppointment: any;
   showModal: boolean = false;
   showBookingModal: boolean = false;
   showPaymentModal: boolean = false;
@@ -41,14 +27,12 @@ export class AppointmentsComponent implements OnInit {
   selectedSlot: any = null;
   selectedService: 'Consultation' | 'Surgery' | 'Therapy' = 'Consultation';
   billAmount: number = 0;
-
   creditCardNumber: string = '';
   expiryDate: string = '';
   cvv: string = '';
   cardholderName: string = '';
   billingAddress: string = '';
   appointmentToPay: any = null;
-
   inputAmount: number | null = null;
 
   constructor(private patientService: PatientService) {}
@@ -78,37 +62,36 @@ export class AppointmentsComponent implements OnInit {
     }
   }
 
-  openBookingModal(slot: any): void {
-    this.selectedSlot = slot;
-    this.showBookingModal = true;
+  changeMonth(direction: string): void {
+    if (direction === 'next') {
+      if (this.currentMonth === 11) {
+        this.currentMonth = 0;
+        this.currentYear++;
+      } else {
+        this.currentMonth++;
+      }
+    } else if (direction === 'prev') {
+      if (this.currentMonth === 0) {
+        this.currentMonth = 11;
+        this.currentYear--;
+      } else {
+        this.currentMonth--;
+      }
+    }
+    this.selectedDate = new Date(this.currentYear, this.currentMonth);  // Set new selected date
   }
+  
+
+  openBookingModal(appointment: any): void {
+    // Your existing logic for opening the booking modal and populating it with appointment data.
+    this.selectedAppointment = appointment; // Example: store the appointment to reschedule.
+    this.showBookingModal = true; // Open the modal
+  }
+  
 
   closeBookingModal(): void {
     this.showBookingModal = false;
     this.appointmentDescription = '';
-    this.selectedSlot = null;
-  }
-
-  calculateBill(): void {
-    const servicePrices = {
-      Consultation: 150,
-      Surgery: 75000,
-      Therapy: 10000,
-    };
-  
-    // Ensure proper casing for service key lookup
-    const formattedService = this.selectedService.charAt(0).toUpperCase() + this.selectedService.slice(1).toLowerCase();
-    this.billAmount = servicePrices[formattedService] || 0;
-  }
-  
-
-  isSlotOccupied(slot: any): boolean {
-    return this.appointments.some(
-      (appointment) =>
-        appointment.date === slot.date &&
-        appointment.time === slot.time &&
-        ['booked', 'approved', 'pending'].includes(appointment.status)
-    );
   }
 
   bookAppointment(): void {
@@ -121,9 +104,7 @@ export class AppointmentsComponent implements OnInit {
     if (userId) {
       this.patientService.bookAppointment({
         user_id: Number(userId),
-        day: this.selectedSlot.day,
-        time: this.selectedSlot.time,
-        date: this.selectedSlot.date,
+        date: this.selectedDate.toISOString(),
         description: this.appointmentDescription,
         service: this.selectedService,
         status: 'booked',
@@ -142,10 +123,45 @@ export class AppointmentsComponent implements OnInit {
     }
   }
 
+  // Method to check if an appointment exists on the selected date
+  isDateBooked(date: Date): boolean {
+    return this.appointments.some(
+      (appointment) => new Date(appointment.date).toLocaleDateString() === date.toLocaleDateString() && appointment.status === 'booked'
+    );
+  }
+
+  // Implementing the daysInMonth() method
+  daysInMonth(): Date[] {
+    const days: Date[] = [];
+    const lastDayOfMonth = new Date(this.currentYear, this.currentMonth + 1, 0);
+    const firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1);
+    
+    for (let date = firstDayOfMonth; date <= lastDayOfMonth; date.setDate(date.getDate() + 1)) {
+      days.push(new Date(date));
+    }
+    return days;
+  }
+
+  calculateBill(): void {
+    switch (this.selectedService) {
+      case 'Consultation':
+        this.billAmount = 500; // Example amount for consultation
+        break;
+      case 'Surgery':
+        this.billAmount = 5000; // Example amount for surgery
+        break;
+      case 'Therapy':
+        this.billAmount = 1500; // Example amount for therapy
+        break;
+      default:
+        this.billAmount = 0;
+        break;
+    }
+  }
+  
   openPaymentModal(appointment: any): void {
     this.appointmentToPay = appointment;
     this.selectedService = appointment.service;
-    this.calculateBill();
     this.showPaymentModal = true;
   }
 

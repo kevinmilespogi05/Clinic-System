@@ -2,21 +2,24 @@
   <!-- Book an Appointment Section -->
   <div class="card">
     <div class="card-title">Book an Appointment</div>
-    <div class="slot-container">
-      <div 
-        class="slot" 
-        [ngClass]="{ 'occupied-slot': isSlotOccupied(slot) }" 
-        *ngFor="let slot of appointmentSlots">
-        <div class="slot-day">{{ slot.day }}</div>
-        <div class="slot-date">{{ slot.date | date:'longDate' }}</div>
-        <div class="slot-time">{{ slot.time }}</div>
-        <button
-          class="book-btn"
-          [disabled]="isSlotOccupied(slot)"
-          (click)="openBookingModal(slot)"
-        >
-          <i class="bi bi-calendar-plus"></i> Book
-        </button>
+
+    <!-- Calendar for Selecting Appointment Dates -->
+    <div class="calendar-container">
+      <div class="calendar-header">
+        <button (click)="changeMonth('prev')" class="nav-btn"><i class="bi bi-chevron-left"></i></button>
+        <span class="month-year">{{ currentMonth | date:'MMMM yyyy' }}</span>
+        <button (click)="changeMonth('next')" class="nav-btn"><i class="bi bi-chevron-right"></i></button>
+      </div>
+      <div class="calendar-grid">
+        <div class="calendar-day" *ngFor="let day of daysInMonth()">
+          <span>{{ day | date:'d' }}</span>
+          <button 
+            *ngIf="!isDateBooked(day)"
+            (click)="openBookingModal(day)"
+            class="book-btn">
+            <i class="bi bi-calendar-plus"></i> Book
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -53,31 +56,27 @@
         <button
           class="cancel-btn"
           *ngIf="appointment.status !== 'cancelled'"
-          (click)="openCancelModal(appointment.id)"
-        >
+          (click)="openCancelModal(appointment.id)">
           <i class="bi bi-x-circle"></i> Cancel
         </button>
 
         <button
           class="delete-btn"
           *ngIf="appointment.status === 'cancelled'"
-          (click)="deleteAppointment(appointment.id)"
-        >
+          (click)="deleteAppointment(appointment.id)">
           <i class="bi bi-trash"></i> Delete
         </button>
 
         <button
           *ngIf="appointment.status === 'pending' && appointment.payment_status === 'pending'"
           class="payment-btn"
-          (click)="openPaymentModal(appointment)"
-        >
+          (click)="openPaymentModal(appointment)">
           <i class="bi bi-credit-card"></i> Pay Now
         </button>
 
         <button 
           *ngIf="appointment.status === 'cancelled' && !appointment.refundProcessed" 
-          (click)="handleRefundOrReschedule(appointment)"
-        >
+          (click)="handleRefundOrReschedule(appointment)">
           <i class="bi bi-arrow-repeat"></i> Refund
         </button>
       </div>
@@ -104,66 +103,65 @@
         <h4>Bill: ₱{{ billAmount }}</h4>
       </div>
 
-      <button (click)="bookAppointment()" *ngIf="selectedSlot"><i class="bi bi-check-circle"></i> Confirm Booking</button>
+      <button (click)="bookAppointment()" *ngIf="appointmentDescription && selectedService"><i class="bi bi-check-circle"></i> Confirm Booking</button>
     </div>
   </div>
 
   <!-- Payment Modal -->
-<div class="modal" *ngIf="showPaymentModal">
-  <div class="modal-content">
-    <span class="close-btn" (click)="closePaymentModal()">&times;</span>
-    <h3>Payment</h3>
-    <form (submit)="processPayment($event)">
-      <div>
-        <label for="creditCard">Credit Card Number</label>
-        <input type="text" id="creditCard" [(ngModel)]="creditCardNumber" name="creditCard" required />
-      </div>
-      <div>
-        <label for="cardholderName">Cardholder's Name</label>
-        <input type="text" id="cardholderName" [(ngModel)]="cardholderName" name="cardholderName" required />
-      </div>
-      <div>
-        <label for="expiryDate">Expiry Date</label>
-        <input type="month" id="expiryDate" [(ngModel)]="expiryDate" name="expiryDate" required />
-      </div>
-      <div>
-        <label for="cvv">CVV</label>
-        <input type="text" id="cvv" [(ngModel)]="cvv" name="cvv" required placeholder="XXX" />
-      </div>
-      <div>
-        <label for="billingAddress">Billing Address</label>
-        <input type="text" id="billingAddress" [(ngModel)]="billingAddress" name="billingAddress" required />
-      </div>
-      <div>
-        <label for="amount">Amount</label>
-        <input 
-          type="number" 
-          id="amount" 
-          [(ngModel)]="inputAmount" 
-          name="amount" 
-          [max]="billAmount" 
-          required 
-          placeholder="Enter amount to pay" 
-        />
-        <p *ngIf="inputAmount && inputAmount > billAmount" class="error">
-          Amount cannot exceed ₱{{ billAmount }}.
-        </p>
-      </div>
-      <div class="payment-summary">
-        <p><strong>Total Bill Amount:</strong> ₱{{ billAmount }}</p>
-      </div>
-      <div class="button-group">
-        <button type="submit" class="payment-btn">
-          <i class="bi bi-check-circle"></i> Submit Payment
-        </button>
-        <button type="button" class="cancel-btn" (click)="closePaymentModal()">
-          <i class="bi bi-x-circle"></i> Cancel
-        </button>
-      </div>      
-    </form>
+  <div class="modal" *ngIf="showPaymentModal">
+    <div class="modal-content">
+      <span class="close-btn" (click)="closePaymentModal()">&times;</span>
+      <h3>Payment</h3>
+      <form (submit)="processPayment($event)">
+        <div>
+          <label for="creditCard">Credit Card Number</label>
+          <input type="text" id="creditCard" [(ngModel)]="creditCardNumber" name="creditCard" required />
+        </div>
+        <div>
+          <label for="cardholderName">Cardholder's Name</label>
+          <input type="text" id="cardholderName" [(ngModel)]="cardholderName" name="cardholderName" required />
+        </div>
+        <div>
+          <label for="expiryDate">Expiry Date</label>
+          <input type="month" id="expiryDate" [(ngModel)]="expiryDate" name="expiryDate" required />
+        </div>
+        <div>
+          <label for="cvv">CVV</label>
+          <input type="text" id="cvv" [(ngModel)]="cvv" name="cvv" required placeholder="XXX" />
+        </div>
+        <div>
+          <label for="billingAddress">Billing Address</label>
+          <input type="text" id="billingAddress" [(ngModel)]="billingAddress" name="billingAddress" required />
+        </div>
+        <div>
+          <label for="amount">Amount</label>
+          <input 
+            type="number" 
+            id="amount" 
+            [(ngModel)]="inputAmount" 
+            name="amount" 
+            [max]="billAmount" 
+            required 
+            placeholder="Enter amount to pay" 
+          />
+          <p *ngIf="inputAmount && inputAmount > billAmount" class="error">
+            Amount cannot exceed ₱{{ billAmount }}.
+          </p>
+        </div>
+        <div class="payment-summary">
+          <p><strong>Total Bill Amount:</strong> ₱{{ billAmount }}</p>
+        </div>
+        <div class="button-group">
+          <button type="submit" class="payment-btn">
+            <i class="bi bi-check-circle"></i> Submit Payment
+          </button>
+          <button type="button" class="cancel-btn" (click)="closePaymentModal()">
+            <i class="bi bi-x-circle"></i> Cancel
+          </button>
+        </div>      
+      </form>
+    </div>
   </div>
-</div>
-
 
   <!-- Cancellation Reason Modal -->
   <div class="modal" *ngIf="showModal">
