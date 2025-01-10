@@ -37,7 +37,7 @@ export class AnalyticsComponent implements OnInit {
       type: 'bar',
       data: {
         labels: [
-          'Paid Invoices', 'Unpaid Invoices', 'Approved Claims', 'Rejected Claims', 'Pending Claims',
+          'Paid Appointments', 'Unpaid Appointments',
           'Total Appointments', 'Total Patients', 'Booked', 'Cancelled'
         ],
         datasets: [
@@ -46,23 +46,20 @@ export class AnalyticsComponent implements OnInit {
             data: [
               stats.paid_invoices,
               stats.unpaid_invoices,
-              stats.approved_claims,
-              stats.rejected_claims,
-              stats.pending_claims,
               0, 0, 0, 0 // Fill with zeros for appointment-related labels
             ],
-            backgroundColor: ['#4caf50', '#f44336', '#2196f3', '#ff9800', '#9c27b0', '#ffffff', '#ffffff', '#ffffff', '#ffffff']
+            backgroundColor: ['#4caf50', '#f44336', '#ffffff', '#ffffff', '#ffffff', '#ffffff']
           },
           {
             label: 'Appointments Stats',
             data: [
-              0, 0, 0, 0, 0, // Fill with zeros for billing-related labels
+              0, 0, // Fill with zeros for billing-related labels
               stats.total_appointments,
               stats.total_patients,
               stats.booked_count,
               stats.cancelled_count
             ],
-            backgroundColor: ['#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff', '#4caf50', '#2196f3', '#ff9800', '#f44336']
+            backgroundColor: ['#ffffff', '#ffffff', '#4caf50', '#2196f3', '#ff9800', '#f44336']
           }
         ]
       },

@@ -21,6 +21,8 @@ try {
         $query = "SELECT 
             (SELECT COUNT(*) FROM appointments WHERE status = 'booked') AS booked_count,
             (SELECT COUNT(*) FROM appointments WHERE status = 'cancelled') AS cancelled_count,
+            (SELECT COUNT(*) FROM appointments WHERE payment_status = 'paid') AS paid_invoices,
+            (SELECT COUNT(*) FROM appointments WHERE payment_status = 'pending') AS unpaid_invoices,
             COUNT(*) AS total_appointments,
             (SELECT COUNT(DISTINCT u.id) 
              FROM users u 
