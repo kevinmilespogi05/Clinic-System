@@ -37,10 +37,9 @@ $user_id = $appointment['user_id'];
 $description = "Service: " . $appointment['service'] . ", Description: " . $appointment['description'];
 
 // Check if an invoice already exists for this appointment
-$checkInvoiceQuery = "SELECT id FROM invoices WHERE user_id = :user_id AND description = :description LIMIT 1";
+$checkInvoiceQuery = "SELECT id FROM invoices WHERE appointment_id = :appointment_id LIMIT 1";
 $checkInvoiceStmt = $conn->prepare($checkInvoiceQuery);
-$checkInvoiceStmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-$checkInvoiceStmt->bindParam(':description', $description, PDO::PARAM_STR);
+$checkInvoiceStmt->bindParam(':appointment_id', $appointment_id, PDO::PARAM_INT);
 $checkInvoiceStmt->execute();
 
 if ($checkInvoiceStmt->rowCount() > 0) {
@@ -49,15 +48,23 @@ if ($checkInvoiceStmt->rowCount() > 0) {
 }
 
 // Insert a new invoice if no existing invoice is found
-$insertQuery = "INSERT INTO invoices (user_id, description, created_at) VALUES (:user_id, :description, NOW())";
+$insertQuery = "INSERT INTO invoices (user_id, description, appointment_id, created_at) VALUES (:user_id, :description, :appointment_id, NOW())";
 $insertStmt = $conn->prepare($insertQuery);
 $insertStmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 $insertStmt->bindParam(':description', $description, PDO::PARAM_STR);
+$insertStmt->bindParam(':appointment_id', $appointment_id, PDO::PARAM_INT);
 
 if ($insertStmt->execute()) {
     $invoice_id = $conn->lastInsertId();
+
+    // Update the appointment to mark the invoice as generated
+    $updateAppointmentQuery = "UPDATE appointments SET invoice_generated = 1 WHERE id = :appointment_id";
+    $updateStmt = $conn->prepare($updateAppointmentQuery);
+    $updateStmt->bindParam(':appointment_id', $appointment_id, PDO::PARAM_INT);
+    $updateStmt->execute();
+
     echo json_encode(["success" => true, "message" => "Invoice generated successfully.", "invoice_id" => $invoice_id]);
 } else {
     echo json_encode(["success" => false, "message" => "Failed to generate invoice."]);
 }
-?>
+

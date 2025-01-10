@@ -83,7 +83,7 @@ generateInvoice(appointmentId: number): Observable<any> {
     .post<any>(
       `${this.baseUrl}/api/appointments/generate_invoice.php`, 
       { appointment_id: appointmentId },
-      { headers: { 'Content-Type': 'application/json' } } // Ensure header is set
+      { headers: { 'Content-Type': 'application/json' } }
     )
     .pipe(catchError(this.handleError));
 }

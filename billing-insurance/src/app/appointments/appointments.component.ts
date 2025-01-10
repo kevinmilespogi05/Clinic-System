@@ -53,10 +53,6 @@ export class AppointmentsComponent implements OnInit {
       }
     );
   }
-  
-  
-  
-  
 
   formatTime(time: string): string {
     const [hours, minutes] = time.split(':');
@@ -81,48 +77,41 @@ export class AppointmentsComponent implements OnInit {
     );
   }
 
-// Decline Appointment
-decline(appointmentId: number): void {
-  Swal.fire({
-    title: 'Are you sure?',
-    text: 'Do you want to cancel this appointment?',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#d33',
-    cancelButtonColor: '#3085d6',
-    confirmButtonText: 'Yes, cancel it!',
-  }).then((result) => {
-    if (result.isConfirmed) {
-      this.patientService.declineAppointment(appointmentId).subscribe(
-        () => {
-          Swal.fire('Cancelled', 'Appointment has been cancelled and deleted.', 'success');
-          this.loadAppointments(); // Reload the list after deletion
-        },
-        (error) => {
-          console.error('Error cancelling appointment:', error);
-          Swal.fire('Error', 'Failed to cancel appointment.', 'error');
-        }
-      );
-    }
-  });
-}
+  decline(appointmentId: number): void {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to cancel this appointment?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, cancel it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.patientService.declineAppointment(appointmentId).subscribe(
+          () => {
+            Swal.fire('Cancelled', 'Appointment has been cancelled and deleted.', 'success');
+            this.loadAppointments(); // Reload the list after deletion
+          },
+          (error) => {
+            console.error('Error cancelling appointment:', error);
+            Swal.fire('Error', 'Failed to cancel appointment.', 'error');
+          }
+        );
+      }
+    });
+  }
 
-
-moveAppointment(appointmentId: number, newStatus: string): void {
-  const appointmentIndex = this.pendingAppointments.findIndex((appt) => appt.id === appointmentId);
-  if (appointmentIndex > -1) {
-    const appointment = { ...this.pendingAppointments[appointmentIndex], status: newStatus };
-    
-    // Check if the appointment has been approved before moving it to the appointments section
-    if (newStatus === 'approved' && appointment.payment_status === 'paid') {
-      this.pendingAppointments.splice(appointmentIndex, 1);
-      this.appointments.push(appointment);
+  moveAppointment(appointmentId: number, newStatus: string): void {
+    const appointmentIndex = this.pendingAppointments.findIndex((appt) => appt.id === appointmentId);
+    if (appointmentIndex > -1) {
+      const appointment = { ...this.pendingAppointments[appointmentIndex], status: newStatus };
+      if (newStatus === 'approved' && appointment.payment_status === 'paid') {
+        this.pendingAppointments.splice(appointmentIndex, 1);
+        this.appointments.push(appointment);
+      }
     }
   }
-}
-
-
-  
 
   openEditModal(appointment: any): void {
     this.selectedAppointment = appointment;
@@ -149,7 +138,6 @@ moveAppointment(appointmentId: number, newStatus: string): void {
       );
     }
   }
-  
 
   deleteAppointment(appointmentId: number): void {
     Swal.fire({
@@ -178,15 +166,17 @@ moveAppointment(appointmentId: number, newStatus: string): void {
 
   generateInvoice(appointmentId: number): void {
     const appointment = this.appointments.find(appt => appt.id === appointmentId);
-  
+
     if (appointment && appointment.payment_status === 'paid') {
       this.patientService.generateInvoice(appointmentId).subscribe(
         (response) => {
           if (response.success) {
             Swal.fire('Success', 'Invoice generated successfully.', 'success');
-            this.loadAppointments(); // Reload appointments to update UI
+            
+            // Reload appointments to reflect the invoice generation
+            this.loadAppointments();
           } else {
-            Swal.fire('Error', response.message, 'error'); // Handle existing invoice error
+            Swal.fire('Error', response.message, 'error');
           }
         },
         (error) => {
@@ -198,6 +188,4 @@ moveAppointment(appointmentId: number, newStatus: string): void {
       Swal.fire('Error', 'Invoice can only be generated for paid appointments.', 'error');
     }
   }
-
-  
 }

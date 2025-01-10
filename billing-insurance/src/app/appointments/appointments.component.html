@@ -44,12 +44,12 @@
           
           <!-- Invoice Generation Button (Only enabled if payment_status is 'paid') -->
           <button 
-  class="generate-invoice-btn" 
-  (click)="generateInvoice(appointment.id)" 
-  [disabled]="appointment.payment_status !== 'paid' || appointment.has_invoice"
-  [class.disabled]="appointment.payment_status !== 'paid' || appointment.has_invoice">
-  Generate Invoice
-</button>
+          class="generate-invoice-btn" 
+          (click)="generateInvoice(appointment.id)" 
+          [disabled]="appointment.payment_status !== 'paid' || appointment.invoice_generated"
+          [class.disabled]="appointment.payment_status !== 'paid' || appointment.invoice_generated">
+          Generate Invoice
+        </button>        
         </td>
       </tr>
     </tbody>
