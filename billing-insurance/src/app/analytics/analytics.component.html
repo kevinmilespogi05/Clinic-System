@@ -3,4 +3,32 @@
     <h2><i class="bi bi-bar-chart-line"></i> Analytics</h2>
     <canvas id="combinedStatsChart"></canvas>
   </div>
+
+  <div class="patients-container">
+    <h2><i class="bi bi-people"></i> Patient Previews</h2>
+    <div *ngFor="let patient of patients" class="patient-item">
+      <p>
+        <strong>Name:</strong> {{ patient.first_name }} {{ patient.last_name }}
+      </p>
+      <p><strong>Username:</strong> {{ patient.username }}</p>
+      <p><strong>Contact Number:</strong> {{ patient.contact_number }}</p>
+      <p><strong>Date of Birth:</strong> {{ patient.date_of_birth | date }}</p>
+      <p><strong>Medical History:</strong> {{ patient.medical_history }}</p>
+    </div>
+  </div>
+
+  <div class="transactions-container">
+    <h2><i class="bi bi-receipt"></i> Important Transactions/Processes</h2>
+    <div *ngFor="let transaction of transactions" class="transaction-item">
+      <p><strong>Transaction ID:</strong> {{ transaction.id }}</p>
+      <p><strong>Type:</strong> {{ transaction.type }}</p>
+      <p><strong>Amount:</strong> {{ transaction.amount | currency }}</p>
+      <p><strong>Date:</strong> {{ transaction.date | date }}</p>
+      <p><strong>Status:</strong> {{ transaction.status }}</p>
+    </div>
+  </div>
+
+  <div class="admin-container">
+    <!-- Admin content here, hidden by CSS -->
+  </div>
 </div>

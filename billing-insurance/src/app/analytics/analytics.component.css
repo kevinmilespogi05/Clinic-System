@@ -12,7 +12,7 @@ h2 {
   font-size: 1.75rem;
   color: #1e3a8a; /* Clinical blue color */
   margin-bottom: 20px;
-  font-family: 'Futura Std Condensed Light', sans-serif;
+  font-family: "Futura Std Condensed Light", sans-serif;
   text-align: center;
 }
 
@@ -39,24 +39,56 @@ canvas {
   max-height: 400px; /* Maintain aspect ratio for smaller screens */
 }
 
+/* Patients container */
+.patients-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.patient-item {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Transactions container */
+.transactions-container {
+  margin-top: 40px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Hide admin section */
+.admin-container {
+  display: none;
+}
+
 /* Media query for smaller screens */
 @media (max-width: 768px) {
   h2 {
-      font-size: 1.5rem;
+    font-size: 1.5rem;
   }
-  
+
   .chart-container {
-      padding: 15px;
-      margin: 10px;
+    padding: 15px;
+    margin: 10px;
   }
 
   canvas {
-      max-height: 300px;
+    max-height: 300px;
   }
 }
 
 @media (max-width: 480px) {
   h2 {
-      font-size: 1.2rem;
+    font-size: 1.2rem;
   }
 }

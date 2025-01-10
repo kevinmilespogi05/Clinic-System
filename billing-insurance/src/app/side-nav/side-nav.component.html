@@ -1,6 +1,9 @@
 <head>
   <!-- Bootstrap Icons Link -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+    rel="stylesheet"
+  />
   <!-- Add custom stylesheet -->
 </head>
 
@@ -13,17 +16,29 @@
 
     <ul class="nav-links">
       <li>
-        <a routerLink="/appointments" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a
+          routerLink="/appointments"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
           <i class="bi bi-calendar-check"></i> Appointments
         </a>
       </li>
       <li>
-        <a routerLink="/analytics" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <i class="bi bi-bar-chart"></i> Analytics
+        <a
+          routerLink="/analytics"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="bi bi-bar-chart"></i> Dashboard
         </a>
       </li>
       <li>
-        <a routerLink="/patient" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a
+          routerLink="/patient"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
           <i class="bi bi-people"></i> Patients
         </a>
       </li>
@@ -31,9 +46,7 @@
 
     <ul class="logout">
       <li>
-        <a (click)="logout()">
-          <i class="bi bi-box-arrow-right"></i> Logout
-        </a>
+        <a (click)="logout()"> <i class="bi bi-box-arrow-right"></i> Logout </a>
       </li>
     </ul>
   </nav>
