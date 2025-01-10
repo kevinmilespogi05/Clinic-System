@@ -1,12 +1,10 @@
 /* Global Styles */
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 body {
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   background-color: #f4f7fa;
   color: #333;
 }
@@ -16,11 +14,7 @@ body {
   padding: 30px;
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  background-color: #f4f7fa;
-  min-height: 100vh;
-  font-family: 'Lato', sans-serif;
-  width: 100%;
+  align-items: center;
 }
 
 /* Card Styling */
@@ -28,30 +22,22 @@ body {
   background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  padding: 25px;
-  width: 90%;
-  max-width: 1200px;
-  margin: auto;
-  transition: transform 0.3s ease;
+  padding: 20px;
+  width: 100%;
+  max-width: 800px;
+  margin: 20px 0;
 }
 
-.card:hover {
-  transform: translateY(-5px);
-}
-
-.card-title {
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-align: left;
-  color: #333;
-  text-transform: uppercase;
+/* Calendar Container Styling */
+.calendar-container {
+  margin-top: 20px;
+  width: 100%;
 }
 
 /* Slot container and booking buttons */
 .slot-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Flexible 2-4 columns depending on screen size */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
   text-align: center;
   justify-items: center;
@@ -70,12 +56,6 @@ body {
 
 .slot:hover {
   transform: scale(1.05);
-}
-
-.slot-day {
-  font-weight: bold;
-  margin-bottom: 12px;
-  color: #333;
 }
 
 .slot-time {
@@ -103,84 +83,6 @@ body {
 .book-btn:disabled {
   background-color: #ccc;
   cursor: not-allowed;
-}
-
-/* Style for occupied slots */
-.occupied-slot {
-  background-color: #e0e0e0;
-  opacity: 0.6;
-}
-
-/* Existing Appointments */
-.appointment-card {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.appointment-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
-  width: 100%;
-}
-
-.appointment-item:hover {
-  background-color: #efefef;
-}
-
-.appointment-details {
-  display: flex;
-  flex-direction: column;
-}
-
-.appointment-day {
-  font-weight: bold;
-  color: #333;
-  font-size: 1.2rem;
-}
-
-.appointment-time {
-  color: #666;
-  font-size: 1rem;
-}
-
-.cancel-btn, .delete-btn, .payment-btn {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  padding: 10px 14px;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.cancel-btn:hover, .delete-btn:hover, .payment-btn:hover {
-  background-color: #d32f2f;
-  transform: scale(1.05);
-}
-
-.delete-btn {
-  background-color: #ff5722;
-}
-
-.delete-btn:hover {
-  background-color: #e64a19;
-}
-
-.payment-btn {
-  background-color: #4caf50;
-}
-
-.payment-btn:hover {
-  background-color: #45a049;
 }
 
 /* Modal Styling */
@@ -289,99 +191,10 @@ button:hover {
   transform: scale(1.05);
 }
 
-/* Payment Modal Styling */
-.payment-summary {
-  margin-top: 20px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #333;
-}
-
-.payment-summary p {
-  margin: 10px 0;
-}
-
-.payment-btn {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 12px 18px;
-  font-size: 1.2rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.payment-btn:hover {
-  background-color: #45a049;
-  transform: scale(1.05);
-}
-
-/* Error handling */
-.error {
-  color: red;
-  font-size: 0.9rem;
-  margin-top: 5px;
-}
-
-input[type="text"], input[type="number"], input[type="month"] {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-}
-
-input[type="text"]:focus, input[type="number"]:focus, input[type="month"]:focus {
-  border-color: #4caf50;
-  outline: none;
-}
-
-select {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-}
-
-select:focus {
-  border-color: #4caf50;
-  outline: none;
-}
-
-/* Button container with spacing */
-.button-group {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
-}
-
-/* Cancel button styling */
-.cancel-btn {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  padding: 12px 18px;
-  font-size: 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.cancel-btn:hover {
-  background-color: #d32f2f;
-  transform: scale(1.05);
-}
-
 /* Responsiveness */
 @media (max-width: 768px) {
   .slot-container {
-    grid-template-columns: repeat(2, 1fr); /* 2 slots per row on smaller screens */
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .modal-content {
@@ -392,6 +205,6 @@ select:focus {
 
 @media (max-width: 480px) {
   .slot-container {
-    grid-template-columns: 1fr; /* 1 slot per row on small screens */
+    grid-template-columns: 1fr;
   }
 }
