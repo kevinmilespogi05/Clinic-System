@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -215,7 +215,7 @@ export class PatientService {
       .pipe(catchError(this.handleError));
   }
 
-  private handleError(error: any): Observable<never> {
+  private handleError(error: HttpErrorResponse): Observable<never> {
     console.error('API Error:', error);
     return throwError(
       () => new Error('Something went wrong. Please try again later.')
