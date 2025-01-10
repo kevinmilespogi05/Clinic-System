@@ -108,12 +108,16 @@ export class AppointmentsComponent implements OnInit {
       Swal.fire('Error', 'Please enter a description for the appointment.', 'error');
       return;
     }
-
+  
     const userId = localStorage.getItem('userId');
     if (userId) {
+      const appointmentDay = this.selectedDate.toLocaleDateString('en-US', { weekday: 'long' });
+      const formattedDate = this.selectedDate.toISOString().split('T')[0]; // YYYY-MM-DD format
+  
       this.patientService.bookAppointment({
         user_id: Number(userId),
-        date: this.selectedDate.toISOString(),
+        date: formattedDate, // Send the correctly formatted date
+        day: appointmentDay, // Add day to the request
         description: this.appointmentDescription,
         service: this.selectedService,
         status: 'booked',
@@ -131,13 +135,17 @@ export class AppointmentsComponent implements OnInit {
       );
     }
   }
-
+  
+  
   // Method to check if an appointment exists on the selected date
   isDateBooked(date: Date): boolean {
-    return this.appointments.some(
-      (appointment) => new Date(appointment.date).toLocaleDateString() === date.toLocaleDateString() && appointment.status === 'booked'
-    );
+    return this.appointments.some((appointment) => {
+      const appointmentDate = new Date(appointment.date);
+      return appointmentDate.toLocaleDateString() === date.toLocaleDateString();
+    });
   }
+  
+  
 
   // Implementing the daysInMonth() method
   daysInMonth(): Date[] {

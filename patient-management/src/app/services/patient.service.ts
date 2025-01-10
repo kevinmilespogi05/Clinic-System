@@ -132,6 +132,15 @@ export class PatientService {
         .pipe(catchError(this.handleError));
     }
 
+    checkAppointmentConflict(userId: number, date: string): Observable<any> {
+      return this.http.post<any>(`${this.baseUrl}/api/appointments/checkConflict.php`, {
+        user_id: userId,
+        date: date,
+      });
+    }
+    
+    
+
 
 
   // Combined Stats (Billing + Appointments)

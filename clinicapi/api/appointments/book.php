@@ -1,4 +1,7 @@
 <?php
+// Set the timezone to Asia/Manila (adjust as needed)
+date_default_timezone_set('Asia/Manila');
+
 // Allow cross-origin requests (CORS)
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, DELETE, PUT");
@@ -15,22 +18,27 @@ try {
     // Retrieve the posted data
     $data = json_decode(file_get_contents("php://input"));
 
-    if (isset($data->user_id) && isset($data->day) && isset($data->time) && isset($data->date) && isset($data->description) && isset($data->service)) {
+    if (isset($data->user_id) && isset($data->date) && isset($data->description) && isset($data->service)) {
         
+        // Convert the date to the correct format (Y-m-d)
         $date = date('Y-m-d', strtotime($data->date));
-        
-        // Check for conflicting appointments (already booked, approved, or pending)
-        $conflictQuery = "SELECT COUNT(*) as count 
-        FROM appointments 
-        WHERE date = :date AND time = :time AND (status = 'booked' OR status = 'approved' OR status = 'pending')";
-        $conflictStmt = $conn->prepare($conflictQuery);
-        $conflictStmt->bindParam(':date', $date);
-        $conflictStmt->bindParam(':time', $data->time);
-        $conflictStmt->execute();
-        $conflictResult = $conflictStmt->fetch(PDO::FETCH_ASSOC);
 
+        // Debug: Print the input date for conflict checking
+        error_log("Booking Attempt: Date: $date");
+
+        // Check if the appointment slot is already booked for the user on the selected date
+        $checkConflictQuery = "SELECT COUNT(*) as count 
+        FROM appointments 
+        WHERE user_id = :user_id AND date = :date AND (status = 'booked' OR status = 'approved' OR status = 'pending')";
+        $checkConflictStmt = $conn->prepare($checkConflictQuery);
+        $checkConflictStmt->bindParam(':user_id', $data->user_id);
+        $checkConflictStmt->bindParam(':date', $date);
+        $checkConflictStmt->execute();
+        $conflictResult = $checkConflictStmt->fetch(PDO::FETCH_ASSOC);
+
+        // If there is a conflict, return an error message
         if ($conflictResult['count'] > 0) {
-            echo json_encode(["error" => "The selected slot is already booked, approved, or pending."]);
+            echo json_encode(["error" => "You have already booked an appointment on this day."]);
             exit;
         }
 
@@ -65,14 +73,13 @@ try {
             $billAmount = $servicePrice;
 
             // Insert the appointment into the database with a status of 'pending'
-            $query = "INSERT INTO appointments (user_id, username, date, time, description, status, service, payment_status, bill_amount) 
-            VALUES (:user_id, :username, :date, :time, :description, 'pending', :service, 'pending', :bill_amount)";
+            $query = "INSERT INTO appointments (user_id, username, date, description, status, service, payment_status, bill_amount) 
+            VALUES (:user_id, :username, :date, :description, 'pending', :service, 'pending', :bill_amount)";
             $stmt = $conn->prepare($query);
             
             $stmt->bindParam(':user_id', $data->user_id);
             $stmt->bindParam(':username', $username);
             $stmt->bindParam(':date', $date);
-            $stmt->bindParam(':time', $data->time);
             $stmt->bindParam(':description', $data->description);
             $stmt->bindParam(':service', $data->service);
             $stmt->bindParam(':bill_amount', $billAmount);
