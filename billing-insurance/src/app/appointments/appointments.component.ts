@@ -166,26 +166,43 @@ export class AppointmentsComponent implements OnInit {
 
   generateInvoice(appointmentId: number): void {
     const appointment = this.appointments.find(appt => appt.id === appointmentId);
-
-    if (appointment && appointment.payment_status === 'paid') {
-      this.patientService.generateInvoice(appointmentId).subscribe(
-        (response) => {
-          if (response.success) {
-            Swal.fire('Success', 'Invoice generated successfully.', 'success');
-            
-            // Reload appointments to reflect the invoice generation
-            this.loadAppointments();
+  
+    if (appointment) {
+      // Show SweetAlert for confirmation before proceeding with invoice generation
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to generate the invoice for this appointment?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, generate it!',
+        cancelButtonText: 'No, cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Proceed only if the appointment is paid
+          if (appointment.payment_status === 'paid') {
+            this.patientService.generateInvoice(appointmentId).subscribe(
+              (response) => {
+                if (response.success) {
+                  Swal.fire('Success', 'Invoice generated successfully.', 'success');
+                  
+                  // Reload appointments to reflect the invoice generation
+                  this.loadAppointments();
+                } else {
+                  Swal.fire('Error', response.message, 'error');
+                }
+              },
+              (error) => {
+                console.error('Error generating invoice:', error);
+                Swal.fire('Error', 'Failed to generate invoice.', 'error');
+              }
+            );
           } else {
-            Swal.fire('Error', response.message, 'error');
+            Swal.fire('Error', 'Invoice can only be generated for paid appointments.', 'error');
           }
-        },
-        (error) => {
-          console.error('Error generating invoice:', error);
-          Swal.fire('Error', 'Failed to generate invoice.', 'error');
         }
-      );
+      });
     } else {
-      Swal.fire('Error', 'Invoice can only be generated for paid appointments.', 'error');
+      Swal.fire('Error', 'Appointment not found.', 'error');
     }
-  }
+  }  
 }
