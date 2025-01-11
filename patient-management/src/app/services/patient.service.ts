@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -59,99 +58,117 @@ export class PatientService {
     });
   }
 
-
-    // Appointments Management
-    getAppointments(userId?: number, role?: string): Observable<any> {
-      let url = `${this.baseUrl}/api/appointments/get_appointments.php`;
-      if (userId && role) {
-        url += `?id=${userId}&role=${role}`;
-      }
-      return this.http.get<any>(url).pipe(catchError(this.handleError));
+  // Appointments Management
+  getAppointments(userId?: number, role?: string): Observable<any> {
+    let url = `${this.baseUrl}/api/appointments/get_appointments.php`;
+    if (userId && role) {
+      url += `?id=${userId}&role=${role}`;
     }
-
-    updateAppointmentStatus(appointmentId: number, paymentStatus: string): Observable<any> {
-      const url = `${this.baseUrl}/api/appointments/update_status.php`; // Adjust the URL as needed
-      const body = {
-        appointment_id: appointmentId,
-        payment_status: paymentStatus, // Use 'payment_status' instead of 'status'
-      };
-    
-      return this.http.post<any>(url, body);
-    }
-    
-  
-    // Book Appointment
-    bookAppointment(data: any): Observable<any> {
-      return this.http.post(`${this.baseUrl}/api/appointments/book.php`, data).pipe(
-        catchError(this.handleError)
-      );
-    }
-  
-    // Cancel Appointment with Reason
-    cancelAppointmentWithReason(appointmentId: number, reason: string): Observable<any> {
-      return this.http
-        .post<any>(`${this.baseUrl}/api/appointments/cancel.php`, {
-          appointment_id: appointmentId,
-          reason: reason,
-        })
-        .pipe(catchError(this.handleError));
-    }
-  
-    // Delete Appointment
-    deleteAppointment(appointmentId: number): Observable<any> {
-      return this.http
-        .post<any>(`${this.baseUrl}/api/appointments/delete_appointment.php`, {
-          id: appointmentId,
-        })
-        .pipe(catchError(this.handleError));
-    }
-  
-    // Process Payment
-    processPayment(paymentDetails: any): Observable<any> {
-      return this.http
-        .post(`${this.baseUrl}/api/payment/process_payment.php`, paymentDetails)
-        .pipe(catchError(this.handleError));
-    }
-  
-    // Payment Confirmation (after successful payment)
-    confirmPayment(appointmentId: number, paymentStatus: string): Observable<any> {
-      return this.http
-        .post<any>(`${this.baseUrl}/api/payment/payment_success.php`, {
-          appointment_id: appointmentId,
-          payment_status: paymentStatus,
-        })
-        .pipe(catchError(this.handleError));
-    }
-  
-    // API call to process refund
-    processRefund(appointmentId: number): Observable<any> {
-      return this.http
-        .post<any>(`${this.baseUrl}/api/appointments/refund.php`, 
-          JSON.stringify({ appointment_id: appointmentId }),  // Send data as JSON
-          { headers: { 'Content-Type': 'application/json' } }  // Set the correct content type
-        )
-        .pipe(catchError(this.handleError));
-    }
-    
-    // API call to reschedule appointment (assuming user selects a new slot)
-    rescheduleAppointment(appointmentId: number, newSlot: any): Observable<any> {
-      return this.http
-          .post<any>(`${this.baseUrl}/api/appointments/reschedule.php`, {
-              appointment_id: appointmentId,
-              new_slot: newSlot
-          })
-          .pipe(catchError(this.handleError));
+    return this.http.get<any>(url).pipe(catchError(this.handleError));
   }
-  
-    
-  
-    checkAppointmentConflict(userId: number, date: string): Observable<any> {
-      return this.http.post<any>(`${this.baseUrl}/api/appointments/checkConflict.php`, {
+
+  updateAppointmentStatus(
+    appointmentId: number,
+    paymentStatus: string
+  ): Observable<any> {
+    const url = `${this.baseUrl}/api/appointments/update_status.php`; // Adjust the URL as needed
+    const body = {
+      appointment_id: appointmentId,
+      payment_status: paymentStatus, // Use 'payment_status' instead of 'status'
+    };
+
+    return this.http.post<any>(url, body);
+  }
+
+  // Book Appointment
+  bookAppointment(data: any): Observable<any> {
+    return this.http
+      .post(`${this.baseUrl}/api/appointments/book.php`, data)
+      .pipe(catchError(this.handleError));
+  }
+
+  // Cancel Appointment with Reason
+  cancelAppointmentWithReason(
+    appointmentId: number,
+    reason: string
+  ): Observable<any> {
+    return this.http
+      .post<any>(`${this.baseUrl}/api/appointments/cancel.php`, {
+        appointment_id: appointmentId,
+        reason: reason,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  // Delete Appointment
+  deleteAppointment(appointmentId: number): Observable<any> {
+    return this.http
+      .post<any>(`${this.baseUrl}/api/appointments/delete_appointment.php`, {
+        id: appointmentId,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  // Process Payment
+  processPayment(paymentDetails: any): Observable<any> {
+    return this.http
+      .post(`${this.baseUrl}/api/payment/process_payment.php`, paymentDetails)
+      .pipe(catchError(this.handleError));
+  }
+
+  // Payment Confirmation (after successful payment)
+  confirmPayment(
+    appointmentId: number,
+    paymentStatus: string
+  ): Observable<any> {
+    return this.http
+      .post<any>(`${this.baseUrl}/api/payment/payment_success.php`, {
+        appointment_id: appointmentId,
+        payment_status: paymentStatus,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  // API call to process refund
+  processRefund(appointmentId: number): Observable<any> {
+    return this.http
+      .post<any>(
+        `${this.baseUrl}/api/appointments/refund.php`,
+        JSON.stringify({ appointment_id: appointmentId }), // Send data as JSON
+        { headers: { 'Content-Type': 'application/json' } } // Set the correct content type
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  // API call to reschedule appointment (assuming user selects a new slot)
+  rescheduleAppointment(appointmentId: number, newSlot: any): Observable<any> {
+    return this.http
+      .post<any>(`${this.baseUrl}/api/appointments/reschedule.php`, {
+        appointment_id: appointmentId,
+        new_slot: newSlot,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  checkAppointmentConflict(userId: number, date: string): Observable<any> {
+    return this.http.post<any>(
+      `${this.baseUrl}/api/appointments/checkConflict.php`,
+      {
         user_id: userId,
         date: date,
-      });
-    }
-    
+      }
+    );
+  }
+
+  // Get Available Slots for a Date
+  getAvailableSlots(date: string): Observable<any> {
+    return this.http
+      .get<any>(
+        `${this.baseUrl}/api/appointments/get_available_slots.php?date=${date}`
+      )
+      .pipe(catchError(this.handleError));
+  }
+
   // Combined Stats (Billing + Appointments)
   getCombinedStats(): Observable<any> {
     return new Observable((observer) => {
@@ -177,12 +194,14 @@ export class PatientService {
     });
   }
 
- // Billing Management
- getInvoicesByUserId(userId: number): Observable<any[]> {
-  return this.http
-    .post<any[]>(`${this.baseUrl}/api/billing/get_user_invoices.php`, { userId })
-    .pipe(catchError(this.handleError));
-}
+  // Billing Management
+  getInvoicesByUserId(userId: number): Observable<any[]> {
+    return this.http
+      .post<any[]>(`${this.baseUrl}/api/billing/get_user_invoices.php`, {
+        userId,
+      })
+      .pipe(catchError(this.handleError));
+  }
 
   getInvoices(): Observable<any[]> {
     return this.http
