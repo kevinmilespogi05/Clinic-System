@@ -330,8 +330,17 @@ export class AppointmentsComponent implements OnInit {
         if (response.success) {
           Swal.fire('Success', 'Refund successfully processed!', 'success');
           this.fetchAppointments(); // Refresh the appointment list
+          
+          // After refund is processed, update the appointment status and delete it
+          const appointmentIndex = this.appointments.findIndex(
+            (appointment) => appointment.id === appointmentId
+          );
+          if (appointmentIndex !== -1) {
+            this.appointments[appointmentIndex].payment_status = 'failed'; // Update status to failed after refund
+            this.appointments[appointmentIndex].refund_status = 'processed'; // Update refund status
+          }
   
-          // After refund is processed, delete the appointment
+          // After processing the refund, you can delete the appointment
           this.deleteAppointment(appointmentId);
         } else {
           Swal.fire('Error', response.message || 'Refund failed. Please try again.', 'error');
@@ -343,8 +352,20 @@ export class AppointmentsComponent implements OnInit {
       }
     );
   }
-  
 
+  getRefundStatusClass(refundStatus: string): string {
+    switch (refundStatus.toLowerCase()) {
+      case 'pending':
+        return 'refund-pending';
+      case 'processed':
+        return 'refund-processed';
+      case 'failed':
+        return 'refund-failed';
+      default:
+        return '';
+    }
+  }
+  
   redirectToPayment(appointment: any): void {
     this.router.navigate(['/payment'], { queryParams: { appointmentId: appointment.id } });
   }

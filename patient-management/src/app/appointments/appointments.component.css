@@ -22,6 +22,8 @@ body {
   width: 100%;
 }
 
+
+
 /* Card Styling */
 .card {
   background-color: #ffffff;
@@ -36,6 +38,15 @@ body {
 
 .card:hover {
   transform: translateY(-5px);
+}
+
+.card-header {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: left;
+  color: #333;
+  text-transform: uppercase;
 }
 
 .card-title {
@@ -386,5 +397,16 @@ textarea:focus, input:focus, select:focus {
   transform: scale(1.05);
 }
 
+.refund-pending {
+  color: orange;
+}
+
+.refund-processed {
+  color: green;
+}
+
+.refund-failed {
+  color: red;
+}
 
 
