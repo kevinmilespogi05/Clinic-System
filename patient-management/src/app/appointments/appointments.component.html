@@ -61,11 +61,12 @@
       </button>
 
       <button
-        class="delete-btn"
-        *ngIf="appointment.status === 'cancelled'"
-        (click)="deleteAppointment(appointment.id)">
-        <i class="bi bi-trash"></i> Delete
-      </button>
+      class="delete-btn"
+      *ngIf="appointment.status === 'cancelled' && (appointment.payment_status === 'pending' || appointment.payment_status === 'failed')"
+      (click)="deleteAppointment(appointment.id)">
+      <i class="bi bi-trash"></i> Delete
+    </button>
+    
 
       <button
         *ngIf="appointment.status === 'pending' && appointment.payment_status === 'pending'"
@@ -75,10 +76,11 @@
       </button>
 
       <button
-        *ngIf="appointment.status === 'cancelled' && !appointment.refundProcessed"
-        (click)="handleRefundOrReschedule(appointment)">
-        <i class="bi bi-arrow-repeat"></i> Refund
-      </button>
+  class="refund-btn"
+  *ngIf="appointment.status === 'cancelled' && appointment.payment_status === 'paid'"
+  (click)="handleRefundOrReschedule(appointment)">
+  <i class="bi bi-arrow-repeat"></i> Refund
+</button>
     </div>
   </div>
 </div>
@@ -108,15 +110,27 @@
     </div>
   </div>
 
-  <!-- Cancellation Reason Modal -->
-  <div class="modal" *ngIf="showModal">
-    <div class="modal-content">
-      <span class="close-btn" (click)="closeCancelModal()">&times;</span>
-      <h3>Enter Cancellation Reason</h3>
-      <textarea [(ngModel)]="cancellationReason" placeholder="Enter your reason here..." rows="4"></textarea>
-      <button (click)="cancelAppointment(appointmentToCancel!)" *ngIf="appointmentToCancel !== null">
-        <i class="bi bi-check-circle"></i> Confirm Cancellation
-      </button>
+<!-- Cancellation Reason Modal -->
+<div class="modal" *ngIf="showModal">
+  <div class="modal-content">
+    <span class="close-btn" (click)="closeCancelModal()">&times;</span>
+    <h3>Select Cancellation Reason</h3>
+    <select [(ngModel)]="cancellationReason" (change)="onReasonChange()" required>
+      <option value="" disabled selected>Select a reason</option>
+      <option *ngFor="let reason of cancellationReasons" [value]="reason">
+        {{ reason }}
+      </option>
+    </select>
+
+    <!-- Display textarea only when 'Other' is selected -->
+    <div *ngIf="cancellationReason === 'Other'">
+      <textarea [(ngModel)]="otherReason" placeholder="Enter your reason here..." rows="4"></textarea>
     </div>
+
+    <button (click)="cancelAppointment(appointmentToCancel!)" *ngIf="appointmentToCancel !== null">
+      <i class="bi bi-check-circle"></i> Confirm Cancellation
+    </button>
   </div>
 </div>
+
+

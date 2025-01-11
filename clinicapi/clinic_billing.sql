@@ -36,7 +36,7 @@ CREATE TABLE `appointments` (
   `description` text DEFAULT NULL,
   `service` enum('Consultation','Surgery','Therapy') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `status` enum('pending','booked','cancelled','approved') NOT NULL DEFAULT 'pending',
+  `status` enum('pending','booked','cancelled','approved','refunded') NOT NULL DEFAULT 'pending',
   `cancellation_reason` varchar(255) DEFAULT NULL,
   `payment_status` enum('pending','paid','failed') NOT NULL DEFAULT 'pending',
   `bill_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
