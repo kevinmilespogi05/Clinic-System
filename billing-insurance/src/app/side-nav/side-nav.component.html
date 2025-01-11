@@ -17,6 +17,15 @@
     <ul class="nav-links">
       <li>
         <a
+          routerLink="/analytics"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="bi bi-bar-chart"></i> Dashboard
+        </a>
+      </li>
+      <li>
+        <a
           routerLink="/appointments"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
@@ -26,11 +35,11 @@
       </li>
       <li>
         <a
-          routerLink="/analytics"
+          routerLink="/insurance"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          <i class="bi bi-bar-chart"></i> Dashboard
+          <i class="bi bi-bar-chart"></i> Insurance
         </a>
       </li>
       <li>
