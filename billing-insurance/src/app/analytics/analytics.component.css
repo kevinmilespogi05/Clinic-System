@@ -1,162 +1,200 @@
-/* Overall container for analytics */
+/* Overall container */
 .analytics-container {
   position: relative;
   width: 100%;
   padding: 40px 20px;
   box-sizing: border-box;
-  background: linear-gradient(135deg, #d9e4f1, #f1f9ff); /* Subtle gradient background */
+  background: linear-gradient(135deg, #d9e4f1, #f1f9ff);
   border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Deeper shadow for modern look */
-  margin-top: 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  margin-top: 30px; /* Ensure there's a gap between the header and this section */
+  margin-bottom: 40px; /* Space below the analytics container */
 }
 
 /* Title */
 h2 {
   font-size: 2rem;
-  color: #0000; /* Soft blue */
+  color: #000;
   margin-bottom: 30px;
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 1px;
-  background: linear-gradient(to right, #1abfce, #006D77); /* Gradient title */
+  background: linear-gradient(to right, #1abfce, #006d77);
   -webkit-background-clip: text;
   color: transparent;
 }
 
-/* Grid for stat containers */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 boxes per row */
-  gap: 20px; /* Adjust gap between boxes */
+/* Stats boxes */
+.stats-boxes {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
   margin-top: 20px;
-  animation: fadeIn 0.8s ease-in-out; /* Animation on load */
 }
 
-/* Each individual stat box container */
-.stat-container {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Softer, larger shadow */
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-  text-align: center;
-  border-left: 8px solid #006D77; /* Accent color line */
-  backdrop-filter: blur(8px); /* Soft blur effect for modern touch */
+.stat-box {
+  flex: 1;
+  max-width: 300px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 120px; /* Decreased height for smaller boxes */
+  padding: 20px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #ffffff, #e8faff);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.stat-container:hover {
-  transform: translateY(-8px); /* Lift effect */
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
-  background-color: #f0f9ff; /* Light background shift on hover */
+.stat-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Stat container paragraph styling */
-.stat-container p {
-  margin: 0;
-  font-size: 1.1em; /* Slightly smaller font size */
-  color: #333; /* Dark text */
-  font-family: 'Poppins', sans-serif;
+.stat-icon {
+  font-size: 3rem;
+  color: #006d77;
+  margin-bottom: 15px;
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #006d77;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 1rem;
   font-weight: 500;
-  letter-spacing: 0.5px;
+  color: #333;
+  text-transform: uppercase;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  h2 {
-    font-size: 1.8rem; /* Slightly smaller title for medium screens */
-  }
-
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns for medium screens */
-  }
-
-  .stat-container {
-    height: 100px; /* Further reduce height on smaller screens */
-  }
+/* Specific styles for appointments and patients */
+.stat-box.appointments {
+  background: linear-gradient(135deg, #e8f8e8, #d6f5d6);
 }
 
-@media (max-width: 480px) {
-  h2 {
-    font-size: 1.4rem; /* Smaller title on mobile */
-  }
-
-  .stats-grid {
-    grid-template-columns: 1fr; /* Single column for small screens */
-  }
-
-  .stat-container {
-    height: 80px; /* Smaller boxes on mobile */
-  }
+.stat-box.appointments .stat-icon {
+  color: #4caf50;
 }
 
-/* Keyframe animation for fading in */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.stat-box.patients {
+  background: linear-gradient(135deg, #e8f0f8, #d6e4f5);
+}
+
+.stat-box.patients .stat-icon {
+  color: #2196f3;
 }
 
 /* Patients container */
 .patients-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-  margin-top: 40px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 40px; /* Space above */
+  margin-bottom: 40px; /* Space below */
+}
+
+.patients-container h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
 }
 
 .patient-item {
-  background-color: #ffffff;
+  background-color: #fff;
   border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  padding: 20px;
+  border-radius: 8px;
+  padding: 15px;
   margin-bottom: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.patient-item:hover {
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+}
+
+.patient-item p {
+  font-size: 14px;
+  color: #555;
+  margin: 8px 0;
+}
+
+.patient-item p strong {
+  color: #333;
 }
 
 /* Transactions container */
 .transactions-container {
-  margin-top: 40px;
+  margin-top: 40px; /* Adds space between patients and transactions section */
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px; /* Space below */
+}
+
+/* Data analytics container */
+.data-analytics-container {
+  margin-top: 40px; /* Adds space between transactions and data analytics section */
+  padding: 25px;
+  background-color: #ffffff;
   border: 1px solid #e0e0e0;
   border-radius: 10px;
-  padding: 20px;
-  background-color: #ffffff;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px; /* Space below */
 }
 
-/* Hide admin section */
-.admin-container {
-  display: none;
+/* Chart container */
+.chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
 }
 
-/* Media query for smaller screens */
+/* Overall layout alignment */
+.analytics-summary-container,
+.patients-container,
+.transactions-container,
+.data-analytics-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Responsive behavior */
 @media (max-width: 768px) {
-  h2 {
-    font-size: 1.5rem;
+  .stats-boxes {
+    flex-wrap: wrap;
+    gap: 15px; /* Reduces the gap between stats boxes */
   }
 
-  .chart-container {
-    padding: 15px;
-    margin: 10px;
+  .stat-box {
+    width: 100%; /* Make stats boxes stack in smaller screens */
   }
 
-  canvas {
-    max-height: 300px;
-  }
-}
-
-@media (max-width: 480px) {
-  h2 {
-    font-size: 1.2rem;
+  .patients-container,
+  .transactions-container,
+  .data-analytics-container {
+    padding: 15px; /* Adjusts padding for smaller screens */
   }
 }

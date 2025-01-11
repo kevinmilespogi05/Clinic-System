@@ -43,7 +43,8 @@ export class AnalyticsComponent implements OnInit {
     this.patientService.getPatients().subscribe(
       (response: any) => {
         if (response && response.success) {
-          this.patients = response.data;
+          // Filter patients where role is 'users'
+          this.patients = response.data.filter((patient: any) => patient.role === 'user');
         } else {
           console.error('Failed to fetch patients:', response.message);
         }
@@ -93,35 +94,21 @@ export class AnalyticsComponent implements OnInit {
               0,
               0,
               0,
-              0, // Fill with zeros for appointment-related labels
+              0, 
             ],
-            backgroundColor: [
-              '#4caf50',
-              '#f44336',
-              '#ffffff',
-              '#ffffff',
-              '#ffffff',
-              '#ffffff',
-            ],
+            backgroundColor: ['#4caf50', '#f44336', '#ffffff', '#ffffff', '#ffffff', '#ffffff'],
           },
           {
             label: 'Appointments Stats',
             data: [
               0,
-              0, // Fill with zeros for billing-related labels
+              0,
               stats.total_appointments,
               stats.total_patients,
               stats.booked_count,
               stats.cancelled_count,
             ],
-            backgroundColor: [
-              '#ffffff',
-              '#ffffff',
-              '#4caf50',
-              '#2196f3',
-              '#ff9800',
-              '#f44336',
-            ],
+            backgroundColor: ['#ffffff', '#ffffff', '#4caf50', '#2196f3', '#ff9800', '#f44336'],
           },
         ],
       },
@@ -129,16 +116,11 @@ export class AnalyticsComponent implements OnInit {
         responsive: true,
         scales: {
           y: {
-            min: 0, // Start y-axis at zero
-            ticks: {
-              stepSize: 1, // Increment by 1
-              precision: 0, // Use whole numbers only
-            },
+            beginAtZero: true,
           },
         },
         plugins: {
           legend: {
-            display: true,
             position: 'top',
           },
         },
