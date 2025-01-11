@@ -15,10 +15,13 @@ import { Router } from '@angular/router';
 })
 export class AppointmentsComponent implements OnInit {
   appointments: any[] = [];
-  selectedDate: Date = new Date(2025, 0, 1); // January 1, 2025
-  selectedTime: string = '16:00:00'; // default time, you can modify as needed
-  currentMonth: number = 0; // Initialize to January (0)
-  currentYear: number = 2025; // Initialize to 2025
+  timezoneOffset: number = new Date().getTimezoneOffset() * 60000; // Get local timezone offset in milliseconds
+  currentDate: Date = new Date(2025, 0, 1); // Explicitly set to January 1, 2025
+  currentMonth: number = this.currentDate.getMonth(); // Initialize to January (0-indexed)
+  currentYear: number = this.currentDate.getFullYear(); // Initialize to 2025
+  selectedDate: Date = new Date(this.currentYear, this.currentMonth, this.currentDate.getDate()); // Correctly set to January 1, 2025
+  selectedTime: string = '16:00:00'; // Default time
+  
   selectedAppointment: any;
   showModal: boolean = false;
   showBookingModal: boolean = false;
@@ -92,8 +95,10 @@ export class AppointmentsComponent implements OnInit {
         this.currentMonth--;
       }
     }
-    this.selectedDate = new Date(this.currentYear, this.currentMonth, 1);  // Update the selectedDate
+    this.currentDate = new Date(this.currentYear, this.currentMonth, 1); // Update currentDate
+    this.selectedDate = this.currentDate; // Keep selectedDate consistent with currentDate
   }
+  
   
   
   openBookingModal(appointment: any): void {
@@ -149,8 +154,6 @@ export class AppointmentsComponent implements OnInit {
       return appointmentDate.toLocaleDateString() === date.toLocaleDateString();
     });
   }
-  
-  
   
 
   // Implementing the daysInMonth() method

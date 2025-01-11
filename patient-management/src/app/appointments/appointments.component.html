@@ -9,7 +9,7 @@
     <div class="calendar-container">
       <div class="calendar-header">
         <button (click)="changeMonth('prev')" class="nav-btn"><i class="bi bi-chevron-left"></i></button>
-        <span class="month-year">{{ currentMonth | date:'MMMM yyyy' }}</span>
+        <span class="month-year">{{ currentDate | date:'MMMM yyyy' }}</span>
         <button (click)="changeMonth('next')" class="nav-btn"><i class="bi bi-chevron-right"></i></button>
       </div>
       <div class="calendar-grid">
@@ -26,6 +26,7 @@
     </div>
   </div>
 
+  
 
     <!-- Existing Appointments Section -->
     <div class="card appointment-card">
