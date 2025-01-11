@@ -7,6 +7,7 @@ import { InvoiceComponent } from './invoice/invoice.component';
 import { PatientComponent } from './patient/patient.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { LoginComponent } from './login/login.component';
+import { StatsComponent } from './stats/stats.component';
 
 export const routes: Routes = [
   { 
@@ -19,6 +20,7 @@ export const routes: Routes = [
     children: [
       { path: 'appointments', component: AppointmentsComponent },
       { path: 'analytics', component: AnalyticsComponent },
+      { path: 'stats', component: StatsComponent},
       { path: 'insurance', component: InsuranceComponent },
       { path: 'invoice', component: InvoiceComponent },
       { path: 'patient', component: PatientComponent },

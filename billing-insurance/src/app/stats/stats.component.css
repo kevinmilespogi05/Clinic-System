@@ -1,0 +1,35 @@
+/* Overall container for analytics */
+.analytics-container {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f4f6f9; /* Light clinical background */
+  }
+  
+  /* Title */
+  h2 {
+    font-size: 1.75rem;
+    color: #1e3a8a; /* Clinical blue color */
+    margin-bottom: 20px;
+    font-family: "Futura Std Condensed Light", sans-serif;
+    text-align: center;
+  }
+  
+  /* Chart container */
+  .chart-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto; /* Centered container */
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #ffffff; /* White background for a clean look */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  
