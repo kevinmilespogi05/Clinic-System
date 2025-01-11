@@ -24,7 +24,7 @@ export const routes: Routes = [
       { path: 'insurance', component: InsuranceComponent },
       { path: 'invoice', component: InvoiceComponent },
       { path: 'patient', component: PatientComponent },
-      { path: '', redirectTo: 'appointments', pathMatch: 'full' },
+      { path: '', redirectTo: 'analytics', pathMatch: 'full' },
     ] 
   },
   { path: '**', redirectTo: 'login' }, // Redirect to login for unknown routes

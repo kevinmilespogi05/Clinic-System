@@ -34,7 +34,7 @@ export class LoginComponent {
               icon: 'success',
               confirmButtonText: 'Proceed'
             }).then(() => {
-              this.router.navigate(['appointments']);  // Navigate to appointments page for admin
+              this.router.navigate(['analytics']);  // Navigate to appointments page for admin
             });
           } else {
             // Add actions for other roles if needed

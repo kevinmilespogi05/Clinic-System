@@ -1,56 +1,110 @@
-.stat-container {
-  margin-bottom: 15px;
-  padding: 10px;
-  background-color: #f0f0f0; /* Light background for each container */
-  border-radius: 5px; /* Rounded corners */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
-}
-
-.stat-container p {
-  margin: 0;
-  font-size: 1.2em; /* Adjust font size */
-  color: #333; /* Text color */
-}
-
 /* Overall container for analytics */
 .analytics-container {
   position: relative;
   width: 100%;
-  padding: 20px;
+  padding: 40px 20px;
   box-sizing: border-box;
-  background-color: #f4f6f9; /* Light clinical background */
+  background: linear-gradient(135deg, #d9e4f1, #f1f9ff); /* Subtle gradient background */
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Deeper shadow for modern look */
+  margin-top: 30px;
 }
 
 /* Title */
 h2 {
-  font-size: 1.75rem;
-  color: #1e3a8a; /* Clinical blue color */
-  margin-bottom: 20px;
-  font-family: "Futura Std Condensed Light", sans-serif;
+  font-size: 2rem;
+  color: #0000; /* Soft blue */
+  margin-bottom: 30px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
   text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: linear-gradient(to right, #1abfce, #006D77); /* Gradient title */
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
-/* Chart container */
-.chart-container {
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto; /* Centered container */
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
+/* Grid for stat containers */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 boxes per row */
+  gap: 20px; /* Adjust gap between boxes */
+  margin-top: 20px;
+  animation: fadeIn 0.8s ease-in-out; /* Animation on load */
+}
+
+/* Each individual stat box container */
+.stat-container {
+  background: #ffffff;
+  border-radius: 12px;
   padding: 20px;
-  background-color: #ffffff; /* White background for a clean look */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Softer, larger shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  text-align: center;
+  border-left: 8px solid #006D77; /* Accent color line */
+  backdrop-filter: blur(8px); /* Soft blur effect for modern touch */
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 20px;
+  justify-content: center;
+  height: 120px; /* Decreased height for smaller boxes */
 }
 
-/* Responsive canvas settings */
-canvas {
-  width: 100%;
-  height: auto;
-  max-height: 400px; /* Maintain aspect ratio for smaller screens */
+.stat-container:hover {
+  transform: translateY(-8px); /* Lift effect */
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
+  background-color: #f0f9ff; /* Light background shift on hover */
+}
+
+/* Stat container paragraph styling */
+.stat-container p {
+  margin: 0;
+  font-size: 1.1em; /* Slightly smaller font size */
+  color: #333; /* Dark text */
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  h2 {
+    font-size: 1.8rem; /* Slightly smaller title for medium screens */
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for medium screens */
+  }
+
+  .stat-container {
+    height: 100px; /* Further reduce height on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  h2 {
+    font-size: 1.4rem; /* Smaller title on mobile */
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr; /* Single column for small screens */
+  }
+
+  .stat-container {
+    height: 80px; /* Smaller boxes on mobile */
+  }
+}
+
+/* Keyframe animation for fading in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Patients container */
