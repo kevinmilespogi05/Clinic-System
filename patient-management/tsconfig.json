@@ -28,6 +28,6 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
-    
+    "typeRoots": ["node_modules/@types", "src/typings"],
   }
 }
