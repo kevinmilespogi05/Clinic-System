@@ -16,5 +16,11 @@
     <p><strong>Description:</strong> {{ appointment.description || 'N/A' }}</p>
     <p><strong>Payment Status:</strong> {{ appointment.payment_status }}</p>
     <p><strong>Total Amount:</strong> {{ totalAmount | currency }}</p>
+  
+    <!-- Cancel Button to redirect to appointments component -->
+    <button (click)="cancel()">Cancel</button>
   </div>
+
+  <!-- Payment Reference Container -->
+  <div #paymentRef></div>
 </div>

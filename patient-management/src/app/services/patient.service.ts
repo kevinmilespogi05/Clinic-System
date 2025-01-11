@@ -68,6 +68,17 @@ export class PatientService {
       }
       return this.http.get<any>(url).pipe(catchError(this.handleError));
     }
+
+    updateAppointmentStatus(appointmentId: number, paymentStatus: string): Observable<any> {
+      const url = `${this.baseUrl}/api/appointments/update_status.php`; // Adjust the URL as needed
+      const body = {
+        appointment_id: appointmentId,
+        payment_status: paymentStatus, // Use 'payment_status' instead of 'status'
+      };
+    
+      return this.http.post<any>(url, body);
+    }
+    
   
     // Book Appointment
     bookAppointment(data: any): Observable<any> {

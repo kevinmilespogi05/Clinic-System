@@ -11,19 +11,19 @@ $conn = $database->getConnection();
 $data = json_decode(file_get_contents("php://input"));
 
 try {
-    if (isset($data->appointment_id) && isset($data->status)) {
+    if (isset($data->appointment_id) && isset($data->payment_status)) {
         $appointment_id = $data->appointment_id;
-        $status = $data->status;
+        $payment_status = $data->payment_status;
 
-        $query = "UPDATE appointments SET status = :status WHERE id = :appointment_id";
+        $query = "UPDATE appointments SET payment_status = :payment_status WHERE id = :appointment_id";
         $stmt = $conn->prepare($query);
-        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':payment_status', $payment_status);
         $stmt->bindParam(':appointment_id', $appointment_id);
 
         if ($stmt->execute()) {
-            echo json_encode(["message" => "Appointment status updated successfully."]);
+            echo json_encode(["message" => "Payment status updated successfully."]);
         } else {
-            echo json_encode(["error" => "Failed to update appointment status."]);
+            echo json_encode(["error" => "Failed to update payment status."]);
         }
     } else {
         echo json_encode(["error" => "Invalid data."]);
@@ -31,4 +31,5 @@ try {
 } catch (Exception $e) {
     echo json_encode(["error" => "Error: " . $e->getMessage()]);
 }
+
 ?>
