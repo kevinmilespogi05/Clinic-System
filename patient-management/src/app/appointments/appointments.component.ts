@@ -23,6 +23,7 @@ export class AppointmentsComponent implements OnInit {
   showBookingModal: boolean = false;
   showPaymentModal: boolean = false;
   cancellationReason: string = '';
+  otherReason: string = ''; 
   appointmentDescription: string = '';
   appointmentToCancel: number | null = null;
   selectedSlot: any = null;
@@ -179,27 +180,55 @@ export class AppointmentsComponent implements OnInit {
   }
   
 
+  cancellationReasons: string[] = [
+    'Scheduling conflict',
+    'Health issue',
+    'Changed mind',
+    'Found alternative provider',
+    'Other'
+  ];
+  
   openCancelModal(appointmentId: number): void {
     this.appointmentToCancel = appointmentId;
     this.showModal = true;
-}
-
+  }
+  
   closeCancelModal(): void {
     this.showModal = false;
-    this.cancellationReason = '';
+    this.cancellationReason = ''; // Reset reason on modal close
+    this.otherReason = ''; // Reset custom reason on modal close
   }
-
+  
+  onReasonChange(): void {
+    // Clear the custom reason input when a non-'Other' reason is selected
+    if (this.cancellationReason !== 'Other') {
+      this.otherReason = '';
+    }
+  }
+  
   cancelAppointment(appointmentId: number | null): void {
     if (appointmentId === null) {
       Swal.fire('Error', 'Invalid appointment ID.', 'error');
       return;
     }
+  
     if (this.cancellationReason.trim() === '') {
-      Swal.fire('Error', 'Please provide a cancellation reason.', 'error');
+      Swal.fire('Error', 'Please select a cancellation reason.', 'error');
       return;
     }
   
-    this.patientService.cancelAppointmentWithReason(appointmentId, this.cancellationReason).subscribe(
+    // Use the custom reason if 'Other' is selected
+    const finalReason =
+      this.cancellationReason === 'Other' && this.otherReason.trim() !== ''
+        ? this.otherReason.trim()
+        : this.cancellationReason;
+  
+    if (this.cancellationReason === 'Other' && finalReason === '') {
+      Swal.fire('Error', 'Please provide a custom cancellation reason.', 'error');
+      return;
+    }
+  
+    this.patientService.cancelAppointmentWithReason(appointmentId, finalReason).subscribe(
       (response) => {
         if (response.message === 'Appointment cancelled successfully.') {
           Swal.fire('Success', 'Appointment cancelled successfully', 'success');
@@ -213,8 +242,8 @@ export class AppointmentsComponent implements OnInit {
         Swal.fire('Error', 'An error occurred while canceling the appointment', 'error');
       }
     );
-}
-
+  }
+  
   getStatusClass(status: string): string {
     switch (status.toLowerCase()) {
       case 'pending':
@@ -302,11 +331,8 @@ export class AppointmentsComponent implements OnInit {
           Swal.fire('Success', 'Refund successfully processed!', 'success');
           this.fetchAppointments(); // Refresh the appointment list
   
-          // After refund is processed, hide the refund button and show delete button
-          const appointment = this.appointments.find(appointment => appointment.id === appointmentId);
-          if (appointment) {
-            appointment.refundProcessed = true; // Set the refund status
-          }
+          // After refund is processed, delete the appointment
+          this.deleteAppointment(appointmentId);
         } else {
           Swal.fire('Error', response.message || 'Refund failed. Please try again.', 'error');
         }
@@ -316,7 +342,8 @@ export class AppointmentsComponent implements OnInit {
         Swal.fire('Error', 'An error occurred while processing the refund.', 'error');
       }
     );
-  }  
+  }
+  
 
   redirectToPayment(appointment: any): void {
     this.router.navigate(['/payment'], { queryParams: { appointmentId: appointment.id } });
