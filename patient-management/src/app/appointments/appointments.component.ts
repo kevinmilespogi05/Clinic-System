@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 export class AppointmentsComponent implements OnInit {
   appointments: any[] = [];
   selectedDate: Date = new Date(2025, 0, 1); // January 1, 2025
+  selectedTime: string = '16:00:00'; // default time, you can modify as needed
   currentMonth: number = 0; // Initialize to January (0)
   currentYear: number = 2025; // Initialize to 2025
   selectedAppointment: any;
@@ -36,6 +37,8 @@ export class AppointmentsComponent implements OnInit {
   billingAddress: string = '';
   appointmentToPay: any = null;
   inputAmount: number | null = null;
+  showRescheduleModal: boolean = false;
+  appointmentToReschedule: any = null;
 
   constructor(private patientService: PatientService, private router: Router) {} // Inject Router
 
@@ -146,6 +149,7 @@ export class AppointmentsComponent implements OnInit {
       return appointmentDate.toLocaleDateString() === date.toLocaleDateString();
     });
   }
+  
   
   
 
@@ -318,6 +322,21 @@ export class AppointmentsComponent implements OnInit {
     });
   }
   
+  handleRefund(appointment: any): void {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to process the refund for this appointment?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Refund',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.processRefund(appointment.id);
+      }
+    });
+  }
+  
   processRefund(appointmentId: number): void {
     // Check if appointmentId is valid
     if (!appointmentId) {
@@ -365,7 +384,55 @@ export class AppointmentsComponent implements OnInit {
         return '';
     }
   }
-  
+
+// Separate function to open the reschedule modal
+openRescheduleModal(appointment: any): void {
+  this.appointmentToReschedule = appointment;
+  this.showRescheduleModal = true;  // Show the reschedule modal
+}
+
+// Close the reschedule modal
+closeRescheduleModal(): void {
+  this.showRescheduleModal = false;
+  this.appointmentToReschedule = null;  // Reset the appointment to reschedule
+}
+
+
+// Method to handle rescheduling the appointment
+rescheduleAppointment(newDate: Date, newTime: string): void {
+  if (this.appointmentToReschedule) {
+      // Adjust the date to UTC+8 (Philippine timezone)
+      const adjustedDate = new Date(newDate.getTime() - newDate.getTimezoneOffset() * 60000);
+      const formattedDate = adjustedDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+
+      // Ensure the time is in the correct format (HH:mm:ss)
+      const formattedTime = newTime; // Example: '16:00:00'
+
+      const newSlot = {
+          date: formattedDate,
+          time: formattedTime
+      };
+
+      // Call the service to update the appointment with the new date and time
+      this.patientService.rescheduleAppointment(
+          this.appointmentToReschedule.id,
+          newSlot
+      ).subscribe(
+          (response) => {
+              Swal.fire('Success', 'Appointment rescheduled successfully.', 'success');
+              this.fetchAppointments();  // Refresh the appointment list to reflect changes
+              this.closeRescheduleModal(); // Close the reschedule modal after rescheduling
+          },
+          (error) => {
+              Swal.fire('Error', 'An error occurred while rescheduling the appointment.', 'error');
+          }
+      );
+  } else {
+      Swal.fire('Error', 'No appointment selected for rescheduling.', 'error');
+  }
+}
+
+
   redirectToPayment(appointment: any): void {
     this.router.navigate(['/payment'], { queryParams: { appointmentId: appointment.id } });
   }

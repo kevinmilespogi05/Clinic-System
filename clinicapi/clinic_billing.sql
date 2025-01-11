@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2025 at 06:21 AM
+-- Generation Time: Jan 11, 2025 at 12:21 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -46,6 +46,13 @@ CREATE TABLE `appointments` (
   `invoice_generated` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `appointments`
+--
+
+INSERT INTO `appointments` (`id`, `user_id`, `username`, `date`, `time`, `description`, `service`, `created_at`, `status`, `cancellation_reason`, `payment_status`, `bill_amount`, `refund_status`, `insurance_provider`, `policy_number`, `invoice_generated`) VALUES
+(60, 3, 'ase', '2024-12-31', '00:00:00', '12312', 'Consultation', '2025-01-11 11:14:46', 'cancelled', 'Health issue', 'paid', 150.00, 'none', NULL, NULL, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -80,8 +87,7 @@ CREATE TABLE `invoices` (
 --
 
 INSERT INTO `invoices` (`id`, `user_id`, `appointment_id`, `services`, `description`, `created_at`) VALUES
-(15, 3, 20, NULL, 'Service: Surgery, Description: 123', '2025-01-10 05:17:14'),
-(16, 3, 21, NULL, 'Service: Surgery, Description: 123', '2025-01-10 05:18:19');
+(17, 3, 59, NULL, 'Service: Surgery, Description: 12312', '2025-01-11 06:18:15');
 
 -- --------------------------------------------------------
 
@@ -183,7 +189,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `insurance_claims`
@@ -195,7 +201,7 @@ ALTER TABLE `insurance_claims`
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `payments`

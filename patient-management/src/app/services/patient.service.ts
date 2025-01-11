@@ -136,13 +136,15 @@ export class PatientService {
     // API call to reschedule appointment (assuming user selects a new slot)
     rescheduleAppointment(appointmentId: number, newSlot: any): Observable<any> {
       return this.http
-        .post<any>(`${this.baseUrl}/api/appointments/reschedule.php`, {
-          appointment_id: appointmentId,
-          new_slot: newSlot,
-        })
-        .pipe(catchError(this.handleError));
-    }
-
+          .post<any>(`${this.baseUrl}/api/appointments/reschedule.php`, {
+              appointment_id: appointmentId,
+              new_slot: newSlot
+          })
+          .pipe(catchError(this.handleError));
+  }
+  
+    
+  
     checkAppointmentConflict(userId: number, date: string): Observable<any> {
       return this.http.post<any>(`${this.baseUrl}/api/appointments/checkConflict.php`, {
         user_id: userId,
