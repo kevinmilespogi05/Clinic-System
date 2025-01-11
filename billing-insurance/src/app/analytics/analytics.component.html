@@ -1,16 +1,23 @@
 <div class="analytics-container">
   <div class="analytics-summary-container">
-    <h2><i class="bi bi-bar-dash"></i>Welcome to Admin Dashboard!</h2>
-    <div *ngIf="combinedStats">
-      <div class="stat-container">
-        <p><strong>Total Appointments:</strong> {{ combinedStats.total_appointments }}</p>
+    <h2><i class="bi bi-bar-dash"></i> Welcome to Admin Dashboard!</h2>
+    <div class="stats-boxes">
+      <div class="stat-box appointments">
+        <i class="bi bi-calendar-check-fill stat-icon"></i>
+        <div class="stat-content">
+          <p class="stat-number">{{ combinedStats.total_appointments }}</p>
+          <p class="stat-label">Total Appointments</p>
+        </div>
       </div>
-      <div class="stat-container">
-        <p><strong>Total Patients:</strong> {{ combinedStats.total_patients }}</p>
+      <div class="stat-box patients">
+        <i class="bi bi-person-fill stat-icon"></i>
+        <div class="stat-content">
+          <p class="stat-number">{{ combinedStats.total_patients }}</p>
+          <p class="stat-label">Total Patients</p>
+        </div>
       </div>
     </div>
   </div>
-
 
   <div class="patients-container">
     <h2><i class="bi bi-people"></i> Patient Previews</h2>
@@ -21,7 +28,7 @@
       <p><strong>Date of Birth:</strong> {{ patient.date_of_birth | date }}</p>
       <p><strong>Medical History:</strong> {{ patient.medical_history }}</p>
     </div>
-  </div>
+  </div>  
 
   <div class="transactions-container">
     <h2><i class="bi bi-receipt"></i> Important Transactions/Processes</h2>
@@ -34,7 +41,10 @@
     </div>
   </div>
 
-  <div class="admin-container">
-    <!-- Admin content here, hidden by CSS -->
+  <div class="data-analytics-container">
+    <h2><i class="bi bi-graph-up-arrow"></i> Data Analytics Preview</h2>
+    <div class="chart-container">
+      <canvas id="combinedStatsChart"></canvas>
+    </div>
   </div>
 </div>
