@@ -366,3 +366,25 @@ textarea:focus, input:focus, select:focus {
     width: 100%;
   }
 }
+
+/* Pay Now Button Styling */
+.pay-now-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  width: 100%; /* Full width button */
+  margin-top: 20px; /* Spacing for better layout */
+}
+
+.pay-now-btn:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+
+

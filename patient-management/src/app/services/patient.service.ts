@@ -139,10 +139,6 @@ export class PatientService {
       });
     }
     
-    
-
-
-
   // Combined Stats (Billing + Appointments)
   getCombinedStats(): Observable<any> {
     return new Observable((observer) => {

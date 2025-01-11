@@ -4,6 +4,7 @@ import { PatientService } from '../services/patient.service';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-appointments',
@@ -35,7 +36,7 @@ export class AppointmentsComponent implements OnInit {
   appointmentToPay: any = null;
   inputAmount: number | null = null;
 
-  constructor(private patientService: PatientService) {}
+  constructor(private patientService: PatientService, private router: Router) {} // Inject Router
 
   ngOnInit(): void {
     this.fetchAppointments();
@@ -177,58 +178,7 @@ export class AppointmentsComponent implements OnInit {
     }
   }
   
-  openPaymentModal(appointment: any): void {
-    this.appointmentToPay = appointment;
-    this.selectedService = appointment.service;
-    this.showPaymentModal = true;
-  }
 
-  closePaymentModal(): void {
-    this.showPaymentModal = false;
-    this.creditCardNumber = '';
-    this.expiryDate = '';
-    this.cvv = '';
-    this.inputAmount = null;
-  }
-
-  processPayment(event: Event): void {
-    event.preventDefault();
-  
-    if (this.inputAmount > this.billAmount) {
-      Swal.fire('Error', `Amount cannot exceed $${this.billAmount}.`, 'error');
-      return;
-    }
-  
-    const amountToPay = this.inputAmount || this.billAmount;
-  
-    if (!this.creditCardNumber || !this.expiryDate || !this.cvv || !this.cardholderName || !this.billingAddress) {
-      Swal.fire('Error', 'Please complete all the payment fields.', 'error');
-      return;
-    }
-  
-    const paymentDetails = {
-      user_id: this.appointmentToPay.user_id,
-      appointment_id: this.appointmentToPay.id,
-      amount: amountToPay,
-      payment_method: 'credit card',
-    };
-  
-    this.patientService.processPayment(paymentDetails).subscribe(
-      (response) => {
-        if (response.success) {
-          Swal.fire('Success', 'Payment successful!', 'success');
-          this.appointmentToPay.payment_status = 'paid';  // Update payment status
-          this.fetchAppointments();
-          this.closePaymentModal();
-        } else {
-          Swal.fire('Error', 'Payment failed. Please try again.', 'error');
-        }
-      },
-      (error) => Swal.fire('Error', 'An error occurred while processing the payment.', 'error')
-    );
-  }
-  
-  
   openCancelModal(appointmentId: number): void {
     this.appointmentToCancel = appointmentId;
     this.showModal = true;
@@ -367,4 +317,8 @@ export class AppointmentsComponent implements OnInit {
       }
     );
   }  
+
+  redirectToPayment(appointment: any): void {
+    this.router.navigate(['/payment'], { queryParams: { appointmentId: appointment.id } });
+  }
 }

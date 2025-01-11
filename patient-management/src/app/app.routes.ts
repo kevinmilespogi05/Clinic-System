@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
+import { PaymentComponent } from './payment/payment.component';
 
 // Define the routes
 export const routes: Routes = [
@@ -23,6 +24,7 @@ export const routes: Routes = [
     component: SideNavComponent,
     children: [
       { path: 'appointments', component: AppointmentsComponent },
+      { path: 'payment', component: PaymentComponent }, 
       { path: 'billing', component: BillingComponent },
       { path: 'insurance', component: InsuranceComponent },
       { path: 'profile', component: ProfileComponent },
