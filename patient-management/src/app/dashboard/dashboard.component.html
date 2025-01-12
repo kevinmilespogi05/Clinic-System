@@ -1,0 +1,23 @@
+<div class="dashboard-container">
+    <div class="card upcoming-appointments-card">
+      <div class="card-header">
+        <h2>Upcoming Appointments</h2>
+      </div>
+  
+      <div class="appointments-list">
+        <!-- Loop through appointments to display them -->
+        <div *ngFor="let appointment of appointments" class="appointment-item">
+          <div class="appointment-info">
+            <p><strong>Day:</strong> {{ appointment.day }}</p>
+            <p><strong>Date:</strong> {{ appointment.date }}</p>
+            <p><strong>Time:</strong> {{ appointment.time }}</p>
+          </div>
+          
+  
+      <!-- If no upcoming appointments, show this message -->
+      <div *ngIf="appointments.length === 0" class="no-appointments">
+        <p>No upcoming appointments.</p>
+      </div>
+    </div>
+  </div>
+  

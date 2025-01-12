@@ -1,0 +1,161 @@
+/* General body styling */
+body {
+    background-color: #f4f6f7; /* Light neutral background for the body */
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif; /* Modern font */
+  }
+  
+  /* Dashboard container */
+  .dashboard-container {
+    margin: 30px; /* Increased margin */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Upcoming appointments card */
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 40px; /* Increased padding */
+    background-color: #ffffff; /* Clean white background */
+    border-radius: 16px; /* Larger border radius */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
+    max-width: 100%;
+    margin: 30px auto; /* Increased margin */
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .card-header h2 {
+    font-size: 2rem; /* Increased font size */
+    font-weight: 700;
+    margin-bottom: 30px; /* Increased margin */
+  }
+  
+  /* Hover effect on the card */
+  .card:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+  }
+  
+  /* Appointments list */
+  .appointments-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Increased gap */
+  }
+  
+  .appointment-item {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fafafa; /* Slightly darker background */
+    padding: 15px; /* Increased padding */
+    border-radius: 12px; /* Larger border radius */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
+  }
+  
+  .appointment-info {
+    flex: 1;
+  }
+  
+  .appointment-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  button.view-btn {
+    padding: 14px 24px; /* Larger padding */
+    background-color: #62c9b1; /* Mint green for buttons */
+    color: white;
+    font-size: 1.2rem; /* Larger font size */
+    font-weight: 600;
+    border: none;
+    border-radius: 10px; /* Larger border radius */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  button.view-btn:hover {
+    background-color: #4db79e; /* Darker mint green on hover */
+    transform: translateY(-3px); /* Slight lift effect */
+  }
+  
+  /* No appointments message */
+  .no-appointments {
+    text-align: center;
+    font-size: 1.25rem; /* Larger font size */
+    color: #34495e; /* Dark gray */
+  }
+  
+  /* Status badge styling */
+  .status-badge {
+    display: inline-block;
+    padding: 10px 16px; /* Larger padding */
+    border-radius: 14px; /* Larger border radius */
+    font-size: 1.2rem; /* Larger font size */
+    font-weight: 600;
+    text-align: center;
+    color: white;
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 1024px) {
+    .card {
+      padding: 30px;
+    }
+  
+    .appointment-info p {
+      font-size: 1.1rem; /* Larger font size */
+    }
+  
+    button.view-btn {
+      font-size: 1.1rem; /* Larger font size */
+      padding: 12px 20px; /* Larger padding */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .card {
+      padding: 25px;
+      margin: 15px;
+    }
+  
+    .appointment-info p {
+      font-size: 1.1rem; /* Larger font size */
+    }
+  
+    button.view-btn {
+      font-size: 1.1rem;
+      padding: 12px 18px; /* Larger padding */
+    }
+  
+    /* Stack the appointment button vertically on smaller screens */
+    button.view-btn {
+      width: 100%;
+      margin-bottom: 15px; /* Increased margin */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    /* Adjust button size on very small screens */
+    button.view-btn {
+      font-size: 1rem; /* Larger font size */
+      padding: 10px 18px; /* Larger padding */
+    }
+  }
+  
+  /* Status colors */
+  .status-pending {
+    background-color: #f39c12;
+  }
+  
+  .status-approved {
+    background-color: #27ae60;
+  }
+  
+  .status-declined {
+    background-color: #e74c3c;
+  }
+  

@@ -58,6 +58,13 @@ export class PatientService {
     });
   }
 
+  // Fetch Upcoming Appointments
+  fetchUpcomingAppointments(userId: number): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseUrl}/api/appointments/get_dashboard_appointments.php?user_id=${userId}`
+    ).pipe(catchError(this.handleError));
+  }
+
   // Appointments Management
   getAppointments(userId?: number, role?: string): Observable<any> {
     let url = `${this.baseUrl}/api/appointments/get_appointments.php`;
