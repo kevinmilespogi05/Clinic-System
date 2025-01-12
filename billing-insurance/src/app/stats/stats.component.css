@@ -1,35 +1,92 @@
 /* Overall container for analytics */
 .analytics-container {
-    position: relative;
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    background-color: #f4f6f9; /* Light clinical background */
-  }
-  
-  /* Title */
-  h2 {
-    font-size: 1.75rem;
-    color: #1e3a8a; /* Clinical blue color */
-    margin-bottom: 20px;
-    font-family: "Futura Std Condensed Light", sans-serif;
-    text-align: center;
-  }
-  
-  /* Chart container */
+  position: relative;
+  width: 100%;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  background-color: #f4f6f9;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Title */
+h2 {
+  font-size: 2rem;
+  color: #0d47a1;
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* Chart container */
+.chart-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 12px;
+  padding: 30px 20px;
+  background-color: #ffffff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect for chart container */
+.chart-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Canvas styling for better alignment */
+canvas {
+  width: 100% !important;
+  max-width: 600px;
+  height: auto !important;
+}
+
+/* Icons styling */
+i.bi {
+  margin-right: 10px;
+  color: #0d47a1;
+  font-size: 1.5rem;
+  vertical-align: middle;
+}
+
+/* Admin container (hidden by default) */
+.admin-container {
+  display: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
   .chart-container {
-    width: 100%;
-    max-width: 1000px;
-    margin: 0 auto; /* Centered container */
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    padding: 20px;
-    background-color: #ffffff; /* White background for a clean look */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+      padding: 20px 10px;
   }
-  
-  
+
+  h2 {
+      font-size: 1.5rem;
+  }
+
+  canvas {
+      max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .analytics-container {
+      padding: 20px 10px;
+  }
+
+  .chart-container {
+      padding: 15px;
+  }
+
+  h2 {
+      font-size: 1.25rem;
+  }
+}

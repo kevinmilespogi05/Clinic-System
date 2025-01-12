@@ -17,6 +17,7 @@ export class AnalyticsComponent implements OnInit {
   transactions: any[] = [];
   appointments: any[] = [];
   pendingAppointments: any[] = [];
+  invoices: any[] = [];
 
   constructor(private patientService: PatientService) {}
 
@@ -25,6 +26,7 @@ export class AnalyticsComponent implements OnInit {
     this.fetchPatients();
     this.fetchTransactions();
     this.loadAppointments();
+    this.fetchInvoices();
   }
 
   fetchCombinedStats(): void {
@@ -32,7 +34,6 @@ export class AnalyticsComponent implements OnInit {
       (response: any) => {
         if (response) {
           this.combinedStats = response;
-          this.renderCombinedChart(response);
         } else {
           console.error('Failed to fetch stats:', response.message);
         }
@@ -74,6 +75,21 @@ export class AnalyticsComponent implements OnInit {
     );
   }
 
+  fetchInvoices(): void {
+    this.patientService.getInvoices().subscribe(
+      (response: any) => {
+        if (response) {
+          this.invoices = response;
+        } else {
+          console.error('Failed to fetch invoices:', response.message);
+        }
+      },
+      (error: any) => {
+        console.error('Error fetching invoices:', error);
+      }
+    );
+  }
+
   loadAppointments(): void {
     this.patientService.getAppointments().subscribe(
       (data: any) => {
@@ -100,63 +116,5 @@ export class AnalyticsComponent implements OnInit {
         Swal.fire('Error', 'Unable to load appointments.', 'error');
       }
     );
-  }
-
-  renderCombinedChart(stats: any): void {
-    const ctx = document.getElementById(
-      'combinedStatsChart'
-    ) as HTMLCanvasElement;
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: [
-          'Paid Appointments',
-          'Unpaid Appointments',
-          'Total Appointments',
-          'Total Patients',
-          'Booked',
-          'Cancelled',
-        ],
-        datasets: [
-          {
-            label: 'Billing Stats',
-            data: [
-              stats.paid_invoices,
-              stats.unpaid_invoices,
-              0,
-              0,
-              0,
-              0,
-            ],
-            backgroundColor: ['#4caf50', '#f44336', '#ffffff', '#ffffff', '#ffffff', '#ffffff'],
-          },
-          {
-            label: 'Appointments Stats',
-            data: [
-              0,
-              0,
-              stats.total_appointments,
-              stats.total_patients,
-              stats.booked_count,
-              stats.cancelled_count,
-            ],
-            backgroundColor: ['#ffffff', '#ffffff', '#4caf50', '#2196f3', '#ff9800', '#f44336'],
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-        plugins: {
-          legend: {
-            position: 'top',
-          },
-        },
-      },
-    });
   }
 }

@@ -2,79 +2,71 @@
 .analytics-container {
   position: relative;
   width: 100%;
-  padding: 20px 10px;
+  padding: 20px 15px;
   box-sizing: border-box;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
-  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  background-color: #f9f9f9;
 }
 
 /* Title */
 h2 {
-  font-size: 1.5rem; /* Smaller font size */
-  color: #000;
+  font-size: 1.8rem;
   font-family: 'Futura Std Condensed Light', sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   text-align: center;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   background: linear-gradient(to right, #000000, #006d77);
   -webkit-background-clip: text;
   color: transparent;
-  padding: 25px;
+  padding: 20px 0;
 }
 
 /* Stats Boxes */
 .stats-boxes {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
 }
 
 .stat-box {
   flex: 1;
-  max-width: 200px; /* Reduced width */
+  max-width: 220px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 10px; /* Smaller padding */
-  border-radius: 10px;
+  padding: 15px;
+  border-radius: 12px;
   background: linear-gradient(135deg, #ffffff, #e8faff);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .stat-box:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 .stat-icon {
-  font-size: 2rem; /* Smaller icon size */
+  font-size: 2.2rem;
   color: #006d77;
   margin-bottom: 10px;
 }
 
-.stat-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .stat-number {
-  font-size: 1.8rem; /* Smaller font size */
+  font-size: 2rem;
   font-weight: bold;
   color: #006d77;
   margin-bottom: 5px;
 }
 
 .stat-label {
-  font-size: 0.8rem; /* Smaller font size */
-  font-weight: 500;
+  font-size: 0.9rem;
   color: #333;
   text-transform: uppercase;
 }
@@ -98,78 +90,96 @@ h2 {
 
 /* Patients Container */
 .patients-container {
-  padding: 15px; /* Smaller padding */
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
   margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.patients-container h2 {
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 10px;
-  font-weight: 600;
 }
 
 .patient-item {
   background-color: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  padding: 10px; /* Smaller padding */
-  margin-bottom: 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .patient-item:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  transform: translateY(-3px);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
 }
 
 .patient-item p {
-  font-size: 12px; /* Smaller font size */
+  font-size: 14px;
   color: #555;
-  margin: 5px 0;
-}
-
-.patient-item p strong {
-  color: #333;
+  margin: 4px 0;
 }
 
 /* Transactions Container */
 .transactions-container {
   margin-top: 20px;
-  padding: 15px; /* Smaller padding */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+/* Invoices Container */
+.invoices-container {
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  margin-top: 20px;
+}
+
+.invoice-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+  padding: 15px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.invoice-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+}
+
+.invoice-item p {
+  font-size: 14px;
+  color: #555;
+  margin: 4px 0;
 }
 
 /* Overall Layout Alignment */
 .analytics-summary-container,
 .patients-container,
 .transactions-container,
-.data-analytics-container {
+.invoices-container {
   width: 100%;
-  max-width: 1700px; /* Reduced max width */
+  max-width: 1500px;
   margin: 0 auto;
 }
 
 /* Responsive Behavior */
 @media (max-width: 768px) {
   .stats-boxes {
-    flex-wrap: wrap;
-    gap: 8px; /* Reduced gap */
+    gap: 10px;
   }
 
   .stat-box {
-    width: 100%; /* Stacked layout */
+    width: 100%;
   }
 
   .patients-container,
   .transactions-container,
-  .data-analytics-container {
-    padding: 10px; /* Adjusted padding for smaller screens */
+  .invoices-container {
+    padding: 15px;
   }
 }
