@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PatientService } from '../services/patient.service';
 import { Chart } from 'chart.js/auto';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-analytics',
@@ -14,6 +15,8 @@ export class AnalyticsComponent implements OnInit {
   patients: any[] = [];
   combinedStats: any;
   transactions: any[] = [];
+  appointments: any[] = [];
+  pendingAppointments: any[] = [];
 
   constructor(private patientService: PatientService) {}
 
@@ -21,6 +24,7 @@ export class AnalyticsComponent implements OnInit {
     this.fetchCombinedStats();
     this.fetchPatients();
     this.fetchTransactions();
+    this.loadAppointments();
   }
 
   fetchCombinedStats(): void {
@@ -70,6 +74,34 @@ export class AnalyticsComponent implements OnInit {
     );
   }
 
+  loadAppointments(): void {
+    this.patientService.getAppointments().subscribe(
+      (data: any) => {
+        if (data && data.appointments && Array.isArray(data.appointments)) {
+          this.pendingAppointments = data.appointments
+            .filter((appt: any) => appt.status === 'pending')
+            .map((appointment: any) => ({
+              ...appointment,
+              patient_name: appointment.username || 'Unknown Patient',
+            }));
+
+          this.appointments = data.appointments
+            .filter((appt: any) => appt.status !== 'pending')
+            .map((appointment: any) => ({
+              ...appointment,
+              patient_name: appointment.username || 'Unknown Patient',
+            }));
+        } else {
+          Swal.fire('Error', 'Invalid data format', 'error');
+        }
+      },
+      (error) => {
+        console.error('Error loading appointments:', error);
+        Swal.fire('Error', 'Unable to load appointments.', 'error');
+      }
+    );
+  }
+
   renderCombinedChart(stats: any): void {
     const ctx = document.getElementById(
       'combinedStatsChart'
@@ -94,7 +126,7 @@ export class AnalyticsComponent implements OnInit {
               0,
               0,
               0,
-              0, 
+              0,
             ],
             backgroundColor: ['#4caf50', '#f44336', '#ffffff', '#ffffff', '#ffffff', '#ffffff'],
           },
