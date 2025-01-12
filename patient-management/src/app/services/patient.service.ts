@@ -163,11 +163,18 @@ export class PatientService {
   // Get Available Slots for a Date
   getAvailableSlots(date: string): Observable<any> {
     return this.http
-      .get<any>(
-        `${this.baseUrl}/api/appointments/get_available_slots.php?date=${date}`
-      )
-      .pipe(catchError(this.handleError));
+      .get<any>(`${this.baseUrl}/api/appointments/get_available_slots.php?date=${date}`)
+      .pipe(
+        catchError((error) => {
+          if (error.status === 200 && error.error) {
+            // Handle non-JSON response here (e.g., HTML error page)
+            console.error('Non-JSON response:', error.error);
+          }
+          return throwError(() => new Error('Something went wrong'));
+        })
+      );
   }
+  
 
   // Combined Stats (Billing + Appointments)
   getCombinedStats(): Observable<any> {

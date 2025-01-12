@@ -22,7 +22,8 @@ try {
         
         // Convert the date to the correct format (Y-m-d)
         $date = date('Y-m-d', strtotime($data->date));
-        $time = date('H:i:s', strtotime($data->time)); // Convert time to H:i:s format
+        // Convert time to 24-hour format (H:i:s) for database insertion
+        $time = date('H:i:s', strtotime($data->time)); // Store time as H:i:s for MySQL
 
         // Debug: Print the input date and time for conflict checking
         error_log("Booking Attempt: Date: $date, Time: $time");
@@ -75,6 +76,9 @@ try {
             // Calculate the bill (assuming 1 day of service for simplicity)
             $billAmount = $servicePrice;
 
+            // Format the time to 12-hour AM/PM format for response
+            $formattedTime = date('g:i A', strtotime($time)); // Example: 11:00 AM
+
             // Insert the appointment into the database with a status of 'pending'
             $query = "INSERT INTO appointments (user_id, username, date, time, description, status, service, payment_status, bill_amount) 
             VALUES (:user_id, :username, :date, :time, :description, 'pending', :service, 'pending', :bill_amount)";
@@ -83,14 +87,27 @@ try {
             $stmt->bindParam(':user_id', $data->user_id);
             $stmt->bindParam(':username', $username);
             $stmt->bindParam(':date', $date);
-            $stmt->bindParam(':time', $time);
+            $stmt->bindParam(':time', $time); // Store the original 24-hour time in database
             $stmt->bindParam(':description', $data->description);
             $stmt->bindParam(':service', $data->service);
             $stmt->bindParam(':bill_amount', $billAmount);
 
             if ($stmt->execute()) {
-                // Return response indicating successful booking
-                echo json_encode(["message" => "Appointment booked successfully. Please complete the payment to confirm."]);
+                // Return response indicating successful booking, with formatted time
+                echo json_encode([
+                    "message" => "Appointment booked successfully. Please complete the payment to confirm.",
+                    "appointment" => [
+                        "id" => $conn->lastInsertId(),
+                        "user_id" => $data->user_id,
+                        "username" => $username,
+                        "date" => $date,
+                        "time" => $formattedTime, // Return formatted time in the response
+                        "description" => $data->description,
+                        "service" => $data->service,
+                        "status" => "pending",
+                        "bill_amount" => $billAmount
+                    ]
+                ]);
             } else {
                 echo json_encode(["error" => "Failed to book appointment."]);
             }

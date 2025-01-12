@@ -15,16 +15,16 @@ import { Router } from '@angular/router';
 })
 export class AppointmentsComponent implements OnInit {
   appointments: any[] = [];
-  timezoneOffset: number = new Date().getTimezoneOffset() * 60000; // Get local timezone offset in milliseconds
-  currentDate: Date = new Date(2025, 0, 1); // Explicitly set to January 1, 2025
-  currentMonth: number = this.currentDate.getMonth(); // Initialize to January (0-indexed)
-  currentYear: number = this.currentDate.getFullYear(); // Initialize to 2025
+  timezoneOffset: number = new Date().getTimezoneOffset() * 60000; 
+  currentDate: Date = new Date(2025, 0, 1); 
+  currentMonth: number = this.currentDate.getMonth(); 
+  currentYear: number = this.currentDate.getFullYear(); 
   selectedDate: Date = new Date(
     this.currentYear,
     this.currentMonth,
     this.currentDate.getDate()
-  ); // Correctly set to January 1, 2025
-  selectedTime: string = ''; // Default time
+  ); 
+  selectedTime: string = ''; 
 
   selectedAppointment: any;
   showModal: boolean = false;
@@ -46,9 +46,9 @@ export class AppointmentsComponent implements OnInit {
   inputAmount: number | null = null;
   showRescheduleModal: boolean = false;
   appointmentToReschedule: any = null;
-  availableSlots: string[] = ['10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM']; // Available time slots
+  availableSlots: string[] = ['10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM']; 
 
-  constructor(private patientService: PatientService, private router: Router) {} // Inject Router
+  constructor(private patientService: PatientService, private router: Router) {} 
 
   ngOnInit(): void {
     this.fetchAppointments();
@@ -57,35 +57,73 @@ export class AppointmentsComponent implements OnInit {
   fetchAppointments(): void {
     const userId = localStorage.getItem('userId');
     const role = localStorage.getItem('role');
-
+  
     if (userId && role) {
-      // Ensure selectedDate is correctly set before making the API call
       this.selectedDate = new Date(this.currentYear, this.currentMonth, 1);
-
+  
       this.patientService.getAppointments(Number(userId), role).subscribe(
         (response) => {
           if (response.appointments) {
-            this.appointments = response.appointments.map(
-              (appointment: any) => {
-                console.log('Appointment Date:', appointment.date); // Check the format
-                const appointmentDate = new Date(appointment.date);
-                if (isNaN(appointmentDate.getTime())) {
-                  console.error('Invalid date:', appointment.date);
-                }
-                const formattedDate =
-                  appointmentDate.toLocaleDateString('en-US');
-                const dayOfWeek = appointmentDate.toLocaleDateString('en-US', {
-                  weekday: 'long',
-                });
-                return { ...appointment, date: formattedDate, day: dayOfWeek };
+            this.appointments = response.appointments.map((appointment: any) => {
+              // Combine date and time directly
+              const appointmentDateTime = new Date(`${appointment.date}T${appointment.time}`);
+  
+              if (isNaN(appointmentDateTime.getTime())) {
+                console.error('Invalid date/time:', appointment.date, appointment.time);
               }
-            );
+  
+              // No timezone adjustment
+              const formattedDate = appointmentDateTime.toLocaleDateString('en-US');
+              const dayOfWeek = appointmentDateTime.toLocaleDateString('en-US', { weekday: 'long' });
+              const formattedTime = appointmentDateTime.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true,
+              });
+  
+              return {
+                ...appointment,
+                date: formattedDate,
+                day: dayOfWeek,
+                time: formattedTime,
+              };
+            });
           }
         },
         (error) => console.error('Error fetching appointments:', error)
       );
     }
   }
+  
+  
+
+
+  formatTime(date: Date): string {
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12;
+    const displayHours = formattedHours ? formattedHours : 12; 
+    const displayMinutes = minutes < 10 ? '0' + minutes : minutes;
+    return `${displayHours}:${displayMinutes} ${ampm}`;
+  }
+
+  formatTimeFromString(timeStr: string): string {
+    const [time, modifier] = timeStr.split(' '); 
+    const [hours, minutes] = time.split(':').map(Number); 
+  
+    let hoursIn24 = hours;
+    if (modifier === 'PM' && hours !== 12) {
+      hoursIn24 += 12; 
+    } else if (modifier === 'AM' && hours === 12) {
+      hoursIn24 = 0; 
+    }
+  
+    const date = new Date(1970, 0, 1, hoursIn24, minutes);
+
+    return this.formatTime(date);
+  }
+  
 
   changeMonth(direction: string): void {
     if (direction === 'next') {
@@ -103,8 +141,8 @@ export class AppointmentsComponent implements OnInit {
         this.currentMonth--;
       }
     }
-    this.currentDate = new Date(this.currentYear, this.currentMonth, 1); // Update currentDate
-    this.selectedDate = this.currentDate; // Keep selectedDate consistent with currentDate
+    this.currentDate = new Date(this.currentYear, this.currentMonth, 1); 
+    this.selectedDate = this.currentDate;
   }
 
   openBookingModal(date: Date): void {
@@ -120,11 +158,11 @@ export class AppointmentsComponent implements OnInit {
   }
 
   fetchAvailableSlots(date: Date): void {
-    const formattedDate = date.toISOString().split('T')[0]; // YYYY-MM-DD format
+    const formattedDate = date.toISOString().split('T')[0]; 
     this.patientService.getAvailableSlots(formattedDate).subscribe(
       (response) => {
         if (response.slots) {
-          this.availableSlots = response.slots;
+          this.availableSlots = response.slots.map(slot => this.formatTimeFromString(slot));
         } else {
           this.availableSlots = ['10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM'];
         }
@@ -135,7 +173,7 @@ export class AppointmentsComponent implements OnInit {
       }
     );
   }
-
+  
   bookAppointment(): void {
     if (!this.appointmentDescription.trim()) {
       Swal.fire(
@@ -165,9 +203,9 @@ export class AppointmentsComponent implements OnInit {
       this.patientService
         .bookAppointment({
           user_id: Number(userId),
-          date: formattedDate, // Send the correctly formatted date
-          time: this.selectedTime, // Add time to the request
-          day: appointmentDay, // Add day to the request
+          date: formattedDate, 
+          time: this.selectedTime, 
+          day: appointmentDay, 
           description: this.appointmentDescription,
           service: this.selectedService,
           status: 'booked',
@@ -196,7 +234,7 @@ export class AppointmentsComponent implements OnInit {
     }
   }
 
-  // Method to check if an appointment exists on the selected date
+
   isDateBooked(date: Date): boolean {
     const appointmentsOnDate = this.appointments.filter((appointment) => {
       const appointmentDate = new Date(appointment.date);
@@ -205,18 +243,18 @@ export class AppointmentsComponent implements OnInit {
     return appointmentsOnDate.length >= this.availableSlots.length;
   }
 
-  // Implementing the daysInMonth() method
+
   daysInMonth(): Date[] {
     const days: Date[] = [];
-    const lastDayOfMonth = new Date(this.currentYear, this.currentMonth + 1, 0); // Last day of the month
-    const firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1); // First day of the month
+    const lastDayOfMonth = new Date(this.currentYear, this.currentMonth + 1, 0); 
+    const firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1); 
 
     for (
       let date = firstDayOfMonth;
       date <= lastDayOfMonth;
       date.setDate(date.getDate() + 1)
     ) {
-      days.push(new Date(date)); // Push each day of the month
+      days.push(new Date(date)); 
     }
     return days;
   }
@@ -224,13 +262,13 @@ export class AppointmentsComponent implements OnInit {
   calculateBill(): void {
     switch (this.selectedService) {
       case 'Consultation':
-        this.billAmount = 500; // Example amount for consultation
+        this.billAmount = 500; 
         break;
       case 'Surgery':
-        this.billAmount = 5000; // Example amount for surgery
+        this.billAmount = 5000; 
         break;
       case 'Therapy':
-        this.billAmount = 1500; // Example amount for therapy
+        this.billAmount = 1500; 
         break;
       default:
         this.billAmount = 0;
@@ -253,12 +291,12 @@ export class AppointmentsComponent implements OnInit {
 
   closeCancelModal(): void {
     this.showModal = false;
-    this.cancellationReason = ''; // Reset reason on modal close
-    this.otherReason = ''; // Reset custom reason on modal close
+    this.cancellationReason = ''; 
+    this.otherReason = ''; 
   }
 
   onReasonChange(): void {
-    // Clear the custom reason input when a non-'Other' reason is selected
+
     if (this.cancellationReason !== 'Other') {
       this.otherReason = '';
     }
@@ -275,7 +313,7 @@ export class AppointmentsComponent implements OnInit {
       return;
     }
 
-    // Use the custom reason if 'Other' is selected
+
     const finalReason =
       this.cancellationReason === 'Other' && this.otherReason.trim() !== ''
         ? this.otherReason.trim()
@@ -370,7 +408,7 @@ export class AppointmentsComponent implements OnInit {
 
   getPaymentStatusClass(paymentStatus: string): string {
     if (!paymentStatus) {
-      return ''; // Return an empty string if paymentStatus is undefined or null
+      return ''; 
     }
 
     switch (paymentStatus.toLowerCase()) {
@@ -397,7 +435,7 @@ export class AppointmentsComponent implements OnInit {
       if (result.isConfirmed) {
         this.processRefund(appointment.id);
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        this.openBookingModal(appointment); // Reschedule logic can be handled directly here
+        this.openBookingModal(appointment); 
       }
     });
   }
@@ -418,7 +456,7 @@ export class AppointmentsComponent implements OnInit {
   }
 
   processRefund(appointmentId: number): void {
-    // Check if appointmentId is valid
+
     if (!appointmentId) {
       Swal.fire('Error', 'Invalid Appointment ID.', 'error');
       return;
@@ -428,18 +466,16 @@ export class AppointmentsComponent implements OnInit {
       (response) => {
         if (response.success) {
           Swal.fire('Success', 'Refund successfully processed!', 'success');
-          this.fetchAppointments(); // Refresh the appointment list
-
-          // After refund is processed, update the appointment status and delete it
+          this.fetchAppointments(); 
           const appointmentIndex = this.appointments.findIndex(
             (appointment) => appointment.id === appointmentId
           );
           if (appointmentIndex !== -1) {
-            this.appointments[appointmentIndex].payment_status = 'failed'; // Update status to failed after refund
-            this.appointments[appointmentIndex].refund_status = 'processed'; // Update refund status
+            this.appointments[appointmentIndex].payment_status = 'failed'; 
+            this.appointments[appointmentIndex].refund_status = 'processed';
           }
 
-          // After processing the refund, you can delete the appointment
+
           this.deleteAppointment(appointmentId);
         } else {
           Swal.fire(
@@ -473,36 +509,33 @@ export class AppointmentsComponent implements OnInit {
     }
   }
 
-  // Separate function to open the reschedule modal
+
   openRescheduleModal(appointment: any): void {
     this.appointmentToReschedule = appointment;
-    this.showRescheduleModal = true; // Show the reschedule modal
+    this.showRescheduleModal = true; 
   }
 
-  // Close the reschedule modal
+
   closeRescheduleModal(): void {
     this.showRescheduleModal = false;
-    this.appointmentToReschedule = null; // Reset the appointment to reschedule
+    this.appointmentToReschedule = null; 
   }
 
-  // Method to handle rescheduling the appointment
+
   rescheduleAppointment(newDate: Date, newTime: string): void {
     if (this.appointmentToReschedule) {
-      // Adjust the date to UTC+8 (Philippine timezone)
+
       const adjustedDate = new Date(
         newDate.getTime() - newDate.getTimezoneOffset() * 60000
       );
-      const formattedDate = adjustedDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
-
-      // Ensure the time is in the correct format (HH:mm:ss)
-      const formattedTime = newTime; // Example: '16:00:00'
-
+      const formattedDate = adjustedDate.toISOString().split('T')[0]; 
+      const formattedTime = newTime; 
       const newSlot = {
         date: formattedDate,
         time: formattedTime,
       };
 
-      // Call the service to update the appointment with the new date and time
+
       this.patientService
         .rescheduleAppointment(this.appointmentToReschedule.id, newSlot)
         .subscribe(
@@ -512,8 +545,8 @@ export class AppointmentsComponent implements OnInit {
               'Appointment rescheduled successfully.',
               'success'
             );
-            this.fetchAppointments(); // Refresh the appointment list to reflect changes
-            this.closeRescheduleModal(); // Close the reschedule modal after rescheduling
+            this.fetchAppointments(); 
+            this.closeRescheduleModal(); 
           },
           (error) => {
             Swal.fire(
