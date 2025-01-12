@@ -21,7 +21,7 @@
           <span class="day-label">{{ day | date : "EEEE, MMMM d, yyyy" }}</span>
           <button
             *ngIf="!isDateBooked(day)"
-            (click)="openBookingModal(day)"
+            (click)="openBookingModal(day)" 
             class="book-btn"
           >
             <i class="bi bi-calendar-plus"></i> Book
@@ -68,6 +68,14 @@
           </div>
         </div>
 
+        <!-- Reschedule Button -->
+        <button
+          *ngIf="appointment.status === 'cancelled' && appointment.payment_status === 'paid'"
+          class="reschedule-btn"
+          (click)="openRescheduleModal(appointment)">
+          <i class="bi bi-calendar-event"></i> Reschedule
+        </button>
+
         <div class="appointment-actions">
           <button
             class="cancel-btn"
@@ -110,6 +118,36 @@
           >
             <i class="bi bi-arrow-repeat"></i> Refund
           </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reschedule Modal -->
+  <div class="modal" *ngIf="showRescheduleModal">
+    <div class="modal-content">
+      <span class="close-btn" (click)="closeRescheduleModal()">&times;</span>
+      <h3>Reschedule Appointment</h3>
+      <div class="calendar-container">
+        <div class="calendar-header">
+          <button (click)="changeMonth('prev')" class="nav-btn">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+          <span class="month-year">{{ currentMonth | date:'MMMM yyyy' }}</span>
+          <button (click)="changeMonth('next')" class="nav-btn">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+        </div>
+        <div class="calendar-grid">
+          <div class="calendar-day" *ngFor="let day of daysInMonth()">
+            <span class="day-label">{{ day | date:'EEEE, MMMM d, yyyy' }}</span>
+            <button 
+              *ngIf="!isDateBooked(day)"
+              (click)="rescheduleAppointment(day, selectedTime)"  
+              class="bi bi-calendar-check">
+              Select
+            </button>
+          </div>
         </div>
       </div>
     </div>
