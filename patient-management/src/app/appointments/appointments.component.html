@@ -66,6 +66,12 @@
               {{ appointment.refund_status }}
             </span>
           </div>          
+          <div class="appointment-invoice-status">
+            Invoice Status:
+            <span [ngClass]="appointment.invoice_generated ? 'generated' : 'not-generated'">
+              {{ appointment.invoice_generated ? 'Generated' : 'Not Generated' }}
+            </span>
+          </div>          
         </div>
 
         <!-- Reschedule Button -->

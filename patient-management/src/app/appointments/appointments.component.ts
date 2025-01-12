@@ -95,7 +95,7 @@ export class AppointmentsComponent implements OnInit {
     }
   }
   
-  
+
 
 
   formatTime(date: Date): string {
@@ -560,6 +560,9 @@ export class AppointmentsComponent implements OnInit {
       Swal.fire('Error', 'No appointment selected for rescheduling.', 'error');
     }
   }
+
+  
+  
 
   redirectToPayment(appointment: any): void {
     this.router.navigate(['/payment'], {

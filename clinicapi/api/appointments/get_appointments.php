@@ -16,7 +16,7 @@ $appointmentId = isset($_GET['appointmentId']) ? $_GET['appointmentId'] : null; 
 try {
     // Admin role - fetch all appointments
     if ($role === 'admin') {
-        $query = "SELECT id, user_id, username, DATE_FORMAT(date, '%Y-%m-%d') AS date, time, description, status, service, payment_status, refund_status, bill_amount 
+        $query = "SELECT id, user_id, username, DATE_FORMAT(date, '%Y-%m-%d') AS date, time, description, status, service, payment_status, refund_status, bill_amount, invoice_generated 
                   FROM appointments 
                   ORDER BY date ASC, time ASC";
         $stmt = $conn->prepare($query);
@@ -25,7 +25,7 @@ try {
     elseif ($role === 'user' && $id) {
         if ($appointmentId) {
             // If appointmentId is provided, fetch that specific appointment
-            $query = "SELECT id, user_id, username, DATE_FORMAT(date, '%Y-%m-%d') AS date, time, description, status, service, payment_status, refund_status, bill_amount 
+            $query = "SELECT id, user_id, username, DATE_FORMAT(date, '%Y-%m-%d') AS date, time, description, status, service, payment_status, refund_status, bill_amount, invoice_generated 
                       FROM appointments 
                       WHERE user_id = :id AND id = :appointmentId
                       ORDER BY date ASC, time ASC";
@@ -34,7 +34,7 @@ try {
             $stmt->bindParam(':appointmentId', $appointmentId, PDO::PARAM_INT);
         } else {
             // Fetch all appointments for the user if appointmentId is not provided
-            $query = "SELECT id, user_id, username, DATE_FORMAT(date, '%Y-%m-%d') AS date, time, description, status, service, payment_status, refund_status, bill_amount 
+            $query = "SELECT id, user_id, username, DATE_FORMAT(date, '%Y-%m-%d') AS date, time, description, status, service, payment_status, refund_status, bill_amount, invoice_generated 
                       FROM appointments 
                       WHERE user_id = :id 
                       ORDER BY date ASC, time ASC";

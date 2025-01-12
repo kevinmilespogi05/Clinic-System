@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PatientService } from '../services/patient.service';
 import { SafePipe } from '../safe.pipe';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';  // Import the jsPDF-AutoTable plugin
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-billing',
@@ -45,10 +45,8 @@ export class BillingComponent implements OnInit {
   generateInvoice(invoice: any): void {
     const doc = new jsPDF();
     doc.setFont('helvetica', 'normal');
-    
-    // Adding Company Logo and Contact Info
-    const logo = 'path_to_logo.jpg'; // Replace with the actual path to the logo
-    doc.addImage(logo, 'JPEG', 10, 10, 30, 30); // Adjust size and position
+    const logo = 'path_to_logo.jpg';
+    doc.addImage(logo, 'JPEG', 10, 10, 30, 30);
     doc.setFontSize(12);
     doc.text('Your Company Name', 50, 15);
     doc.text('Address: 123 Street, City, Country', 50, 20);
@@ -58,16 +56,11 @@ export class BillingComponent implements OnInit {
     doc.setFontSize(16);
     doc.text('Invoice Receipt', 105, 40, { align: 'center' });
     doc.setFontSize(10);
-
-    // Line separator after the header
     doc.setLineWidth(0.5);
     doc.line(10, 35, 200, 35);
-
-    // Invoice Number and Date
     doc.text(`Invoice Number: ${invoice.invoice_id}`, 10, 45);
     doc.text(`Created At: ${new Date(invoice.invoice_date).toLocaleString()}`, 10, 50);
 
-    // User Details
     doc.text('User Details:', 10, 60);
     doc.text(`Name: ${invoice.user.first_name} ${invoice.user.last_name}`, 10, 70);
     doc.text(`Contact: ${invoice.user.contact_number}`, 10, 80);
@@ -77,7 +70,6 @@ export class BillingComponent implements OnInit {
       90
     );
 
-    // Appointment Details - Table Style
     doc.text('Appointment Details:', 10, 110);
     doc.autoTable({
       startY: 115,
@@ -99,40 +91,30 @@ export class BillingComponent implements OnInit {
       },
     });
 
-    // Payment Details - Table Style
-  // Corrected Y-position for "Payment Details" text
-const paymentDetailsStartY = doc.lastAutoTable.finalY + 10;
+    const paymentDetailsStartY = doc.lastAutoTable.finalY + 10;
+    doc.text('Payment Details:', 10, paymentDetailsStartY);
 
-// Add "Payment Details" text BEFORE the table
-doc.text('Payment Details:', 10, paymentDetailsStartY);
+    doc.autoTable({
+      startY: paymentDetailsStartY + 5,
+      head: [['Amount', 'Method', 'Payment Status']],
+      body: [
+        [
+          `$${invoice.appointment.bill_amount}`,
+          'Credit Card',
+          'Paid',
+        ],
+      ],
+      theme: 'grid',
+      margin: { top: 5 },
+      styles: {
+        cellPadding: 3,
+        fontSize: 10,
+        halign: 'center',
+      },
+    });
 
-// Payment Details - Table Style
-doc.autoTable({
-  startY: paymentDetailsStartY + 5,  // Start table slightly below the text
-  head: [['Amount', 'Method', 'Payment Status']],
-  body: [
-    [
-      invoice.payment && invoice.payment.amount !== null ? `$${invoice.payment.amount}` : 'N/A',
-      invoice.payment && invoice.payment.method ? invoice.payment.method : 'N/A',
-      invoice.payment && invoice.payment.status ? invoice.payment.status : 'Pending',
-    ],
-  ],
-  theme: 'grid',
-  margin: { top: 5 },
-  styles: {
-    cellPadding: 3,
-    fontSize: 10,
-    halign: 'center',
-  },
-});
-
-    // Footer message
     doc.text('Thank you for your payment!', 10, doc.lastAutoTable.finalY + 20);
-
-    // Line separator before footer
     doc.line(10, doc.lastAutoTable.finalY + 25, 200, doc.lastAutoTable.finalY + 25);
-
-    // Save the PDF
     doc.save(`Invoice_${invoice.invoice_id}.pdf`);
   }
 
@@ -140,41 +122,31 @@ doc.autoTable({
     const doc = new jsPDF();
     doc.setFont('helvetica', 'normal');
     
-    // Adding Company Logo and Contact Info
-    const logo = 'path_to_logo.jpg'; // Replace with the actual path to the logo
-    doc.addImage(logo, 'JPEG', 10, 10, 30, 30); // Adjust size and position
-    doc.setFontSize(12);
-    doc.text('Your Company Name', 50, 15);
-    doc.text('Address: 123 Street, City, Country', 50, 20);
-    doc.text('Phone: +123 456 789', 50, 25);
-    doc.text('Email: contact@yourcompany.com', 50, 30);
-
+    doc.setFontSize(40); // Larger font size for "ClinicPoint"
+    doc.text('ClinicPoint', 14, 20);
+    
     doc.setFontSize(16);
     doc.text('Invoice Preview', 105, 40, { align: 'center' });
-    doc.setFontSize(10);
-
-    // Line separator after the header
+    
     doc.setLineWidth(0.5);
-    doc.line(10, 35, 200, 35);
-
-    // Invoice Number and Date
-    doc.text(`Invoice Number: ${invoice.invoice_id}`, 10, 45);
-    doc.text(`Created At: ${new Date(invoice.invoice_date).toLocaleString()}`, 10, 50);
-
-    // User Details
-    doc.text('User Details:', 10, 60);
-    doc.text(`Name: ${invoice.user.first_name} ${invoice.user.last_name}`, 10, 70);
-    doc.text(`Contact: ${invoice.user.contact_number}`, 10, 80);
+    doc.line(10, 45, 200, 45);
+    
+    doc.setFontSize(10);
+    doc.text(`Invoice Number: ${invoice.invoice_id}`, 10, 55);
+    doc.text(`Created At: ${new Date(invoice.invoice_date).toLocaleString()}`, 10, 60);
+    
+    doc.text('User Details:', 10, 75);
+    doc.text(`Name: ${invoice.user.first_name} ${invoice.user.last_name}`, 10, 85);
+    doc.text(`Contact: ${invoice.user.contact_number}`, 10, 95);
     doc.text(
       `Billing Address: ${invoice.user.billing_address}, ${invoice.user.city}, ${invoice.user.province}`,
       10,
-      90
+      105
     );
-
-    // Appointment Details - Table Style
-    doc.text('Appointment Details:', 10, 110);
+  
+    doc.text('Appointment Details:', 10, 120);
     doc.autoTable({
-      startY: 115,
+      startY: 125,
       head: [['Date', 'Time', 'Service', 'Bill Amount']],
       body: [
         [
@@ -192,41 +164,37 @@ doc.autoTable({
         halign: 'center',
       },
     });
-
-    // Payment Details - Table Style
-   // Corrected Y-position for "Payment Details" text
-const paymentDetailsStartY = doc.lastAutoTable.finalY + 10;
-
-// Add "Payment Details" text BEFORE the table
-doc.text('Payment Details:', 10, paymentDetailsStartY);
-
-// Payment Details - Table Style
-doc.autoTable({
-  startY: paymentDetailsStartY + 5,  // Start table slightly below the text
-  head: [['Amount', 'Method', 'Payment Status']],
-  body: [
-    [
-      invoice.payment && invoice.payment.amount !== null ? `$${invoice.payment.amount}` : 'N/A',
-      invoice.payment && invoice.payment.method ? invoice.payment.method : 'N/A',
-      invoice.payment && invoice.payment.status ? invoice.payment.status : 'Pending',
-    ],
-  ],
-  theme: 'grid',
-  margin: { top: 5 },
-  styles: {
-    cellPadding: 3,
-    fontSize: 10,
-    halign: 'center',
-  },
-});
-
-
-    // Footer message
+  
+    const paymentDetailsStartY = doc.lastAutoTable.finalY + 10;
+    doc.text('Payment Details:', 10, paymentDetailsStartY);
+  
+    doc.autoTable({
+      startY: paymentDetailsStartY + 5,
+      head: [['Amount', 'Method', 'Payment Status']],
+      body: [
+        [
+          `$${invoice.appointment.bill_amount}`,
+          'Credit Card',
+          'Paid',
+        ],
+      ],
+      theme: 'grid',
+      margin: { top: 5 },
+      styles: {
+        cellPadding: 3,
+        fontSize: 10,
+        halign: 'center',
+      },
+    });
+  
+    doc.setFontSize(10);
     doc.text('Thank you for your payment!', 10, doc.lastAutoTable.finalY + 20);
-
-    // Create a blob URL and open it in a new tab for preview
+    
+    doc.setLineWidth(0.5);
+    doc.line(10, doc.lastAutoTable.finalY + 25, 200, doc.lastAutoTable.finalY + 25);
+  
     const blob = doc.output('blob');
     const url = URL.createObjectURL(blob);
     window.open(url, '_blank');
   }
-}
+}  
