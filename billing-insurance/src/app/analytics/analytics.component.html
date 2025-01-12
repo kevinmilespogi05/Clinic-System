@@ -21,6 +21,7 @@
 
   <div class="appointments-container">
     <h2><i class="bi bi-calendar3"></i> Upcoming Appointments</h2>
+    <h3>Pending Appointments</h3>
     <div class="pending-appointments">
       <div *ngFor="let appt of pendingAppointments" class="appointment-item">
         <p><strong>Patient Name:</strong> {{ appt.patient_name }}</p>
@@ -29,7 +30,6 @@
       </div>
     </div>
     <div class="other-appointments">
-      <h3>Pending Appointments</h3>
       <div *ngFor="let appt of appointments" class="appointment-item">
         <p><strong>Patient Name:</strong> {{ appt.patient_name }}</p>
         <p><strong>Appointment Date:</strong> {{ appt.date | date }}</p>
