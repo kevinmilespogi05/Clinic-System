@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 12, 2025 at 04:11 AM
+-- Generation Time: Jan 12, 2025 at 07:56 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -28,25 +28,23 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `appointments` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `date` date NOT NULL,
   `time` varchar(10) NOT NULL,
   `description` text DEFAULT NULL,
-  `service` enum('Consultation', 'Surgery', 'Therapy') NOT NULL,
+  `service` enum('Consultation','Surgery','Therapy') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `status` enum('pending', 'booked', 'cancelled', 'approved', 'refunded') NOT NULL DEFAULT 'pending',
+  `status` enum('pending','booked','cancelled','approved','refunded') NOT NULL DEFAULT 'pending',
   `cancellation_reason` varchar(255) DEFAULT NULL,
-  `payment_status` enum('pending', 'paid', 'failed') NOT NULL DEFAULT 'pending',
+  `payment_status` enum('pending','paid','failed') NOT NULL DEFAULT 'pending',
   `bill_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `refund_status` enum('none', 'requested', 'processed', 'failed') NOT NULL DEFAULT 'none',
+  `refund_status` enum('none','requested','processed','failed') NOT NULL DEFAULT 'none',
   `insurance_provider` varchar(255) DEFAULT NULL,
   `policy_number` varchar(255) DEFAULT NULL,
-  `invoice_generated` tinyint(1) NOT NULL DEFAULT 0, -- Default to '0' (Not Generated)
-  PRIMARY KEY (`id`)
+  `invoice_generated` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 
 -- --------------------------------------------------------
 
@@ -76,13 +74,6 @@ CREATE TABLE `invoices` (
   `description` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `invoices`
---
-
-INSERT INTO `invoices` (`id`, `user_id`, `appointment_id`, `services`, `description`, `created_at`) VALUES
-(17, 3, 59, NULL, 'Service: Surgery, Description: 12312', '2025-01-11 06:18:15');
 
 -- --------------------------------------------------------
 
@@ -184,7 +175,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
 
 --
 -- AUTO_INCREMENT for table `insurance_claims`
@@ -196,7 +187,7 @@ ALTER TABLE `insurance_claims`
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `payments`
