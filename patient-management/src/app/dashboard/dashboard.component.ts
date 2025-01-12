@@ -15,11 +15,13 @@ export class DashboardComponent implements OnInit {
   selectedDate: Date;
   currentYear: number = new Date().getFullYear();
   currentMonth: number = new Date().getMonth();
+  claims: any[] = [];  // Declare the claims property
   
   constructor(private patientService: PatientService, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchAppointments();
+    this.loadClaims();  // Method to load insurance claims
   }
 
   fetchAppointments(): void {
@@ -68,4 +70,15 @@ export class DashboardComponent implements OnInit {
     // Navigate to the appointment details page using router
     this.router.navigate(['/appointment-details', appointmentId]);
   }
+
+  // Method to load insurance claims
+  loadClaims(): void {
+    const userId = parseInt(localStorage.getItem('userId') || '0', 10);
+    const isAdmin = localStorage.getItem('role') === 'admin' ? 1 : 0;
+
+    this.patientService.getInsuranceClaims(userId, isAdmin).subscribe((data: any[]) => {
+      this.claims = data;  // Assign the response data to the claims property
+    });
+  }
+
 }

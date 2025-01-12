@@ -21,3 +21,34 @@
     </div>
   </div>
   
+      <!-- Insurance Claim Status Section -->
+      <div class="card insurance-status-card">
+        <div class="card-header">
+          <h2><i class="bi bi-shield-lock"></i> Insurance Claim Status</h2>
+        </div>
+        <div class="insurance-status-list">
+          <div *ngFor="let claim of claims" class="claim-item">
+            <p><strong>Claim ID:</strong> {{ claim.id }}</p>
+            <p><strong>Description:</strong> {{ claim.description }}</p>
+            <p>
+              <strong>Status:</strong>
+              <span
+                class="status-badge"
+                [ngClass]="{
+                  'status-approved': claim.status === 'approved',
+                  'status-declined': claim.status === 'declined',
+                  'status-pending': claim.status === 'pending'
+                }"
+              >
+                {{ claim.status | titlecase }}
+              </span>
+            </p>
+          </div>
+        </div>
+    
+        <div *ngIf="claims.length === 0" class="no-claims">
+          <p>No insurance claims.</p>
+        </div>
+      </div>
+    </div>
+    
