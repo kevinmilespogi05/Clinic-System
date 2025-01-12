@@ -5,7 +5,7 @@
     <h2><i class="bi bi-shield-lock"></i> Insurance Claim Status</h2>
     <div *ngFor="let claim of claims" class="claim-item">
       <p><strong>Claim ID:</strong> {{ claim.id }}</p>
-      <p><strong>Description:</strong> {{ claim.description }}</p>
+      <p><strong>Description:</strong> {{ claim.description || 'No description available' }}</p>
       <p>
         <strong>Status:</strong>
         <span
@@ -28,25 +28,86 @@
     <form [formGroup]="claimForm" (ngSubmit)="createClaim()">
       <div class="form-group">
         <label for="service-type"><i class="bi bi-tools"></i> Service Type:</label>
-        <select id="service-type" formControlName="service_type">
+        <select id="service-type" formControlName="service_type" (change)="onServiceTypeChange($event)">
           <option value="" disabled selected>Select service type</option>
           <option value="consultation">Consultation</option>
           <option value="surgery">Surgery</option>
           <option value="therapy">Therapy</option>
         </select>
       </div>
-      <div class="form-group">
-        <label for="claim-description"><i class="bi bi-file-earmark-text"></i> Claim Description:</label>
-        <textarea
-          id="claim-description"
-          formControlName="claim_description"
-          rows="4"
-          placeholder="Enter claim description"
-        ></textarea>
+
+      <!-- Consultation-specific fields -->
+      <div *ngIf="currentServiceType === 'consultation'">
+        <div class="form-group">
+          <label for="doctor-name"><i class="bi bi-person"></i> Doctor's Name:</label>
+          <input type="text" id="doctor-name" formControlName="doctor_name" placeholder="Enter doctor's name" />
+        </div>
+
+        <div class="form-group">
+          <label for="appointment-date"><i class="bi bi-calendar"></i> Appointment Date:</label>
+          <input type="date" id="appointment-date" formControlName="appointment_date" />
+        </div>
+
+        <div class="form-group">
+          <label for="reason-for-visit"><i class="bi bi-pencil"></i> Reason for Visit:</label>
+          <textarea id="reason-for-visit" formControlName="reason_for_visit" rows="4" placeholder="Enter reason for visit"></textarea>
+        </div>
       </div>
-      <button type="submit" class="btn-submit">
-        <i class="bi bi-check-circle"></i> Submit
-      </button>
+
+      <!-- Surgery-specific fields -->
+      <div *ngIf="currentServiceType === 'surgery'">
+        <div class="form-group">
+          <label for="surgery-type"><i class="bi bi-cogs"></i> Type of Surgery:</label>
+          <input type="text" id="surgery-type" formControlName="surgery_type" placeholder="Enter type of surgery" />
+        </div>
+
+        <div class="form-group">
+          <label for="surgery-date"><i class="bi bi-calendar"></i> Surgery Date:</label>
+          <input type="date" id="surgery-date" formControlName="surgery_date" />
+        </div>
+
+        <div class="form-group">
+          <label for="anesthesia-required"><i class="bi bi-check-square"></i> Anesthesia Required:</label>
+          <input type="checkbox" id="anesthesia-required" formControlName="anesthesia_required" />
+        </div>
+
+        <div class="form-group">
+          <label for="surgeon-name"><i class="bi bi-person"></i> Surgeon's Name:</label>
+          <input type="text" id="surgeon-name" formControlName="surgeon_name" placeholder="Enter surgeon's name" />
+        </div>
+      </div>
+
+      <!-- Therapy-specific fields -->
+      <div *ngIf="currentServiceType === 'therapy'">
+        <div class="form-group">
+          <label for="therapy-type"><i class="bi bi-brush"></i> Type of Therapy:</label>
+          <input type="text" id="therapy-type" formControlName="therapy_type" placeholder="Enter type of therapy" />
+        </div>
+
+        <div class="form-group">
+          <label for="therapy-sessions"><i class="bi bi-calendar"></i> Number of Sessions:</label>
+          <input type="number" id="therapy-sessions" formControlName="therapy_sessions" placeholder="Enter number of sessions" />
+        </div>
+
+        <div class="form-group">
+          <label for="therapist-name"><i class="bi bi-person"></i> Therapist's Name:</label>
+          <input type="text" id="therapist-name" formControlName="therapist_name" placeholder="Enter therapist's name" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="discount"><i class="bi bi-percent"></i> Discount:</label>
+        <input
+          type="text"
+  id="discount"
+  formControlName="discount"
+  [value]="discount + '%'"
+  [disabled]="true"
+        />
+      </div>
+
+      <button type="submit" [disabled]="claimForm.invalid">Submit Claim</button>
     </form>
   </div>
+
 </div>
