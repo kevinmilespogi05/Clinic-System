@@ -60,12 +60,12 @@
               {{ appointment.payment_status }}
             </span>
           </div>
-          <div class="appointment-refund-status">
+          <div class="appointment-refund-status" *ngIf="appointment.status === 'cancelled'">
             Refund Status:
             <span [ngClass]="getRefundStatusClass(appointment.refund_status)">
               {{ appointment.refund_status }}
             </span>
-          </div>
+          </div>          
         </div>
 
         <!-- Reschedule Button -->
