@@ -18,27 +18,30 @@ try {
     // Retrieve the posted data
     $data = json_decode(file_get_contents("php://input"));
 
-    if (isset($data->user_id) && isset($data->date) && isset($data->description) && isset($data->service)) {
+    if (isset($data->user_id) && isset($data->date) && isset($data->time) && isset($data->description) && isset($data->service)) {
         
         // Convert the date to the correct format (Y-m-d)
         $date = date('Y-m-d', strtotime($data->date));
+        $time = date('H:i:s', strtotime($data->time)); // Convert time to H:i:s format
 
-        // Debug: Print the input date for conflict checking
-        error_log("Booking Attempt: Date: $date");
+        // Debug: Print the input date and time for conflict checking
+        error_log("Booking Attempt: Date: $date, Time: $time");
 
-        // Check if the appointment slot is already booked for the user on the selected date
+        // Check if the appointment slot is already booked for the user on the selected date and time
         $checkConflictQuery = "SELECT COUNT(*) as count 
         FROM appointments 
-        WHERE user_id = :user_id AND date = :date AND (status = 'booked' OR status = 'approved' OR status = 'pending')";
+        WHERE user_id = :user_id AND date = :date AND time = :time 
+        AND (status = 'booked' OR status = 'approved' OR status = 'pending')";
         $checkConflictStmt = $conn->prepare($checkConflictQuery);
         $checkConflictStmt->bindParam(':user_id', $data->user_id);
         $checkConflictStmt->bindParam(':date', $date);
+        $checkConflictStmt->bindParam(':time', $time);
         $checkConflictStmt->execute();
         $conflictResult = $checkConflictStmt->fetch(PDO::FETCH_ASSOC);
 
         // If there is a conflict, return an error message
         if ($conflictResult['count'] > 0) {
-            echo json_encode(["error" => "You have already booked an appointment on this day."]);
+            echo json_encode(["error" => "This time slot is already booked. Please choose a different slot."]);
             exit;
         }
 
@@ -59,7 +62,7 @@ try {
                     $servicePrice = 150; // Low cost
                     break;
                 case 'Surgery':
-                    $servicePrice = 75000; // Medium cost
+                    $servicePrice = 75000; // High cost
                     break;
                 case 'Therapy':
                     $servicePrice = 10000; // Medium cost
@@ -73,13 +76,14 @@ try {
             $billAmount = $servicePrice;
 
             // Insert the appointment into the database with a status of 'pending'
-            $query = "INSERT INTO appointments (user_id, username, date, description, status, service, payment_status, bill_amount) 
-            VALUES (:user_id, :username, :date, :description, 'pending', :service, 'pending', :bill_amount)";
+            $query = "INSERT INTO appointments (user_id, username, date, time, description, status, service, payment_status, bill_amount) 
+            VALUES (:user_id, :username, :date, :time, :description, 'pending', :service, 'pending', :bill_amount)";
             $stmt = $conn->prepare($query);
             
             $stmt->bindParam(':user_id', $data->user_id);
             $stmt->bindParam(':username', $username);
             $stmt->bindParam(':date', $date);
+            $stmt->bindParam(':time', $time);
             $stmt->bindParam(':description', $data->description);
             $stmt->bindParam(':service', $data->service);
             $stmt->bindParam(':bill_amount', $billAmount);
