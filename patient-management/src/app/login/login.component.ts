@@ -42,7 +42,7 @@ export class LoginComponent {
               icon: 'success',
               confirmButtonText: 'Proceed'
             }).then(() => {
-              this.router.navigate(['appointments']);
+              this.router.navigate(['dashboard']);
             });
           }
           
