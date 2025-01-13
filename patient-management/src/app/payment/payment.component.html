@@ -15,8 +15,7 @@
     <p><strong>Time:</strong> {{ appointment.time }}</p>
     <p><strong>Description:</strong> {{ appointment.description || 'N/A' }}</p>
     <p><strong>Payment Status:</strong> {{ appointment.payment_status }}</p>
-    <p><strong>Total Amount:</strong> ₱{{ appointment.bill_amount | number: '1.2-2' }}</p> <!-- Use number pipe -->
-    <p><strong>Discounted Amount:</strong> ₱{{ appointment.discounted_amount | number: '1.2-2' }}</p> <!-- Use number pipe -->
+    <p><strong>Total Amount:</strong> {{ totalAmount | currency }}</p>
   
     <!-- Cancel Button to redirect to appointments component -->
     <button (click)="cancel()">Cancel</button>

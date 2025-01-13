@@ -45,7 +45,7 @@ export class PaymentComponent implements OnInit {
         this.router.navigate(['/appointments']);
       }),
       onError: (error: any) => console.error('Error processing payment:', error),
-    }).render(this.paymentRef.nativeElement);    
+    }).render(this.paymentRef.nativeElement);
   }
   
   fetchAppointmentDetails(): void {
@@ -57,15 +57,13 @@ export class PaymentComponent implements OnInit {
         if (response.appointments && response.appointments.length) {
           this.appointment = response.appointments.find((appt: any) => appt.id === this.appointmentId);
           if (this.appointment) {
-            // Set the total amount to the discounted amount, not the bill amount
-            this.totalAmount = this.appointment.discounted_amount || this.appointment.bill_amount;
+            this.totalAmount = this.appointment.bill_amount;
           }
         }
       },
       (error) => console.error('Error fetching appointment details', error)
     );
   }
-  
   
 
     // Define the updateAppointmentStatus method

@@ -21,9 +21,9 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchAppointments();
-    // this.loadClaims();  // Method to load insurance claims
+    this.loadClaims();  // Now load the claims when the component initializes
   }
-
+  
   fetchAppointments(): void {
     const userId = localStorage.getItem('userId');
     const role = localStorage.getItem('role');
@@ -71,14 +71,17 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/appointment-details', appointmentId]);
   }
 
-  // Method to load insurance claims
-  // loadClaims(): void {
-  //   const userId = parseInt(localStorage.getItem('userId') || '0', 10);
-  //   const isAdmin = localStorage.getItem('role') === 'admin' ? 1 : 0;
-
-  //   this.patientService.getInsuranceClaims(userId, isAdmin).subscribe((data: any[]) => {
-  //     this.claims = data;  // Assign the response data to the claims property
-  //   });
-  // }
-
+  loadClaims(): void {
+    const userId = parseInt(localStorage.getItem('userId') || '0', 10);
+    const isAdmin = localStorage.getItem('role') === 'admin' ? 1 : 0;
+  
+    this.patientService.getInsuranceClaims(userId, isAdmin).subscribe((response: { success: boolean, claims: any[] }) => {
+      if (response.success) {
+        this.claims = response.claims;  // Assign the claims array from the response
+      } else {
+        console.error('Error fetching claims:', response);
+      }
+    });
+  }
+  
 }
