@@ -13,7 +13,7 @@ if (isset($data->id)) {
         $database = new Database();
         $conn = $database->getConnection();
 
-        // Start a transaction to ensure both operations are executed together
+        // Start a transaction to ensure all operations are executed together
         $conn->beginTransaction();
 
         // Delete payment associated with the appointment
@@ -23,6 +23,22 @@ if (isset($data->id)) {
         $paymentStmt->execute();
         // Log the number of rows affected by the payments deletion
         error_log("Rows affected by payment deletion: " . $paymentStmt->rowCount());
+
+        // Delete related invoice
+        $invoiceQuery = "DELETE FROM invoices WHERE appointment_id = :appointment_id";
+        $invoiceStmt = $conn->prepare($invoiceQuery);
+        $invoiceStmt->bindParam(':appointment_id', $appointmentId, PDO::PARAM_INT);
+        $invoiceStmt->execute();
+        // Log the number of rows affected by the invoice deletion
+        error_log("Rows affected by invoice deletion: " . $invoiceStmt->rowCount());
+
+        // Delete related insurance claim
+        $insuranceClaimQuery = "DELETE FROM insurance_claims WHERE appointment_id = :appointment_id";
+        $insuranceClaimStmt = $conn->prepare($insuranceClaimQuery);
+        $insuranceClaimStmt->bindParam(':appointment_id', $appointmentId, PDO::PARAM_INT);
+        $insuranceClaimStmt->execute();
+        // Log the number of rows affected by the insurance claim deletion
+        error_log("Rows affected by insurance claim deletion: " . $insuranceClaimStmt->rowCount());
 
         // Delete the appointment
         $appointmentQuery = "DELETE FROM appointments WHERE id = :id";
@@ -36,7 +52,7 @@ if (isset($data->id)) {
         if ($appointmentStmt->rowCount() > 0) {
             // Commit the transaction
             $conn->commit();
-            echo json_encode(["message" => "Appointment and associated payment deleted successfully"]);
+            echo json_encode(["message" => "Appointment and associated records (payment, invoice, insurance claim) deleted successfully"]);
         } else {
             // Rollback the transaction if no rows were affected
             $conn->rollBack();

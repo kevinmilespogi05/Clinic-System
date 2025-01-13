@@ -7,6 +7,7 @@
         <th>Payment Status</th> <!-- Replaced Status column with Payment Status -->
         <th>Description</th>
         <th>Created At</th>
+        <th>Discounted Amount</th> 
         <th>Action</th>
       </tr>
     </thead>
@@ -22,6 +23,7 @@
         </td> <!-- Display Payment Status -->
         <td>{{ invoice.description }}</td>
         <td>{{ invoice.invoice_date | date: 'short' }}</td>
+        <td>{{ invoice.discounted_amount | currency: 'USD' }}</td> <!-- Display Discounted Amount -->
         <td>
           <button class="btn" (click)="generateInvoice(invoice)">Download</button>
           <button class="btn" (click)="previewInvoice(invoice)">Preview</button>

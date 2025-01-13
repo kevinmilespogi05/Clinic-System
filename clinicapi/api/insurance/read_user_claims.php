@@ -8,13 +8,14 @@ $userId = isset($_GET['user_id']) ? $_GET['user_id'] : null;
 
 if ($userId) {
     $query = "SELECT 
-        insurance_claims.id, 
-        insurance_claims.description, 
-        insurance_claims.status, 
-        insurance_claims.created_at 
-    FROM insurance_claims 
-    WHERE insurance_claims.user_id = :user_id
-    ORDER BY insurance_claims.created_at DESC";
+                insurance_claims.id, 
+                insurance_claims.description, 
+                insurance_claims.status, 
+                insurance_claims.service,
+                insurance_claims.discounted_amount  -- Add discounted_amount field
+              FROM insurance_claims 
+              WHERE insurance_claims.user_id = :user_id
+              ORDER BY insurance_claims.created_at DESC";
 
     $stmt = $db->prepare($query);
     $stmt->bindParam(':user_id', $userId);

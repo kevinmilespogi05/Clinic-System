@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchAppointments();
-    this.loadClaims();  // Method to load insurance claims
+    // this.loadClaims();  // Method to load insurance claims
   }
 
   fetchAppointments(): void {
@@ -72,13 +72,13 @@ export class DashboardComponent implements OnInit {
   }
 
   // Method to load insurance claims
-  loadClaims(): void {
-    const userId = parseInt(localStorage.getItem('userId') || '0', 10);
-    const isAdmin = localStorage.getItem('role') === 'admin' ? 1 : 0;
+  // loadClaims(): void {
+  //   const userId = parseInt(localStorage.getItem('userId') || '0', 10);
+  //   const isAdmin = localStorage.getItem('role') === 'admin' ? 1 : 0;
 
-    this.patientService.getInsuranceClaims(userId, isAdmin).subscribe((data: any[]) => {
-      this.claims = data;  // Assign the response data to the claims property
-    });
-  }
+  //   this.patientService.getInsuranceClaims(userId, isAdmin).subscribe((data: any[]) => {
+  //     this.claims = data;  // Assign the response data to the claims property
+  //   });
+  // }
 
 }

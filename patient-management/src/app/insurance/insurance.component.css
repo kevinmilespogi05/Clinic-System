@@ -113,6 +113,31 @@ body {
   background-color: #2980b9; /* Darker blue on hover */
 }
 
+/* Insurance Claim Item Styling */
+.claim-item {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px; /* Space between each claim item */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+.claim-item:hover {
+  transform: translateY(-5px); /* Hover effect for claims */
+}
+
+.claim-item p {
+  font-size: 1rem;
+  color: #34495e;
+  margin: 8px 0;
+}
+
+/* Separation between insurance claim items */
+.claim-item:not(:last-child) {
+  border-bottom: 1px solid #ccc; /* Light grey border */
+}
+
 /* Status badge styling */
 .status-badge {
   display: inline-block;

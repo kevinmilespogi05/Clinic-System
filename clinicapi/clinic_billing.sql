@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 12, 2025 at 07:56 AM
+-- Generation Time: Jan 13, 2025 at 02:15 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -46,6 +46,14 @@ CREATE TABLE `appointments` (
   `invoice_generated` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `appointments`
+--
+
+INSERT INTO `appointments` (`id`, `user_id`, `username`, `date`, `time`, `description`, `service`, `created_at`, `status`, `cancellation_reason`, `payment_status`, `bill_amount`, `refund_status`, `insurance_provider`, `policy_number`, `invoice_generated`) VALUES
+(1, 3, 'ase', '2024-11-29', '11:00:00', '123123', 'Consultation', '2025-01-12 12:56:22', 'approved', NULL, 'paid', 150.00, 'none', NULL, NULL, 1),
+(3, 3, 'ase', '2025-01-01', '17:00:00', 'awdwa', 'Therapy', '2025-01-13 11:43:52', 'pending', NULL, 'pending', 10000.00, 'none', NULL, NULL, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -55,10 +63,21 @@ CREATE TABLE `appointments` (
 CREATE TABLE `insurance_claims` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `appointment_id` int(11) NOT NULL,
   `description` text NOT NULL,
+  `service` enum('Consultation','Surgery','Therapy') NOT NULL,
   `status` varchar(50) DEFAULT 'pending',
+  `payment_status` varchar(50) DEFAULT 'pending',
+  `discounted_amount` decimal(10,2) DEFAULT 0.00,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `insurance_claims`
+--
+
+INSERT INTO `insurance_claims` (`id`, `user_id`, `appointment_id`, `description`, `service`, `status`, `payment_status`, `discounted_amount`, `created_at`) VALUES
+(9, 3, 3, 'awdwa', 'Therapy', 'approved', 'pending', 8500.00, '2025-01-13 12:58:35');
 
 -- --------------------------------------------------------
 
@@ -71,9 +90,17 @@ CREATE TABLE `invoices` (
   `user_id` int(11) NOT NULL,
   `appointment_id` int(11) NOT NULL,
   `services` text DEFAULT NULL,
+  `discounted_amount` decimal(10,2) DEFAULT 0.00,
   `description` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `invoices`
+--
+
+INSERT INTO `invoices` (`id`, `user_id`, `appointment_id`, `services`, `description`, `created_at`) VALUES
+(19, 3, 1, 'Consultation', '123123', '2025-01-12 12:57:20');
 
 -- --------------------------------------------------------
 
@@ -175,19 +202,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `insurance_claims`
 --
 ALTER TABLE `insurance_claims`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `payments`

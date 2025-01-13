@@ -16,6 +16,7 @@ if (!empty($data->userId)) {
             i.id AS invoice_id, 
             i.services, 
             i.description, 
+            i.discounted_amount,  -- Add the discounted amount here
             i.created_at AS invoice_date, 
             a.date AS appointment_date, 
             a.time AS appointment_time, 
@@ -29,14 +30,14 @@ if (!empty($data->userId)) {
             u.province,
             p.amount AS payment_amount, 
             p.payment_method, 
-            p.status AS payment_status  -- This is the payment status you're referring to from the appointments table
+            p.status AS payment_status
         FROM invoices i
         LEFT JOIN appointments a ON i.user_id = a.user_id
         LEFT JOIN users u ON i.user_id = u.id
         LEFT JOIN payments p ON i.user_id = p.user_id
         WHERE i.user_id = :user_id
         GROUP BY i.id";  // Grouping by invoice id to ensure we get unique invoices
-
+        
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
         $stmt->execute();
@@ -45,8 +46,9 @@ if (!empty($data->userId)) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $invoices[] = [
                 'invoice_id' => $row['invoice_id'],
-                'services' => $row['services'],  // Services
-                'description' => $row['description'],  // Description
+                'services' => $row['services'], 
+                'description' => $row['description'],
+                'discounted_amount' => $row['discounted_amount'],  // Add this
                 'invoice_date' => $row['invoice_date'],
                 'appointment' => [
                     'date' => $row['appointment_date'],
@@ -67,7 +69,7 @@ if (!empty($data->userId)) {
                     'method' => $row['payment_method'],
                     'status' => $row['payment_status'],
                 ],
-            ];
+            ];            
         }
 
         header('Content-Type: application/json');

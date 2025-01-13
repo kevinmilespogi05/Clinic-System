@@ -559,3 +559,9 @@ select:focus {
   outline: none;
   box-shadow: 0 0 5px rgba(243, 156, 18, 0.5); /* Focus outline with glow effect */
 }
+
+.selected {
+  background-color: #007bff; /* Highlight color */
+  color: white;
+}
+

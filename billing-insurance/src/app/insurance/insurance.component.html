@@ -1,22 +1,35 @@
 <div class="admin-insurance-container">
-    <h2>Admin Insurance Management</h2>
-    <div *ngFor="let claim of claims" class="claim-item">
-      <p>Claim ID: {{ claim.id }}</p>
-      <p>Patient Username: {{ claim.username }}</p>
-      <p>Description: {{ claim.description }}</p>
-      <p>
-        Status:
-        <span
-          [ngClass]="{
-            approved: claim.status === 'approved',
-            rejected: claim.status === 'rejected',
-            pending: claim.status === 'pending'
-          }"
-          >{{ claim.status }}</span
-        >
-      </p>
-      <button (click)="updateClaimStatus(claim.id, 'approved')">Approve</button>
-      <button (click)="updateClaimStatus(claim.id, 'rejected')">Reject</button>
-    </div>
+  <h2>Admin Insurance Management</h2>
+  <div *ngFor="let claim of claims" class="claim-item">
+    <p>Claim ID: {{ claim.id }}</p>
+    <p>Patient Username: {{ claim.username }}</p>
+    <p>Description: {{ claim.description }}</p>
+    <p>Appointment ID: {{ claim.appointment_id }}</p>
+    <p>Service: {{ claim.service }}</p>
+    <p>Bill Amount: ₱{{ claim.bill_amount | number: '1.2-2' }}</p>
+    <p>Discounted Amount: ₱{{ claim.discounted_amount | number: '1.2-2' }}</p>  <!-- Display discounted amount -->
+    <p>Payment Status: 
+      <span
+        [ngClass]="{
+          'paid': claim.claim_payment_status === 'paid',
+          'pending': claim.claim_payment_status === 'pending',
+          'unpaid': claim.claim_payment_status === 'unpaid'
+        }">
+        {{ claim.claim_payment_status }}
+      </span>
+    </p>
+    <p>
+      Status:
+      <span
+        [ngClass]="{
+          approved: claim.status === 'approved',
+          rejected: claim.status === 'rejected',
+          pending: claim.status === 'pending'
+        }">
+        {{ claim.status }}
+      </span>
+    </p>
+    <button (click)="updateClaimStatus(claim.id, 'approved')">Approve</button>
+    <button (click)="updateClaimStatus(claim.id, 'rejected')">Reject</button>
   </div>
-  
+</div>

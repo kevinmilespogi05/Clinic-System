@@ -16,28 +16,70 @@ $appointmentId = isset($_GET['appointmentId']) ? $_GET['appointmentId'] : null; 
 try {
     // Admin role - fetch all appointments
     if ($role === 'admin') {
-        $query = "SELECT id, user_id, username, DATE_FORMAT(date, '%Y-%m-%d') AS date, time, description, status, service, payment_status, refund_status, bill_amount, invoice_generated 
+        $query = "SELECT 
+                    appointments.id, 
+                    appointments.user_id, 
+                    appointments.username, 
+                    DATE_FORMAT(appointments.date, '%Y-%m-%d') AS date, 
+                    appointments.time, 
+                    appointments.description, 
+                    appointments.status, 
+                    appointments.service, 
+                    appointments.payment_status, 
+                    appointments.refund_status, 
+                    appointments.bill_amount, 
+                    appointments.invoice_generated,
+                    insurance_claims.discounted_amount  -- Fetch the discounted_amount from insurance_claims table
                   FROM appointments 
-                  ORDER BY date ASC, time ASC";
+                  LEFT JOIN insurance_claims ON appointments.id = insurance_claims.appointment_id
+                  ORDER BY appointments.date ASC, appointments.time ASC";
         $stmt = $conn->prepare($query);
     } 
     // User role - fetch appointments for a specific user
     elseif ($role === 'user' && $id) {
         if ($appointmentId) {
             // If appointmentId is provided, fetch that specific appointment
-            $query = "SELECT id, user_id, username, DATE_FORMAT(date, '%Y-%m-%d') AS date, time, description, status, service, payment_status, refund_status, bill_amount, invoice_generated 
+            $query = "SELECT 
+                        appointments.id, 
+                        appointments.user_id, 
+                        appointments.username, 
+                        DATE_FORMAT(appointments.date, '%Y-%m-%d') AS date, 
+                        appointments.time, 
+                        appointments.description, 
+                        appointments.status, 
+                        appointments.service, 
+                        appointments.payment_status, 
+                        appointments.refund_status, 
+                        appointments.bill_amount, 
+                        appointments.invoice_generated,
+                        insurance_claims.discounted_amount  -- Fetch the discounted_amount from insurance_claims table
                       FROM appointments 
-                      WHERE user_id = :id AND id = :appointmentId
-                      ORDER BY date ASC, time ASC";
+                      LEFT JOIN insurance_claims ON appointments.id = insurance_claims.appointment_id
+                      WHERE appointments.user_id = :id AND appointments.id = :appointmentId
+                      ORDER BY appointments.date ASC, appointments.time ASC";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->bindParam(':appointmentId', $appointmentId, PDO::PARAM_INT);
         } else {
             // Fetch all appointments for the user if appointmentId is not provided
-            $query = "SELECT id, user_id, username, DATE_FORMAT(date, '%Y-%m-%d') AS date, time, description, status, service, payment_status, refund_status, bill_amount, invoice_generated 
+            $query = "SELECT 
+                        appointments.id, 
+                        appointments.user_id, 
+                        appointments.username, 
+                        DATE_FORMAT(appointments.date, '%Y-%m-%d') AS date, 
+                        appointments.time, 
+                        appointments.description, 
+                        appointments.status, 
+                        appointments.service, 
+                        appointments.payment_status, 
+                        appointments.refund_status, 
+                        appointments.bill_amount, 
+                        appointments.invoice_generated,
+                        insurance_claims.discounted_amount  -- Fetch the discounted_amount from insurance_claims table
                       FROM appointments 
-                      WHERE user_id = :id 
-                      ORDER BY date ASC, time ASC";
+                      LEFT JOIN insurance_claims ON appointments.id = insurance_claims.appointment_id
+                      WHERE appointments.user_id = :id 
+                      ORDER BY appointments.date ASC, appointments.time ASC";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         }

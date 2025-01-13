@@ -15,36 +15,49 @@ if ($isAdmin == 1) {
         insurance_claims.id, 
         users.username, 
         insurance_claims.description, 
+        insurance_claims.service, 
         insurance_claims.status, 
+        appointments.payment_status AS claim_payment_status,  -- Fetch payment_status from appointments table
+        appointments.bill_amount,  -- Getting bill_amount from the appointments table
+        insurance_claims.discounted_amount,  -- Add discounted_amount
+        insurance_claims.appointment_id, 
         insurance_claims.created_at 
     FROM insurance_claims 
     JOIN users ON insurance_claims.user_id = users.id 
+    JOIN appointments ON insurance_claims.appointment_id = appointments.id  -- Join with appointments table
     ORDER BY insurance_claims.created_at DESC";
+
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+
+    $claims = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($claims);
 } else {
-    // Regular user can only see their own claims
+    // Regular users can only see their own claims
     $query = "SELECT 
         insurance_claims.id, 
         users.username, 
         insurance_claims.description, 
+        insurance_claims.service, 
         insurance_claims.status, 
+        appointments.payment_status AS claim_payment_status,  -- Fetch payment_status from appointments table
+        appointments.bill_amount,  -- Getting bill_amount from the appointments table
+        insurance_claims.discounted_amount,  -- Add discounted_amount
+        insurance_claims.appointment_id, 
         insurance_claims.created_at 
     FROM insurance_claims 
     JOIN users ON insurance_claims.user_id = users.id 
-    WHERE insurance_claims.user_id = :user_id
+    JOIN appointments ON insurance_claims.appointment_id = appointments.id  -- Join with appointments table
+    WHERE insurance_claims.user_id = :user_id 
     ORDER BY insurance_claims.created_at DESC";
-}
 
-$stmt = $db->prepare($query);
-
-// Bind user_id parameter for regular users
-if ($isAdmin == 0) {
+    $stmt = $db->prepare($query);
     $stmt->bindParam(":user_id", $userId);
+    $stmt->execute();
+
+    $claims = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($claims);
 }
-
-$stmt->execute();
-
-$claims = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-echo json_encode($claims);
-
 ?>

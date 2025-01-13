@@ -68,11 +68,16 @@ export class PatientService {
   // Appointments Management
   getAppointments(userId?: number, role?: string): Observable<any> {
     let url = `${this.baseUrl}/api/appointments/get_appointments.php`;
-    if (userId && role) {
-      url += `?id=${userId}&role=${role}`;
+  
+    if (role === 'admin') {
+      url += `?role=admin`; // Admin fetches all appointments
+    } else if (role === 'user' && userId) {
+      url += `?id=${userId}&role=user`; // User fetches their specific appointments
     }
+  
     return this.http.get<any>(url).pipe(catchError(this.handleError));
   }
+  
 
   updateAppointmentStatus(appointmentId: number, paymentStatus: string): Observable<any> {
     const url = `${this.baseUrl}/api/appointments/update_status.php`; // Adjust the URL as needed
@@ -248,15 +253,12 @@ export class PatientService {
       .pipe(catchError(this.handleError));
   }
 
-  // Insurance Management
-  getInsuranceClaims(userId: number, isAdmin: number = 0): Observable<any[]> {
-    return this.http
-      .get<any[]>(
-        `${this.baseUrl}/api/insurance/read_all.php?user_id=${userId}&is_admin=${isAdmin}`
-      )
-      .pipe(catchError(this.handleError));
+  // Insurance Management 
+  getInsuranceClaims(userId: number, isAdmin: number): Observable<{ success: boolean, claims: any[] }> {
+    const url = `${this.baseUrl}/api/insurance/read_user_claims.php?user_id=${userId}`;
+    return this.http.get<{ success: boolean, claims: any[] }>(url); // Use proper type annotation
   }
-
+  
   createInsuranceClaim(claim: any): Observable<any> {
     return this.http
       .post<any>(`${this.baseUrl}/api/insurance/create.php`, claim)

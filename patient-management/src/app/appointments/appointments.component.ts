@@ -95,9 +95,6 @@ export class AppointmentsComponent implements OnInit {
     }
   }
   
-
-
-
   formatTime(date: Date): string {
     const hours = date.getHours();
     const minutes = date.getMinutes();
@@ -262,10 +259,10 @@ export class AppointmentsComponent implements OnInit {
   calculateBill(): void {
     switch (this.selectedService) {
       case 'Consultation':
-        this.billAmount = 500; 
+        this.billAmount = 150; 
         break;
       case 'Surgery':
-        this.billAmount = 5000; 
+        this.billAmount = 75000; 
         break;
       case 'Therapy':
         this.billAmount = 1500; 
@@ -512,58 +509,62 @@ export class AppointmentsComponent implements OnInit {
 
   openRescheduleModal(appointment: any): void {
     this.appointmentToReschedule = appointment;
-    this.showRescheduleModal = true; 
-  }
+    this.selectedTime = appointment.time; // Pre-select the existing time
+    this.showRescheduleModal = true;
+}
 
-
-  closeRescheduleModal(): void {
+closeRescheduleModal(): void {
     this.showRescheduleModal = false;
-    this.appointmentToReschedule = null; 
-  }
+    this.appointmentToReschedule = null;
+    this.selectedTime = ''; // Reset the selected time when closing the modal
+}
 
-
-  rescheduleAppointment(newDate: Date, newTime: string): void {
+rescheduleAppointment(newDate: Date, newTime: string): void {
     if (this.appointmentToReschedule) {
+      if (!newTime) {
+        Swal.fire('Error', 'Please select a time for the rescheduled appointment.', 'error');
+        return;
+      }
 
-      const adjustedDate = new Date(
-        newDate.getTime() - newDate.getTimezoneOffset() * 60000
-      );
-      const formattedDate = adjustedDate.toISOString().split('T')[0]; 
-      const formattedTime = newTime; 
+      // Adjust the date to account for timezone offset
+      const adjustedDate = new Date(newDate.getTime() - newDate.getTimezoneOffset() * 60000);
+
+      // Format the date and time properly
+      const formattedDate = adjustedDate.toISOString().split('T')[0]; // YYYY-MM-DD format
+      const formattedTime = newTime; // Use the selected time
+
+      // Log for debugging purposes
+      console.log('Rescheduled Date:', formattedDate, 'Time:', formattedTime);
+
       const newSlot = {
         date: formattedDate,
         time: formattedTime,
       };
 
-
+      // Call the reschedule API with the adjusted slot
       this.patientService
         .rescheduleAppointment(this.appointmentToReschedule.id, newSlot)
         .subscribe(
           (response) => {
-            Swal.fire(
-              'Success',
-              'Appointment rescheduled successfully.',
-              'success'
-            );
-            this.fetchAppointments(); 
-            this.closeRescheduleModal(); 
+            if (response.success) {
+              Swal.fire('Success', 'Appointment rescheduled successfully.', 'success');
+              this.fetchAppointments(); // Refresh the appointments
+              this.closeRescheduleModal(); // Close the modal
+            } else {
+              Swal.fire('Error', 'An error occurred while rescheduling the appointment.', 'error');
+            }
           },
           (error) => {
-            Swal.fire(
-              'Error',
-              'An error occurred while rescheduling the appointment.',
-              'error'
-            );
+            console.error('Error rescheduling appointment:', error);
+            Swal.fire('Error', 'An error occurred while rescheduling the appointment.', 'error');
           }
         );
     } else {
       Swal.fire('Error', 'No appointment selected for rescheduling.', 'error');
     }
-  }
+}
 
   
-  
-
   redirectToPayment(appointment: any): void {
     this.router.navigate(['/payment'], {
       queryParams: { appointmentId: appointment.id },
