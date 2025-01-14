@@ -12,7 +12,7 @@ if ($userId) {
                 insurance_claims.description, 
                 insurance_claims.status, 
                 insurance_claims.service,
-                insurance_claims.discounted_amount  -- Add discounted_amount field
+                insurance_claims.discounted_amount
               FROM insurance_claims 
               WHERE insurance_claims.user_id = :user_id
               ORDER BY insurance_claims.created_at DESC";

@@ -296,3 +296,122 @@ footer {
         font-size: 0.9rem;
     }
 }
+
+/* Insurance Section Container */
+.insurance-status-container {
+    padding: 35px;
+    background: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
+    font-family: 'Roboto', sans-serif;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.insurance-status-container:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Insurance Section Header */
+.insurance-status-container h3 {
+    color: #34495e;
+    font-size: 2rem;
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* Individual Claim Item */
+.claim-item {
+    padding: 18px;
+    background: #ffffff;
+    border-radius: 10px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Claim Status Styling */
+.claim-item span {
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 6px;
+    color: white;
+}
+
+.claim-item .approved {
+    background-color: #28a745;
+}
+
+.claim-item .rejected {
+    background-color: #e74c3c;
+}
+
+.claim-item .pending {
+    background-color: #f39c12;
+}
+
+/* Invoices Section */
+h3 {
+    color: #34495e;
+    font-size: 2rem;
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* Invoices List */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    padding: 18px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+ul li p {
+    font-size: 1rem;
+    color: #34495e;
+    margin-bottom: 10px;
+}
+
+ul li p strong {
+    font-weight: 700;
+    color: #2980b9; /* Soft blue for labels */
+}
+
+/* Invoice Highlight */
+ul li p:last-child {
+    font-weight: bold;
+    color: #e74c3c; /* Red color for important details */
+}
+
+/* No Invoices Available */
+.no-invoices-message {
+    font-size: 1.2rem;
+    color: #7f8c8d;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Responsive Design for Invoices */
+@media screen and (max-width: 768px) {
+    ul li {
+        padding: 15px;
+    }
+
+    ul li p {
+        font-size: 0.95rem;
+    }
+}
+
+

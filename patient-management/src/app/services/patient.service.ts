@@ -33,10 +33,18 @@ export class PatientService {
   }
 
   getProfile(userId: number): Observable<any> {
-    return this.http.get<any>(
-      `${this.baseUrl}/api/users/get_profile.php?id=${userId}`
-    );
+    return this.http.get<any>(`${this.baseUrl}/api/users/get_profile.php?id=${userId}`);
   }
+  
+  getInsuranceClaimsUser(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/api/insurance/read_user_claims.php?user_id=${userId}`);
+  }
+
+  getInvoicesUser(userId: number): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/api/billing/get_user_invoices_user.php`, { userId });
+  }
+  
+  
 
   updateProfile(userId: number, updatedData: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/api/users/update_profile.php`, {

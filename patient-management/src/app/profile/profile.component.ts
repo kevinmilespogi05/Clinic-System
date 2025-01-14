@@ -15,6 +15,7 @@ export class ProfileComponent implements OnInit {
   userId: number | null = null;
   profileData: any = null;
   claims: any[] = []; // Holds insurance claims data
+  invoices: any[] = []; // Holds invoice data
   errorMessage: string | null = null;
   isEditing: boolean = false;
   updatedProfileData: any = {}; // For holding data during editing
@@ -25,7 +26,8 @@ export class ProfileComponent implements OnInit {
     this.userId = Number(localStorage.getItem('userId'));
     if (this.userId) {
       this.fetchProfileData(this.userId);
-      // this.fetchInsuranceClaims(this.userId); // Fetch insurance claims
+      this.fetchInsuranceClaims(this.userId); // Fetch insurance claims
+      this.fetchInvoices(this.userId); // Fetch invoices
     } else {
       this.errorMessage = 'User not logged in';
       this.router.navigate(['/login']);
@@ -37,7 +39,6 @@ export class ProfileComponent implements OnInit {
       next: (response) => {
         if (response.success) {
           this.profileData = response.data;
-          console.log('Profile Data:', this.profileData); // Debugging
           this.updatedProfileData = { ...this.profileData }; // Initialize data for editing
         } else {
           this.errorMessage = response.message || 'Profile data not found.';
@@ -50,38 +51,50 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  // fetchInsuranceClaims(userId: number): void {
-  //   this.patientService.getInsuranceClaims(userId).subscribe({
-  //     next: (response) => {
-  //       if (response.length > 0) {
-  //         this.claims = response;
-  //       } else {
-  //         this.claims = [];
-  //       }
-  //     },
-  //     error: (error) => {
-  //       console.error('Error fetching insurance claims:', error);
-  //       this.errorMessage = 'Failed to fetch insurance claims. Please try again later.';
-  //     }
-  //   });
-  // }
+  fetchInsuranceClaims(userId: number): void {
+    this.patientService.getInsuranceClaimsUser(userId).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.claims = response.claims;
+        } else {
+          console.error('Failed to fetch insurance claims');
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching insurance claims:', error);
+      }
+    });
+  }
+
+  fetchInvoices(userId: number): void {
+    this.patientService.getInvoicesUser(userId).subscribe({
+      next: (response) => {
+        if (response) {
+          this.invoices = response;
+        } else {
+          console.error('Failed to fetch invoices');
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching invoices:', error);
+      }
+    });
+  }
 
   toggleEdit(): void {
     this.isEditing = !this.isEditing;
     if (!this.isEditing) {
-      // Reset to the profileData when exiting edit mode
       this.updatedProfileData = { ...this.profileData };
     }
   }
 
   updateProfile(): void {
-    console.log('Updating profile with data:', this.updatedProfileData);
     if (this.userId !== null) {
       this.patientService.updateProfile(this.userId, this.updatedProfileData).subscribe({
         next: (response) => {
           if (response.success) {
-            this.profileData = { ...this.updatedProfileData }; // Update profileData after success
-            this.isEditing = false; // Exit edit mode
+            this.profileData = { ...this.updatedProfileData };
+            this.isEditing = false;
           } else {
             this.errorMessage = response.message || 'Failed to update profile.';
           }

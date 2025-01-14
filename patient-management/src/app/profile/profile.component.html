@@ -202,3 +202,57 @@
     <p *ngIf="!errorMessage">Loading...</p>
   </div>
 </ng-template>
+
+<!-- Insurance Claims Card -->
+<div *ngIf="claims.length > 0" class="insurance-status-container">
+  <h3>Insurance Claims</h3>
+  <div *ngFor="let claim of claims" class="claim-item">
+    <p><strong>Service:</strong> {{ claim.service }}</p>
+    <!-- <p><strong>Status:</strong> <span [ngClass]="{'approved': claim.status === 'Approved', 'rejected': claim.status === 'Rejected', 'pending': claim.status === 'Pending'}">{{ claim.status }}</span></p> -->
+    <p><strong>Discounted Amount:</strong> {{ claim.discounted_amount | currency }}</p>
+    <p><strong>Description:</strong> {{ claim.description }}</p>
+  </div>
+</div>
+
+<!-- No Claims Template -->
+<ng-template #noClaimsTemplate>
+  <div class="insurance-status-container">
+    <h3>Insurance Claims</h3>
+    <p>No insurance claims available.</p>
+  </div>
+</ng-template>
+
+<!-- Invoices Section -->
+<h3>Invoices</h3>
+<div *ngIf="invoices.length > 0; else noInvoicesTemplate">
+  <ul>
+    <li *ngFor="let invoice of invoices">
+      <p><strong>Invoice ID:</strong> {{ invoice.invoice_id }}</p>
+      <p><strong>Invoice Date:</strong> {{ invoice.invoice_date | date }}</p>
+      <p><strong>Services:</strong> {{ invoice.services }}</p>
+      <p><strong>Description:</strong> {{ invoice.description }}</p>
+      <p><strong>Discounted Amount:</strong> {{ invoice.discounted_amount | currency }}</p>
+      <p><strong>Appointment Date:</strong> {{ invoice.appointment.date | date }}</p>
+      <p><strong>Appointment Time:</strong> {{ invoice.appointment.time }}</p>
+      <p><strong>Appointment Service:</strong> {{ invoice.appointment.service }}</p>
+      <p><strong>Bill Amount:</strong> {{ invoice.appointment.bill_amount | currency }}</p>
+      <p><strong>Payment Amount:</strong> {{ invoice.payment.amount | currency }}</p>
+      <p><strong>Payment Method:</strong> {{ invoice.payment.method }}</p>
+      <p><strong>Payment Status:</strong> {{ invoice.payment.status }}</p>
+    </li>
+  </ul>
+</div>
+<ng-template #noInvoicesTemplate>
+  <p>No invoices available.</p>
+</ng-template>
+
+
+<!-- Error Template -->
+<ng-template #errorTemplate>
+<div class="error-message">
+  <p *ngIf="errorMessage">{{ errorMessage }}</p>
+  <p *ngIf="!errorMessage">Loading...</p>
+</div>
+</ng-template>
+
+

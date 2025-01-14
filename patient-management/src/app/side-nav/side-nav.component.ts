@@ -25,7 +25,7 @@ export class SideNavComponent implements OnInit {
   fetchUsername() {
     const userId = localStorage.getItem('userId');
     if (userId) {
-      const apiUrl = `http://localhost/Clinic-System/clinicapi/api/users/get_profile.php?id=${userId}`;
+      const apiUrl = `http://localhost/Clinic-System/clinicapi/api/users/get_profile_side.php?id=${userId}`;
       this.http.get<any>(apiUrl).subscribe({
         next: (response) => {
           if (response.success && response.data.username) {
