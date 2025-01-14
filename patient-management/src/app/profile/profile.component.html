@@ -227,18 +227,13 @@
 <div *ngIf="invoices.length > 0; else noInvoicesTemplate">
   <ul>
     <li *ngFor="let invoice of invoices">
-      <p><strong>Invoice ID:</strong> {{ invoice.invoice_id }}</p>
       <p><strong>Invoice Date:</strong> {{ invoice.invoice_date | date }}</p>
       <p><strong>Services:</strong> {{ invoice.services }}</p>
       <p><strong>Description:</strong> {{ invoice.description }}</p>
-      <p><strong>Discounted Amount:</strong> {{ invoice.discounted_amount | currency }}</p>
       <p><strong>Appointment Date:</strong> {{ invoice.appointment.date | date }}</p>
       <p><strong>Appointment Time:</strong> {{ invoice.appointment.time }}</p>
-      <p><strong>Appointment Service:</strong> {{ invoice.appointment.service }}</p>
       <p><strong>Bill Amount:</strong> {{ invoice.appointment.bill_amount | currency }}</p>
-      <p><strong>Payment Amount:</strong> {{ invoice.payment.amount | currency }}</p>
-      <p><strong>Payment Method:</strong> {{ invoice.payment.method }}</p>
-      <p><strong>Payment Status:</strong> {{ invoice.payment.status }}</p>
+      <p><strong>Discounted Amount:</strong> {{ invoice.discounted_amount | currency }}</p>
     </li>
   </ul>
 </div>
