@@ -11,17 +11,25 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  appointments: any[] = [];  // Assuming this is already defined in your class
+  appointments: any[] = [];
   selectedDate: Date;
   currentYear: number = new Date().getFullYear();
   currentMonth: number = new Date().getMonth();
-  claims: any[] = [];  // Declare the claims property
+  claims: any[] = [];
   
+  selectedAppointment: any = null;
+
   constructor(private patientService: PatientService, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchAppointments();
-    this.loadClaims();  // Now load the claims when the component initializes
+    this.loadClaims();
+  }
+
+  // Open modal with details of selected appointment
+  openDetailsModal(appointment: any): void {
+    this.selectedAppointment = appointment; // Store the selected appointment
+    document.getElementById('detailsModal')?.classList.add('show'); // Show modal
   }
 
   // Helper function to convert 12-hour time format to 24-hour format
@@ -47,27 +55,17 @@ export class DashboardComponent implements OnInit {
         (response) => {
           if (response.appointments) {
             this.appointments = response.appointments.map((appointment: any) => {
-              // Combine date and time using the correct ISO format
               const appointmentDateTime = new Date(`${appointment.date}T${this.convertTo24HourTime(appointment.time)}`);
-
-              if (isNaN(appointmentDateTime.getTime())) {
-                console.error('Invalid date/time:', appointment.date, appointment.time);
-              }
-
-              // Format the date and time
               const formattedDate = appointmentDateTime.toLocaleDateString('en-US');
               const dayOfWeek = appointmentDateTime.toLocaleDateString('en-US', { weekday: 'long' });
-              const formattedTime = appointmentDateTime.toLocaleTimeString('en-US', {
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: true,
-              });
+              const formattedTime = appointmentDateTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
 
               return {
                 ...appointment,
                 date: formattedDate,
                 day: dayOfWeek,
                 time: formattedTime,
+                service: appointment.service || 'No service selected' // Ensure there's a service field
               };
             });
           }
@@ -76,16 +74,22 @@ export class DashboardComponent implements OnInit {
       );
     }
   }
-    loadClaims(): void {
+
+  loadClaims(): void {
     const userId = parseInt(localStorage.getItem('userId') || '0', 10);
     const isAdmin = localStorage.getItem('role') === 'admin' ? 1 : 0;
 
     this.patientService.getInsuranceClaims(userId, isAdmin).subscribe((response: { success: boolean, claims: any[] }) => {
       if (response.success) {
-        this.claims = response.claims;  // Assign the claims array from the response
+        this.claims = response.claims;
       } else {
         console.error('Error fetching claims:', response);
       }
     });
+  }
+
+  closeDetailsModal(): void {
+    document.getElementById('detailsModal')?.classList.remove('show');
+    this.selectedAppointment = null; // Clear selected appointment
   }
 }

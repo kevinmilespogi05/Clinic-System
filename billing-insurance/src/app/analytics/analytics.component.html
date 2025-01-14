@@ -1,5 +1,6 @@
 <div class="analytics-container">
-  <div class="analytics-summary-container">
+  <!-- Summary Section -->
+  <div class="card">
     <h2><i class="bi bi-bar-dash"></i> Administrator Dashboard</h2>
     <div class="stats-boxes">
       <div class="stat-box appointments">
@@ -19,7 +20,8 @@
     </div>
   </div>
 
-  <div class="appointments-container">
+  <!-- Appointments Section -->
+  <div class="card">
     <h2><i class="bi bi-calendar3"></i> Upcoming Appointments</h2>
     <div class="pending-appointments">
       <div *ngFor="let appt of pendingAppointments" class="appointment-item">
@@ -37,10 +39,9 @@
       </div>
     </div>
   </div>
-</div>
 
-
-  <div class="patients-container">
+  <!-- Patients Section -->
+  <div class="card">
     <h2><i class="bi bi-people"></i> Patient Previews</h2>
     <div *ngFor="let patient of patients" class="patient-item">
       <p><strong>Name:</strong> {{ patient.first_name }} {{ patient.last_name }}</p>
@@ -49,9 +50,10 @@
       <p><strong>Date of Birth:</strong> {{ patient.date_of_birth | date }}</p>
       <p><strong>Medical History:</strong> {{ patient.medical_history }}</p>
     </div>
-  </div>  
+  </div>
 
-  <div class="invoices-container">
+  <!-- Invoices Section -->
+  <div class="card">
     <h2><i class="bi bi-file-earmark-text"></i> Invoices</h2>
     <div *ngIf="invoices.length > 0; else noInvoices">
       <div *ngFor="let invoice of invoices" class="invoice-item">
@@ -65,5 +67,4 @@
       <p>No invoices available.</p>
     </ng-template>
   </div>
-  
-
+</div>

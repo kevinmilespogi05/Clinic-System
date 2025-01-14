@@ -413,5 +413,52 @@ ul li p:last-child {
         font-size: 0.95rem;
     }
 }
-
+/* Invoices Container */
+.invoices-container {
+    padding: 35px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    margin: 50px auto;
+    max-width: 1000px;
+    font-family: 'Roboto', sans-serif;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+  
+  .invoices-container:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Invoices Header */
+  .invoices-container h3 {
+    color: #34495e;
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+  
+  /* Individual Invoice Item */
+  .invoice-item {
+    padding: 18px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+    color: #34495e;
+  }
+  
+  .invoice-item p {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    line-height: 1.8;
+  }
+  
+  .invoice-item strong {
+    color: #2980b9; /* Soft blue for labels */
+  }
+  
 

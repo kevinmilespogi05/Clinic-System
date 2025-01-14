@@ -11,7 +11,10 @@
           <p><strong>Day:</strong> {{ appointment.day }}</p>
           <p><strong>Date:</strong> {{ appointment.date }}</p>
           <p><strong>Time:</strong> {{ appointment.time }}</p>
+          <p><strong>Service:</strong> {{ appointment.service }}</p> <!-- Display selected service -->
         </div>
+
+        
       </div>
 
       <!-- If no upcoming appointments, show this message -->
@@ -48,6 +51,20 @@
 
     <div *ngIf="claims.length === 0" class="no-claims">
       <p>No insurance claims.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal to show appointment details -->
+<div id="detailsModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" (click)="closeDetailsModal()">×</span>
+    <h3>Appointment Details</h3>
+    <div *ngIf="selectedAppointment">
+      <p><strong>Day:</strong> {{ selectedAppointment.day }}</p>
+      <p><strong>Date:</strong> {{ selectedAppointment.date }}</p>
+      <p><strong>Time:</strong> {{ selectedAppointment.time }}</p>
+      <p><strong>Service:</strong> {{ selectedAppointment.service }}</p> <!-- Display service here -->
     </div>
   </div>
 </div>

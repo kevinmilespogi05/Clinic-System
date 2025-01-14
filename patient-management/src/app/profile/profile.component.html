@@ -223,10 +223,10 @@
 </ng-template>
 
 <!-- Invoices Section -->
-<h3>Invoices</h3>
-<div *ngIf="invoices.length > 0; else noInvoicesTemplate">
-  <ul>
-    <li *ngFor="let invoice of invoices">
+<div class="invoices-container">
+  <h3>Invoices</h3>
+  <div *ngIf="invoices.length > 0; else noInvoicesTemplate">
+    <div *ngFor="let invoice of invoices" class="invoice-item">
       <p><strong>Invoice Date:</strong> {{ invoice.invoice_date | date }}</p>
       <p><strong>Services:</strong> {{ invoice.services }}</p>
       <p><strong>Description:</strong> {{ invoice.description }}</p>
@@ -234,12 +234,13 @@
       <p><strong>Appointment Time:</strong> {{ invoice.appointment.time }}</p>
       <p><strong>Bill Amount:</strong> {{ invoice.appointment.bill_amount | currency }}</p>
       <p><strong>Discounted Amount:</strong> {{ invoice.discounted_amount | currency }}</p>
-    </li>
-  </ul>
+    </div>
+  </div>
+  <ng-template #noInvoicesTemplate>
+    <p>No invoices available.</p>
+  </ng-template>
 </div>
-<ng-template #noInvoicesTemplate>
-  <p>No invoices available.</p>
-</ng-template>
+
 
 
 <!-- Error Template -->

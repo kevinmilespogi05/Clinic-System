@@ -9,8 +9,9 @@
       <div><strong>Service:</strong> {{ appt.service }}</div>
       <div><strong>Payment Status:</strong> {{ appt.payment_status | titlecase }}</div>
     </div>
-    <button (click)="approve(appt.id)">Approve</button>
-    <button (click)="decline(appt.id)">Decline</button>
+    <!-- Added 'approve-btn' and 'decline-btn' classes -->
+    <button class="approve-btn" (click)="approve(appt.id)">Approve</button>
+    <button class="decline-btn" (click)="decline(appt.id)">Decline</button>
   </div>
 </div>
 

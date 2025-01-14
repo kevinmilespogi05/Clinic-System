@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit {
   errorMessage: string | null = null;
   isEditing: boolean = false;
   updatedProfileData: any = {}; // For holding data during editing
+viewInvoice: any;
 
   constructor(private patientService: PatientService, private router: Router) {}
 
