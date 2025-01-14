@@ -60,13 +60,13 @@ try {
             $servicePrice = 0;
             switch ($data->service) {
                 case 'Consultation':
-                    $servicePrice = 150; // Low cost
+                    $servicePrice = 500; // Low cost
                     break;
                 case 'Surgery':
-                    $servicePrice = 75000; // High cost
+                    $servicePrice = 5000; // High cost
                     break;
                 case 'Therapy':
-                    $servicePrice = 10000; // Medium cost
+                    $servicePrice = 1500; // Medium cost
                     break;
                 default:
                     echo json_encode(["error" => "Invalid service type."]);
