@@ -38,106 +38,166 @@ export class StatsComponent implements OnInit {
   }
 
   renderCharts(stats: any): void {
-    const ctxAppointments = document.getElementById('appointmentsChart') as HTMLCanvasElement;
-    const ctxOtherStats = document.getElementById('otherStatsChart') as HTMLCanvasElement;
+    // Wait for the DOM to load before accessing canvas elements
+    setTimeout(() => {
+      const ctxAppointments = document.getElementById('appointmentsChart') as HTMLCanvasElement;
+      const ctxInsurance = document.getElementById('insuranceChart') as HTMLCanvasElement;
+      const ctxOtherStats = document.getElementById('otherStatsChart') as HTMLCanvasElement;
+  
+      if (!ctxAppointments || !ctxInsurance || !ctxOtherStats) {
+        console.error('Failed to find canvas elements. Ensure IDs are correct and DOM is loaded.');
+        return;
+      }
+  
+      const appointmentsTotal = stats.paid_invoices + stats.unpaid_invoices + stats.total_appointments;
+      const insuranceTotal = stats.approved_claims + stats.pending_claims;
+      const otherStatsTotal = stats.total_patients + stats.booked_count + stats.cancelled_count;
 
-    const appointmentsTotal = stats.paid_invoices + stats.unpaid_invoices + stats.total_appointments;
-    const otherStatsTotal = stats.total_patients + stats.booked_count + stats.cancelled_count;
-
-    // Appointments Breakdown Pie Chart (Paid, Unpaid, Total Appointments)
-    new Chart(ctxAppointments, {
-      type: 'pie',
-      data: {
-        labels: ['Paid Appointments', 'Unpaid Appointments', 'Total Appointments'],
-        datasets: [
-          {
-            data: [stats.paid_invoices, stats.unpaid_invoices, stats.total_appointments],
-            backgroundColor: ['#4caf50', '#f44336', '#2196f3'], // Green, Red, Blue
-            borderWidth: 0, // Removes the white line
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            display: true,
-            position: 'top',
-          },
-          tooltip: {
-            callbacks: {
-              label: function (tooltipItem) {
-                const value = tooltipItem.raw as number;
-                const percentage = ((value / appointmentsTotal) * 100).toFixed(2);
-                return `${tooltipItem.label}: ${percentage}%`;
+  
+      // Appointments Chart
+      new Chart(ctxAppointments, {
+        type: 'pie',
+        data: {
+          labels: ['Paid Appointments', 'Unpaid Appointments', 'Total Appointments'],
+          datasets: [
+            {
+              data: [stats.paid_invoices, stats.unpaid_invoices, stats.total_appointments],
+              backgroundColor: ['#4caf50', '#f44336', '#2196f3'],
+              borderWidth: 0,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top',
+            },
+            tooltip: {
+              callbacks: {
+                label: function (tooltipItem) {
+                  const value = tooltipItem.raw as number;
+                  const percentage = ((value / appointmentsTotal) * 100).toFixed(2);
+                  return `${tooltipItem.label}: ${percentage}%`;
+                },
               },
             },
-          },
-          datalabels: {
-            color: '#000',
-            font: {
-              size: 14,
+            datalabels: {
+              color: '#000',
+              font: {
+                size: 14,
+              },
+              formatter: function (value: number) {
+                if (value === 0) {
+                  return ''; // Hide zero values
+                }
+                const percentage = ((value / appointmentsTotal) * 100).toFixed(0);
+                return `${percentage}%`;
+              },
+              align: 'center',
+              anchor: 'center',
             },
-            formatter: function (value: number) {
-              if (value === 0) {
-                return ''; // Hide labels with zero value
-              }
-              const percentage = ((value / appointmentsTotal) * 100).toFixed(0);
-              return `${percentage}%`;
+          },
+        },
+      });
+      
+  
+      // Insurance Claims Chart
+      new Chart(ctxInsurance, {
+        type: 'pie',
+        data: {
+          labels: ['Approved Claims', 'Pending Claims'],
+          datasets: [
+            {
+              data: [stats.approved_claims, stats.pending_claims],
+              backgroundColor: ['#4caf50', '#ff9800'],
+              borderWidth: 0,
             },
-            align: 'center',
-            anchor: 'center',
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top',
+            },
+            tooltip: {
+              callbacks: {
+                label: function (tooltipItem) {
+                  const value = tooltipItem.raw as number;
+                  const percentage = ((value / insuranceTotal) * 100).toFixed(2);
+                  return `${tooltipItem.label}: ${percentage}%`;
+                },
+              },
+            },
+            datalabels: {
+              color: '#000',
+              font: {
+                size: 14,
+              },
+              formatter: function (value: number) {
+                if (value === 0) {
+                  return ''; // Hide zero values
+                }
+                const percentage = ((value / insuranceTotal) * 100).toFixed(0);
+                return `${percentage}%`;
+              },
+              align: 'center',
+              anchor: 'center',
+            },
           },
         },
-      },
-    });
-
-    // Other Stats Pie Chart (Paid vs. Unpaid Invoices)
-new Chart(ctxOtherStats, {
-  type: 'pie',
-  data: {
-    labels: ['Paid Invoices', 'Unpaid Invoices'],
-    datasets: [
-      {
-        data: [stats.paid_invoices, stats.unpaid_invoices],
-        backgroundColor: ['#4caf50', '#f44336'], // Green for Paid, Red for Unpaid
-        borderWidth: 0,
-      },
-    ],
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: true,
-        position: 'top',
-      },
-      tooltip: {
-        callbacks: {
-          label: function (tooltipItem) {
-            const value = tooltipItem.raw as number;
-            const percentage = ((value / (stats.paid_invoices + stats.unpaid_invoices)) * 100).toFixed(2);
-            return `${tooltipItem.label}: ${percentage}%`;
+      });
+  
+      // Other Stats Chart
+      new Chart(ctxOtherStats, {
+        type: 'pie',
+        data: {
+          labels: ['Paid Invoices', 'Unpaid Invoices'],
+          datasets: [
+            {
+              data: [stats.paid_invoices, stats.unpaid_invoices],
+              backgroundColor: ['#4caf50', '#f44336'],
+              borderWidth: 0,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top',
+            },
+            tooltip: {
+              callbacks: {
+                label: function (tooltipItem) {
+                  const value = tooltipItem.raw as number;
+                  const percentage = ((value / otherStatsTotal) * 100).toFixed(2);
+                  return `${tooltipItem.label}: ${percentage}%`;
+                },
+              },
+            },
+            datalabels: {
+              color: '#000',
+              font: {
+                size: 14,
+              },
+              formatter: function (value: number) {
+                if (value === 0) {
+                  return ''; // Hide zero values
+                }
+                const percentage = ((value / otherStatsTotal) * 100).toFixed(0);
+                return `${percentage}%`;
+              },
+              align: 'center',
+              anchor: 'center',
+            },
           },
         },
-      },
-      datalabels: {
-        color: '#000',
-        font: {
-          size: 14,
-        },
-        formatter: function (value: number) {
-          if (value === 0) {
-            return ''; // Hide zero values
-          }
-          const percentage = ((value / (stats.paid_invoices + stats.unpaid_invoices)) * 100).toFixed(0);
-          return `${percentage}%`;
-        },
-        align: 'center',
-        anchor: 'center',
-      },
-    },
-  },
-});
-}
-}
+      });
+    }, 0); // Defer execution to allow DOM rendering
+  }
+}  
