@@ -46,7 +46,7 @@ export class AppointmentsComponent implements OnInit {
   inputAmount: number | null = null;
   showRescheduleModal: boolean = false;
   appointmentToReschedule: any = null;
-  availableSlots: string[] = ['10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM'];
+ availableSlots: string[] = ['10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM'];
 
   constructor(private patientService: PatientService, private router: Router) {}
 
@@ -154,19 +154,19 @@ export class AppointmentsComponent implements OnInit {
     this.patientService.getAvailableSlots(formattedDate).subscribe(
       (response) => {
         if (response.slots) {
-          this.availableSlots = response.slots.map((slot) =>
-            this.formatTimeFromString(slot)
-          );
+          this.availableSlots = response.slots.map((slot) => this.formatTimeFromString(slot));
         } else {
-          this.availableSlots = ['10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM'];
+          // Default time slots if no data is returned
+          this.availableSlots = ['10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM'];
         }
       },
       (error) => {
         console.error('Error fetching available slots:', error);
-        this.availableSlots = ['10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM'];
+        this.availableSlots = ['10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM'];
       }
     );
   }
+  
 
   bookAppointment(): void {
     if (!this.appointmentDescription.trim()) {
