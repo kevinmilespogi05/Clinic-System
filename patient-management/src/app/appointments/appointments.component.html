@@ -75,12 +75,13 @@
         </div>
 
         <!-- Reschedule Button -->
-        <button
-          *ngIf="appointment.status === 'cancelled' && appointment.payment_status === 'paid'"
-          class="reschedule-btn"
-          (click)="openRescheduleModal(appointment)">
-          <i class="bi bi-calendar-event"></i> Reschedule
-        </button>
+        <div class="appointment-actions">
+          <button
+            *ngIf="appointment.status === 'cancelled' && appointment.payment_status === 'paid'"
+            class="reschedule-btn"
+            (click)="openRescheduleModal(appointment)">
+            <i class="bi bi-calendar-event"></i> Reschedule
+          </button>
 
         <div class="appointment-actions">
           <button
@@ -113,17 +114,13 @@
           >
             <i class="bi bi-credit-card"></i> Pay Now
           </button>
-
           <button
-            class="refund-btn"
-            *ngIf="
-              appointment.status === 'cancelled' &&
-              appointment.payment_status === 'paid'
-            "
-            (click)="handleRefundOrReschedule(appointment)"
-          >
-            <i class="bi bi-arrow-repeat"></i> Refund
-          </button>
+          class="refund-btn"
+          *ngIf="appointment.status === 'cancelled' && appointment.payment_status === 'paid'"
+          (click)="handleRefundOrReschedule(appointment)">
+          <i class="bi bi-arrow-repeat"></i> Refund
+        </button>
+      </div>
         </div>
       </div>
     </div>
@@ -131,7 +128,7 @@
 
 <!-- Reschedule Modal -->
 <div class="modal" *ngIf="showRescheduleModal">
-  <div class="modal-content">
+  <div class="modal-content large">
     <span class="close-btn" (click)="closeRescheduleModal()">&times;</span>
     <h3>Reschedule Appointment</h3>
     <div class="calendar-container">
@@ -139,20 +136,25 @@
         <button (click)="changeMonth('prev')" class="nav-btn">
           <i class="bi bi-chevron-left"></i>
         </button>
-        <span class="month-year">{{ currentMonth | date:'MMMM yyyy' }}</span>
+        <span class="month-year">{{ currentDate | date: 'MMMM yyyy' }}</span>
         <button (click)="changeMonth('next')" class="nav-btn">
           <i class="bi bi-chevron-right"></i>
         </button>
       </div>
       <div class="calendar-grid">
-        <div class="calendar-day" *ngFor="let day of daysInMonth()">
-          <span class="day-label">{{ day | date:'EEEE, MMMM d, yyyy' }}</span>
+        <div 
+          class="calendar-day" 
+          *ngFor="let day of daysInMonth()" 
+          [ngClass]="{'selected': selectedDate === day}">
+          <div class="date-info">
+            <span class="day-name">{{ day | date:'EEE' }}</span>
+            <span class="date-number">{{ day | date:'MMM d' }}</span>
+          </div>
           <button 
-            *ngIf="!isDateBooked(day)"
-            (click)="selectedDate = day"
-            [ngClass]="{'selected': selectedDate === day}"
-            class="bi bi-calendar-check">
-            Select Date
+          (click)="selectedDate = day"
+          [ngClass]="{'active': selectedDate === day}" 
+          class="book-btn">
+          Select
           </button>
         </div>
       </div>
@@ -164,7 +166,7 @@
         <option *ngFor="let slot of availableSlots" [value]="slot">{{ slot }}</option>
       </select>
     </div>
-    
+
     <button 
       *ngIf="selectedDate && selectedTime"
       (click)="rescheduleAppointment(selectedDate, selectedTime)" 
@@ -173,7 +175,6 @@
     </button>
   </div>
 </div>
-
 
 
   <!-- Booking Modal -->

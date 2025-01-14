@@ -52,7 +52,7 @@ body {
 }
 
 .nav-btn {
-  background-color: #007bff;
+  background-color: #20c910;
   border: none;
   color: #fff;
   padding: 5px 10px;
@@ -565,3 +565,157 @@ select:focus {
   color: white;
 }
 
+/* Modal Styling */
+.modal-content.large {
+  max-width: 900px; /* Increased modal width */
+  max-height: 750px; /* Increased modal height */
+  padding: 20px;
+  overflow-y: auto;
+  border-radius: 8px;
+}
+
+/* Calendar Styling */
+.calendar-container {
+  margin: 20px 0;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 columns for days of the week */
+  gap: 15px; /* More gap for balance */
+}
+
+.calendar-day {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px; /* Softer corners */
+  padding: 15px;
+  height: 140px; /* Increased height */
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.date-info {
+  margin-bottom: 12px; /* Extra spacing for clarity */
+}
+
+.day-name {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #7f8c8d;
+}
+
+.date-number {
+  font-size: 1.3rem; /* Slightly larger date font */
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.book-btn {
+  background-color: #34db58;
+  border: none;
+  color: #fff;
+  padding: 10px 15px; /* Larger buttons */
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1rem; /* Slightly larger font size */
+  margin-top: auto; /* Ensures alignment at the bottom */
+}
+
+.book-btn.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.book-btn:hover {
+  background-color: #2980b9;
+}
+
+.calendar-day.selected {
+  background-color: #dfe6e9;
+  border-color: #74b9ff;
+}
+
+/* Time Selection */
+.time-selection {
+  margin-top: 20px;
+}
+
+.time-selection label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.time-selection select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.btn-reschedule {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.btn-reschedule:hover {
+  background-color: #0056b3;
+}
+.selected-btn {
+  background-color: #ffc107; /* Yellow */
+  color: #fff;
+  font-weight: bold;
+  border: 2px solid #ff9800;
+}
+.appointment-actions {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+  width: 100%; /* Ensure container takes the full width of the parent */
+}
+
+.refund-btn {
+  background-color: #a72828; /* Green for Refund button */
+  border: none;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 500px; /* Set a fixed width for Refund button */
+  text-align: center; 
+}
+
+.reschedule-btn {
+  background-color: #ff8800; /* Blue for Reschedule button */
+  border: none;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 500px; /* Set a fixed width for Reschedule button */
+  text-align: center;
+}
+
+.refund-btn:hover,
+.reschedule-btn:hover {
+  opacity: 0.9;
+}
