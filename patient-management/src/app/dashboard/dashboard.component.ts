@@ -23,7 +23,19 @@ export class DashboardComponent implements OnInit {
     this.fetchAppointments();
     this.loadClaims();  // Now load the claims when the component initializes
   }
-  
+
+  // Helper function to convert 12-hour time format to 24-hour format
+  convertTo24HourTime(time: string): string {
+    const [hour, minuteAndPeriod] = time.split(':');
+    const [minute, period] = minuteAndPeriod.split(' ');
+
+    let hour24 = parseInt(hour, 10);
+    if (period === 'PM' && hour24 !== 12) hour24 += 12;
+    if (period === 'AM' && hour24 === 12) hour24 = 0;
+
+    return `${hour24.toString().padStart(2, '0')}:${minute}`;
+  }
+
   fetchAppointments(): void {
     const userId = localStorage.getItem('userId');
     const role = localStorage.getItem('role');
@@ -35,14 +47,14 @@ export class DashboardComponent implements OnInit {
         (response) => {
           if (response.appointments) {
             this.appointments = response.appointments.map((appointment: any) => {
-              // Combine date and time directly
-              const appointmentDateTime = new Date(`${appointment.date}T${appointment.time}`);
+              // Combine date and time using the correct ISO format
+              const appointmentDateTime = new Date(`${appointment.date}T${this.convertTo24HourTime(appointment.time)}`);
 
               if (isNaN(appointmentDateTime.getTime())) {
                 console.error('Invalid date/time:', appointment.date, appointment.time);
               }
 
-              // No timezone adjustment
+              // Format the date and time
               const formattedDate = appointmentDateTime.toLocaleDateString('en-US');
               const dayOfWeek = appointmentDateTime.toLocaleDateString('en-US', { weekday: 'long' });
               const formattedTime = appointmentDateTime.toLocaleTimeString('en-US', {
@@ -64,17 +76,10 @@ export class DashboardComponent implements OnInit {
       );
     }
   }
-
-  // Define goToAppointmentDetails method
-  goToAppointmentDetails(appointmentId: number): void {
-    // Navigate to the appointment details page using router
-    this.router.navigate(['/appointment-details', appointmentId]);
-  }
-
-  loadClaims(): void {
+    loadClaims(): void {
     const userId = parseInt(localStorage.getItem('userId') || '0', 10);
     const isAdmin = localStorage.getItem('role') === 'admin' ? 1 : 0;
-  
+
     this.patientService.getInsuranceClaims(userId, isAdmin).subscribe((response: { success: boolean, claims: any[] }) => {
       if (response.success) {
         this.claims = response.claims;  // Assign the claims array from the response
@@ -83,5 +88,4 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
-  
 }

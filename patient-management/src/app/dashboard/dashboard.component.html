@@ -1,54 +1,53 @@
 <div class="dashboard-container">
-    <div class="card upcoming-appointments-card">
-      <div class="card-header">
-        <h2>My Upcoming Appointments</h2>
+  <div class="card upcoming-appointments-card">
+    <div class="card-header">
+      <h2>My Upcoming Appointments</h2>
+    </div>
+
+    <div class="appointments-list">
+      <!-- Loop through appointments to display them -->
+      <div *ngFor="let appointment of appointments" class="appointment-item">
+        <div class="appointment-info">
+          <p><strong>Day:</strong> {{ appointment.day }}</p>
+          <p><strong>Date:</strong> {{ appointment.date }}</p>
+          <p><strong>Time:</strong> {{ appointment.time }}</p>
+        </div>
       </div>
-  
-      <div class="appointments-list">
-        <!-- Loop through appointments to display them -->
-        <div *ngFor="let appointment of appointments" class="appointment-item">
-          <div class="appointment-info">
-            <p><strong>Day:</strong> {{ appointment.day }}</p>
-            <p><strong>Date:</strong> {{ appointment.date }}</p>
-            <p><strong>Time:</strong> {{ appointment.time }}</p>
-          </div>
-          
-  
+
       <!-- If no upcoming appointments, show this message -->
       <div *ngIf="appointments.length === 0" class="no-appointments">
         <p>No upcoming appointments.</p>
       </div>
     </div>
   </div>
-  
-      <!-- Insurance Claim Status Section -->
-      <div class="card insurance-status-card">
-        <div class="card-header">
-          <h2>My Insurance Claim Status</h2>
-        </div>
-        <div class="insurance-status-list">
-          <div *ngFor="let claim of claims" class="claim-item">
-            <p><strong>Claim ID:</strong> {{ claim.id }}</p>
-            <p><strong>Description:</strong> {{ claim.description }}</p>
-            <p>
-              <strong>Status:</strong>
-              <span
-                class="status-badge"
-                [ngClass]="{
-                  'status-approved': claim.status === 'approved',
-                  'status-declined': claim.status === 'declined',
-                  'status-pending': claim.status === 'pending'
-                }"
-              >
-                {{ claim.status | titlecase }}
-              </span>
-            </p>
-          </div>
-        </div>
-    
-        <div *ngIf="claims.length === 0" class="no-claims">
-          <p>No insurance claims.</p>
-        </div>
+
+  <!-- Insurance Claim Status Section -->
+  <div class="card insurance-status-card">
+    <div class="card-header">
+      <h2>My Insurance Claim Status</h2>
+    </div>
+    <div class="insurance-status-list">
+      <div *ngFor="let claim of claims" class="claim-item">
+        <p><strong>Claim ID:</strong> {{ claim.id }}</p>
+        <p><strong>Description:</strong> {{ claim.description }}</p>
+        <p>
+          <strong>Status:</strong>
+          <span
+            class="status-badge"
+            [ngClass]="{
+              'status-approved': claim.status === 'approved',
+              'status-declined': claim.status === 'declined',
+              'status-pending': claim.status === 'pending'
+            }"
+          >
+            {{ claim.status | titlecase }}
+          </span>
+        </p>
       </div>
     </div>
-    
+
+    <div *ngIf="claims.length === 0" class="no-claims">
+      <p>No insurance claims.</p>
+    </div>
+  </div>
+</div>
