@@ -18,6 +18,7 @@ export class InsuranceComponent implements OnInit {
   claimForm: FormGroup;
   currentServiceType: string = '';
   discount: number = 0;
+  consultationDiscountApplied: boolean = false; // New property to track discount application
 
   constructor(private patientService: PatientService, private fb: FormBuilder) {
     this.claimForm = this.fb.group({
@@ -43,15 +44,21 @@ export class InsuranceComponent implements OnInit {
   loadClaims(): void {
     const userId = parseInt(localStorage.getItem('userId') || '0', 10);
     const isAdmin = localStorage.getItem('role') === 'admin' ? 1 : 0;
-  
-    this.patientService.getInsuranceClaims(userId, isAdmin).subscribe((response: { success: boolean, claims: any[] }) => {
-      console.log(response);  // Log the response to check its structure
-      if (response.success) {
-        this.claims = Array.isArray(response.claims) ? response.claims : []; // Ensure it's an array
-      } else {
-        console.log('Failed to load claims');
-      }
-    });
+
+    this.patientService
+      .getInsuranceClaims(userId, isAdmin)
+      .subscribe((response: { success: boolean; claims: any[] }) => {
+        if (response.success) {
+          this.claims = Array.isArray(response.claims) ? response.claims : [];
+        } else {
+          console.log('Failed to load claims');
+        }
+
+        // Check if a consultation discount was already applied
+        this.consultationDiscountApplied = this.claims.some(
+          (claim) => claim.service === 'Consultation' && claim.discounted_amount > 0
+        );
+      });
   }
   
   // Handle the change in service type selection
@@ -68,18 +75,16 @@ export class InsuranceComponent implements OnInit {
     const selectedAppointment = this.appointments.find(
       (appointment) => appointment.id === +selectedAppointmentId
     );
-  
+
     if (selectedAppointment) {
-      // Populate the form with appointment details, including the service type
       this.claimForm.patchValue({
         service_type: selectedAppointment.service,
         appointment_id: selectedAppointment.id,
-        claim_description: selectedAppointment.description, // Set description from appointment
+        claim_description: selectedAppointment.description,
       });
-  
+
       this.currentServiceType = selectedAppointment.service;
       this.setDiscount(selectedAppointment.service);
-      // Enable the service type input dynamically
       this.claimForm.get('service_type')?.enable();
     }
   }
@@ -108,8 +113,11 @@ export class InsuranceComponent implements OnInit {
       default:
         this.discount = 0;
     }
-    this.claimForm.patchValue({ discount: this.discount });
+  
+    // Append '%' sign and update the form control
+    this.claimForm.patchValue({ discount: `${this.discount}%` });
   }
+  
   
   // Initialize the form based on the selected service type
   initializeForm(serviceType: string): void {
@@ -158,23 +166,18 @@ export class InsuranceComponent implements OnInit {
         user_id: parseInt(localStorage.getItem('userId') || '0', 10),
         appointment_id: this.claimForm.value.appointment_id,
         description: this.claimForm.value.claim_description,
-        service: this.claimForm.value.service_type,  // Add service field here
+        service: this.claimForm.value.service_type,
         discount: this.claimForm.value.discount,
       };
-  
-      console.log('Submitting claim data:', claimData);  // Add this line to log the data being sent
-  
-      this.patientService.createInsuranceClaim(claimData).subscribe(response => {
+
+      this.patientService.createInsuranceClaim(claimData).subscribe((response) => {
         console.log('Claim created:', response);
-        console.log('Claim Description:', this.claimForm.value.claim_description);
-        console.log('Appointment ID:', this.claimForm.value.appointment_id);
         this.loadClaims();
         this.claimForm.reset();
       });
     } else {
-      console.log('Please provide a description.');
       alert('Description is required!');
     }
-  }  
+  }
 }
 

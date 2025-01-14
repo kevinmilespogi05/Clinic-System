@@ -208,8 +208,7 @@
   <h3>Insurance Claims</h3>
   <div *ngFor="let claim of claims" class="claim-item">
     <p><strong>Service:</strong> {{ claim.service }}</p>
-    <!-- <p><strong>Status:</strong> <span [ngClass]="{'approved': claim.status === 'Approved', 'rejected': claim.status === 'Rejected', 'pending': claim.status === 'Pending'}">{{ claim.status }}</span></p> -->
-    <p><strong>Discounted Amount:</strong> {{ claim.discounted_amount | currency }}</p>
+    <p><strong>Discounted Amount:</strong> {{ claim.discounted_amount | currency:'PHP' }}</p>
     <p><strong>Description:</strong> {{ claim.description }}</p>
   </div>
 </div>
@@ -232,15 +231,14 @@
       <p><strong>Description:</strong> {{ invoice.description }}</p>
       <p><strong>Appointment Date:</strong> {{ invoice.appointment.date | date }}</p>
       <p><strong>Appointment Time:</strong> {{ invoice.appointment.time }}</p>
-      <p><strong>Bill Amount:</strong> {{ invoice.appointment.bill_amount | currency }}</p>
-      <p><strong>Discounted Amount:</strong> {{ invoice.discounted_amount | currency }}</p>
+      <p><strong>Bill Amount:</strong> {{ invoice.appointment.bill_amount | currency:'PHP' }}</p>
+      <p><strong>Discounted Amount:</strong> {{ invoice.discounted_amount | currency:'PHP' }}</p>
     </div>
   </div>
   <ng-template #noInvoicesTemplate>
     <p>No invoices available.</p>
   </ng-template>
 </div>
-
 
 
 <!-- Error Template -->

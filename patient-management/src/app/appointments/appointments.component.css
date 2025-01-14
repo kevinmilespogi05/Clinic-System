@@ -719,3 +719,14 @@ select:focus {
 .reschedule-btn:hover {
   opacity: 0.9;
 }
+
+
+.selected {
+  background-color: #007bff; /* Change to the color you want */
+  color: white;
+  border-radius: 50%;
+}
+.active {
+  background-color: #28a745; /* Change for active (hovered or clicked) state */
+  color: white;
+}

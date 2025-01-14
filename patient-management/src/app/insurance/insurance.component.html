@@ -49,9 +49,11 @@
         type="text"
         id="discount"
         formControlName="discount"
-        [value]="discount + '%'"
+        [value]="claimForm.value.discount"
+        readonly
       />
     </div>
+    
 
     <button type="submit" [disabled]="claimForm.invalid">Submit Claim</button>
   </form>

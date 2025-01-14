@@ -47,6 +47,10 @@ export class AppointmentsComponent implements OnInit {
   showRescheduleModal: boolean = false;
   appointmentToReschedule: any = null;
  availableSlots: string[] = ['10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM'];
+ rescheduleCurrentMonth: number = this.currentDate.getMonth();
+ rescheduleCurrentYear: number = this.currentDate.getFullYear();
+ rescheduleSelectedDate: Date = new Date(this.rescheduleCurrentYear, this.rescheduleCurrentMonth, this.currentDate.getDate());
+
 
   constructor(private patientService: PatientService, private router: Router) {}
 
@@ -117,25 +121,45 @@ export class AppointmentsComponent implements OnInit {
     return this.formatTime(date);
   }
 
-  changeMonth(direction: string): void {
-    if (direction === 'next') {
-      if (this.currentMonth === 11) {
-        this.currentMonth = 0;
-        this.currentYear++;
-      } else {
-        this.currentMonth++;
+  changeMonth(direction: string, context: 'main' | 'reschedule'): void {
+    if (context === 'main') {
+      if (direction === 'next') {
+        if (this.currentMonth === 11) {
+          this.currentMonth = 0;
+          this.currentYear++;
+        } else {
+          this.currentMonth++;
+        }
+      } else if (direction === 'prev') {
+        if (this.currentMonth === 0) {
+          this.currentMonth = 11;
+          this.currentYear--;
+        } else {
+          this.currentMonth--;
+        }
       }
-    } else if (direction === 'prev') {
-      if (this.currentMonth === 0) {
-        this.currentMonth = 11;
-        this.currentYear--;
-      } else {
-        this.currentMonth--;
+      this.currentDate = new Date(this.currentYear, this.currentMonth, 1);
+      this.selectedDate = this.currentDate;
+    } else if (context === 'reschedule') {
+      if (direction === 'next') {
+        if (this.rescheduleCurrentMonth === 11) {
+          this.rescheduleCurrentMonth = 0;
+          this.rescheduleCurrentYear++;
+        } else {
+          this.rescheduleCurrentMonth++;
+        }
+      } else if (direction === 'prev') {
+        if (this.rescheduleCurrentMonth === 0) {
+          this.rescheduleCurrentMonth = 11;
+          this.rescheduleCurrentYear--;
+        } else {
+          this.rescheduleCurrentMonth--;
+        }
       }
+      this.rescheduleSelectedDate = new Date(this.rescheduleCurrentYear, this.rescheduleCurrentMonth, 1);
     }
-    this.currentDate = new Date(this.currentYear, this.currentMonth, 1);
-    this.selectedDate = this.currentDate;
   }
+  
 
   openBookingModal(date: Date): void {
     this.selectedDate = date;
@@ -236,11 +260,11 @@ export class AppointmentsComponent implements OnInit {
     return appointmentsOnDate.length >= this.availableSlots.length;
   }
 
-  daysInMonth(): Date[] {
+  daysInMonth(month: number = this.currentMonth, year: number = this.currentYear): Date[] {
     const days: Date[] = [];
-    const lastDayOfMonth = new Date(this.currentYear, this.currentMonth + 1, 0);
-    const firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1);
-
+    const lastDayOfMonth = new Date(year, month + 1, 0);
+    const firstDayOfMonth = new Date(year, month, 1);
+  
     for (
       let date = firstDayOfMonth;
       date <= lastDayOfMonth;
@@ -250,6 +274,7 @@ export class AppointmentsComponent implements OnInit {
     }
     return days;
   }
+  
 
   calculateBill(): void {
     switch (this.selectedService) {
@@ -501,13 +526,16 @@ export class AppointmentsComponent implements OnInit {
     this.appointmentToReschedule = appointment;
     this.selectedTime = appointment.time;
     this.showRescheduleModal = true;
+    this.selectedDate = null; // Reset selected date when closing the modal
   }
 
   closeRescheduleModal(): void {
     this.showRescheduleModal = false;
     this.appointmentToReschedule = null;
     this.selectedTime = '';
+    this.selectedDate = null; // Reset selected date when closing the modal
   }
+  
 
   rescheduleAppointment(newDate: Date, newTime: string): void {
     if (this.appointmentToReschedule) {
@@ -567,6 +595,17 @@ export class AppointmentsComponent implements OnInit {
       Swal.fire('Error', 'No appointment selected for rescheduling.', 'error');
     }
   }
+
+  // Method to handle date selection
+selectDate(day: Date): void {
+  this.selectedDate = day;
+}
+
+// Method to check if the date is selected
+isSelected(day: Date): boolean {
+  return this.selectedDate && this.selectedDate.getTime() === day.getTime();
+}
+
 
   redirectToPayment(appointment: any): void {
     this.router.navigate(['/payment'], {
