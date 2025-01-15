@@ -56,19 +56,20 @@
     </ng-template>
   </div>
 
-  <!-- Patients Section -->
-  <div class="card">
-    <h2><i class="bi bi-people"></i> Patient Section</h2>
-    <div *ngFor="let patient of patients" class="patient-item">
-      <p>
-        <strong>Name:</strong> {{ patient.first_name }} {{ patient.last_name }}
-      </p>
-      <p><strong>Username:</strong> {{ patient.username }}</p>
-      <p><strong>Contact Number:</strong> {{ patient.contact_number }}</p>
-      <p><strong>Date of Birth:</strong> {{ patient.date_of_birth | date }}</p>
-      <p><strong>Medical History:</strong> {{ patient.medical_history }}</p>
-    </div>
+ <!-- Patients Section -->
+<div class="card">
+  <h2><i class="bi bi-people"></i> Patient Section</h2>
+  <div *ngFor="let patient of patients" class="patient-item">
+    <p><strong>Name:</strong> {{ patient.first_name }} {{ patient.last_name }}</p>
+    <p><strong>Username:</strong> {{ patient.username }}</p>
+    <p><strong>Contact Number:</strong> {{ patient.contact_number }}</p>
+    <p><strong>Date of Birth:</strong> {{ patient.date_of_birth | date }}</p>
+    <p><strong>Medical History:</strong> {{ patient.medical_history }}</p>
+    <!-- Divider between patients -->
+    <div class="patient-divider"></div>
   </div>
+</div>
+
 
   <!-- Invoices Section -->
   <div class="card">
