@@ -8,7 +8,7 @@
   box-sizing: border-box;
   background: #f4f8fb;
   border-radius: 16px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Card Layout */
@@ -49,7 +49,8 @@
 }
 
 /* Appointment & Invoice Items */
-.appointment-item, .invoice-item {
+.appointment-item,
+.invoice-item {
   background-color: #ffffff;
   border: 1px solid #ddd;
   border-radius: 12px;
@@ -59,12 +60,14 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.appointment-item:hover, .invoice-item:hover {
+.appointment-item:hover,
+.invoice-item:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
-.appointment-item p, .invoice-item p {
+.appointment-item p,
+.invoice-item p {
   font-size: 1rem;
   color: #555;
   margin: 6px 0;
@@ -146,7 +149,8 @@ button:hover {
     padding: 15px;
   }
 
-  .appointment-item p, .invoice-item p {
+  .appointment-item p,
+  .invoice-item p {
     font-size: 0.9rem;
   }
 
