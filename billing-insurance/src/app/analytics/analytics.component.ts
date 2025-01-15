@@ -424,24 +424,18 @@ export class AnalyticsComponent implements OnInit {
       const ctxInsurance = document.getElementById(
         'insuranceChart'
       ) as HTMLCanvasElement;
-      const ctxOtherStats = document.getElementById(
-        'otherStatsChart'
+      const ctxInvoices = document.getElementById(
+        'invoicesChart'
       ) as HTMLCanvasElement;
-
-      if (!ctxAppointments || !ctxInsurance || !ctxOtherStats) {
+  
+      if (!ctxAppointments || !ctxInsurance || !ctxInvoices) {
         console.error(
           'Failed to find canvas elements. Ensure IDs are correct and DOM is loaded.'
         );
         return;
       }
-
-      const appointmentsTotal =
-        stats.paid_invoices + stats.unpaid_invoices + stats.total_appointments;
-      const insuranceTotal = stats.approved_claims + stats.pending_claims;
-      const otherStatsTotal =
-        stats.total_patients + stats.booked_count + stats.cancelled_count;
-
-      // Appointments Chart
+  
+      // Appointments Chart (Pie)
       new Chart(ctxAppointments, {
         type: 'pie',
         data: {
@@ -458,60 +452,22 @@ export class AnalyticsComponent implements OnInit {
                 stats.total_appointments,
               ],
               backgroundColor: ['#4caf50', '#f44336', '#2196f3'],
-              borderWidth: 0,
+              borderWidth: 1,
             },
           ],
         },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              display: true,
-              position: 'top',
-            },
-            tooltip: {
-              callbacks: {
-                label: function (tooltipItem) {
-                  const value = tooltipItem.raw as number;
-                  const percentage = (
-                    (value / appointmentsTotal) *
-                    100
-                  ).toFixed(2);
-                  return `${tooltipItem.label}: ${percentage}%`;
-                },
-              },
-            },
-            datalabels: {
-              color: '#000',
-              font: {
-                size: 14,
-              },
-              formatter: function (value: number) {
-                if (value === 0) {
-                  return ''; // Hide zero values
-                }
-                const percentage = ((value / appointmentsTotal) * 100).toFixed(
-                  0
-                );
-                return `${percentage}%`;
-              },
-              align: 'center',
-              anchor: 'center',
-            },
-          },
-        },
       });
-
-      // Insurance Claims Chart
+  
+      // Insurance Chart (Bar)
       new Chart(ctxInsurance, {
-        type: 'pie',
+        type: 'bar',
         data: {
           labels: ['Approved Claims', 'Pending Claims'],
           datasets: [
             {
+              label: 'Insurance Claims',
               data: [stats.approved_claims, stats.pending_claims],
-              backgroundColor: ['#4caf50', '#ff9800'],
-              borderWidth: 0,
+              backgroundColor: ['#ffc107', '#03a9f4'],
             },
           ],
         },
@@ -519,49 +475,34 @@ export class AnalyticsComponent implements OnInit {
           responsive: true,
           plugins: {
             legend: {
-              display: true,
               position: 'top',
             },
-            tooltip: {
-              callbacks: {
-                label: function (tooltipItem) {
-                  const value = tooltipItem.raw as number;
-                  const percentage = ((value / insuranceTotal) * 100).toFixed(
-                    2
-                  );
-                  return `${tooltipItem.label}: ${percentage}%`;
-                },
+          },
+          scales: {
+            x: {
+              grid: {
+                display: false,
               },
             },
-            datalabels: {
-              color: '#000',
-              font: {
-                size: 14,
-              },
-              formatter: function (value: number) {
-                if (value === 0) {
-                  return ''; // Hide zero values
-                }
-                const percentage = ((value / insuranceTotal) * 100).toFixed(0);
-                return `${percentage}%`;
-              },
-              align: 'center',
-              anchor: 'center',
+            y: {
+              beginAtZero: true,
             },
           },
         },
       });
-
-      // Other Stats Chart
-      new Chart(ctxOtherStats, {
-        type: 'pie',
+  
+      // Invoices Chart (Line)
+      new Chart(ctxInvoices, {
+        type: 'line',
         data: {
-          labels: ['Paid Invoices', 'Unpaid Invoices'],
+          labels: ['January', 'February', 'March', 'April', 'May', 'June'], // Example labels; replace with actual data
           datasets: [
             {
-              data: [stats.paid_invoices, stats.unpaid_invoices],
-              backgroundColor: ['#4caf50', '#f44336'],
-              borderWidth: 0,
+              label: 'Monthly Invoice Amounts',
+              data: stats.monthly_invoices || [], // Example data; replace with actual monthly invoice amounts
+              borderColor: '#3e95cd',
+              fill: false,
+              tension: 0.1,
             },
           ],
         },
@@ -569,38 +510,21 @@ export class AnalyticsComponent implements OnInit {
           responsive: true,
           plugins: {
             legend: {
-              display: true,
               position: 'top',
             },
-            tooltip: {
-              callbacks: {
-                label: function (tooltipItem) {
-                  const value = tooltipItem.raw as number;
-                  const percentage = ((value / otherStatsTotal) * 100).toFixed(
-                    2
-                  );
-                  return `${tooltipItem.label}: ${percentage}%`;
-                },
+          },
+          scales: {
+            x: {
+              grid: {
+                display: false,
               },
             },
-            datalabels: {
-              color: '#000',
-              font: {
-                size: 14,
-              },
-              formatter: function (value: number) {
-                if (value === 0) {
-                  return ''; // Hide zero values
-                }
-                const percentage = ((value / otherStatsTotal) * 100).toFixed(0);
-                return `${percentage}%`;
-              },
-              align: 'center',
-              anchor: 'center',
+            y: {
+              beginAtZero: true,
             },
           },
         },
       });
-    }, 0); // Defer execution to allow DOM rendering
+    }, 0);
   }
 }
