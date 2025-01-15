@@ -531,61 +531,48 @@ export class AppointmentsComponent implements OnInit {
   rescheduleAppointment(newDate: Date, newTime: string): void {
     if (this.appointmentToReschedule) {
       if (!newTime) {
+        Swal.fire('Error', 'Please select a time for the rescheduled appointment.', 'error');
+        return;
+      }
+  
+      // Validate the reschedule date
+      if (!this.isRescheduleValid(newDate, this.appointmentToReschedule.date)) {
         Swal.fire(
           'Error',
-          'Please select a time for the rescheduled appointment.',
+          'You can only reschedule your appointment for next week or next month.',
           'error'
         );
         return;
       }
-
-      const adjustedDate = new Date(
-        newDate.getTime() - newDate.getTimezoneOffset() * 60000
-      );
-
+  
+      const adjustedDate = new Date(newDate.getTime() - newDate.getTimezoneOffset() * 60000);
       const formattedDate = adjustedDate.toISOString().split('T')[0];
       const formattedTime = newTime;
-
+  
       console.log('Rescheduled Date:', formattedDate, 'Time:', formattedTime);
-
-      const newSlot = {
-        date: formattedDate,
-        time: formattedTime,
-      };
-
-      this.patientService
-        .rescheduleAppointment(this.appointmentToReschedule.id, newSlot)
-        .subscribe(
-          (response) => {
-            if (response.success) {
-              Swal.fire(
-                'Success',
-                'Appointment rescheduled successfully.',
-                'success'
-              );
-              this.fetchAppointments();
-              this.closeRescheduleModal();
-            } else {
-              Swal.fire(
-                'Error',
-                'An error occurred while rescheduling the appointment.',
-                'error'
-              );
-            }
-          },
-          (error) => {
-            console.error('Error rescheduling appointment:', error);
-            Swal.fire(
-              'Error',
-              'An error occurred while rescheduling the appointment.',
-              'error'
-            );
+  
+      const newSlot = { date: formattedDate, time: formattedTime };
+  
+      this.patientService.rescheduleAppointment(this.appointmentToReschedule.id, newSlot).subscribe(
+        (response) => {
+          if (response.success) {
+            Swal.fire('Success', 'Appointment rescheduled successfully.', 'success');
+            this.fetchAppointments();
+            this.closeRescheduleModal();
+          } else {
+            Swal.fire('Error', 'An error occurred while rescheduling the appointment.', 'error');
           }
-        );
+        },
+        (error) => {
+          console.error('Error rescheduling appointment:', error);
+          Swal.fire('Error', 'An error occurred while rescheduling the appointment.', 'error');
+        }
+      );
     } else {
       Swal.fire('Error', 'No appointment selected for rescheduling.', 'error');
     }
   }
+  
 
   // Method to handle date selection
 selectDate(day: Date): void {
@@ -596,6 +583,24 @@ selectDate(day: Date): void {
 isSelected(day: Date): boolean {
   return this.selectedDate && this.selectedDate.getTime() === day.getTime();
 }
+
+// Method to check if the selected date is valid for rescheduling (next week or next month)
+isRescheduleValid(selectedDate: Date, originalDate: Date): boolean {
+  const currentDate = new Date();
+  const selectedDateObj = new Date(selectedDate);
+  const originalDateObj = new Date(originalDate);
+
+  // Calculate the date range (next week or next month)
+  const minRescheduleDate = new Date(originalDateObj);
+  minRescheduleDate.setDate(originalDateObj.getDate() + 7); // next week
+
+  const maxRescheduleDate = new Date(originalDateObj);
+  maxRescheduleDate.setMonth(originalDateObj.getMonth() + 1); // next month
+
+  // Check if the selected date is within the allowed range
+  return selectedDateObj >= minRescheduleDate && selectedDateObj <= maxRescheduleDate;
+}
+
 
 
   redirectToPayment(appointment: any): void {
