@@ -1,0 +1,10 @@
+<div class="card">
+    <h2><i class="bi bi-file-earmark-spreadsheet"></i> Generate Clinic Report</h2>
+    <p class="text-muted">Download a detailed report with patients, appointments, invoices, and insurance claims.</p>
+  
+    <button (click)="generateReport()" class="btn btn-primary" [disabled]="loading">
+      <i *ngIf="loading" class="bi bi-arrow-clockwise spinner"></i> 
+      {{ loading ? 'Generating Report...' : 'Download Report as PDF' }}
+    </button>
+  </div>
+  

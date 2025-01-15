@@ -196,6 +196,28 @@ export class PatientService {
     return this.getRequest('api/insurance/stats.php');
   }
 
+    /** ======================= Report Management ================= */
+
+  getAppointmentsReport(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/api/report/getAppointments.php`);
+  }
+
+  getInsuranceClaimsReport(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/api/report/getInsuranceClaims.php`);
+  }
+
+  getInvoicesReport(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/api/report/getInvoices.php`);
+  }
+
+  getPayments(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/api/report/getPayments.php`);
+  }
+
+  getUsers(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/api/report/getUsers.php`);
+  }
+
   /** ======================= Utility Methods ====================== */
   private getRequest(endpoint: string): Observable<any> {
     return this.http

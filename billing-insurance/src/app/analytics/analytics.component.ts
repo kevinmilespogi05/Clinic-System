@@ -4,6 +4,8 @@ import { PatientService } from '../services/patient.service';
 import { Chart } from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import Swal from 'sweetalert2';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 Chart.register(ChartDataLabels);
 
@@ -21,6 +23,8 @@ export class AnalyticsComponent implements OnInit {
   appointments: any[] = [];
   pendingAppointments: any[] = [];
   invoices: any[] = [];
+  insuranceClaims: any[] = [];
+
 
   constructor(private patientService: PatientService) {}
 
@@ -30,23 +34,97 @@ export class AnalyticsComponent implements OnInit {
     this.fetchTransactions();
     this.loadAppointments();
     this.fetchInvoices();
+    this.fetchInsuranceClaims(); // New method to fetch insurance claims
   }
 
-  fetchCombinedStats(): void {
-    this.patientService.getCombinedStats().subscribe(
+  generateReport(): void {
+    // Combine all data into a single array with section headers
+    const reportData = [
+      { Type: 'Section', Name: 'Patients' },
+      ...this.patients.map(patient => ({
+        Type: 'Patient',
+        Name: `${patient.first_name} ${patient.last_name}`,
+        Username: patient.username,
+        Contact: patient.contact_number,
+        DOB: patient.date_of_birth,
+        MedicalHistory: patient.medical_history
+      })),
+      { Type: 'Section', Name: 'Appointments' },
+      ...this.appointments.map(appt => ({
+        Type: 'Appointment',
+        PatientName: appt.patient_name,
+        Date: appt.date,
+        Time: appt.time,
+        Status: appt.status,
+        Service: appt.service
+      })),
+      { Type: 'Section', Name: 'Invoices' },
+      ...this.invoices.map(invoice => ({
+        Type: 'Invoice',
+        InvoiceID: invoice.id,
+        UserID: invoice.user_id,
+        Description: invoice.description,
+        CreatedAt: invoice.created_at,
+        DiscountedAmount: invoice.discounted_amount
+      })),
+      { Type: 'Section', Name: 'Insurance Claims' },
+      ...this.insuranceClaims.map(claim => ({
+        Type: 'Insurance Claim',
+        ClaimID: claim.id,
+        PatientName: claim.patient_name,
+        Status: claim.status,
+        ClaimAmount: claim.claim_amount,
+        ApprovedAmount: claim.approved_amount,
+        CreatedAt: claim.created_at
+      }))
+    ];
+  
+    // Ensure that the data exists before attempting to generate the report
+    if (reportData.length === 0) {
+      Swal.fire('No Data', 'There is no data available for the report.', 'warning');
+      return;
+    }
+  
+    // Create a worksheet and a workbook
+    const worksheet = XLSX.utils.json_to_sheet(reportData);
+    const workbook = XLSX.utils.book_new();
+  
+    // Optional: Add a title row or section headers
+    const titleRow = [['Clinic Report']];
+    XLSX.utils.sheet_add_aoa(worksheet, titleRow, { origin: 'A1' });
+  
+    // Add the sheet to the workbook
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Clinic Report');
+  
+    // Export to Excel
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array'
+    });
+  
+    // Save the file
+    const fileName = `Clinic_Report_${new Date().toISOString()}.xlsx`;
+    saveAs(new Blob([excelBuffer], { type: 'application/octet-stream' }), fileName);
+  
+    // Notify the user the report is generated
+    Swal.fire('Report Generated', 'Your report has been successfully generated!', 'success');
+  }
+  
+  fetchInsuranceClaims(): void {
+    this.patientService.getInsuranceClaimsReport().subscribe(
       (response: any) => {
-        if (response) {
-          this.combinedStats = response;
-          this.renderCharts(response);
+        if (response && response.insuranceClaims) {
+          this.insuranceClaims = response.insuranceClaims;
         } else {
-          console.error('Failed to fetch stats:', response.message);
+          console.error('Failed to fetch insurance claims:', response.message);
         }
       },
       (error: any) => {
-        console.error('Error fetching stats:', error);
+        console.error('Error fetching insurance claims:', error);
       }
     );
   }
+  
 
   fetchPatients(): void {
     this.patientService.getPatients().subscribe(
@@ -120,6 +198,22 @@ export class AnalyticsComponent implements OnInit {
       (error) => {
         console.error('Error loading appointments:', error);
         Swal.fire('Error', 'Unable to load appointments.', 'error');
+      }
+    );
+  }
+
+  fetchCombinedStats(): void {
+    this.patientService.getCombinedStats().subscribe(
+      (response: any) => {
+        if (response) {
+          this.combinedStats = response;
+          this.renderCharts(response);
+        } else {
+          console.error('Failed to fetch stats:', response.message);
+        }
+      },
+      (error: any) => {
+        console.error('Error fetching stats:', error);
       }
     );
   }

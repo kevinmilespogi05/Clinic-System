@@ -8,6 +8,7 @@ import { PatientComponent } from './patient/patient.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { LoginComponent } from './login/login.component';
 import { StatsComponent } from './stats/stats.component';
+import { ReportComponent } from './report/report.component';
 
 export const routes: Routes = [
   { 
@@ -20,6 +21,7 @@ export const routes: Routes = [
     children: [
       { path: 'appointments', component: AppointmentsComponent },
       { path: 'analytics', component: AnalyticsComponent },
+      { path:'report', component: ReportComponent }, // Added new route for report component
       { path: 'stats', component: StatsComponent},
       { path: 'insurance', component: InsuranceComponent },
       { path: 'invoice', component: InvoiceComponent },
