@@ -18,19 +18,24 @@
 </button>
       </div>
       <div class="calendar-grid">
-        <div class="calendar-day" *ngFor="let day of daysInMonth()">
+        <div 
+          class="calendar-day" 
+          *ngFor="let day of daysInMonth()" 
+          [ngClass]="{ 'disabled': isDateInPast(day) }"
+        >
           <span class="day-label">{{ day | date : "EEEE, MMMM d, yyyy" }}</span>
           <button
-            *ngIf="!isDateBooked(day)"
+            *ngIf="!isDateInPast(day) && !isDateBooked(day)"
             (click)="openBookingModal(day)" 
             class="book-btn"
           >
             <i class="bi bi-calendar-plus"></i> Book
           </button>
         </div>
-      </div>
+      </div>      
     </div>
   </div>
+
 
   <!-- Existing Appointments Section -->
   <div class="card appointment-card">
