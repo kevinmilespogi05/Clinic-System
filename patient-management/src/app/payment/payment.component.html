@@ -15,7 +15,7 @@
     <p><strong>Time:</strong> {{ appointment.time }}</p>
     <p><strong>Description:</strong> {{ appointment.description || 'N/A' }}</p>
     <p><strong>Payment Status:</strong> {{ appointment.payment_status }}</p>
-    <p><strong>Total Amount:</strong> {{ totalAmount | currency }}</p>
+    <p><strong>Total Amount:</strong> ₱{{ totalAmount | number }}</p> <!-- Changed currency to ₱ -->
   
     
   </div>
