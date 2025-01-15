@@ -20,10 +20,12 @@ try {
 
     if (isset($data->user_id) && isset($data->date) && isset($data->time) && isset($data->description) && isset($data->service)) {
         
-        // Convert the date to the correct format (Y-m-d)
-        $date = date('Y-m-d', strtotime($data->date));
-        // Convert time to 24-hour format (H:i:s) for database insertion
-        $time = date('H:i:s', strtotime($data->time)); // Store time as H:i:s for MySQL
+// Convert the date to the correct format (Y-m-d) with Manila time
+$date = new DateTime($data->date, new DateTimeZone('Asia/Manila'));
+$date = $date->format('Y-m-d'); // Ensure the correct date format
+
+// Convert time to 24-hour format (H:i:s)
+$time = date('H:i:s', strtotime($data->time));
 
         // Debug: Print the input date and time for conflict checking
         error_log("Booking Attempt: Date: $date, Time: $time");

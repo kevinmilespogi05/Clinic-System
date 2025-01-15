@@ -194,63 +194,48 @@ export class AppointmentsComponent implements OnInit {
 
   bookAppointment(): void {
     if (!this.appointmentDescription.trim()) {
-      Swal.fire(
-        'Error',
-        'Please enter a description for the appointment.',
-        'error'
-      );
+      Swal.fire('Error', 'Please enter a description for the appointment.', 'error');
       return;
     }
-
+  
     if (!this.selectedTime) {
-      Swal.fire(
-        'Error',
-        'Please select a time slot for the appointment.',
-        'error'
-      );
+      Swal.fire('Error', 'Please select a time slot for the appointment.', 'error');
       return;
     }
-
+  
     const userId = localStorage.getItem('userId');
     if (userId) {
-      const appointmentDay = this.selectedDate.toLocaleDateString('en-US', {
-        weekday: 'long',
-      });
-      const formattedDate = this.selectedDate.toISOString().split('T')[0];
-
-      this.patientService
-        .bookAppointment({
-          user_id: Number(userId),
-          date: formattedDate,
-          time: this.selectedTime,
-          day: appointmentDay,
-          description: this.appointmentDescription,
-          service: this.selectedService,
-          status: 'booked',
-        })
-        .subscribe(
-          (response) => {
-            if (response.error) {
-              Swal.fire('Error', response.error, 'error');
-            } else {
-              Swal.fire(
-                'Success',
-                'Appointment successfully booked.',
-                'success'
-              );
-              this.fetchAppointments();
-              this.closeBookingModal();
-            }
-          },
-          (error) =>
-            Swal.fire(
-              'Error',
-              'Failed to book appointment. Please try again.',
-              'error'
-            )
-        );
+      const appointmentDay = this.selectedDate.toLocaleDateString('en-US', { weekday: 'long' });
+  
+      // Adjust the date for the timezone offset
+      const adjustedDate = new Date(this.selectedDate.getTime() - this.timezoneOffset);
+  
+      // Format the adjusted date
+      const formattedDate = adjustedDate.toISOString().split('T')[0];
+  
+      this.patientService.bookAppointment({
+        user_id: Number(userId),
+        date: formattedDate,
+        time: this.selectedTime,
+        day: appointmentDay,
+        description: this.appointmentDescription,
+        service: this.selectedService,
+        status: 'booked',
+      }).subscribe(
+        (response) => {
+          if (response.error) {
+            Swal.fire('Error', response.error, 'error');
+          } else {
+            Swal.fire('Success', 'Appointment successfully booked.', 'success');
+            this.fetchAppointments();
+            this.closeBookingModal();
+          }
+        },
+        (error) => Swal.fire('Error', 'Failed to book appointment. Please try again.', 'error')
+      );
     }
   }
+  
 
   isDateInPast(date: Date): boolean {
     const today = new Date();
