@@ -46,6 +46,6 @@ button:hover {
 
 .gcash-qr img {
   width: 450px; /* Increased size */
-  height: 500px; /* Maintained aspect ratio */
+  height: 450px; /* Maintained aspect ratio */
   margin-top: 20px;
 }
