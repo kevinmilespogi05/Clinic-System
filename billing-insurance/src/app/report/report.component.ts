@@ -75,9 +75,8 @@ export class ReportComponent implements OnInit {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.width;
     const pageHeight = doc.internal.pageSize.height;
-    let y = 20; // Starting Y position for content
+    let y = 20;
   
-    // Helper function to add a page header
     const addHeader = () => {
       doc.setFontSize(18);
       doc.setFont('helvetica', 'bold');
@@ -85,17 +84,15 @@ export class ReportComponent implements OnInit {
       doc.setFontSize(10);
       doc.setFont('helvetica', 'normal');
       doc.text(`Generated on: ${new Date().toLocaleString()}`, 10, 15);
-      doc.line(10, 18, pageWidth - 10, 18); // Horizontal line
+      doc.line(10, 18, pageWidth - 10, 18);
     };
   
-    // Helper function to add a page footer
     const addFooter = (pageNum: number) => {
       doc.setFontSize(10);
       doc.setFont('helvetica', 'normal');
       doc.text(`Page ${pageNum}`, pageWidth - 20, pageHeight - 10);
     };
   
-    // Helper function to check for page overflow
     const checkPageOverflow = (increment: number) => {
       if (y + increment > pageHeight - 20) {
         addFooter(pageNum++);
@@ -116,46 +113,60 @@ export class ReportComponent implements OnInit {
     y += 10;
   
     // Table Header for Patients
-    doc.setFillColor(0, 123, 255); // Clinic-themed color (blue)
+    doc.setFillColor(0, 123, 255); // Blue Header
+    doc.setTextColor(255, 255, 255); // White Text
     doc.rect(10, y - 5, pageWidth - 20, 8, 'F');
     doc.setFontSize(12);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Name', 10, y);
-    doc.text('Username', 50, y);
-    doc.text('Contact', 90, y);
-    doc.text('DOB', 130, y);
-    doc.text('Role', 170, y);
+    doc.text('Name', 12, y);
+    doc.text('Username', 52, y);
+    doc.text('Contact', 92, y);
+    doc.text('DOB', 132, y);
+    doc.text('Role', 172, y);
     y += 8;
   
-    // Table Content for Patients
-    doc.setFont('helvetica', 'normal');
+    // Table Content for Patients with Highlighted Data
     this.patients.forEach((patient) => {
-      checkPageOverflow(10);
-      doc.text(`${patient.first_name || 'N/A'} ${patient.last_name || 'N/A'}`, 10, y);
-      doc.text(`${patient.username || 'N/A'}`, 50, y);
-      doc.text(`${patient.contact_number || 'N/A'}`, 90, y);
-      doc.text(`${patient.date_of_birth || 'N/A'}`, 130, y);
-      doc.text(`${patient.role || 'N/A'}`, 170, y);
+      checkPageOverflow(15);
+  
+      // Highlight the main data row
+      doc.setFillColor(220, 230, 241); // Light Blue Background
+      doc.rect(10, y - 5, pageWidth - 20, 8, 'F');
+  
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(0, 0, 0); // Black Text
+      doc.text(`${patient.first_name || 'N/A'} ${patient.last_name || 'N/A'}`, 12, y);
+      doc.text(`${patient.username || 'N/A'}`, 52, y);
+      doc.text(`${patient.contact_number || 'N/A'}`, 92, y);
+      doc.text(`${patient.date_of_birth || 'N/A'}`, 132, y);
+      doc.text(`${patient.role || 'N/A'}`, 172, y);
       y += 8;
   
-      // Additional user data from the 'users' table
+      // Additional user data (indented, no highlight)
       doc.setFontSize(10);
-      doc.text(`Cardholder: ${patient.card_first_name} ${patient.card_last_name}`, 10, y);
-      y += 8;
-      doc.text(`Card Number: ${patient.card_number}`, 10, y);
-      y += 8;
-      doc.text(`Expiry Date: ${patient.card_expiry}`, 10, y);
-      y += 8;
-      doc.text(`Billing Address: ${patient.billing_address}`, 10, y);
-      y += 8;
-      doc.text(`City: ${patient.city}`, 10, y);
-      y += 8;
-      doc.text(`Province: ${patient.province}`, 10, y);
-      y += 8;
-      doc.text(`Postal Code: ${patient.billing_postal_code}`, 10, y);
-      y += 8;
-      doc.text(`Medical History: ${patient.medical_history || 'N/A'}`, 10, y);
-      y += 8;
+      doc.setFont('helvetica', 'normal');
+      doc.text(`Cardholder: ${patient.card_first_name || 'N/A'} ${patient.card_last_name || 'N/A'}`, 15, y);
+      y += 6;
+  
+      const wrappedAddress = doc.splitTextToSize(
+        `Billing Address: ${patient.billing_address || 'N/A'}`,
+        pageWidth - 25
+      );
+      doc.text(wrappedAddress, 15, y);
+      y += wrappedAddress.length * 6;
+  
+      doc.text(`Card Number: ${patient.card_number || 'N/A'}`, 15, y);
+      y += 6;
+      doc.text(`Expiry Date: ${patient.card_expiry || 'N/A'}`, 15, y);
+      y += 6;
+      doc.text(`City: ${patient.city || 'N/A'}`, 15, y);
+      y += 6;
+      doc.text(`Province: ${patient.province || 'N/A'}`, 15, y);
+      y += 6;
+      doc.text(`Postal Code: ${patient.billing_postal_code || 'N/A'}`, 15, y);
+      y += 6;
+      doc.text(`Medical History: ${patient.medical_history || 'N/A'}`, 15, y);
+      y += 10; // Extra spacing between entries
     });
   
     // Section: Appointments
@@ -167,28 +178,32 @@ export class ReportComponent implements OnInit {
     doc.text('Appointments Information', 10, y);
     y += 10;
   
-    // Table Header for Appointments
-    doc.setFillColor(0, 123, 255);
-    doc.rect(10, y - 5, pageWidth - 20, 8, 'F');
+    // Table Header for Appointments (Highlighted)
+    doc.setFillColor(0, 102, 204);
+    doc.setTextColor(255, 255, 255);
+    doc.rect(10, y - 5, pageWidth - 20, 10, 'F');
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
-    doc.text('Patient', 10, y);
-    doc.text('Date', 70, y);
-    doc.text('Time', 120, y);
-    doc.text('Status', 170, y);
-    y += 8;
+    doc.text('Patient', 12, y);
+    doc.text('Date', 72, y);
+    doc.text('Time', 122, y);
+    doc.text('Status', 172, y);
+    y += 10;
+  
+    // Reset text color for content
+    doc.setTextColor(0, 0, 0);
+    doc.setFont('helvetica', 'normal');
   
     // Table Content for Appointments
-    doc.setFont('helvetica', 'normal');
     this.appointments.forEach((appt) => {
       checkPageOverflow(10);
-      doc.text(`${appt.first_name || 'N/A'} ${appt.last_name || 'N/A'}`, 10, y);
-      doc.text(`${appt.date || 'N/A'}`, 70, y);
-      doc.text(`${appt.time || 'N/A'}`, 120, y);
-      doc.text(`${appt.status || 'N/A'}`, 170, y);
+      doc.text(`${appt.first_name || 'N/A'} ${appt.last_name || 'N/A'}`, 12, y);
+      doc.text(`${appt.date || 'N/A'}`, 72, y);
+      doc.text(`${appt.time || 'N/A'}`, 122, y);
+      doc.text(`${appt.status || 'N/A'}`, 172, y);
       y += 8;
     });
-  
+
     // Section: Invoices
     checkPageOverflow(20);
     doc.line(10, y, pageWidth - 10, y);
@@ -219,6 +234,58 @@ export class ReportComponent implements OnInit {
       doc.text(`${invoice.discounted_amount || 'N/A'}`, 170, y);
       y += 8;
     });
+
+    // ==========================
+  // 📄 Insurance Claims Section
+  // ==========================
+  checkPageOverflow(20);
+  doc.line(10, y, pageWidth - 10, y);
+  y += 10;
+
+  doc.setFontSize(14);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Insurance Claims', 10, y);
+  y += 10;
+
+  // Table Header for Insurance Claims
+  doc.setFillColor(0, 153, 76); // Green Header
+  doc.setTextColor(255, 255, 255); // White Text
+  doc.rect(10, y - 5, pageWidth - 20, 8, 'F');
+  doc.setFontSize(11);
+  doc.text('Claim ID', 12, y);
+  doc.text('User ID', 30, y);
+  doc.text('Service', 50, y);
+  doc.text('Status', 80, y);
+  doc.text('Payment', 110, y);
+  doc.text('Amount', 140, y);
+  doc.text('Description', 170, y);
+  y += 8;
+
+  // Table Content for Insurance Claims
+  doc.setTextColor(0, 0, 0); // Reset text color
+  this.insuranceClaims.forEach((claim) => {
+    checkPageOverflow(10);
+
+    // Highlight the data row
+    doc.setFillColor(220, 241, 220); // Light Green Background
+    doc.rect(10, y - 5, pageWidth - 20, 8, 'F');
+
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`${claim.id || 'N/A'}`, 12, y);
+    doc.text(`${claim.user_id || 'N/A'}`, 30, y);
+    doc.text(`${claim.service || 'N/A'}`, 50, y);
+    doc.text(`${claim.status || 'N/A'}`, 80, y);
+    doc.text(`${claim.payment_status || 'N/A'}`, 110, y);
+    doc.text(`${claim.discounted_amount || '0.00'}`, 140, y);
+
+    // Wrap the description text
+    const wrappedDescription = doc.splitTextToSize(`${claim.description || 'N/A'}`, 30);
+    doc.text(wrappedDescription, 170, y);
+    
+    // Adjust row height based on description length
+    y += (wrappedDescription.length * 6) > 8 ? (wrappedDescription.length * 6) : 8;
+  });
   
     // Finalize the PDF
     addFooter(pageNum);
