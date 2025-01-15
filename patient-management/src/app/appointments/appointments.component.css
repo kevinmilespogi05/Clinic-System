@@ -11,13 +11,28 @@ body {
   color: #333;
 }
 
-/* Container for the entire appointments section */
+button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+/* Container Styling */
 .appointment-container {
   padding: 20px;
   background-color: #f9f9f9;
 }
 
-/* Card styling for different sections */
+/* Card Styling */
 .card {
   background-color: #fff;
   border-radius: 8px;
@@ -26,7 +41,6 @@ body {
   padding: 20px;
 }
 
-/* Header styling for cards */
 .card-header {
   border-bottom: 1px solid #ddd;
   margin-bottom: 20px;
@@ -38,37 +52,18 @@ body {
   margin: 0;
 }
 
-/* Calendar container styling */
+/* Calendar Styling */
 .calendar-container {
-  margin-bottom: 20px;
+  margin: 20px 0;
 }
 
-/* Header for the calendar navigation */
 .calendar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
-.nav-btn {
-  background-color: #20c910;
-  border: none;
-  color: #fff;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.nav-btn:hover {
-  background-color: #0056b3;
-}
-
-.month-year {
-  font-size: 1.2em;
-}
-
-/* Grid layout for the calendar days */
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -76,32 +71,40 @@ body {
 }
 
 .calendar-day {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   background-color: #fff;
   border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 10px;
+  border-radius: 6px;
+  padding: 15px;
+  height: 140px;
   text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.day-label {
-  display: block;
-  margin-bottom: 10px;
+.calendar-day.disabled {
+  background-color: #f5f5f5;
+  color: #999;
+  pointer-events: none;
+  cursor: not-allowed;
 }
 
 .book-btn {
-  background-color: #28a745;
+  background-color: #4caf50;
   border: none;
   color: #fff;
-  padding: 5px 10px;
-  cursor: pointer;
+  padding: 10px 15px;
   border-radius: 4px;
+  margin-top: auto;
 }
 
 .book-btn:hover {
-  background-color: #218838;
+  background-color: #4caf50;
 }
 
-/* Styling for the list of appointments */
+/* Appointment List */
 .appointment-list {
   display: flex;
   flex-direction: column;
@@ -115,35 +118,12 @@ body {
   padding: 10px;
 }
 
-.appointment-details {
-  margin-bottom: 10px;
-}
-
 .appointment-actions {
   display: flex;
   gap: 10px;
 }
 
-.cancel-btn,
-.delete-btn,
-.payment-btn,
-.refund-btn {
-  background-color: #dc3545;
-  border: none;
-  color: #fff;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.cancel-btn:hover,
-.delete-btn:hover,
-.payment-btn:hover,
-.refund-btn:hover {
-  background-color: #c82333;
-}
-
-/* Modal styling */
+/* Modal Styling */
 .modal {
   position: fixed;
   top: 0;
@@ -154,74 +134,79 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 .modal-content {
   background-color: #fff;
-  padding: 20px;
+  padding: 30px;
   border-radius: 8px;
-  width: 400px;
-  max-width: 90%;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: slideUp 0.4s ease-in-out;
 }
 
 .close-btn {
-  background-color: #dc3545;
-  border: none;
-  color: #fff;
-  padding: 5px 10px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 1.5rem;
+  color: #888;
   cursor: pointer;
-  border-radius: 4px;
-  float: right;
+  transition: color 0.3s ease;
 }
 
 .close-btn:hover {
+  color: #ff5252;
+}
+
+/* Input and Textarea Styling */
+textarea,
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+textarea:focus,
+input:focus,
+select:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+/* Button Enhancements */
+.payment-btn {
+  background-color: #28a745;
+}
+
+.cancel-btn,
+.delete-btn,
+.refund-btn {
+  background-color: #dc3545;
+}
+
+.payment-btn:hover {
+  background-color: #218838;
+}
+
+.cancel-btn:hover,
+.delete-btn:hover,
+.refund-btn:hover {
   background-color: #c82333;
 }
 
-.form-group {
-  margin-bottom: 15px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.form-group select,
-.form-group textarea {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.bill-section {
-  margin-top: 15px;
-}
-
-.bill-section h4 {
-  margin: 0;
-}
-
-/* Additional styling for the cancellation reason modal */
-.modal-content h3 {
-  margin-bottom: 15px;
-}
-
-.modal-content select {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  margin-bottom: 15px;
-}
-
-.modal-content textarea {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  margin-bottom: 15px;
+/* Error Messages */
+.error {
+  color: #e74c3c;
+  font-size: 0.9rem;
 }
 
 /* Responsive Adjustments */
@@ -242,223 +227,16 @@ body {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .appointment-container {
-    padding: 20px;
-  }
-
-  .card {
-    width: 100%;
-    padding: 15px;
-  }
-
-  .card-title {
-    font-size: 1.4rem;
-  }
-
-  .month-year {
-    font-size: 1.2rem;
-  }
-
-  .nav-btn {
-    font-size: 0.9rem;
-    padding: 8px 12px;
-  }
-
   .modal-content {
     padding: 20px;
-    width: 90%;
   }
 
-  .payment-summary {
-    font-size: 0.9rem;
-  }
-
-  .button-group {
+  .appointment-actions {
     flex-direction: column;
   }
-
-  .payment-btn,
-  .cancel-btn {
-    width: 100%;
-    padding: 12px;
-  }
 }
 
-/* Modal Enhancements */
-.modal-content {
-  width: 90%;
-  max-width: 480px;
-  padding: 30px;
-}
-
-textarea,
-input,
-select {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-}
-
-textarea:focus,
-input:focus,
-select:focus {
-  border-color: #4caf50;
-  outline: none;
-}
-
-/* Button Enhancements */
-button {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-button:hover {
-  background-color: #45a049;
-  transform: scale(1.05);
-}
-
-/* Error Message Styling */
-.error {
-  color: red;
-  font-size: 0.9rem;
-  margin-top: 5px;
-}
-
-/* Modal Overlay */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-/* Modal Content */
-.modal-content {
-  background-color: #ffffff;
-  border-radius: 12px;
-  padding: 30px;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  position: relative;
-  animation: slideUp 0.4s ease-in-out;
-}
-
-/* Close Button */
-.close-btn {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  font-size: 1.5rem;
-  color: #888;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.close-btn:hover {
-  color: #ff5252;
-}
-
-/* Modal Headings */
-.modal-content h3 {
-  font-size: 1.6rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #333;
-}
-
-/* Textarea and Input Styling */
-textarea,
-input,
-select {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-}
-
-textarea:focus,
-input:focus,
-select:focus {
-  border-color: #4caf50;
-  outline: none;
-}
-
-/* Payment Summary Section */
-.payment-summary {
-  background-color: #f9f9f9;
-  padding: 15px;
-  border-radius: 8px;
-  margin-top: 10px;
-  text-align: center;
-  font-weight: bold;
-  color: #333;
-}
-
-/* Button Group in Modals */
-.button-group {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.payment-btn,
-.cancel-btn {
-  flex: 1;
-  padding: 12px;
-  border-radius: 6px;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: transform 0.2s ease, background-color 0.3s ease;
-}
-
-.payment-btn {
-  background-color: #4caf50;
-  color: white;
-}
-
-.payment-btn:hover {
-  background-color: #45a049;
-  transform: scale(1.05);
-}
-
-.cancel-btn {
-  background-color: #f44336;
-  color: white;
-}
-
-.cancel-btn:hover {
-  background-color: #e53935;
-  transform: scale(1.05);
-}
-
-/* Error Messages */
-.error {
-  color: #e74c3c;
-  font-size: 0.9rem;
-  margin-top: -10px;
-}
-
-/* Modal Animations */
+/* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -477,256 +255,4 @@ select:focus {
     transform: translateY(0);
     opacity: 1;
   }
-}
-
-/* Responsive Adjustments for Modals */
-@media (max-width: 480px) {
-  .modal-content {
-    padding: 20px;
-  }
-
-  .button-group {
-    flex-direction: column;
-  }
-
-  .payment-btn,
-  .cancel-btn {
-    width: 100%;
-  }
-}
-
-/* Pay Now Button Styling */
-.pay-now-btn {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1.1rem;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-  width: 100%; /* Full width button */
-  margin-top: 20px; /* Spacing for better layout */
-}
-
-.pay-now-btn:hover {
-  background-color: #45a049;
-  transform: scale(1.05);
-}
-
-.refund-pending {
-  color: orange;
-}
-
-.refund-processed {
-  color: green;
-}
-
-.refund-failed {
-  color: red;
-}
-
-/* Reschedule Button Styling */
-.reschedule-btn {
-  background-color: #f39c12; /* Amber color */
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.reschedule-btn:hover {
-  background-color: #e67e22; /* Darker amber color on hover */
-  transform: scale(1.05); /* Slightly enlarge the button */
-}
-
-.reschedule-btn i {
-  margin-right: 8px; /* Space between the icon and text */
-}
-
-.reschedule-btn:active {
-  background-color: #d35400; /* Even darker amber on click */
-  transform: scale(1); /* Reset scale on click */
-}
-
-.reschedule-btn:focus {
-  outline: none;
-  box-shadow: 0 0 5px rgba(243, 156, 18, 0.5); /* Focus outline with glow effect */
-}
-
-.selected {
-  background-color: #007bff; /* Highlight color */
-  color: white;
-}
-
-/* Modal Styling */
-.modal-content.large {
-  max-width: 900px; /* Increased modal width */
-  max-height: 750px; /* Increased modal height */
-  padding: 20px;
-  overflow-y: auto;
-  border-radius: 8px;
-}
-
-/* Calendar Styling */
-.calendar-container {
-  margin: 20px 0;
-}
-
-.calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr); /* 7 columns for days of the week */
-  gap: 15px; /* More gap for balance */
-}
-
-.calendar-day {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 6px; /* Softer corners */
-  padding: 15px;
-  height: 140px; /* Increased height */
-  text-align: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.date-info {
-  margin-bottom: 12px; /* Extra spacing for clarity */
-}
-
-.day-name {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #7f8c8d;
-}
-
-.date-number {
-  font-size: 1.3rem; /* Slightly larger date font */
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-.book-btn {
-  background-color: #34db58;
-  border: none;
-  color: #fff;
-  padding: 10px 15px; /* Larger buttons */
-  cursor: pointer;
-  border-radius: 4px;
-  font-size: 1rem; /* Slightly larger font size */
-  margin-top: auto; /* Ensures alignment at the bottom */
-}
-
-.book-btn.active {
-  background-color: #007bff;
-  color: #fff;
-}
-
-.book-btn:hover {
-  background-color: #2980b9;
-}
-
-.calendar-day.selected {
-  background-color: #dfe6e9;
-  border-color: #74b9ff;
-}
-
-/* Time Selection */
-.time-selection {
-  margin-top: 20px;
-}
-
-.time-selection label {
-  font-weight: bold;
-  margin-bottom: 5px;
-  display: block;
-}
-
-.time-selection select {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-.btn-reschedule {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-top: 15px;
-  width: 100%;
-}
-
-.btn-reschedule:hover {
-  background-color: #0056b3;
-}
-.selected-btn {
-  background-color: #ffc107; /* Yellow */
-  color: #fff;
-  font-weight: bold;
-  border: 2px solid #ff9800;
-}
-.appointment-actions {
-  display: flex;
-  gap: 10px; /* Space between buttons */
-  width: 100%; /* Ensure container takes the full width of the parent */
-}
-
-.refund-btn {
-  background-color: #a72828; /* Green for Refund button */
-  border: none;
-  color: white;
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 4px;
-  width: 500px; /* Set a fixed width for Refund button */
-  text-align: center; 
-}
-
-.reschedule-btn {
-  background-color: #ff8800; /* Blue for Reschedule button */
-  border: none;
-  color: white;
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 4px;
-  width: 500px; /* Set a fixed width for Reschedule button */
-  text-align: center;
-}
-
-.refund-btn:hover,
-.reschedule-btn:hover {
-  opacity: 0.9;
-}
-
-
-.selected {
-  background-color: #007bff; /* Change to the color you want */
-  color: white;
-  border-radius: 50%;
-}
-.active {
-  background-color: #28a745; /* Change for active (hovered or clicked) state */
-  color: white;
 }
