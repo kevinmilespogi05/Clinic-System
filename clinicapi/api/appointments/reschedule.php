@@ -30,6 +30,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($stmt->rowCount() > 0) {
                 $existing_appointment = $stmt->fetch(PDO::FETCH_ASSOC);
                 
+                // Ensure the new date is valid (next week or next month)
+                $current_date = new DateTime();
+                $existing_appointment_date = new DateTime($existing_appointment['date']);
+                $new_appointment_date = new DateTime($new_date);
+                
+                // Check if the new date is at least a week after the original appointment date
+                $interval = $existing_appointment_date->diff($new_appointment_date);
+                if ($interval->days < 7) {
+                    echo json_encode(['success' => false, 'message' => 'You can only reschedule your appointment to a date at least 7 days after the original appointment.']);
+                    exit;
+                }
+                
                 // Start a transaction
                 $conn->beginTransaction();
 
@@ -38,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $username = $existing_appointment['username'];
                 $service = $existing_appointment['service'];
                 $description = $existing_appointment['description'];
-                $status = 'booked';
+                $status = 'booked'; // Assuming status is 'booked' after reschedule
                 $payment_status = $existing_appointment['payment_status'];
                 $bill_amount = $existing_appointment['bill_amount'];
                 $refund_status = $existing_appointment['refund_status'];
@@ -68,31 +80,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($stmt_new->execute()) {
                     // Remove the old appointment
                     $sql_remove_old_appointment = "DELETE FROM appointments WHERE id = :appointment_id";
-                    $stmt_remove_old = $conn->prepare($sql_remove_old_appointment);
-                    $stmt_remove_old->bindParam(':appointment_id', $appointment_id, PDO::PARAM_INT);
-                    
-                    if ($stmt_remove_old->execute()) {
-                        // Commit the transaction
-                        $conn->commit();
-                        echo json_encode(['success' => true, 'message' => 'Appointment rescheduled successfully.']);
-                    } else {
-                        // Rollback the transaction in case of failure
-                        $conn->rollBack();
-                        echo json_encode(['success' => false, 'message' => 'Failed to remove old appointment.']);
-                    }
+                    $stmt_remove = $conn->prepare($sql_remove_old_appointment);
+                    $stmt_remove->bindParam(':appointment_id', $appointment_id, PDO::PARAM_INT);
+                    $stmt_remove->execute();
+
+                    // Commit the transaction
+                    $conn->commit();
+                    echo json_encode(['success' => true, 'message' => 'Appointment rescheduled successfully.']);
                 } else {
-                    // Rollback the transaction in case of failure
+                    // Rollback the transaction if insertion fails
                     $conn->rollBack();
-                    echo json_encode(['success' => false, 'message' => 'Failed to create new appointment.']);
+                    echo json_encode(['success' => false, 'message' => 'An error occurred while rescheduling the appointment.']);
                 }
             } else {
                 echo json_encode(['success' => false, 'message' => 'Appointment not found.']);
             }
         } else {
-            echo json_encode(['success' => false, 'message' => 'Invalid new slot data.']);
+            echo json_encode(['success' => false, 'message' => 'Invalid reschedule data.']);
         }
     } else {
         echo json_encode(['success' => false, 'message' => 'Missing appointment ID or new slot data.']);
     }
+} else {
+    echo json_encode(['success' => false, 'message' => 'Invalid request method.']);
 }
 ?>
