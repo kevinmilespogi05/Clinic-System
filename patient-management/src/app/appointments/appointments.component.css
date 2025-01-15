@@ -347,34 +347,6 @@ button:hover {
   animation: fadeIn 0.3s ease-in-out;
 }
 
-.calendar-day {
-  text-align: center;
-  padding: 10px;
-  margin: 5px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-
-  &.disabled {
-    background-color: #f5f5f5;
-    color: #999;
-    pointer-events: none;
-    cursor: not-allowed;
-  }
-}
-
-.book-btn {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 3px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-}
-
 /* Modal Content */
 .modal-content {
   background-color: #ffffff;
