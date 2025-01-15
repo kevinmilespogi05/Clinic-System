@@ -252,6 +252,12 @@ export class AppointmentsComponent implements OnInit {
     }
   }
 
+  isDateInPast(date: Date): boolean {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time to midnight
+    return date < today;
+  }
+
   isDateBooked(date: Date): boolean {
     const appointmentsOnDate = this.appointments.filter((appointment) => {
       const appointmentDate = new Date(appointment.date);
