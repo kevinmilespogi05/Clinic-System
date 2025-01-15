@@ -21,11 +21,14 @@
   </div>
 
   <div class="card">
-    <h2><i class="bi bi-file-earmark-spreadsheet"></i> Generate Report</h2>
-    <button (click)="generateReport()" class="btn btn-primary">
-      Download Report as Excel
+    <h2><i class="bi bi-file-earmark-spreadsheet"></i> Generate Clinic Report</h2>
+      
+    <button (click)="generateReport()" class="btn btn-primary" [disabled]="loading">
+      <i *ngIf="loading" class="bi bi-arrow-clockwise spinner"></i> 
+      {{ loading ? 'Generating Report...' : 'Download Report as PDF' }}
     </button>
   </div>
+  
 
   <!-- Appointments Section -->
   <div class="card">
