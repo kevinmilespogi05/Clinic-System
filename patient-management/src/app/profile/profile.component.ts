@@ -14,12 +14,13 @@ import { FormsModule } from '@angular/forms';
 export class ProfileComponent implements OnInit {
   userId: number | null = null;
   profileData: any = null;
-  claims: any[] = []; // Holds insurance claims data
   invoices: any[] = []; // Holds invoice data
   errorMessage: string | null = null;
   isEditing: boolean = false;
   updatedProfileData: any = {}; // For holding data during editing
-viewInvoice: any;
+  viewInvoice: any;
+  insuranceClaims: any[] = []; // Holds insurance claims data
+
 
   constructor(private patientService: PatientService, private router: Router) {}
 
@@ -27,12 +28,27 @@ viewInvoice: any;
     this.userId = Number(localStorage.getItem('userId'));
     if (this.userId) {
       this.fetchProfileData(this.userId);
+      this.fetchInvoices(this.userId);
       this.fetchInsuranceClaims(this.userId); // Fetch insurance claims
-      this.fetchInvoices(this.userId); // Fetch invoices
     } else {
       this.errorMessage = 'User not logged in';
       this.router.navigate(['/login']);
     }
+  }
+
+  fetchInsuranceClaims(userId: number): void {
+    this.patientService.getInsuranceClaimsUser(userId).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.insuranceClaims = response.claims;
+        } else {
+          console.error('Failed to fetch insurance claims');
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching insurance claims:', error);
+      }
+    });
   }
 
   fetchProfileData(userId: number): void {
@@ -48,21 +64,6 @@ viewInvoice: any;
       error: (error) => {
         console.error('Error fetching profile data:', error);
         this.errorMessage = 'Failed to fetch profile data. Please try again later.';
-      }
-    });
-  }
-
-  fetchInsuranceClaims(userId: number): void {
-    this.patientService.getInsuranceClaimsUser(userId).subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.claims = response.claims;
-        } else {
-          console.error('Failed to fetch insurance claims');
-        }
-      },
-      error: (error) => {
-        console.error('Error fetching insurance claims:', error);
       }
     });
   }

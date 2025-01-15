@@ -195,32 +195,6 @@
   </div>
 </div>
 
-<!-- Error Template -->
-<ng-template #errorTemplate>
-  <div class="error-message">
-    <p *ngIf="errorMessage">{{ errorMessage }}</p>
-    <p *ngIf="!errorMessage">Loading...</p>
-  </div>
-</ng-template>
-
-<!-- Insurance Claims Card -->
-<div *ngIf="claims.length > 0" class="insurance-status-container">
-  <h3>Insurance Claims</h3>
-  <div *ngFor="let claim of claims" class="claim-item">
-    <p><strong>Service:</strong> {{ claim.service }}</p>
-    <p><strong>Discounted Amount:</strong> {{ claim.discounted_amount | currency:'PHP' }}</p>
-    <p><strong>Description:</strong> {{ claim.description }}</p>
-  </div>
-</div>
-
-<!-- No Claims Template -->
-<ng-template #noClaimsTemplate>
-  <div class="insurance-status-container">
-    <h3>Insurance Claims</h3>
-    <p>No insurance claims available.</p>
-  </div>
-</ng-template>
-
 <!-- Invoices Section -->
 <div class="invoices-container">
   <h3>Invoices</h3>
@@ -240,13 +214,12 @@
   </ng-template>
 </div>
 
-
-<!-- Error Template -->
 <ng-template #errorTemplate>
 <div class="error-message">
   <p *ngIf="errorMessage">{{ errorMessage }}</p>
   <p *ngIf="!errorMessage">Loading...</p>
 </div>
 </ng-template>
+
 
 
