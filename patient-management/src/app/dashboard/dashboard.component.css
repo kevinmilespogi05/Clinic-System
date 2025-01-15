@@ -43,6 +43,10 @@ body {
     color: #2c3e50;
 }
 
+.card-header i {
+    margin-right: 10px;
+}
+
 /* Appointments List */
 .appointments-list {
     width: 100%;
