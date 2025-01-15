@@ -17,16 +17,18 @@
     <p><strong>Payment Status:</strong> {{ appointment.payment_status }}</p>
     <p><strong>Total Amount:</strong> ₱{{ totalAmount | number }}</p> <!-- Changed currency to ₱ -->
   
-    <!-- Cancel Button to redirect to appointments component -->
-    <button (click)="cancel()">Cancel</button>
+    
   </div>
+
+  <!-- Payment Reference Container -->
+  <div #paymentRef></div>
 
   <!-- GCash QR Code -->
   <div class="gcash-qr">
     <h3>Scan to Pay via GCash</h3>
     <img src="assets/gcash.jpg" alt="GCash QR Code" />
+     <!-- Cancel Button to redirect to appointments component -->
+    
   </div>
-
-  <!-- Payment Reference Container -->
-  <div #paymentRef></div>
+  <button (click)="cancel()">Cancel</button>
 </div>
