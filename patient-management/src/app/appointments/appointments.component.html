@@ -134,9 +134,11 @@
 
 <!-- Reschedule Modal -->
 <div class="modal" *ngIf="showRescheduleModal">
-  <div class="modal-content large">
+  <div class="modal-content">
     <span class="close-btn" (click)="closeRescheduleModal()">&times;</span>
     <h3>Reschedule Appointment</h3>
+
+    <!-- Calendar Section -->
     <div class="calendar-container">
       <div class="calendar-header">
         <button (click)="changeMonth('prev', 'reschedule')" class="nav-btn">
@@ -147,33 +149,46 @@
           <i class="bi bi-chevron-right"></i>
         </button>
       </div>
+
       <div class="calendar-grid">
         <div 
           class="calendar-day" 
           *ngFor="let day of daysInMonth(rescheduleCurrentMonth, rescheduleCurrentYear)" 
           [ngClass]="{
-            'selected': isSelected(day),
-            'active': selectedDate === day
+            'disabled': isDateInPast(day),
+            'selected': isSelected(day)
           }">
-          <div class="date-info">
-            <span class="day-name">{{ day | date:'EEE' }}</span>
-            <span class="date-number">{{ day | date:'MMM d' }}</span>
-          </div>
-          <button 
+          <span class="day-label">{{ day | date : "EEEE, MMM d" }}</span>
+          <button
+            *ngIf="!isDateInPast(day)"
             (click)="selectDate(day)"
-            class="book-btn">
-            Select
+            class="book-btn"
+          >
+            <i class="bi bi-calendar-check"></i> Select
           </button>
         </div>
-      </div>      
+      </div>
     </div>
 
+    <!-- Time Selection Section -->
     <div class="time-selection">
-      <label for="time">Select Time</label>
+      <label for="time">Select Time:</label>
       <select id="time" [(ngModel)]="selectedTime">
         <option *ngFor="let slot of availableSlots" [value]="slot">{{ slot }}</option>
       </select>
     </div>
+
+    <!-- Reschedule Button -->
+    <button 
+      *ngIf="selectedDate && selectedTime"
+      (click)="rescheduleAppointment(selectedDate, selectedTime)" 
+      class="btn-reschedule"
+    >
+      <i class="bi bi-calendar-event"></i> Reschedule Appointment
+    </button>
+  </div>
+</div>
+
 
     <button 
       *ngIf="selectedDate && selectedTime"
@@ -182,7 +197,7 @@
       Reschedule Appointment
     </button>
   </div>
-</div>
+
 
 
   <!-- Booking Modal -->
@@ -263,4 +278,4 @@
       </button>
     </div>
   </div>
-</div>
+
