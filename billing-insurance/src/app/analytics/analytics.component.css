@@ -195,9 +195,31 @@ button:hover {
   margin: 6px 0;
 }
 
-/* Divider between patients */
+/* Divider for each patient */
 .patient-divider {
-  border-top: 1px solid #ddd;
-  margin: 10px 0;
+  border: none;
+  border-top: 2px solid #38ef7d; /* Green gradient color */
+  margin: 20px 0;
   padding: 0;
+  background: linear-gradient(to right, #11998e, #38ef7d); /* Gradient effect */
+  height: 2px; /* Thicker line */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow for a subtle depth effect */
+}
+
+/* Divider for each invoice */
+.invoice-divider {
+  border: none;
+  border-top: 2px solid #006d77; /* Darker green for invoices */
+  margin: 20px 0;
+  padding: 0;
+  background: linear-gradient(to right, #38ef7d, #11998e); /* Gradient effect */
+  height: 2px; /* Thicker line */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow for a subtle depth effect */
+}
+
+/* Hover effect for the dividers */
+.patient-divider:hover,
+.invoice-divider:hover {
+  transform: scaleX(1.1);
+  transition: transform 0.3s ease;
 }
