@@ -23,26 +23,36 @@
   <!-- Appointments Section -->
   <div class="card">
     <h2><i class="bi bi-calendar3"></i> Upcoming Appointments</h2>
-    <div class="pending-appointments">
+    <div *ngIf="pendingAppointments.length > 0; else noPendingAppointments" class="appointment-list">
       <div *ngFor="let appt of pendingAppointments" class="appointment-item">
         <p><strong>Patient Name:</strong> {{ appt.patient_name }}</p>
         <p><strong>Appointment Date:</strong> {{ appt.date | date }}</p>
         <p><strong>Status:</strong> {{ appt.status }}</p>
       </div>
     </div>
-    <div class="other-appointments">
-      <h3></h3>
+    <ng-template #noPendingAppointments>
+      <p>No pending appointments.</p>
+    </ng-template>
+  </div>
+
+  <!-- Booked Appointments Section -->
+  <div class="card booked-appointments">
+    <h2><i class="bi bi-calendar-check-fill"></i> Booked Appointments</h2>
+    <div *ngIf="appointments.length > 0; else noAppointments" class="appointment-list">
       <div *ngFor="let appt of appointments" class="appointment-item">
         <p><strong>Patient Name:</strong> {{ appt.patient_name }}</p>
         <p><strong>Appointment Date:</strong> {{ appt.date | date }}</p>
         <p><strong>Status:</strong> {{ appt.status }}</p>
       </div>
     </div>
+    <ng-template #noAppointments>
+      <p>No appointments available.</p>
+    </ng-template>
   </div>
 
   <!-- Patients Section -->
   <div class="card">
-    <h2><i class="bi bi-people"></i> Patient Previews</h2>
+    <h2><i class="bi bi-people"></i> Patient Section</h2>
     <div *ngFor="let patient of patients" class="patient-item">
       <p><strong>Name:</strong> {{ patient.first_name }} {{ patient.last_name }}</p>
       <p><strong>Username:</strong> {{ patient.username }}</p>
