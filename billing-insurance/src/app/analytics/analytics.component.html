@@ -8,10 +8,6 @@
     <h3>Insurance Claims</h3>
     <canvas id="insuranceChart"></canvas>
   </div>
-  <div class="chart-card">
-    <h3>Monthly Invoices</h3>
-    <canvas id="invoicesChart"></canvas>
-  </div>
 </div>
 
 <div class="analytics-container">
@@ -38,21 +34,20 @@
 
   <div class="card">
     <h2><i class="bi bi-file-earmark-spreadsheet"></i> Generate Clinic Report</h2>
-      
     <button (click)="generateReport()" class="btn btn-primary" [disabled]="loading">
       <i *ngIf="loading" class="bi bi-arrow-clockwise spinner"></i> 
       {{ loading ? 'Generating Report...' : 'Download Report as PDF' }}
     </button>
+    
+    <button (click)="previewReport()" class="btn btn-secondary" [disabled]="loading" style="margin-left: 20px;">
+      <i class="bi bi-eye"></i> Preview Report
+    </button>
   </div>
   
-
   <!-- Appointments Section -->
   <div class="card">
     <h2><i class="bi bi-calendar3"></i> Upcoming Appointments</h2>
-    <div
-      *ngIf="pendingAppointments.length > 0; else noPendingAppointments"
-      class="appointment-list"
-    >
+    <div *ngIf="pendingAppointments.length > 0; else noPendingAppointments" class="appointment-list">
       <div *ngFor="let appt of pendingAppointments" class="appointment-item">
         <p><strong>Patient Name:</strong> {{ appt.patient_name }}</p>
         <p><strong>Appointment Date:</strong> {{ appt.date | date }}</p>
@@ -67,10 +62,7 @@
   <!-- Booked Appointments Section -->
   <div class="card booked-appointments">
     <h2><i class="bi bi-calendar-check-fill"></i> Booked Appointments</h2>
-    <div
-      *ngIf="appointments.length > 0; else noAppointments"
-      class="appointment-list"
-    >
+    <div *ngIf="appointments.length > 0; else noAppointments" class="appointment-list">
       <div *ngFor="let appt of appointments" class="appointment-item">
         <p><strong>Patient Name:</strong> {{ appt.patient_name }}</p>
         <p><strong>Appointment Date:</strong> {{ appt.date | date }}</p>
@@ -83,43 +75,40 @@
   </div>
 
   <!-- Patients Section -->
-<div class="card">
-  <h2><i class="bi bi-people"></i> Patients</h2>
-  <div *ngIf="patients.length > 0; else noPatients" class="card-list">
-    <div *ngFor="let patient of patients" class="card-item">
-      <p><strong>Name:</strong> {{ patient.first_name }} {{ patient.last_name }}</p>
-      <p><strong>Username:</strong> {{ patient.username }}</p>
-      <p><strong>Contact:</strong> {{ patient.contact_number }}</p>
-      <p><strong>DOB:</strong> {{ patient.date_of_birth | date }}</p>
-      <p><strong>Medical History:</strong> {{ patient.medical_history }}</p>
-      <!-- Divider for each patient -->
-      <hr class="patient-divider">
+  <div class="card">
+    <h2><i class="bi bi-people"></i> Patients</h2>
+    <div *ngIf="patients.length > 0; else noPatients" class="card-list">
+      <div *ngFor="let patient of patients" class="card-item">
+        <p><strong>Name:</strong> {{ patient.first_name }} {{ patient.last_name }}</p>
+        <p><strong>Username:</strong> {{ patient.username }}</p>
+        <p><strong>Contact:</strong> {{ patient.contact_number }}</p>
+        <p><strong>DOB:</strong> {{ patient.date_of_birth | date }}</p>
+        <p><strong>Medical History:</strong> {{ patient.medical_history }}</p>
+        <hr class="patient-divider">
+      </div>
     </div>
+    <ng-template #noPatients>
+      <p>No patients available.</p>
+    </ng-template>
   </div>
-  <ng-template #noPatients>
-    <p>No patients available.</p>
-  </ng-template>
-</div>
 
-<!-- Invoices Section -->
-<div class="card">
-  <h2><i class="bi bi-file-earmark-text"></i> Invoices</h2>
-  <div *ngIf="invoices.length > 0; else noInvoices" class="card-list">
-    <div *ngFor="let invoice of invoices" class="card-item">
-      <p><strong>Invoice ID:</strong> {{ invoice.id }}</p>
-      <p><strong>User ID:</strong> {{ invoice.user_id }}</p>
-      <p><strong>Description:</strong> {{ invoice.description }}</p>
-      <p>
-        <strong>Created At:</strong>
-        {{ invoice.created_at | date : "medium" }}
-      </p>
-      <!-- Divider for each invoice -->
-      <hr class="invoice-divider">
+  <!-- Invoices Section -->
+  <div class="card">
+    <h2><i class="bi bi-file-earmark-text"></i> Invoices</h2>
+    <div *ngIf="invoices.length > 0; else noInvoices" class="card-list">
+      <div *ngFor="let invoice of invoices" class="card-item">
+        <p><strong>Invoice ID:</strong> {{ invoice.id }}</p>
+        <p><strong>User ID:</strong> {{ invoice.user_id }}</p>
+        <p><strong>Description:</strong> {{ invoice.description }}</p>
+        <p>
+          <strong>Created At:</strong>
+          {{ invoice.created_at | date : "medium" }}
+        </p>
+        <hr class="invoice-divider">
+      </div>
     </div>
+    <ng-template #noInvoices>
+      <p>No invoices available.</p>
+    </ng-template>
   </div>
-  <ng-template #noInvoices>
-    <p>No invoices available.</p>
-  </ng-template>
 </div>
-
-

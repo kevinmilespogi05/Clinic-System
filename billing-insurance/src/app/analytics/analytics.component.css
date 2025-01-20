@@ -7,9 +7,11 @@
   margin: 0 auto;
   box-sizing: border-box;
   background: #f4f8fb;
-  border-radius: 0px;
+  border-radius: 8px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjusts based on screen size */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Card Layout */
@@ -50,6 +52,48 @@
   background: #dff6f0;
   border-radius: 50%;
   color: #11998e;
+}
+
+/* Statistics Boxes */
+.stats-boxes {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.stat-box {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  flex: 1 1 300px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+.stat-icon {
+  font-size: 2rem;
+  color: #38ef7d;
+}
+
+.stat-number {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.stat-label {
+  font-size: 1rem;
+  color: #777;
 }
 
 /* Appointment & Invoice Items */
@@ -94,34 +138,11 @@ button:hover {
   transform: translateY(-3px);
 }
 
-/* Responsive Layout */
-@media (max-width: 768px) {
-  .stats-boxes {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .stat-box {
-    width: 100%;
-  }
-
-  .card {
-    padding: 15px;
-  }
-
-  .appointment-item p,
-  .invoice-item p {
-    font-size: 0.9rem;
-  }
-
-  .stat-number {
-    font-size: 1.3rem;
-  }
-
-  .chart-container {
-    height: 250px;
-  }
+button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
 }
+
 /* Patients Section */
 .patient-item {
   background-color: #ffffff;
@@ -147,43 +168,36 @@ button:hover {
 /* Divider for each patient */
 .patient-divider {
   border: none;
-  border-top: 2px solid #38ef7d; /* Green gradient color */
+  border-top: 2px solid #38ef7d;
   margin: 20px 0;
   padding: 0;
-  background: linear-gradient(to right, #11998e, #38ef7d); /* Gradient effect */
-  height: 2px; /* Thicker line */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow for a subtle depth effect */
+  background: linear-gradient(to right, #11998e, #38ef7d);
+  height: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Divider for each invoice */
 .invoice-divider {
   border: none;
-  border-top: 2px solid #006d77; /* Darker green for invoices */
+  border-top: 2px solid #006d77;
   margin: 20px 0;
   padding: 0;
-  background: linear-gradient(to right, #38ef7d, #11998e); /* Gradient effect */
-  height: 2px; /* Thicker line */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow for a subtle depth effect */
-}
-
-/* Hover effect for the dividers */
-.patient-divider:hover,
-.invoice-divider:hover {
-  transform: scaleX(1.1);
-  transition: transform 0.3s ease;
+  background: linear-gradient(to right, #38ef7d, #11998e);
+  height: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Chart Section */
 .statistics-box {
   display: flex;
   justify-content: space-between;
-  gap: 10px; /* Space between the charts */
+  gap: 10px;
   flex-wrap: nowrap;
   padding: 30px;
-  background: #f4f8fb; /* White background for the box */
-  border-radius: 0px;
-  width: 75%; 
-  margin-left: 202px;
+  background: #f4f8fb;
+  border-radius: 8px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 /* Individual Chart Cards */
@@ -191,9 +205,9 @@ button:hover {
   background-color: white;
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  padding: 30px; /* Increased padding */
+  padding: 30px;
   text-align: center;
-  flex: 0 0 350px; /* Increased width */
+  flex: 0 0 350px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -211,17 +225,100 @@ button:hover {
 
 canvas {
   max-width: 100%;
-  height: 250px; /* Increased height */
+  height: 250px;
   margin: 0 auto;
 }
 
 /* Responsive Layout */
 @media (max-width: 768px) {
+  .stats-boxes {
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .stat-box {
+    flex: 1 1 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  .appointment-item p,
+  .invoice-item p {
+    font-size: 0.9rem;
+  }
+
+  .stat-number {
+    font-size: 1.3rem;
+  }
+
+  .chart-container {
+    height: 250px;
+  }
+
   .statistics-box {
-    flex-wrap: wrap; /* Stack charts vertically on smaller screens */
+    flex-wrap: wrap;
   }
 
   .chart-card {
-    flex: 1 1 100%; /* Allow the charts to take full width */
+    flex: 1 1 100%;
   }
+
+  .patient-item {
+    padding: 10px;
+  }
+
+  .patient-divider {
+    margin: 10px 0;
+  }
+
+  .invoice-divider {
+    margin: 10px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .analytics-container {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 10px;
+  }
+
+  .stats-boxes {
+    gap: 10px;
+  }
+
+  .stat-box {
+    flex: 1 1 100%;
+  }
+
+  .appointment-item,
+  .invoice-item,
+  .patient-item {
+    padding: 12px;
+  }
+
+  .chart-card {
+    padding: 20px;
+  }
+
+  .patient-divider,
+  .invoice-divider {
+    margin: 10px 0;
+  }
+}
+
+/* Custom Adjustments for Download & Preview Buttons */
+button + button {
+  margin-top: 10px;
+}
+
+button {
+  margin-right: 10px;
 }
